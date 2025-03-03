@@ -1,0 +1,6 @@
+-- ----------------------------
+-- Records of kerjasama_tridharma_pengmas
+-- ----------------------------
+INSERT INTO `kerjasama_tridharma_pengmas` VALUES (1, 5, 8, 'SD KHADIJAH WONOREJO SURABAYA', 'lokal', 'Pelaksanaan Kegiatan Program Pengabdian Masyarakat Pendanaan PNBP 2024', '<p>Peningkatan IKU 2, IKU 3, IKU 5, IKU 6</p>', '20 Maret 2024 / 1 tahun', 'https://drive.google.com/file/d/135ZCgpZ2l9JWrQPIGLhkSyvQchgV1v5p/view?usp=drive_link', '20 Maret 2025', NULL, NOW(), NOW());
+INSERT INTO `kerjasama_tridharma_pengmas` VALUES (2, 5, 8, 'UD. IKABA', 'lokal', 'Pelaksanaan Kegiatan Program Pengabdian Masyarakat Pendanaan PNBP 2024', '<p>Peningkatan IKU 2, IKU 3, IKU 5, IKU 6</p>', '25 Maret 2024 / 1 tahun', 'https://drive.google.com/file/d/1I2oV3T4QkT0V8lnZQyFL59pkSZ0ha0aF/view?usp=drive_link', '25 Maret 2025', NULL, NOW(), NOW());
+INSERT INTO `kerjasama_tridharma_pengmas` VALUES (3, 4, 8, 'Prasegi Art', 'lokal', 'Pengambangan Digital Marketing Dan Modifikasi Produk Berbasis Infrared Proximity Reflective Method (IPRM) menggunakan Olahan Limbah Logam Pada UMKM Prasegi ART', '<p>Peningkatan IKU 2, IKU 3, IKU 5, IKU 6</p>', '6 bulan', 'https://drive.google.com/file/d/1ybe-FaDw9SFIL_w5XOviPKnFjAZ6SFXj/view?usp=drive_link', '2023', NULL, NOW(), NOW());

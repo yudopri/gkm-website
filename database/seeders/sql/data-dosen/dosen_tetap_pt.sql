@@ -1,0 +1,5 @@
+-- ----------------------------
+-- Records of dosen_tetap_pt
+-- ----------------------------
+INSERT INTO `dosen_tetap_pt` VALUES (1, 5, 8, 'Rani Purbaningtyas, S.Kom, M.T', '012038203', 'Magister Teknik', NULL, 'Teknik Informatika', 1, 'Lektor Kepala', '12109305201225', 'PEKERTI, Asesor Kompetensi', '<ul><li>TIF420707 Workshop Sistem Informasi Berbasis Dekstop</li><li>TIF440702 Kewirausahaan</li><li>TIF440703 Manajemen Kualitas Perangkat Lunak</li><li>TIF460701 Teknik Penulisan Ilmiah</li><li>TIF460707 Workshop Proyek Sistem Informasi</li></ul>', 1, NULL, NULL, NOW(), NOW());
+INSERT INTO `dosen_tetap_pt` VALUES (2, 5, 8, 'Sholihah Ayu Wulandari, S.ST, M.Tr.T.', '0024119301', 'Magister Terapan Teknik Elektro', NULL, 'Artificial Intelligent, IoT, Telecomunications', 1, 'Asisten Ahli', NULL, 'PEKERTI, Asesor Kompetensi', '<ul><li>TIF420706 Perencanaan Proyek Perangkat Lunak</li><li>TIF440706 Workshop Sistem Informasi Web Framework</li><li>TIF440707 Workshop Mobile Applications Framework</li><li>TIF460702 Statistika</li><li>TIF460707 Workshop Proyek Sistem Informasi</li></ul>', 1, NULL, NULL, NOW(), NOW());
