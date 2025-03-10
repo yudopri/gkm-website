@@ -16,4 +16,10 @@ class PenelitianDtps extends Model
      * @var string
      */
     protected $table = 'penelitian_dtps';
+    protected $fiilable = [
+        'user_id',
+        'sumber_dana',
+        'judul_penelitian',
+        'tahun_penelitian',
+    ];
 }

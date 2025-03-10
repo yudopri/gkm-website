@@ -15,4 +15,11 @@ class EvalTempatKerja extends Model
      * @var string
      */
     protected $table = 'eval_tempat_kerja';
+    protected $fiilable = [
+        'user_id',
+        'tahun',
+        'jumlah_lulusan',
+        'jumlah_lulusan_terlacak',
+        'jumlah_lulusan_tingkat',
+    ];
 }

@@ -16,4 +16,10 @@ class SitasiKaryaDosen extends Model
      * @var string
      */
     protected $table = 'sitasi_karya_dosen';
+    protected $fiilable = [
+        'user_id',
+        'nama_dosen',
+        'judul_sitasi',
+        'tahun',
+    ];
 }

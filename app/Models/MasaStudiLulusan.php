@@ -15,4 +15,12 @@ class MasaStudiLulusan extends Model
      * @var string
      */
     protected $table = 'masa_studi_lulusan';
+    protected $fiilable = [
+        'user_id',
+        'tahun',
+        'jumlah_mhs_diterima',
+        'jumlah_mhs_lulus',
+        'jumlah_lulusan',
+        'mean_masa_studi',
+    ];
 }

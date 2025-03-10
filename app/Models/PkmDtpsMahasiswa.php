@@ -15,4 +15,11 @@ class PkmDtpsMahasiswa extends Model
      * @var string
      */
     protected $table = 'pkm_dtps_mahasiswa';
+    protected $fillable = [
+        'user_id',
+        'tema',
+        'nama_mhs',
+        'judul',
+        'tahun',
+    ];
 }

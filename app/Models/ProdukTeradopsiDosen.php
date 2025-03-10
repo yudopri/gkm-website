@@ -16,4 +16,12 @@ class ProdukTeradopsiDosen extends Model
      * @var string
      */
     protected $table = 'produk_teradopsi_dosen';
+    protected $fiilable = [
+        'user_id',
+        'nama_dosen',
+        'nama_produk',
+        'deskripsi_produk',
+        'bukti',
+        'tahun',
+    ];
 }

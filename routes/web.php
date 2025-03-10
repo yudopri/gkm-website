@@ -135,7 +135,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
             // Dosen Pembimbing TA
             Route::get('/dosen-pembimbing-ta', [PembimbingTaController::class, 'index'])->name('dosen-pembimbing-ta.index');
-            Route::post('/dosen-pembimbing-ta', [PembimbingTaController::class, 'store'])->name('dosen-pembimbing-ta.store');
+            Route::post('/dosen-pembimbing-ta', [PSembimbingTaController::class, 'store'])->name('dosen-pembimbing-ta.store');
             Route::get('/dosen-pembimbing-ta/create', [PembimbingTaController::class, 'create'])->name('dosen-pembimbing-ta.create');
             Route::get('/dosen-pembimbing-ta/{pembimbingTaId}', [PembimbingTaController::class, 'edit'])->name('dosen-pembimbing-ta.edit');
             Route::put('/dosen-pembimbing-ta/{pembimbingTaId}', [PembimbingTaController::class, 'update'])->name('dosen-pembimbing-ta.update');

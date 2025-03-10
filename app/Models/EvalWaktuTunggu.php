@@ -15,4 +15,12 @@ class EvalWaktuTunggu extends Model
      * @var string
      */
     protected $table = 'eval_waktu_tunggu';
+    protected $fiilable = [
+        'user_id',
+        'tahun',
+        'jumlah_lulusan',
+        'jumlah_lulusan_terlacak',
+        'jumlah_lulusan_terlacak_dipesan',
+        'jumlah_lulusan_waktu',
+    ];
 }

@@ -15,4 +15,10 @@ class EvalKepuasanPengguna extends Model
      * @var string
      */
     protected $table = 'eval_kepuasan_pengguna';
+    protected $fiilable = [
+        'user_id',
+        'tahun',
+        'jumlah_lulusan',
+        'jumlah_tanggapan',
+    ];
 }

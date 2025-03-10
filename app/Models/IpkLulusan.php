@@ -15,4 +15,10 @@ class IpkLulusan extends Model
      * @var string
      */
     protected $table = 'ipk_lulusan';
+    protected $fiilable = [
+        'user_id',
+        'tahun',
+        'jumlah_lulusan',
+        'ipk',
+    ];
 }

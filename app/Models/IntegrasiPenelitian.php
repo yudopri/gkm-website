@@ -16,4 +16,12 @@ class IntegrasiPenelitian extends Model
      * @var string
      */
     protected $table = 'integrasi_penelitian';
+    protected $fillable = [
+        'user_id',
+        'judul_penelitian',
+        'nama_dosen',
+        'mata_kuliah',
+        'bentuk_integrasi',
+        'tahun',
+    ];
 }

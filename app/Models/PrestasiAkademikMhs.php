@@ -15,4 +15,11 @@ class PrestasiAkademikMhs extends Model
      * @var string
      */
     protected $table = 'prestasi_akademik_mhs';
+    protected $fillable = [
+        'user_id',
+        'nama_kegiatan',
+        'tingkat',
+        'prestasi',
+        'tahun',
+    ];
 }

@@ -16,4 +16,10 @@ class PublikasiIlmiahDosen extends Model
      * @var string
      */
     protected $table = 'publikasi_ilmiah_dosen';
+    protected $fiilable = [
+        'user_id',
+        'nama_dosen',
+        'judul_artikel',
+        'tahun',
+    ];
 }

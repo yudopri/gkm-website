@@ -16,4 +16,11 @@ class PkmDtps extends Model
      * @var string
      */
     protected $table = 'pkm_dtps';
+    protected $fillable = [
+        'user_id',
+        'tema',
+        'nama_mhs',
+        'judul',
+        'tahun',
+    ];
 }

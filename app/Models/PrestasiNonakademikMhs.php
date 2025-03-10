@@ -15,4 +15,11 @@ class PrestasiNonakademikMhs extends Model
      * @var string
      */
     protected $table = 'prestasi_nonakademik_mhs';
+    protected $fillable = [
+        'user_id',
+        'nama_kegiatan',
+        'tingkat',
+        'prestasi',
+        'tahun',
+    ];
 }

@@ -23,6 +23,7 @@ class BukuChapterDosen extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'luaran_penelitian',
         'tahun',
         'keterangan',
