@@ -55,11 +55,11 @@
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item"
-                                                            href="{{ route('admin.data-mahasiswa.mahasiswa-asing.edit', $mhs->id) }}">
+                                                            href="{{ route('admin.dosen.dm.mahasiswa-asing.edit', ['tahunAjaran' => $tahun_ajaran, 'mahasiswaAsingId' => $mhs->id]) }}">
                                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                                         </a>
                                                         <a class="dropdown-item"
-                                                            href="{{ route('admin.data-mahasiswa.mahasiswa-asing.destroy', $mhs->id) }}"
+                                                            href="{{ route('admin.dosen.dm.mahasiswa-asing.destroy', ['tahunAjaran' => $tahun_ajaran, 'mahasiswaAsingId' => $mhs->id]) }}"
                                                             data-confirm-delete="true">
                                                             <i class="bx bx-trash me-1"></i>
                                                             Delete
@@ -74,6 +74,20 @@
                                         </tr>
                                     @endforelse
                                 </tbody>
+                                <tfoot class="table-border-bottom-0">
+    <tr>
+        <th colspan="3" class="text-center rounded-start-bottom">Jumlah</th>
+        <!-- This cell will remain empty or can be used for something else if necessary -->
+        <th></th>
+    </tr>
+    <tr>
+        <th class="text-center">{{ number_format($total->total_mhs_aktif ?? 0) }}</th>
+        <th class="text-center">{{ number_format($total->total_mhs_asing_fulltime ?? 0) }}</th>
+        <th class="text-center">{{ number_format($total->total_mhs_asing_parttime ?? 0) }}</th>
+        <th class="text-center"></th> <!-- Empty column for actions if needed -->
+    </tr>
+</tfoot>
+
                             </table>
                         </div>
                         <!-- #e tabel -->

@@ -16,28 +16,43 @@ class MahasiswaAsingController extends Controller
      * Display a listing of the resource.
      */
     public function index(string $tahunAjaran)
-    {
-        try {
-            $userId = Auth::id();
-            $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
+{
+    try {
+        // Get the logged-in user's ID
+        $userId = Auth::id();
 
-            $mhsAsing = MahasiswaAsing::with('user')
-                ->where('user_id', $userId)
-                ->where('tahun_ajaran_id', $tahunAjaranId)
-                ->paginate(5);
+        // Fetch the `tahun_ajaran_id` using the provided slug, or fail if not found
+        $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
 
-            $title = 'Hapus Data!';
-            $text = "Apakah kamu yakin ingin menghapus?";
-            confirmDelete($title, $text);
+        // Fetch MahasiswaAsing records for the logged-in user and the provided tahun_ajaran_id
+        $mhsAsing = MahasiswaAsing::with('user')
+            ->where('user_id', $userId)
+            ->where('tahun_ajaran_id', $tahunAjaranId)
+            ->paginate(5);
 
-            return view('pages.admin.dosen.data-mahasiswa.mhs-asing.index', [
-                'mhs_asing' => $mhsAsing,
-                'tahun_ajaran' => $tahunAjaran,
-            ]);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+        $totals = MahasiswaAsing::selectRaw('
+            SUM(mhs_aktif) as total_mhs_aktif,
+            SUM(mhs_asing_fulltime) as total_mhs_asing_fulltime,
+            SUM(mhs_asing_parttime) as total_mhs_asing_parttime
+        ')->first();
+        
+        // Set title and text for delete confirmation (Ensure this JS function exists and works on the front-end)
+        $title = 'Hapus Data!';
+        $text = "Apakah kamu yakin ingin menghapus?";
+        confirmDelete($title, $text); // Assuming this is a custom JS function for delete confirmation
+
+        // Return the view with the fetched data
+        return view('pages.admin.dosen.data-mahasiswa.mhs-asing.index', [
+            'mhs_asing' => $mhsAsing,
+            'tahun_ajaran' => $tahunAjaran,
+            'total' => $totals,
+        ]);
+    } catch (\Exception $e) {
+        // In case of any error, return with error message
+        return back()->withErrors($e->getMessage());
     }
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -46,7 +61,7 @@ class MahasiswaAsingController extends Controller
     {
         try {
             $mhsAsing = new MahasiswaAsing();
-            return view('pages.admin.data-mahasiswa.mhs-asing.form', [
+            return view('pages.admin.dosen.data-mahasiswa.mhs-asing.form', [
                 'mhs' => $mhsAsing,
                 'tahun_ajaran' => $tahunAjaran,
                 'form_title' => 'Tambah Data',
@@ -110,14 +125,19 @@ class MahasiswaAsingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $tahunAjaran, string $id)
     {
         try {
             $mhsAsing = MahasiswaAsing::with('user')->whereId($id)->first();
-            return view('pages.admin.data-mahasiswa.mhs-asing.form', [
+            return view('pages.admin.dosen.data-mahasiswa.mhs-asing.form', [
                 'mhs' => $mhsAsing,
+                'tahun_ajaran' => $tahunAjaran,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.data-mahasiswa.mahasiswa-asing.update', $mhsAsing->id),
+                'form_action' => route('admin.dosen.dm.mahasiswa-asing.update', [
+    'tahunAjaran' => $tahunAjaran,
+    'mahasiswaAsingId' => $mhsAsing->id,
+]),
+
                 'form_method' => "PUT",
             ]);
         } catch (\Exception $e) {
@@ -146,8 +166,8 @@ class MahasiswaAsingController extends Controller
             $mhsAsing = MahasiswaAsing::findOrFail($id);
             $update = $mhsAsing->update($validated);
             if ($update) {
-                return redirect()->route('admin.data-mahasiswa.mahasiswa-asing.index')
-                    ->with('toast_success', 'Data mahasiswa asing berhasil diupdate');
+                return redirect()->route('admin.dosen.dm.mahasiswa-asing.index', $tahunAjaran)
+                    ->with('toast_success', 'Data mahasiswa asing berhasil ditambahkan');
             }
 
             throw new \Exception('Data mahasiswa asing gagal diupdate');
@@ -159,14 +179,14 @@ class MahasiswaAsingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $tahunAjaran, string $id)
     {
         try {
             $mhsAsing = MahasiswaAsing::findOrFail($id);
             $delete = $mhsAsing->delete();
 
             if ($delete) {
-                return redirect()->route('admin.data-mahasiswa.mahasiswa-asing.index')
+                return redirect()->route('admin.dosen.dm.mahasiswa-asing.index', $tahunAjaran)
                     ->with('toast_success', 'Data mahasiswa asing berhasil dihapus');
             }
 

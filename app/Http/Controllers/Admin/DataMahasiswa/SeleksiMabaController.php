@@ -135,14 +135,18 @@ class SeleksiMabaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $tahunAjaran,string $id)
     {
         try {
             $seleksiMaba = SeleksiMahasiswaBaru::with('user')->whereId($id)->first();
-            return view('pages.admin.data-mahasiswa.seleksi-maba.form', [
+            return view('pages.admin.dosen.data-mahasiswa.seleksi-maba.form', [
                 'seleksi' => $seleksiMaba,
+                'tahun_ajaran' => $tahunAjaran,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.data-mahasiswa.seleksi-mahasiswa-baru.update', $seleksiMaba->id),
+                'form_action' => route('admin.dosen.dm.seleksi-maba.update', [
+                    'tahunAjaran' => $tahunAjaran,
+                    'seleksiMabaId' => $seleksiMaba->id,
+                ]),                
                 'form_method' => "PUT",
             ]);
         } catch (\Exception $e) {
@@ -176,7 +180,7 @@ class SeleksiMabaController extends Controller
             $seleksiMaba = SeleksiMahasiswaBaru::findOrFail($id);
             $update = $seleksiMaba->update($validated);
             if ($update) {
-                return redirect()->route('admin.data-mahasiswa.seleksi-mahasiswa-baru.index')
+                return redirect()->route('admin.dosen.dm.seleksi-maba.index', $tahunAjaran)
                     ->with('toast_success', 'Data seleksi maba berhasil diupdate');
             }
 
@@ -189,14 +193,14 @@ class SeleksiMabaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $seleksiMaba = SeleksiMahasiswaBaru::findOrFail($id);
             $delete = $seleksiMaba->delete();
 
             if ($delete) {
-                return redirect()->route('admin.data-mahasiswa.seleksi-mahasiswa-baru.index')
+                return redirect()->route('admin.dosen.dm.seleksi-maba.index', $tahunAjaran)
                     ->with('toast_success', 'Data seleksi maba berhasil dihapus');
             }
 
