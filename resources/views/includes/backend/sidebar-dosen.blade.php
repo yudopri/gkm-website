@@ -109,10 +109,46 @@
 
         <!-- #s 3.b kinerja dosen -->
         <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.*') ? 'active open' : '' }}">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <div data-i18n="Kinerja Dosen">Kinerja Dosen</div>
+    </a>
+    <ul class="menu-sub">
+        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.rekognisi-dtps.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.kinerja-dosen.rekognisi-dtps.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                <div data-i18n="Pengakuan/Rekognisi Dosen">Pengakuan/Rekognisi Dosen</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.penelitian-dtps.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.kinerja-dosen.penelitian-dtps.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                <div data-i18n="Penelitian DTPS">Penelitian DTPS</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.pkm-dtps.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.kinerja-dosen.pkm-dtps.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                <div data-i18n="PkM DTPS">PkM DTPS</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.publikasi-ilmiah.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                <div data-i18n="Publikasi & Pagelaran Ilmiah">Publikasi & Pagelaran Ilmiah</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.sitasi-karya.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.kinerja-dosen.sitasi-karya.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                <div data-i18n="Sitasi Karya Ilmiah">Sitasi Karya Ilmiah</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.produk-teradopsi.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.kinerja-dosen.produk-teradopsi.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                <div data-i18n="Produk/Jasa Teradopsi">Produk/Jasa Teradopsi</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.*') ? 'open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <div data-i18n="Kinerja Dosen">Kinerja Dosen</div>
+                <div data-i18n="Luaran Penelitian Lain">Luaran Penelitian Lain</div>
             </a>
             <ul class="menu-sub">
+<<<<<<< HEAD
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.rekognisi-dtps.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.kinerja-dosen.rekognisi-dtps.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Pengakuan/Rekognisi Dosen">Pengakuan/Rekognisi Dosen</div>
@@ -170,8 +206,33 @@
                         </li>
                     </ul>
                 </li>
+=======
+                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.hki-paten.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-paten.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                        <div data-i18n="HKI (Paten)">HKI (Paten)</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.hki-hakcipta.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-hakcipta.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                        <div data-i18n="HKI (Hak Cipta)">HKI (Hak Cipta)</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.teknologi-karya.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.kinerja-dosen.luaran-lain.teknologi-karya.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                        <div data-i18n="Teknologi & Karya">Teknologi & Karya</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.buku-chapter.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.kinerja-dosen.luaran-lain.buku-chapter.index', ['tahunAjaran' => $tahun_ajaran]) }}" class="menu-link">
+                        <div data-i18n="Buku & Chapter">Buku & Chapter</div>
+                    </a>
+                </li>
+>>>>>>> be47085 (Update migrate and rekognisi)
             </ul>
         </li>
+    </ul>
+</li>
+
         <!-- #e 3.b kinerja dosen -->
 
         <!-- #s 5. kualitas pembelajaran -->
