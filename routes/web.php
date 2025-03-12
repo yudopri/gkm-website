@@ -39,6 +39,8 @@ use App\Http\Controllers\Admin\Petugas\ListDosenController;
 use App\Http\Controllers\Admin\PkmDtpsMahasiswaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserProfileController;
+
 
 Route::get('/', function () {
     return view('pages.front.index');
@@ -135,7 +137,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
             // Dosen Pembimbing TA
             Route::get('/dosen-pembimbing-ta', [PembimbingTaController::class, 'index'])->name('dosen-pembimbing-ta.index');
-            Route::post('/dosen-pembimbing-ta', [PSembimbingTaController::class, 'store'])->name('dosen-pembimbing-ta.store');
+            Route::post('/dosen-pembimbing-ta', [PembimbingTaController::class, 'store'])->name('dosen-pembimbing-ta.store');
             Route::get('/dosen-pembimbing-ta/create', [PembimbingTaController::class, 'create'])->name('dosen-pembimbing-ta.create');
             Route::get('/dosen-pembimbing-ta/{pembimbingTaId}', [PembimbingTaController::class, 'edit'])->name('dosen-pembimbing-ta.edit');
             Route::put('/dosen-pembimbing-ta/{pembimbingTaId}', [PembimbingTaController::class, 'update'])->name('dosen-pembimbing-ta.update');
@@ -283,3 +285,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 });
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// *Api Routes
+Route::apiResource('user-profiles', UserProfileController::class);
