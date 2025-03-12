@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('judul_penelitian');
             $table->string('sumber_dana');
-            $table->date('tahun_penelitian');
+            $table->string('tahun_penelitian', 4)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

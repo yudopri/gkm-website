@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama_dosen')->nullable();
             $table->string('mata_kuliah')->nullable();
             $table->string('bentuk_integrasi')->nullable();
-            $table->date('tahun')->nullable();
+            $table->string('tahun', 4)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

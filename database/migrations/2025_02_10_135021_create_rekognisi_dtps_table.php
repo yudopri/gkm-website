@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('bidang_keahlian')->nullable();
             $table->string('nama_rekognisi')->nullable();
             $table->string('bukti_pendukung')->nullable();
-            $table->integer('tingkat')->nullable();
-            $table->date('tahun')->nullable();
+            $table->string('tingkat')->nullable();
+            $table->string('tahun', 4)->nullable();
 
             /* foreign_keys */
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

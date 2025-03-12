@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('tema');
             $table->string('nama_mhs')->nullable();
             $table->string('judul')->nullable();
-            $table->date('tahun')->nullable();
+            $table->string('tahun', 4)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

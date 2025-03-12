@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\KinerjaDosen;
 use App\Http\Controllers\Controller;
 use App\Models\RekognisiDosen;
 use Illuminate\Http\Request;
+use App\Models\TahunAjaranSemester;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,10 +15,13 @@ class RekognisiDosenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
-            $rekognisi = RekognisiDosen::with('user')->get();
+            $userId = Auth::id();
+            $rekognisi = RekognisiDosen::with('user')
+            ->where('user_id', $userId)
+            ->paginate(5);;
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
@@ -24,6 +29,7 @@ class RekognisiDosenController extends Controller
 
             return view('pages.admin.kinerja-dosen.rekognisi-dosen.index', [
                 'rekognisi_dosen' => $rekognisi,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
@@ -33,14 +39,15 @@ class RekognisiDosenController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $tahunAjaran)
     {
         try {
             $rekognisiDosen = new RekognisiDosen();
             return view('pages.admin.kinerja-dosen.rekognisi-dosen.form', [
                 'rekognisi' => $rekognisiDosen,
+                'tahun_ajaran' => $tahunAjaran,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-dosen.rekognisi-dtps.store'),
+                'form_action' => route('admin.kinerja-dosen.rekognisi-dtps.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -51,7 +58,7 @@ class RekognisiDosenController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,string $tahunAjaran)
     {
         try {
             // dd($request->all());
@@ -74,7 +81,7 @@ class RekognisiDosenController extends Controller
 
             $create = RekognisiDosen::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-dosen.rekognisi-dtps.index')
+                return redirect()->route('admin.kinerja-dosen.rekognisi-dtps.index', $tahunAjaran)
                     ->with('toast_success', 'Data rekognisi dtps berhasil ditambahkan');
             }
 
@@ -95,14 +102,19 @@ class RekognisiDosenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id,string $tahunAjaran)
     {
         try {
-            $dosenPraktisi = RekognisiDosen::with('user')->whereId($id)->first();
-            return view('pages.admin.data-dosen.dosen-praktisi.form', [
-                'dosen' => $dosenPraktisi,
+            $rekognisi = RekognisiDosen::with('user')->first();
+            
+            return view('pages.admin.kinerja-dosen.rekognisi-dosen.form', [
+                'rekognisi' => $rekognisi,
+                'tahun_ajaran' => $tahunAjaran,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.data-dosen.dosen-praktisi.update', $dosenPraktisi->id),
+                'form_action' => route('admin.kinerja-dosen.rekognisi-dtps.update', [
+                    'tahunAjaran' => $tahunAjaran,
+                    'rekognisiId' => $rekognisi->id,
+                ]),
                 'form_method' => "PUT",
             ]);
         } catch (\Exception $e) {
@@ -113,7 +125,7 @@ class RekognisiDosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id,string $tahunAjaran)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -136,7 +148,7 @@ class RekognisiDosenController extends Controller
             $dosenPraktisi = RekognisiDosen::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.data-dosen.dosen-praktisi.index')
+                return redirect()->route('admin.kinerja-dosen.rekognisi-dtps.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
             }
 
@@ -149,14 +161,14 @@ class RekognisiDosenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id,string $tahunAjaran)
     {
         try {
             $dosenPraktisi = RekognisiDosen::findOrFail($id);
             $delete = $dosenPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.data-dosen.dosen-praktisi.index')
+                return redirect()->route('admin.kinerja-dosen.rekognisi-dtps.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
             }
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('eval_kepuasan_pengguna', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->date('tahun');
+            $table->string('tahun', 4)->nullable();
             $table->integer('jumlah_lulusan');
             $table->integer('jumlah_tanggapan');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

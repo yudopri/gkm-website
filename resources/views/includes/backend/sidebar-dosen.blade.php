@@ -114,32 +114,32 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.rekognisi-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.rekognisi-dtps.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kinerja-dosen.rekognisi-dtps.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Pengakuan/Rekognisi Dosen">Pengakuan/Rekognisi Dosen</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.penelitian-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.penelitian-dtps.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kinerja-dosen.penelitian-dtps.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Penelitian DTPS">Penelitian DTPS</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.pkm-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.pkm-dtps.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kinerja-dosen.pkm-dtps.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="PkM DTPS">PkM DTPS</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.publikasi-ilmiah.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Publikasi & Pagelaran Ilmiah">Publikasi & Pagelaran Ilmiah</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.sitasi-karya.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.sitasi-karya.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kinerja-dosen.sitasi-karya.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Sitasi Karya Ilmiah">Sitasi Karya Ilmiah</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.produk-teradopsi.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.produk-teradopsi.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kinerja-dosen.produk-teradopsi.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Produk/Jasa Teradopsi">Produk/Jasa Teradopsi</div>
                     </a>
                 </li>
@@ -149,22 +149,22 @@
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.hki-paten.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-paten.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-paten.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="HKI (Paten)">HKI (Paten)</div>
                             </a>
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.hki-hakcipta.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-hakcipta.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-hakcipta.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="HKI (Hak Cipta)">HKI (Hak Cipta)</div>
                             </a>
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.teknologi-karya.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.teknologi-karya.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.teknologi-karya.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="Teknologi & Karya">Teknologi & Karya</div>
                             </a>
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.buku-chapter.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.buku-chapter.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.buku-chapter.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="Buku & Chapter">Buku & Chapter</div>
                             </a>
                         </li>
@@ -181,17 +181,17 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ request()->routeIs('admin.kualitas-pembelajaran.kurikulum-pembelajaran.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Kurikulum & Pembelajaran">Kurikulum & Pembelajaran</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.kualitas-pembelajaran.integrasi-penelitian.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kualitas-pembelajaran.integrasi-penelitian.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kualitas-pembelajaran.integrasi-penelitian.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Integrasi Penelitian">Integrasi Penelitian</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.kualitas-pembelajaran.kepuasan-mahasiswa.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kualitas-pembelajaran.kepuasan-mahasiswa.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kualitas-pembelajaran.kepuasan-mahasiswa.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Kepuasan Mahasiswa">Kepuasan Mahasiswa</div>
                     </a>
                 </li>
@@ -206,12 +206,12 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ request()->routeIs('admin.penelitian-dtps.penelitian-mahasiswa.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.penelitian-dtps.penelitian-mahasiswa.index') }}" class="menu-link">
+                    <a href="{{ route('admin.penelitian-dtps.penelitian-mahasiswa.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Penelitian Mahasiswa">Penelitian Mahasiswa</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.penelitian-dtps.rujukan-tesis.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.penelitian-dtps.rujukan-tesis.index') }}" class="menu-link">
+                    <a href="{{ route('admin.penelitian-dtps.rujukan-tesis.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Rujukan Tesis/Disertasi">Rujukan Tesis/Disertasi</div>
                     </a>
                 </li>
@@ -221,7 +221,7 @@
 
         <!-- #s 7. PkM DTPS Mahasiswa -->
         <li class="menu-item {{ request()->routeIs('admin.pkm-dtps-mahasiswa.*') ? 'active' : '' }}">
-            <a href="{{ route('admin.pkm-dtps-mahasiswa.index') }}" class="menu-link">
+            <a href="{{ route('admin.pkm-dtps-mahasiswa.index', $tahun_ajaran) }}" class="menu-link">
                 <div data-i18n="PkM DTPS Mahasiswa">PkM DTPS Mahasiswa</div>
             </a>
         </li>
@@ -235,7 +235,7 @@
             <ul class="menu-sub">
                 <!-- 8.a -->
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.ipk-lulusan.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-lulusan.ipk-lulusan.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kinerja-lulusan.ipk-lulusan.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="IPK Lulusan">IPK Lulusan</div>
                     </a>
                 </li>
@@ -246,12 +246,12 @@
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.prestasi-mahasiswa.akademik.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.akademik.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.akademik.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="Akademik">Akademik</div>
                             </a>
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="Non-akademik">Non-akademik</div>
                             </a>
                         </li>
@@ -259,7 +259,7 @@
                 </li>
                 <!-- 8.c -->
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.masa-studi-lulusan.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-lulusan.masa-studi-lulusan.index') }}" class="menu-link">
+                    <a href="{{ route('admin.kinerja-lulusan.masa-studi-lulusan.index', $tahun_ajaran) }}" class="menu-link">
                         <div data-i18n="Masa Studi Lulusan">Masa Studi Lulusan</div>
                     </a>
                 </li>
@@ -270,23 +270,23 @@
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="Waktu Tunggu">Waktu Tunggu</div>
                             </a>
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="Kesesuaian Kerja">Kesesuaian Kerja</div>
                             </a>
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="Tempat Kerja">Tempat Kerja</div>
                             </a>
                         </li>
                         <li
                             class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.index') }}" class="menu-link">
+                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.index', $tahun_ajaran) }}" class="menu-link">
                                 <div data-i18n="Kepuasan Pengguna">Kepuasan Pengguna</div>
                             </a>
                         </li>

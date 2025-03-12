@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -9,16 +9,13 @@
 
         <div class="row">
             <div class="col-md-12">
-                <!-- #s navpills -->
-                @include('includes.backend.navpills.kinerja-dosen')
-                <!-- #e navpills -->
 
                 <div class="card mb-4">
                     <h5 class="card-header">Tabel Pengakuan/Rekognisi DTPS</h5>
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="{{ route('admin.kinerja-dosen.rekognisi-dtps.create') }}" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kinerja-dosen.rekognisi-dtps.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -66,7 +63,7 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
+                                                        <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.rekognisi-dtps.edit', ['tahunAjaran' => $tahun_ajaran, 'rekognisiId' => $rekognisi->id]) }}">
                                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                                         </a>
                                                         <a class="dropdown-item" href="javascript:void(0);">
