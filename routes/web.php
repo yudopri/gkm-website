@@ -171,7 +171,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::prefix('kinerja-dosen/{tahunAjaran}')->name('kinerja-dosen.')->group(function () {
         Route::get('/rekognisi-dtps', [RekognisiDosenController::class, 'index'])->name('rekognisi-dtps.index');
-<<<<<<< HEAD
             Route::post('/rekognisi-dtps', [RekognisiDosenController::class, 'store'])->name('rekognisi-dtps.store');
             Route::get('/rekognisi-dtps/create', [RekognisiDosenController::class, 'create'])->name('rekognisi-dtps.create');
             Route::get('/rekognisi-dtps/{rekognisiId}', [RekognisiDosenController::class, 'edit'])->name('rekognisi-dtps.edit');
@@ -181,9 +180,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/penelitian-dtps', [PenelitianDtpsController::class, 'index'])->name('penelitian-dtps.index');
         Route::post('/penelitian-dtps', [PenelitianDtpsController::class, 'store'])->name('penelitian-dtps.store');
         Route::get('/penelitian-dtps/create', [PenelitianDtpsController::class, 'create'])->name('penelitian-dtps.create');
-        Route::get('/penelitian-dtps/{dosenPraktisiId}', [PenelitianDtpsController::class, 'edit'])->name('penelitian-dtps.edit');
-        Route::put('/penelitian-dtps/{dosenPraktisiId}', [PenelitianDtpsController::class, 'update'])->name('penelitian-dtps.update');
-        Route::delete('/penelitian-dtps/{dosenPraktisiId}', [PenelitianDtpsController::class, 'destroy'])->name('penelitian-dtps.destroy');
+        Route::get('/penelitian-dtps/{penelitianId}', [PenelitianDtpsController::class, 'edit'])->name('penelitian-dtps.edit');
+        Route::put('/penelitian-dtps/{penelitianId}', [PenelitianDtpsController::class, 'update'])->name('penelitian-dtps.update');
+        Route::delete('/penelitian-dtps/{penelitianId}', [PenelitianDtpsController::class, 'destroy'])->name('penelitian-dtps.destroy');
         // Route::resource('pkm-dtps', PkmDtpsController::class)->except('show');
         Route::get('/pkm-dtps', [PkmDtpsController::class, 'index'])->name('pkm-dtps.index');
     Route::post('/pkm-dtps', [PkmDtpsController::class, 'store'])->name('pkm-dtps.store');
@@ -199,7 +198,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::put('/publikasi-ilmiah/{dosenPraktisiId}', [PublikasiIlmiahController::class, 'update'])->name('publikasi-ilmiah.update');
     Route::delete('/publikasi-ilmiah/{dosenPraktisiId}', [PublikasiIlmiahController::class, 'destroy'])->name('publikasi-ilmiah.destroy');
         // Route::resource('sitasi-karya', SitasiKaryaController::class)->except('show');
-        
+
         Route::get('/sitasi-karya', [SitasiKaryaController::class, 'index'])->name('sitasi-karya.index');
     Route::post('/sitasi-karya', [SitasiKaryaController::class, 'store'])->name('sitasi-karya.store');
     Route::get('/sitasi-karya/create', [SitasiKaryaController::class, 'create'])->name('sitasi-karya.create');
@@ -207,14 +206,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::put('/sitasi-karya/{dosenPraktisiId}', [SitasiKaryaController::class, 'update'])->name('sitasi-karya.update');
     Route::delete('/sitasi-karya/{dosenPraktisiId}', [SitasiKaryaController::class, 'destroy'])->name('sitasi-karya.destroy');
         // Route::resource('produk-teradopsi', ProdukTeradopsiController::class)->except('show');
-=======
-        Route::get('/rekognisi-dtps/create', [RekognisiDosenController::class, 'create'])->name('rekognisi-dtps.create');
-        Route::resource('penelitian-dtps', PenelitianDtpsController::class)->except('show');
-        Route::resource('pkm-dtps', PkmDtpsController::class)->except('show');
-        Route::resource('publikasi-ilmiah', PublikasiIlmiahController::class)->except('show');
-        Route::resource('sitasi-karya', SitasiKaryaController::class)->except('show');
-        Route::resource('produk-teradopsi', ProdukTeradopsiController::class)->except('show');
->>>>>>> be47085 (Update migrate and rekognisi)
 
         Route::get('/produk-teradopsi', [ProdukTeradopsiController::class, 'index'])->name('produk-teradopsi.index');
     Route::post('/produk-teradopsi', [ProdukTeradopsiController::class, 'store'])->name('produk-teradopsi.store');
@@ -260,10 +251,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::put('/pkm-dtps-mahasiswa/{dosenPraktisiId}', [PkmDtpsMahasiswaController::class, 'update'])->name('pkm-dtps-mahasiswa.update');
     Route::delete('/pkm-dtps-mahasiswa/{dosenPraktisiId}', [PkmDtpsMahasiswaController::class, 'destroy'])->name('pkm-dtps-mahasiswa.destroy');
     Route::prefix('kinerja-lulusan')->name('kinerja-lulusan.')->group(function () {
-        
+
     Route::resource('ipk-lulusan', IpkLulusanController::class)->except('show');
 
-<<<<<<< HEAD
     Route::prefix('prestasi-mahasiswa')->name('prestasi-mahasiswa.')->group(function () {
         Route::resource('akademik', AkademikController::class)->except('show');
         Route::resource('nonakademik', NonakademikController::class)->except('show');
@@ -276,7 +266,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::resource('tempat-kerja', TempatKerjaController::class)->except('show');
         Route::resource('kepuasan-pengguna', KepuasanPenggunaController::class)->except('show');
     });
-    
+
     });
     Route::prefix('penelitian-dtps')->name('penelitian-dtps.')->group(function () {
         Route::get('/penelitian-mahasiswa', [PenelitianMahasiswaController::class, 'index'])->name('penelitian-mahasiswa.index');
@@ -287,9 +277,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::delete('/penelitian-mahasiswa/{dosenPraktisiId}', [PenelitianMahasiswaController::class, 'destroy'])->name('penelitian-mahasiswa.destroy');
         Route::resource('rujukan-tesis', RujukanTesisController::class)->except('show');
     });
-=======
-
->>>>>>> be47085 (Update migrate and rekognisi)
     Route::prefix('kualitas-pembelajaran')->name('kualitas-pembelajaran.')->group(function () {
         Route::resource('kurikulum-pembelajaran', KurikulumPembelajaranController::class)->except('show');
         Route::resource('integrasi-penelitian', IntegrasiPenelitianController::class)->except('show');

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('judul_artikel');
             $table->string('tahun', 4)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

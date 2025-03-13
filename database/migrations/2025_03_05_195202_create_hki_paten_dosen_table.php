@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('tahun', 4)->nullable();
             $table->string('keterangan')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

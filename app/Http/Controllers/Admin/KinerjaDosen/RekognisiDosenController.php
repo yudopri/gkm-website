@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RekognisiDosen;
 use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
-<<<<<<< HEAD
 use App\Models\User;
-=======
->>>>>>> be47085 (Update migrate and rekognisi)
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,18 +19,11 @@ class RekognisiDosenController extends Controller
     {
         try {
             $userId = Auth::id();
-<<<<<<< HEAD
-            $rekognisi = RekognisiDosen::with('user')
-            ->where('user_id', $userId)
-            ->paginate(5);;
-=======
             $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
 
             $rekognisi = RekognisiDosen::with('user')
                 ->where('user_id', $userId)
                 ->paginate(5);
-
->>>>>>> be47085 (Update migrate and rekognisi)
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
@@ -41,11 +31,7 @@ class RekognisiDosenController extends Controller
 
             return view('pages.admin.kinerja-dosen.rekognisi-dosen.index', [
                 'rekognisi_dosen' => $rekognisi,
-<<<<<<< HEAD
                 'tahun_ajaran' => $tahunAjaran,
-=======
-                'tahun_ajaran' => $tahunAjaran, // this is correct
->>>>>>> be47085 (Update migrate and rekognisi)
             ]);
 
         } catch (\Exception $e) {
@@ -75,11 +61,7 @@ class RekognisiDosenController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-<<<<<<< HEAD
-    public function store(Request $request,string $tahunAjaran)
-=======
     public function store(Request $request, string $tahunAjaran)
->>>>>>> be47085 (Update migrate and rekognisi)
     {
         try {
             // dd($request->all());
@@ -102,15 +84,9 @@ class RekognisiDosenController extends Controller
 
             $create = RekognisiDosen::create($validated);
             if ($create) {
-<<<<<<< HEAD
                 return redirect()->route('admin.kinerja-dosen.rekognisi-dtps.index', $tahunAjaran)
                     ->with('toast_success', 'Data rekognisi dtps berhasil ditambahkan');
             }
-=======
-                return redirect()->route('admin.kinerja-dosen.rekognisi-dtps.index', ['tahunAjaran' => $tahunAjaran])
-    ->with('toast_success', 'Data rekognisi dtps berhasil ditambahkan');
- }
->>>>>>> be47085 (Update migrate and rekognisi)
 
             throw new \Exception('Data rekognisi dtps gagal ditambahkan');
         } catch (\Exception $e) {
@@ -133,7 +109,7 @@ class RekognisiDosenController extends Controller
     {
         try {
             $rekognisi = RekognisiDosen::with('user')->first();
-            
+
             return view('pages.admin.kinerja-dosen.rekognisi-dosen.form', [
                 'rekognisi' => $rekognisi,
                 'tahun_ajaran' => $tahunAjaran,

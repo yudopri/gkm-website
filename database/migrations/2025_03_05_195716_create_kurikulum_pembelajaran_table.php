@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('sks_kuliah');
             $table->string('capaian_kuliah');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('bentuk_integrasi')->nullable();
             $table->string('tahun', 4)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

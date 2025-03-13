@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('jumlah_lulusan');
             $table->double('mean_masa_studi');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

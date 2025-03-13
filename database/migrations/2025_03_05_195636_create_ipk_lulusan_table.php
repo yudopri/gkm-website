@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('tahun', 4)->nullable();
             $table->integer('jumlah_lulusan');
             $table->double('ipk');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

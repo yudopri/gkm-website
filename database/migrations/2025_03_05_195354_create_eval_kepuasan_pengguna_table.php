@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('jumlah_lulusan');
             $table->integer('jumlah_tanggapan');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

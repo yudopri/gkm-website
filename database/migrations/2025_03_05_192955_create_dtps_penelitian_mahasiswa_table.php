@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_mahasiswa')->nullable();
             $table->string('judul')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

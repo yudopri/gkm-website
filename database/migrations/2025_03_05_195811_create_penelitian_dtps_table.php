@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('penelitian_dtps', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('judul_penelitian');
+            $table->integer('jumlah_judul');
             $table->string('sumber_dana');
             $table->string('tahun_penelitian', 4)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

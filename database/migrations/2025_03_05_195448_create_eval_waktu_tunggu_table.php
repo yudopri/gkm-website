@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('jumlah_lulusan_terlacak_dipesan');
             $table->double('jumlah_lulusan_waktu');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
