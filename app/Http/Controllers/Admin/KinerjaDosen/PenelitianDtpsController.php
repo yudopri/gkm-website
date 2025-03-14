@@ -21,12 +21,21 @@ class PenelitianDtpsController extends Controller
             $userId = Auth::id();
             $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
 
-            $penelitianDtps = PenelitianDtps::with('user')
-                ->where('user_id', $userId)
-                ->paginate(5);
-            $totals = PenelitianDtps::selectRaw('
-                SUM(jumlah_judul) as total,
-            ')->first();
+            $penelitianDtps = PenelitianDtps::whereIn('id', function ($query) use ($userId) {
+                $query->selectRaw('MAX(id)') // Ambil ID terbesar (terbaru)
+                    ->from('penelitian_dtps')
+                    ->where('user_id', $userId)
+                    ->whereNull('deleted_at')
+                    ->groupBy('sumber_dana');
+            })->get();
+
+        // Ambil total jumlah_judul per sumber_dana dalam bentuk array
+        $totals = PenelitianDtps::where('user_id', $userId)
+            ->whereNull('deleted_at')
+            ->groupBy('sumber_dana')
+            ->selectRaw('sumber_dana, SUM(jumlah_judul) as total')
+            ->pluck('total', 'sumber_dana'); // Mengubah ke bentuk [sumber_dana => total]
+
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);
@@ -34,7 +43,7 @@ class PenelitianDtpsController extends Controller
             return view('pages.admin.kinerja-dosen.penelitian-dtps.index', [
                 'penelitian_dtps' => $penelitianDtps,
                 'tahun_ajaran' => $tahunAjaran,
-                'total' => $totals,
+                'totals' => $totals,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
@@ -103,30 +112,42 @@ class PenelitianDtpsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id,string $tahunAjaran)
-    {
-        try {
-            $penelitianDtps = PenelitianDtps::with('user')->findOrFail($id);
+    public function edit(string $tahunAjaran,string $id)
+{
+    try {
+        // Gunakan find() agar bisa menangani null
+        $penelitianDtps = PenelitianDtps::with('user')->find($id);
+        $userId = Auth::id();
+        $totals = PenelitianDtps::where('user_id', $userId)
+        ->whereNull('deleted_at')
+        ->groupBy('sumber_dana')
+        ->selectRaw('sumber_dana, SUM(jumlah_judul) as total')
+        ->pluck('total', 'sumber_dana'); // Mengubah ke bentuk [sumber_dana => total]
 
-            return view('pages.admin.kinerja-dosen.penelitian-dosen.form', [
-                'penelitian_dtps' => $penelitianDtps,
-                'tahun_ajaran' => $tahunAjaran,
-                'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-dosen.penelitian-dtps.update', [
-                    'tahunAjaran' => $tahunAjaran,
-                    'penelitianId' => $penelitianDtps->id,
-                ]),
-                'form_method' => "PUT",
-            ]);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+        if (!$penelitianDtps) {
+            return back()->withErrors('Data tidak ditemukan.');
         }
+
+        return view('pages.admin.kinerja-dosen.penelitian-dtps.form', [
+            'penelitian_dtps' => $penelitianDtps,
+            'tahun_ajaran' => $tahunAjaran,
+            'form_title' => 'Edit Data',
+            'form_action' => route('admin.kinerja-dosen.penelitian-dtps.update', [
+                'penelitianId' => $penelitianDtps->id,
+                'tahunAjaran' => $tahunAjaran,
+            ]),
+            'form_method' => "PUT",
+            'totals' => $totals,
+        ]);
+    } catch (\Exception $e) {
+        return back()->withErrors('Terjadi kesalahan: ' . $e->getMessage());
     }
+}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id,string $tahunAjaran)
+    public function update(Request $request, string $tahunAjaran,string $id)
     {
         try {
             // dd($request->all());
@@ -158,7 +179,7 @@ class PenelitianDtpsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
         $PenelitianDtps = PenelitianDtps::findOrFail($id);

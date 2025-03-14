@@ -20,7 +20,7 @@ class PenelitianDtps extends Model
     protected $fillable = [
         'user_id',
         'sumber_dana',
-        'judul_penelitian',
+        'jumlah_judul',
         'tahun_penelitian',
     ];
 

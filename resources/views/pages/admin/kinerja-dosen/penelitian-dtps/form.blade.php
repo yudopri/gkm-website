@@ -22,12 +22,14 @@
                             @csrf @method($form_method)
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_judul">Jumlah Judul Penelitian</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="jumlah_judul" name="jumlah_judul"
-                                        value="{{ old('jumlah_judul', $penelitian_dtps->jumlah_judul) }}" autofocus required />
-                                </div>
-                            </div>
+    <label class="col-sm-2 col-form-label" for="jumlah_judul">Jumlah Judul Penelitian</label>
+    <div class="col-sm-10">
+        <input type="number" class="form-control" id="jumlah_judul" name="jumlah_judul"
+            value="{{ $totals[$penelitian_dtps->sumber_dana] ?? 0 }}"
+            autofocus required />
+    </div>
+</div>
+
 
                             @php
                                 $options = ['lokal' => 'Perguruan Tinggi (POLIJE)/Mandiri', 'nasional' => 'Lembaga Dalam Negeri (Diluar Polije)', 'internasional' => 'Lembaga Luar Negeri'];

@@ -29,14 +29,21 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    @php
-                                        $sumberDana = ['lokal' => 'a. Perguruan Tinggi (POLIJE) <br> / b. Mandiri', 'nasional' => 'Lembaga Dalam Negeri (Diluar Polije)', 'internasional' => 'Lembaga Luar Negeri'];
-                                    @endphp
+                                @php
+    $sumberDana = [
+        'lokal' => "a. Perguruan Tinggi (POLIJE) \n b. Mandiri",
+
+        'nasional' => "Lembaga Dalam Negeri (Diluar Polije)",
+
+        'internasional' => "Lembaga Luar Negeri"
+    ];
+@endphp
+
                                     @foreach ($penelitian_dtps as $index => $penelitian)
                                         <tr>
                                             <td class="text-center">{{ $index + 1 }}</td>
                                             <td>{{ $sumberDana[$penelitian->sumber_dana] ?? '-' }}</td>
-                                            <td class="text-center">{{ number_format($total->total ?? 0) }}</td>
+                                            <td class="text-center">{{ number_format($totals[$penelitian->sumber_dana] ?? 0) }}</td>
                                             <td class="text-center">
                                                 <div class="dropdown">
                                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -69,7 +76,7 @@
                                 <tfoot class="table-border-bottom-0">
                                     <tr>
                                         <th colspan="2" class="rounded-start-bottom">Jumlah</th>
-                                        <th class="text-center">{{ $penelitian_dtps->sum('jumlah_judul') }}</th>
+                                        <th class="text-center">{{ number_format($totals->sum()) }}</th>
                                         <th class="rounded-end-bottom">Aksi</th>
                                     </tr>
                                 </tfoot>

@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('pkm_dtps', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('tema');
-            $table->string('nama_mhs')->nullable();
-            $table->string('judul')->nullable();
+            $table->integer('jumlah_judul')->nullable();
+            $table->string('sumber_dana')->nullable();
             $table->string('tahun', 4)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
