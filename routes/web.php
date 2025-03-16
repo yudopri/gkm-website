@@ -40,6 +40,13 @@ use App\Http\Controllers\Admin\PkmDtpsMahasiswaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\Api\DataDosen\DosenPraktisiApiController;
+use App\Http\Controllers\Api\DataDosen\DosenTidakTetapApiController;
+use App\Http\Controllers\Api\DataDosen\EwmpDosenApiController;
+use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
+use App\Http\Controllers\Api\DataMahasiswa\MahasiswaAsingApiController;
+use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
+
 
 
 Route::get('/', function () {
@@ -289,3 +296,10 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 // *Api Routes
 Route::apiResource('user-profiles', UserProfileController::class);
+Route::apiResource('dosen-praktisi', DosenPraktisiApiController::class);
+Route::apiResource('dosen-tetap', DosenTetapApiController::class);
+Route::apiResource('dosen-tidak-tetap', DosenTidakTetapApiController::class);
+Route::apiResource('ewmp-dosen', EwmpDosenApiController::class);
+Route::apiResource('tahun-ajaran', TahunAjaranApiController::class);
+Route::apiResource('mahasiswa-asing', MahasiswaAsingApiController::class);
+Route::apiResource('seleksi-maba', SeleksiMabaApiController::class);
