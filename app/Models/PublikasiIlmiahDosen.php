@@ -20,6 +20,11 @@ class PublikasiIlmiahDosen extends Model
         'user_id',
         'nama_dosen',
         'judul_artikel',
+        'jenis_artikel',
         'tahun',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

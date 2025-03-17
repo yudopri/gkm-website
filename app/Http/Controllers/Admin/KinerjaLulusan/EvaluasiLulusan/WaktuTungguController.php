@@ -11,7 +11,7 @@ class WaktuTungguController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $waktuTunggu = EvalWaktuTunggu::with('user')->get();
@@ -22,6 +22,7 @@ class WaktuTungguController extends Controller
 
             return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.index', [
                 'waktu_tunggu' => $waktuTunggu,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
@@ -31,7 +32,7 @@ class WaktuTungguController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $tahunAjaran)
     {
         //
     }

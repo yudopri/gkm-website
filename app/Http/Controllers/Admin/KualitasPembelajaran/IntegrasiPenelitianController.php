@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Admin\KualitasPembelajaran;
 use App\Http\Controllers\Controller;
 use App\Models\IntegrasiPenelitian;
 use Illuminate\Http\Request;
+use App\Models\TahunAjaranSemester;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class IntegrasiPenelitianController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $integrasi = IntegrasiPenelitian::with('user')->get();
@@ -22,6 +25,7 @@ class IntegrasiPenelitianController extends Controller
 
             return view('pages.admin.kualitas-pembelajaran.integrasi-penelitian.index', [
                 'integrasi_penelitian' => $integrasi,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

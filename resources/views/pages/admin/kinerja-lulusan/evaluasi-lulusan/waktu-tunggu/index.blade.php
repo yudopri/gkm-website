@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -10,10 +10,6 @@
 
         <div class="row">
             <div class="col-md-12">
-                <!-- #s navpills -->
-                @include('includes.backend.navpills.kinerja-lulusan')
-                <!-- #e navpills -->
-
                 <!-- #s waktu-tunggu-d3 -->
                 <div class="card mb-4">
                     <h5 class="card-header" data-bs-toggle="collapse" href="#waktu-tunggu-d3" role="button" aria-expanded="false"

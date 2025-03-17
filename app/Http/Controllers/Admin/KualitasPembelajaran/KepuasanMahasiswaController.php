@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Admin\KualitasPembelajaran;
 use App\Http\Controllers\Controller;
 use App\Models\KepuasanMahasiswa;
 use Illuminate\Http\Request;
+use App\Models\TahunAjaranSemester;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class KepuasanMahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $kepuasan = KepuasanMahasiswa::with('user')->get();
@@ -22,6 +25,7 @@ class KepuasanMahasiswaController extends Controller
 
             return view('pages.admin.kualitas-pembelajaran.kepuasan-mahasiswa.index', [
                 'kepuasan_mahasiswa' => $kepuasan,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

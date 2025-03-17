@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Admin\KualitasPembelajaran;
 use App\Http\Controllers\Controller;
 use App\Models\KurikulumPembelajaran;
 use Illuminate\Http\Request;
+use App\Models\TahunAjaranSemester;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class KurikulumPembelajaranController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $kurikulum = KurikulumPembelajaran::with('user')->get();
@@ -22,6 +25,7 @@ class KurikulumPembelajaranController extends Controller
 
             return view('pages.admin.kualitas-pembelajaran.kurikulum-pembelajaran.index', [
                 'kurikulum_pembelajaran' => $kurikulum,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

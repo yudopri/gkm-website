@@ -11,7 +11,7 @@ class HkiPatenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $hki = HkiPatenDosen::with('user')->get();
@@ -22,6 +22,7 @@ class HkiPatenController extends Controller
 
             return view('pages.admin.kinerja-dosen.luaran-lain.hki-paten.index', [
                 'hki_paten' => $hki,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

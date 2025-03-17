@@ -11,7 +11,7 @@ class BukuChapterController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $bookChapter = BukuChapterDosen::with('user')->get();
@@ -22,6 +22,7 @@ class BukuChapterController extends Controller
 
             return view('pages.admin.kinerja-dosen.luaran-lain.buku-chapter.index', [
                 'buku_chapter' => $bookChapter,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

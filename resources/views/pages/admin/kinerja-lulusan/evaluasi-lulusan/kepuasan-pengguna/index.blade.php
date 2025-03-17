@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -10,9 +10,6 @@
 
         <div class="row">
             <div class="col-md-12">
-                <!-- #s navpills -->
-                @include('includes.backend.navpills.kinerja-lulusan')
-                <!-- #e navpills -->
 
                 <!--#s tabel-ref-8e2 -->
                 <div class="card mb-4">

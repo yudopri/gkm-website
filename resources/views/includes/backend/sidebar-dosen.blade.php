@@ -143,41 +143,6 @@
                 <div data-i18n="Produk/Jasa Teradopsi">Produk/Jasa Teradopsi</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.*') ? 'open' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <div data-i18n="Luaran Penelitian Lain">Luaran Penelitian Lain</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.rekognisi-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.rekognisi-dtps.index', $tahun_ajaran) }}" class="menu-link">
-                        <div data-i18n="Pengakuan/Rekognisi Dosen">Pengakuan/Rekognisi Dosen</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.penelitian-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.penelitian-dtps.index', $tahun_ajaran) }}" class="menu-link">
-                        <div data-i18n="Penelitian DTPS">Penelitian DTPS</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.pkm-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.pkm-dtps.index', $tahun_ajaran) }}" class="menu-link">
-                        <div data-i18n="PkM DTPS">PkM DTPS</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.publikasi-ilmiah.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahun_ajaran) }}" class="menu-link">
-                        <div data-i18n="Publikasi & Pagelaran Ilmiah">Publikasi & Pagelaran Ilmiah</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.sitasi-karya.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.sitasi-karya.index', $tahun_ajaran) }}" class="menu-link">
-                        <div data-i18n="Sitasi Karya Ilmiah">Sitasi Karya Ilmiah</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.produk-teradopsi.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.produk-teradopsi.index', $tahun_ajaran) }}" class="menu-link">
-                        <div data-i18n="Produk/Jasa Teradopsi">Produk/Jasa Teradopsi</div>
-                    </a>
-                </li>
                 <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.*') ? 'open' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <div data-i18n="Luaran Penelitian Lain">Luaran Penelitian Lain</div>
@@ -203,8 +168,6 @@
                                 <div data-i18n="Buku & Chapter">Buku & Chapter</div>
                             </a>
                         </li>
-                    </ul>
-                </li>
             </ul>
         </li>
     </ul>
@@ -258,8 +221,8 @@
         <!-- #e 6. penelitian DTPS -->
 
         <!-- #s 7. PkM DTPS Mahasiswa -->
-        <li class="menu-item {{ request()->routeIs('admin.pkm-dtps-mahasiswa.*') ? 'active' : '' }}">
-            <a href="{{ route('admin.pkm-dtps-mahasiswa.index', $tahun_ajaran) }}" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('admin.dtps-mahasiswa.pkm-dtps-mahasiswa.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.dtps-mahasiswa.pkm-dtps-mahasiswa.index', $tahun_ajaran) }}" class="menu-link">
                 <div data-i18n="PkM DTPS Mahasiswa">PkM DTPS Mahasiswa</div>
             </a>
         </li>

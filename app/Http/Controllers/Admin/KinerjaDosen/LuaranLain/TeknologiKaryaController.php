@@ -11,7 +11,7 @@ class TeknologiKaryaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $tnk = TeknologiKaryaDosen::with('user')->get();
@@ -22,6 +22,7 @@ class TeknologiKaryaController extends Controller
 
             return view('pages.admin.kinerja-dosen.luaran-lain.teknologi-karya.index', [
                 'teknologi_karya' => $tnk,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

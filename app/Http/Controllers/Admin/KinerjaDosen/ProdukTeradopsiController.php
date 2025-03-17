@@ -11,7 +11,7 @@ class ProdukTeradopsiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $produk = ProdukTeradopsiDosen::with('user')->get();
@@ -22,6 +22,7 @@ class ProdukTeradopsiController extends Controller
 
             return view('pages.admin.kinerja-dosen.produk-teradopsi.index', [
                 'produk_teradopsi' => $produk,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -9,16 +9,13 @@
 
         <div class="row">
             <div class="col-md-12">
-                <!-- #s navpills -->
-                @include('includes.backend.navpills.kualitas-pembelajaran')
-                <!-- #e navpills -->
 
                 <div class="card mb-4">
                     <h5 class="card-header">Tabel 5.C | Kepuasan Mahasiswa</h5>
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="{{ route('admin.kualitas-pembelajaran.kepuasan-mahasiswa.create') }}" class="btn btn-info mb-3">
+                        <a href="javascript:void(0);" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->

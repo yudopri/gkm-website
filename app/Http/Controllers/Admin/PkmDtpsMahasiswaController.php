@@ -11,7 +11,7 @@ class PkmDtpsMahasiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $pkmDtpsMhs = PkmDtpsMahasiswa::with('user')->get();
@@ -22,6 +22,7 @@ class PkmDtpsMahasiswaController extends Controller
 
             return view('pages.admin.pkm-dtps-mahasiswa.index', [
                 'pkm_dtps_mhs' => $pkmDtpsMhs,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
@@ -31,7 +32,7 @@ class PkmDtpsMahasiswaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $tahunAjaran)
     {
         //
     }

@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -9,17 +9,14 @@
         </h4>
 
         <div class="row">
-            <div class="col-md-12">
-                <!-- #s navpills -->
-                @include('includes.backend.navpills.kinerja-lulusan')
-                <!-- #e navpills -->
+            <div class="col-md-12"> 
 
                 <div class="card mb-4">
                     <h5 class="card-header">Tabel 8.B.2 | Prestasi Non-akademik Mahasiswa</h5>
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.create') }}" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->

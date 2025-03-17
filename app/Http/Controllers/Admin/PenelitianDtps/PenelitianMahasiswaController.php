@@ -11,7 +11,7 @@ class PenelitianMahasiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $kurikulum = DtpsPenelitianMahasiswa::with('user')->get();
@@ -22,6 +22,7 @@ class PenelitianMahasiswaController extends Controller
 
             return view('pages.admin.penelitian-dtps.penelitian-mahasiswa.index', [
                 'kurikulum_pembelajaran' => $kurikulum,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

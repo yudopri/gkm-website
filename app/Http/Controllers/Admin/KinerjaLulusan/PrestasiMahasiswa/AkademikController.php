@@ -11,7 +11,7 @@ class AkademikController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $prestasiAkademik = PrestasiAkademikMhs::with('user')->get();
@@ -22,6 +22,7 @@ class AkademikController extends Controller
 
             return view('pages.admin.kinerja-lulusan.prestasi-akademik-mhs.index', [
                 'prestasi_akademik' => $prestasiAkademik,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
@@ -31,7 +32,7 @@ class AkademikController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $tahunAjaran)
     {
         //
     }

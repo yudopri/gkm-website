@@ -11,7 +11,7 @@ class SitasiKaryaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $sitasi = SitasiKaryaDosen::with('user')->get();
@@ -22,6 +22,7 @@ class SitasiKaryaController extends Controller
 
             return view('pages.admin.kinerja-dosen.sitasi-karya.index', [
                 'sitasi_karya' => $sitasi,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

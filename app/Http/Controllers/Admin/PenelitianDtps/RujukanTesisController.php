@@ -11,7 +11,7 @@ class RujukanTesisController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $tahunAjaran)
     {
         try {
             $rujukanTesis = DtpsRujukanTesis::with('user')->get();
@@ -22,6 +22,7 @@ class RujukanTesisController extends Controller
 
             return view('pages.admin.penelitian-dtps.rujukan-tesis.index', [
                 'rujukan_tesis' => $rujukanTesis,
+                'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
