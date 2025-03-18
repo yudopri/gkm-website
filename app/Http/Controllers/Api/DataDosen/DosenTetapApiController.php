@@ -11,31 +11,17 @@ use App\Models\TahunAjaranSemester;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
 class DosenTetapApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(string $tahunAjaran)
+    public function index()
     {
-        try {
-            $userId = Auth::id();
-            $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
-
-            $dosenTetap = DosenTetapPT::with('user')
-                ->where('user_id', $userId)
-                ->where('tahun_ajaran_id', $tahunAjaranId)
-                ->paginate(8);
-
-
-            return response()->json($dosenTetap, Response::HTTP_OK);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+        return response()->json(DosenTetapPT::all(), Response::HTTP_OK);
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -74,14 +60,13 @@ class DosenTetapApiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tetap')->whereId($id)->firstOrFail();
-
+            $dosen = DosenTetapPT::find($id);
             return response()->json($dosen, Response::HTTP_OK);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+            return back()->withErrors($e->getMessage())->withInput();
         }
     }
 

@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DosenIndustriPraktisi;
 use App\Models\TahunAjaranSemester;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
 class DosenPraktisiApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(string $tahunAjaran)
+    public function index()
     {
         return response()->json(DosenIndustriPraktisi::all(), Response::HTTP_OK);
     }

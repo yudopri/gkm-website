@@ -404,14 +404,3 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 });
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-// *Api Routes
-Route::apiResource('user-profiles', UserProfileController::class);
-Route::apiResource('dosen-praktisi', DosenPraktisiApiController::class);
-Route::apiResource('dosen-tetap', DosenTetapApiController::class);
-Route::apiResource('dosen-tidak-tetap', DosenTidakTetapApiController::class);
-Route::apiResource('ewmp-dosen', EwmpDosenApiController::class);
-Route::apiResource('tahun-ajaran', TahunAjaranApiController::class);
-Route::apiResource('mahasiswa-asing', MahasiswaAsingApiController::class);
-Route::apiResource('seleksi-maba', SeleksiMabaApiController::class);
