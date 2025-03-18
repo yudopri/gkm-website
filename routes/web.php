@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\DataDosen\DosenPraktisiApiController;
+use App\Http\Controllers\Api\DataDosen\DosenTetapApiController;
 use App\Http\Controllers\Api\DataDosen\DosenTidakTetapApiController;
 use App\Http\Controllers\Api\DataDosen\EwmpDosenApiController;
 use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
@@ -82,6 +83,49 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
                 Route::resource('dosen-tidak-tetap', DosenTidakTetapController::class)->only('show');
                 Route::resource('dosen-praktisi', DosenPraktisiController::class)->only('show');
             });
+            Route::prefix('kinerja-dosen')->name('kd.')->group(function () {
+
+                Route::resource('rekognisi-dtps', RekognisiDosenController::class)->only('show');
+                Route::resource('penelitian-dtps', PenelitianDtpsController::class)->only('show');
+                Route::resource('pkm-dtps', PkmDtpsController::class)->only('show');
+                Route::resource('publikasi-ilmiah', PublikasiIlmiahController::class)->only('show');
+                Route::resource('sitasi-karya', SitasiKaryaController::class)->only('show');
+                Route::resource('produk-teradopsi', ProdukTeradopsiController::class)->only('show');
+                Route::prefix('luaran-lain')->name('luaran-lain.')->group(function () {
+                    Route::resource('hki-paten', HkiPatenController::class)->only('show');
+                    Route::resource('hki-hakcipta', HkiHakciptaController::class)->only('show');
+                    Route::resource('teknologi-karya', TeknologiKaryaController::class)->only('show');
+                    Route::resource('buku-chapter', BukuChapterController::class)->only('show');
+                });
+            });
+            Route::prefix('dtps-mahasiswa')->name('dtpsm.')->group(function () {
+                Route::resource('pkm-dtps-mahasiswa', PkmDtpsMahasiswaController::class)->only('show');
+            });
+            Route::prefix('kinerja-lulus')->name('kl.')->group(function () {
+                Route::resource('ipk-lulusan', IpkLulusanController::class)->only('show');
+                Route::prefix('prestasi-mahasiswa')->name('prestasi-mahasiswa.')->group(function () {
+                    Route::resource('akademik', AkademikController::class)->only('show');
+                    Route::resource('nonakademik', NonakademikController::class)->only('show');
+                });
+                Route::resource('masa-studi-lulusan', MasaStudiLulusanController::class)->only('show');
+                Route::prefix('evaluasi-lulusan')->name('evaluasi-lulusan.')->group(function () {
+                    Route::resource('kesesuaian-kerja', KesesuaianKerjaController::class)->only('show');
+                    Route::resource('tempat-kerja', TempatKerjaController::class)->only('show');
+                    Route::resource('waktu-tunggu', WaktuTungguController::class)->only('show');
+                    Route::resource('kepuasan-pengguna', KepuasanPenggunaController::class)->only('show');
+                });
+            });
+            Route::prefix('penelitian-dtps')->name('pdtps.')->group(function () {
+                Route::resource('penelitian-mahasiswa', PenelitianMahasiswaController::class)->only('show');
+                Route::resource('rujukan-tesis', RujukanTesisController::class)->only('show');
+            });
+            Route::prefix('kualitas-pembelajaran')->name('kpl.')->group(function () {
+                Route::resource('integrasi-penelitian', IntegrasiPenelitianController::class)->only('show');
+                Route::resource('kurikulum-pembelajaran', KurikulumPembelajaranController::class)->only('show');
+                Route::resource('kepuasan-mahasiswa', KepuasanMahasiswaController::class)->only('show');
+            });
+
+
         });
     });
 
@@ -296,21 +340,21 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/waktu-tunggu/{dosenPraktisiId}', [WaktuTungguController::class, 'edit'])->name('waktu-tunggu.edit');
         Route::put('/waktu-tunggu/{dosenPraktisiId}', [WaktuTungguController::class, 'update'])->name('waktu-tunggu.update');
         Route::delete('/waktu-tunggu/{dosenPraktisiId}', [WaktuTungguController::class, 'destroy'])->name('waktu-tunggu.destroy');
-        
+
         Route::get('/kesesuaian-kerja', [KesesuaianKerjaController::class, 'index'])->name('kesesuaian-kerja.index');
         Route::post('/kesesuaian-kerja', [KesesuaianKerjaController::class, 'store'])->name('kesesuaian-kerja.store');
         Route::get('/kesesuaian-kerja/create', [KesesuaianKerjaController::class, 'create'])->name('kesesuaian-kerja.create');
         Route::get('/kesesuaian-kerja/{dosenPraktisiId}', [KesesuaianKerjaController::class, 'edit'])->name('kesesuaian-kerja.edit');
         Route::put('/kesesuaian-kerja/{dosenPraktisiId}', [KesesuaianKerjaController::class, 'update'])->name('kesesuaian-kerja.update');
         Route::delete('/kesesuaian-kerja/{dosenPraktisiId}', [KesesuaianKerjaController::class, 'destroy'])->name('kesesuaian-kerja.destroy');
-        
+
         Route::get('/tempat-kerja', [TempatKerjaController::class, 'index'])->name('tempat-kerja.index');
         Route::post('/tempat-kerja', [TempatKerjaController::class, 'store'])->name('tempat-kerja.store');
         Route::get('/tempat-kerja/create', [TempatKerjaController::class, 'create'])->name('tempat-kerja.create');
         Route::get('/tempat-kerja/{dosenPraktisiId}', [TempatKerjaController::class, 'edit'])->name('tempat-kerja.edit');
         Route::put('/tempat-kerja/{dosenPraktisiId}', [TempatKerjaController::class, 'update'])->name('tempat-kerja.update');
         Route::delete('/tempat-kerja/{dosenPraktisiId}', [TempatKerjaController::class, 'destroy'])->name('tempat-kerja.destroy');
-       
+
         Route::get('/kepuasan-pengguna', [KepuasanPenggunaController::class, 'index'])->name('kepuasan-pengguna.index');
         Route::post('/kepuasan-pengguna', [KepuasanPenggunaController::class, 'store'])->name('kepuasan-pengguna.store');
         Route::get('/kepuasan-pengguna/create', [KepuasanPenggunaController::class, 'create'])->name('kepuasan-pengguna.create');

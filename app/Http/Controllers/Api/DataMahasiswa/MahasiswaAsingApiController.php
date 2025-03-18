@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\DataMahasiswa;
+namespace App\Http\Controllers\Api\DataMahasiswa;
 
 use App\Http\Controllers\Controller;
 use App\Models\MahasiswaAsing;

@@ -108,63 +108,64 @@
         <!-- #e 3.a dosen -->
 
         <!-- #s 3.b kinerja dosen -->
-        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.*') ? 'active open' : '' }}">
+        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <div data-i18n="Kinerja Dosen">Kinerja Dosen</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.rekognisi-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.rekognisi-dtps.index') }}" class="menu-link">
-                        <div data-i18n="Pengakuan/Rekognisi Dosen">Pengakuan/Rekognisi Dosen</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.penelitian-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.penelitian-dtps.index') }}" class="menu-link">
+            <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.rekognisi-dtps.*') ? 'active' : '' }}">
+    <a href="{{ route('admin.petugas.detail.kd.rekognisi-dtps.show', $dosenId) }}" class="menu-link">
+        <div data-i18n="Pengakuan/Rekognisi Dosen">Pengakuan/Rekognisi Dosen</div>
+    </a>
+</li>
+
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.penelitian-dtps.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kd.penelitian-dtps.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Penelitian DTPS">Penelitian DTPS</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.pkm-dtps.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.pkm-dtps.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.pkm-dtps.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kd.pkm-dtps.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="PkM DTPS">PkM DTPS</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.publikasi-ilmiah.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.publikasi-ilmiah.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kd.publikasi-ilmiah.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Publikasi & Pagelaran Ilmiah">Publikasi & Pagelaran Ilmiah</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.sitasi-karya.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.sitasi-karya.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.sitasi-karya.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kd.sitasi-karya.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Sitasi Karya Ilmiah">Sitasi Karya Ilmiah</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.produk-teradopsi.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-dosen.produk-teradopsi.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.produk-teradopsi.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kd.produk-teradopsi.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Produk/Jasa Teradopsi">Produk/Jasa Teradopsi</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.*') ? 'open' : '' }}">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.luaran-lain.*') ? 'open' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <div data-i18n="Luaran Penelitian Lain">Luaran Penelitian Lain</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.hki-paten.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-paten.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.luaran-lain.hki-paten.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kd.luaran-lain.hki-paten.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="HKI (Paten)">HKI (Paten)</div>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.hki-hakcipta.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-hakcipta.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.luaran-lain.hki-hakcipta.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kd.luaran-lain.hki-hakcipta.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="HKI (Hak Cipta)">HKI (Hak Cipta)</div>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.teknologi-karya.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.teknologi-karya.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.luaran-lain.teknologi-karya.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kd.luaran-lain.teknologi-karya.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Teknologi & Karya">Teknologi & Karya</div>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-dosen.luaran-lain.buku-chapter.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-dosen.luaran-lain.buku-chapter.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.luaran-lain.buku-chapter.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kd.luaran-lain.buku-chapter.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Buku & Chapter">Buku & Chapter</div>
                             </a>
                         </li>
@@ -175,23 +176,23 @@
         <!-- #e 3.b kinerja dosen -->
 
         <!-- #s 5. kualitas pembelajaran -->
-        <li class="menu-item {{ request()->routeIs('admin.kualitas-pembelajaran.*') ? 'active open' : '' }}">
+        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kpl.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <div data-i18n="Kualitas Pembelajaran">Kualitas Pembelajaran</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ request()->routeIs('admin.kualitas-pembelajaran.kurikulum-pembelajaran.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kpl.kurikulum-pembelajaran.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kpl.kurikulum-pembelajaran.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Kurikulum & Pembelajaran">Kurikulum & Pembelajaran</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.kualitas-pembelajaran.integrasi-penelitian.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kualitas-pembelajaran.integrasi-penelitian.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kpl.integrasi-penelitian.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kpl.integrasi-penelitian.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Integrasi Penelitian">Integrasi Penelitian</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.kualitas-pembelajaran.kepuasan-mahasiswa.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kualitas-pembelajaran.kepuasan-mahasiswa.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kpl.kepuasan-mahasiswa.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kpl.kepuasan-mahasiswa.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Kepuasan Mahasiswa">Kepuasan Mahasiswa</div>
                     </a>
                 </li>
@@ -200,18 +201,18 @@
         <!-- #e 5. kualitas pembelajaran -->
 
         <!-- #s 6. penelitian DTPS -->
-        <li class="menu-item {{ request()->routeIs('admin.penelitian-dtps.*') ? 'active open' : '' }}">
+        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.pdtps.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <div data-i18n="Penelitian DTPS">Penelitian DTPS</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ request()->routeIs('admin.penelitian-dtps.penelitian-mahasiswa.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.penelitian-dtps.penelitian-mahasiswa.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.pdtps.penelitian-mahasiswa.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.pdtps.penelitian-mahasiswa.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Penelitian Mahasiswa">Penelitian Mahasiswa</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.penelitian-dtps.rujukan-tesis.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.penelitian-dtps.rujukan-tesis.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.pdtps.rujukan-tesis.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.pdtps.rujukan-tesis.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Rujukan Tesis/Disertasi">Rujukan Tesis/Disertasi</div>
                     </a>
                 </li>
@@ -220,73 +221,73 @@
         <!-- #e 6. penelitian DTPS -->
 
         <!-- #s 7. PkM DTPS Mahasiswa -->
-        <li class="menu-item {{ request()->routeIs('admin.pkm-dtps-mahasiswa.*') ? 'active' : '' }}">
-            <a href="{{ route('admin.pkm-dtps-mahasiswa.index') }}" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.dtpsm.pkm-dtps-mahasiswa.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.petugas.detail.dtpsm.pkm-dtps-mahasiswa.show', $dosenId) }}" class="menu-link">
                 <div data-i18n="PkM DTPS Mahasiswa">PkM DTPS Mahasiswa</div>
             </a>
         </li>
         <!-- #e 7. PkM DTPS Mahasiswa -->
 
         <!-- #s 8. kinerja lulusan -->
-        <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.*') ? 'active open' : '' }}">
+        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <div data-i18n="Kinerja Lulusan">Kinerja Lulusan</div>
             </a>
             <ul class="menu-sub">
                 <!-- 8.a -->
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.ipk-lulusan.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-lulusan.ipk-lulusan.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.ipk-lulusan.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kl.ipk-lulusan.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="IPK Lulusan">IPK Lulusan</div>
                     </a>
                 </li>
                 <!-- 8.b -->
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.prestasi-mahasiswa.*') ? 'open' : '' }}">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.prestasi-mahasiswa.*') ? 'open' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <div data-i18n="Prestasi Mahasiswa">Prestasi Mahasiswa</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.prestasi-mahasiswa.akademik.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.akademik.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.prestasi-mahasiswa.akademik.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kl.prestasi-mahasiswa.akademik.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Akademik">Akademik</div>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.prestasi-mahasiswa.nonakademik.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kl.prestasi-mahasiswa.nonakademik.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Non-akademik">Non-akademik</div>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <!-- 8.c -->
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.masa-studi-lulusan.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.kinerja-lulusan.masa-studi-lulusan.index') }}" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.masa-studi-lulusan.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.kl.masa-studi-lulusan.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Masa Studi Lulusan">Masa Studi Lulusan</div>
                     </a>
                 </li>
                 <!-- 8.d 8.e -->
-                <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.*') ? 'open' : '' }}">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.evaluasi-lulusan.*') ? 'open' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <div data-i18n="Evaluasi Lulusan">Evaluasi Lulusan</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.evaluasi-lulusan.waktu-tunggu.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kl.evaluasi-lulusan.waktu-tunggu.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Waktu Tunggu">Waktu Tunggu</div>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.evaluasi-lulusan.kesesuaian-kerja.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kl.evaluasi-lulusan.kesesuaian-kerja.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Kesesuaian Kerja">Kesesuaian Kerja</div>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index') }}" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.evaluasi-lulusan.tempat-kerja.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kl.evaluasi-lulusan.tempat-kerja.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Tempat Kerja">Tempat Kerja</div>
                             </a>
                         </li>
                         <li
-                            class="menu-item {{ request()->routeIs('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.*') ? 'active' : '' }}">
-                            <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.index') }}" class="menu-link">
+                            class="menu-item {{ request()->routeIs('admin.petugas.detail.kl.evaluasi-lulusan.kepuasan-pengguna.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.kl.evaluasi-lulusan.kepuasan-pengguna.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Kepuasan Pengguna">Kepuasan Pengguna</div>
                             </a>
                         </li>

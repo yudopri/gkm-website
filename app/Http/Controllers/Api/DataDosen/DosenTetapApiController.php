@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\DataDosen;
+namespace App\Http\Controllers\Api\DataDosen;
 
 use App\Models\DosenTetapPT;
 use Illuminate\Http\Request;

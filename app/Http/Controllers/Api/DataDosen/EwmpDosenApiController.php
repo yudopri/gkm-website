@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\DataDosen;
+namespace App\Http\Controllers\Api\DataDosen;
 
 use App\Models\EwmpDosen;
 use Illuminate\Http\Request;
