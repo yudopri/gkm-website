@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Dosen;
+namespace App\Http\Controllers\Api\Dosen;
 
 use App\Http\Controllers\Controller;
 use App\Models\TahunAjaranSemester;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TahunAjaranApiController extends Controller
 {

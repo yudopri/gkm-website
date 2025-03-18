@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\DataDosen;
+namespace App\Http\Controllers\Api\DataDosen;
 
 use App\Models\EwmpDosen;
 use Illuminate\Http\Request;
@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TahunAjaranSemester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
 class EwmpDosenApiController extends Controller
 {
