@@ -28,9 +28,9 @@ class UserProfileController extends Controller
                 'handphone' => 'required|string',
                 'user_id' => 'required|exists:users,id',
             ]);
-    
+
             $profile = UserProfile::create($request->all());
-    
+
             return response()->json($profile, Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -66,7 +66,7 @@ class UserProfileController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message'=> $validator->errors()], Response::HTTP_BAD_REQUEST);
+            return response()->json(['message' => $validator->errors()], Response::HTTP_BAD_REQUEST);
         }
 
         $profile->update($request->all());
