@@ -31,7 +31,6 @@ class DosenTetapApiController extends Controller
      */
     public function index()
     {
- 
         try {
             $data = DosenTetapPT::all();
             return response()->json($data, Response::HTTP_OK);
@@ -79,8 +78,10 @@ class DosenTetapApiController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first()],
-                    Response::HTTP_UNPROCESSABLE_ENTITY);
+                return response()->json(
+                    ['error' => $validator->errors()->first()],
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
             }
 
             $validated = $request->all();
@@ -88,8 +89,10 @@ class DosenTetapApiController extends Controller
 
             return response()->json($create, Response::HTTP_CREATED);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to create record: ' . $e->getMessage()], 
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(
+                ['error' => 'Failed to create record: ' . $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
@@ -116,11 +119,15 @@ class DosenTetapApiController extends Controller
             $record = DosenTetapPT::findOrFail($id);
             return response()->json($record, Response::HTTP_OK);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Record not found'],
-                Response::HTTP_NOT_FOUND);
+            return response()->json(
+                ['error' => 'Record not found'],
+                Response::HTTP_NOT_FOUND
+            );
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()],
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(
+                ['error' => 'Server error: ' . $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
@@ -164,8 +171,10 @@ class DosenTetapApiController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first()],
-                    Response::HTTP_UNPROCESSABLE_ENTITY);
+                return response()->json(
+                    ['error' => $validator->errors()->first()],
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
             }
 
             $record = DosenTetapPT::findOrFail($id);
@@ -174,11 +183,15 @@ class DosenTetapApiController extends Controller
 
             return response()->json($record, Response::HTTP_OK);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Record not found'],
-                Response::HTTP_NOT_FOUND);
+            return response()->json(
+                ['error' => 'Record not found'],
+                Response::HTTP_NOT_FOUND
+            );
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()],
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(
+                ['error' => 'Server error: ' . $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
@@ -197,14 +210,20 @@ class DosenTetapApiController extends Controller
             $delete = DosenTetapPT::findOrFail($id);
             $delete->delete();
 
-            return response()->json(['message' => 'Record deleted successfully'],
-                Response::HTTP_OK);
+            return response()->json(
+                ['message' => 'Record deleted successfully'],
+                Response::HTTP_OK
+            );
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Record not found'],
-                Response::HTTP_NOT_FOUND);
+            return response()->json(
+                ['error' => 'Record not found'],
+                Response::HTTP_NOT_FOUND
+            );
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Server error: ' . $e->getMessage()],
-                Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(
+                ['error' => 'Server error: ' . $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 }

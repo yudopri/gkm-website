@@ -2,58 +2,67 @@
 
 namespace App\Http\Controllers\Api\DataMahasiswa;
 
+use App\Models\SeleksiMahasiswaBaru;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\SeleksiMahasiswaBaru;
-use App\Models\TahunAjaranSemester;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+/**
+ * Controller for managing SeleksiMahasiswaBaru endpoints.
+ * 
+ * @package App\Http\Controllers\Api\DataMahasiswa
+ */
 class SeleksiMabaApiController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display all SeleksiMahasiswaBaru data.
+     *
+     * @return \Illuminate\Http\JsonResponse The SeleksiMahasiswaBaru record or error message
+     * 
+     * @throws \Exception If there's an error during data retrieval
+     * 
+     * @response 200 {
+     * "id": "1",
+     * ...other SeleksiMahasiswaBaru attributes...
+     * }
+     * @response 500 Server error
      */
-    public function index(string $tahunAjaran)
+    public function index()
     {
         try {
-            $userId = Auth::id();
-            $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
-
-            $seleksiMaba = SeleksiMahasiswaBaru::with('user')
-                ->where('user_id', $userId)
-                ->where('tahun_ajaran_id', $tahunAjaranId)
-                ->paginate(5);
-
-            $totals = SeleksiMahasiswaBaru::selectRaw('
-                SUM(pendaftar) as total_pendaftar,
-                SUM(lulus_seleksi) as total_lulus_seleksi,
-                SUM(maba_reguler) as total_maba_reguler,
-                SUM(maba_transfer) as total_maba_transfer,
-                SUM(COALESCE(mhs_aktif_reguler, 0) + COALESCE(mhs_aktif_transfer, 0)) as total_mhs_aktif
-            ')->first();
-
-            $title = 'Hapus Data!';
-            $text = "Apakah kamu yakin ingin menghapus?";
-            confirmDelete($title, $text);
-
-            return response()->json($seleksiMaba, $totals, Response::HTTP_OK);
+            $data = SeleksiMahasiswaBaru::all();
+            return response()->json($data, Response::HTTP_OK);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+            return response()->json([
+                'error' => 'Server error: ' . $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-
-
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created SeleksiMahasiswaBaru resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request  The HTTP request containing SeleksiMahasiswaBaru data
+     * 
+     * @return \Illuminate\Http\JsonResponse The SeleksiMahasiswaBaru record or error message
+     *
+     * @throws \Exception When an error occurs during record creation
+     * 
+     * @response 201 {
+     *    "id": 1,
+     *   ...other SeleksiMahasiswaBaru attributes...
+     * }
+     * @response 422 Data validation error
+     * @response 500 Server error
      */
-    public function store(Request $request, string $tahunAjaran)
+    public function store(Request $request)
     {
         try {
             $validator = Validator::make($request->all(), [
+                'user_id' => 'required|exists:users,id',
+                'tahun_ajaran_id' => 'required|exists:tahun_ajaran_semester,id',
                 'tahun_akademik' => 'required|string',
                 'daya_tampung' => 'required|numeric',
                 'pendaftar' => 'nullable|numeric',
@@ -64,55 +73,87 @@ class SeleksiMabaApiController extends Controller
                 'mhs_aktif_transfer' => 'nullable|numeric',
             ]);
 
-
+            if ($validator->fails()) {
+                return response()->json(
+                    ['error' => $validator->errors()->first()],
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
 
             $validated = $request->all();
-            $validated['user_id'] = Auth::id();
-            $validated['tahun_ajaran_id'] = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
             $create = SeleksiMahasiswaBaru::create($validated);
 
             return response()->json($create, Response::HTTP_CREATED);
-
-            throw new \Exception('Data gagal ditambahhkan');
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
+            return response()->json(
+                ['error' => 'Failed to create record: ' . $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource from SeleksiMahasiswaBaru.
+     *
+     * @param string $id The ID of the SeleksiMahasiswaBaru to retrieve
+     * 
+     * @return \Illuminate\Http\JsonResponse The SeleksiMahasiswaBaru record or error message
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the record does not exist
+     * @throws \Exception For any other server errors
+     *
+     * @response 200 {
+     *  "id": "1",
+     *  ...other SeleksiMahasiswaBaru attributes...
+     * }
+     * @response 404 { "error": "Record not found" }
+     * @response 500 { "error": "Server error: [error message]" }
      */
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'mahasiswa_asing')->whereId($id)->firstOrFail();
-
-            $totals = SeleksiMahasiswaBaru::selectRaw('
-                SUM(pendaftar) as total_pendaftar,
-                SUM(lulus_seleksi) as total_lulus_seleksi,
-                SUM(maba_reguler) as total_maba_reguler,
-                SUM(maba_transfer) as total_maba_transfer,
-                SUM(COALESCE(mhs_aktif_reguler, 0) + COALESCE(mhs_aktif_transfer, 0)) as total_mhs_aktif
-            ')->first();
-
-            // dd($dosen);
-
-            return response()->json($dosen, $totals, Response::HTTP_OK);
+            $record = SeleksiMahasiswaBaru::findOrFail($id);
+            return response()->json($record, Response::HTTP_OK);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                ['error' => 'Record not found'],
+                Response::HTTP_NOT_FOUND
+            );
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+            return response()->json(
+                ['error' => 'Server error: ' . $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
-
     /**
-     * Update the specified resource in storage.
+     * Update an existing SeleksiMahasiswaBaru record.
+     *
+     * @param  \Illuminate\Http\Request  $request  The HTTP request containing the updated data
+     * @param  string  $id  The ID of the SeleksiMahasiswaBaru record to update
+     * 
+     * @return \Illuminate\Http\JsonResponse The SeleksiMahasiswaBaru record or error message
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the record does not exist
+     * @throws \Exception For any other server errors
+     *
+     * @response 200 {
+     *     "id": 1,
+     *    ...other SeleksiMahasiswaBaru attributes...
+     * }
+     * @response 404 Record not found
+     * @response 422 Data validation error
+     * @response 500 Server error
      */
-    public function update(Request $request, string $id,string $tahunAjaran)
+    public function update(Request $request, string $id)
     {
         try {
             $validator = Validator::make($request->all(), [
-                'tahun_akademik' => 'required|string',
-                'daya_tampung' => 'required|numeric',
+                'user_id' => 'sometimes|required|exists:users,id',
+                'tahun_ajaran_id' => 'sometimes|required|exists:tahun_ajaran_semester,id',
+                'tahun_akademik' => 'sometimes|required|string',
+                'daya_tampung' => 'sometimes|required|numeric',
                 'pendaftar' => 'nullable|numeric',
                 'lulus_seleksi' => 'nullable|numeric',
                 'maba_reguler' => 'nullable|numeric',
@@ -121,33 +162,60 @@ class SeleksiMabaApiController extends Controller
                 'mhs_aktif_transfer' => 'nullable|numeric',
             ]);
 
+            if ($validator->fails()) {
+                return response()->json(
+                    ['error' => $validator->errors()->first()],
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
 
-
+            $record = SeleksiMahasiswaBaru::findOrFail($id);
             $validated = $request->all();
+            $record->update($validated);
 
-            $seleksiMaba = SeleksiMahasiswaBaru::findOrFail($id);
-            $update = $seleksiMaba->update($validated);
-            return response()->json($update, Response::HTTP_OK);
-
-            throw new \Exception('Data seleksi maba gagal diupdate');
+            return response()->json($record, Response::HTTP_OK);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                ['error' => 'Record not found'],
+                Response::HTTP_NOT_FOUND
+            );
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
+            return response()->json(
+                ['error' => 'Server error: ' . $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a SeleksiMahasiswaBaru record by ID.
+     *
+     * @param string $id The ID of the SeleksiMahasiswaBaru to delete
+     * @return \Illuminate\Http\JsonResponse The SeleksiMahasiswaBaru record or error message
+     * 
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the record does not exist
+     * @throws \Exception For any other server errors
      */
-    public function destroy(string $tahunAjaran,string $id)
+    public function destroy(string $id)
     {
         try {
-            $seleksiMaba = SeleksiMahasiswaBaru::findOrFail($id);
-            $delete = $seleksiMaba->delete();
+            $delete = SeleksiMahasiswaBaru::findOrFail($id);
+            $delete->delete();
 
-            return response()->json(['message' => 'Seleksi Maba deleted'], Response::HTTP_OK);
-
+            return response()->json(
+                ['message' => 'Record deleted successfully'],
+                Response::HTTP_OK
+            );
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                ['error' => 'Record not found'],
+                Response::HTTP_NOT_FOUND
+            );
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+            return response()->json(
+                ['error' => 'Server error: ' . $e->getMessage()],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 }
