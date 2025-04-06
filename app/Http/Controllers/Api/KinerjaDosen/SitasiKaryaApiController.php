@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Api\DataDosen;
 
 use App\Http\Controllers\Api\BaseApiTrait;
-use App\Models\DosenPembimbingTA;
 use App\Http\Controllers\Controller;
+use App\Models\SitasiKaryaDosen;
 
 /**
- * Controller for managing DosenPembimbingTA endpoints.
+ * Controller for managing RekognisiDosen endpoints.
  * 
- * @package App\Http\Controllers\Api\DataDosen
+ * @package App\Http\Controllers\Api\KinerjaDosen
  */
-class PembimbingTaApiController extends Controller
+class SitasiKaryaApiController extends Controller
 {
     use BaseApiTrait;
 
@@ -22,9 +22,9 @@ class PembimbingTaApiController extends Controller
      */
     protected function getModelClass()
     {
-        return DosenPembimbingTA::class;
+        return SitasiKaryaDosen::class;
     }
-    
+
     /**
      * Get validation rules for storing a new record.
      *
@@ -34,13 +34,12 @@ class PembimbingTaApiController extends Controller
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'tahun_ajaran_id' => 'required|exists:tahun_ajaran_semester,id',
-            'nama_dosen' => 'required|string|max:255',
-            'mhs_bimbingan_ps' => 'nullable|numeric',
-            'mhs_bimbingan_ps_lain' => 'nullable|numeric',
+            'nama_dosen' => 'required|string',
+            'judul_sitasi' => 'required|string',
+            'tahun' => 'required|string|max:4',
         ];
     }
-    
+
     /**
      * Get validation rules for updating a record.
      *
@@ -50,10 +49,9 @@ class PembimbingTaApiController extends Controller
     {
         return [
             'user_id' => 'sometimes|required|exists:users,id',
-            'tahun_ajaran_id' => 'sometimes|required|exists:tahun_ajaran_semester,id',
-            'nama_dosen' => 'sometimes|required|string|max:255',
-            'mhs_bimbingan_ps' => 'nullable|numeric',
-            'mhs_bimbingan_ps_lain' => 'nullable|numeric',
+            'nama_dosen' => 'sometimes|required|string',
+            'judul_sitasi' => 'sometimes|required|string',
+            'tahun' => 'sometimes|required|string|max:4',
         ];
     }
 }
