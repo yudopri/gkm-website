@@ -15,27 +15,26 @@ class EwmpDosenApiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $tahunAjaran)
+    public function index(Request $request, string $tahunAjaran)
     {
         try {
             $userId = Auth::id();
-            $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
+            $tahunAjaranData = TahunAjaranSemester::where('slug', $tahunAjaran)->first();
 
-            $ewmp = EwmpDosen::with('user')
+            if (!$tahunAjaranData) {
+                return response()->json(['error' => 'Tahun Ajaran tidak ditemukan'], Response::HTTP_NOT_FOUND);
+            }
+
+            $dosenTidakTetap = DosenTidakTetap::with('user')
                 ->where('user_id', $userId)
-                ->where('tahun_ajaran_id', $tahunAjaranId)
+                ->where('tahun_ajaran_id', $tahunAjaranData->id)
                 ->paginate(8);
 
-            $title = 'Hapus Data!';
-            $text = "Apakah kamu yakin ingin menghapus?";
-            confirmDelete($title, $text);
-
-            return response()->json($ewmp, Response::HTTP_OK);
+            return response()->json($dosenTidakTetap, Response::HTTP_OK);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -44,28 +43,35 @@ class EwmpDosenApiController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'nama_dosen' => 'required|string|max:255',
-                'is_dtps' => 'nullable|boolean',
-                'ps_diakreditasi' => 'nullable|numeric',
-                'ps_lain_dalam_pt' => 'nullable|numeric',
-                'ps_lain_luar_pt' => 'nullable|numeric',
-                'penelitian' => 'nullable|numeric',
-                'pkm' => 'nullable|numeric',
-                'tugas_tambahan' => 'nullable|numeric',
-                'jumlah_sks' => 'nullable|numeric',
-                'avg_per_semester' => 'nullable|numeric',
+                'is_dtps' => 'required|boolean',
+                'ps_diakreditasi' => 'required|numeric|min:0',
+                'ps_lain_dalam_pt' => 'required|numeric|min:0',
+                'ps_lain_luar_pt' => 'required|numeric|min:0',
+                'penelitian' => 'required|numeric|min:0',
+                'pkm' => 'required|numeric|min:0',
+                'tugas_tambahan' => 'required|numeric|min:0',
+                'jumlah_sks' => 'required|numeric|min:0',
+                'avg_per_semester' => 'required|numeric|min:0',
             ]);
 
-            $validated = $request->all();
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $tahunAjaranData = TahunAjaranSemester::where('slug', $tahunAjaran)->first();
+            if (!$tahunAjaranData) {
+                return response()->json(['error' => 'Tahun Ajaran tidak ditemukan'], Response::HTTP_NOT_FOUND);
+            }
+
+            $validated = $validator->validated();
             $validated['user_id'] = Auth::id();
-            $validated['tahun_ajaran_id'] = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
-            $validated['is_dtps'] = $request->has('is_dtps') ? 1 : 0;
-            $create = EwmpDosen::create($validated);
+            $validated['tahun_ajaran_id'] = $tahunAjaranData->id;
 
-            return response()->json($create, Response::HTTP_CREATED);
+            $ewmp = EwmpDosen::create($validated);
 
-            throw new \Exception('Data ewmp dosen gagal ditambahhkan');
+            return response()->json($ewmp, Response::HTTP_CREATED);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
+            return response()->json(['error' => 'Gagal menambahkan EWMP Dosen'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -74,9 +80,13 @@ class EwmpDosenApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $ewmp = EwmpDosen::findOrFail($id);
+            return response()->json($ewmp, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Data tidak ditemukan'], Response::HTTP_NOT_FOUND);
+        }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -84,29 +94,36 @@ class EwmpDosenApiController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            $ewmp = EwmpDosen::findOrFail($id);
+
+            // Pastikan hanya user yang memiliki data yang bisa mengedit
+            if ($ewmp->user_id !== Auth::id()) {
+                return response()->json(['error' => 'Anda tidak memiliki izin untuk mengubah data ini'], Response::HTTP_FORBIDDEN);
+            }
+
             $validator = Validator::make($request->all(), [
                 'nama_dosen' => 'required|string|max:255',
-                'is_dtps' => 'nullable|boolean',
-                'ps_diakreditasi' => 'nullable|numeric',
-                'ps_lain_dalam_pt' => 'nullable|numeric',
-                'ps_lain_luar_pt' => 'nullable|numeric',
-                'penelitian' => 'nullable|numeric',
-                'pkm' => 'nullable|numeric',
-                'tugas_tambahan' => 'nullable|numeric',
-                'jumlah_sks' => 'nullable|numeric',
-                'avg_per_semester' => 'nullable|numeric',
+                'is_dtps' => 'required|boolean',
+                'ps_diakreditasi' => 'required|numeric|min:0',
+                'ps_lain_dalam_pt' => 'required|numeric|min:0',
+                'ps_lain_luar_pt' => 'required|numeric|min:0',
+                'penelitian' => 'required|numeric|min:0',
+                'pkm' => 'required|numeric|min:0',
+                'tugas_tambahan' => 'required|numeric|min:0',
+                'jumlah_sks' => 'required|numeric|min:0',
+                'avg_per_semester' => 'required|numeric|min:0',
             ]);
 
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
 
+            $validated = $validator->validated();
+            $ewmp->update($validated);
 
-            $validated = $request->all();
-            $validated['is_dtps'] = $request->has('is_dtps') ? 1 : 0;
-
-            $ewmp = EwmpDosen::findOrFail($id);
-            $update = $ewmp->update($validated);
-            return response()->json($update, Response::HTTP_OK);
+            return response()->json(['message' => 'Data berhasil diperbarui'], Response::HTTP_OK);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
+            return response()->json(['error' => 'Gagal memperbarui data'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -117,12 +134,17 @@ class EwmpDosenApiController extends Controller
     {
         try {
             $ewmp = EwmpDosen::findOrFail($id);
-            $delete = $ewmp->delete();
 
-            return response()->json(['message' => 'EWMP Dosen deleted'], Response::HTTP_OK);
+            // Pastikan hanya user yang memiliki data yang bisa menghapus
+            if ($ewmp->user_id !== Auth::id()) {
+                return response()->json(['error' => 'Anda tidak memiliki izin untuk menghapus data ini'], Response::HTTP_FORBIDDEN);
+            }
 
+            $ewmp->delete();
+
+            return response()->json(['message' => 'Data berhasil dihapus'], Response::HTTP_OK);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+            return response()->json(['error' => 'Gagal menghapus data'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

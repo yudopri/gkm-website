@@ -16,28 +16,26 @@ class DosenTidakTetapApiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $tahunAjaran)
+    public function index(Request $request, string $tahunAjaran)
     {
         try {
             $userId = Auth::id();
-            $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
+            $tahunAjaranData = TahunAjaranSemester::where('slug', $tahunAjaran)->first();
+
+            if (!$tahunAjaranData) {
+                return response()->json(['error' => 'Tahun Ajaran tidak ditemukan'], Response::HTTP_NOT_FOUND);
+            }
 
             $dosenTidakTetap = DosenTidakTetap::with('user')
                 ->where('user_id', $userId)
-                ->where('tahun_ajaran_id', $tahunAjaranId)
+                ->where('tahun_ajaran_id', $tahunAjaranData->id)
                 ->paginate(8);
-
-            $title = 'Hapus Data!';
-            $text = "Apakah kamu yakin ingin menghapus?";
-            confirmDelete($title, $text);
 
             return response()->json($dosenTidakTetap, Response::HTTP_OK);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -57,17 +55,19 @@ class DosenTidakTetapApiController extends Controller
                 'kesesuaian_keahlian_mk' => 'nullable|boolean',
             ]);
 
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
 
-            $validated = $request->all();
+            $validated = $validator->validated();
             $validated['user_id'] = Auth::id();
             $validated['kesesuaian_keahlian_mk'] = $request->has('kesesuaian_keahlian_mk') ? 1 : 0;
+
             $create = DosenTidakTetap::create($validated);
 
             return response()->json($create, Response::HTTP_CREATED);
-
-            throw new \Exception('Data dosen tidak tetap gagal ditambahkan');
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -76,7 +76,12 @@ class DosenTidakTetapApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosenTidakTetap = DosenTidakTetap::findOrFail($id);
+            return response()->json($dosenTidakTetap, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Data tidak ditemukan'], Response::HTTP_NOT_FOUND);
+        }
     }
 
     /**
@@ -97,17 +102,19 @@ class DosenTidakTetapApiController extends Controller
                 'kesesuaian_keahlian_mk' => 'nullable|boolean',
             ]);
 
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
 
-            $validated = $request->all();
+            $validated = $validator->validated();
             $validated['kesesuaian_keahlian_mk'] = $request->has('kesesuaian_keahlian_mk') ? 1 : 0;
 
             $dosenTidakTetap = DosenTidakTetap::findOrFail($id);
-            $update = $dosenTidakTetap->update($validated);
-            return response()->json($update, Response::HTTP_OK);
+            $dosenTidakTetap->update($validated);
 
-            throw new \Exception('Data dosen tidak tetap gagal diupdate');
+            return response()->json(['message' => 'Data berhasil diperbarui'], Response::HTTP_OK);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
+            return response()->json(['error' => 'Gagal memperbarui data'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -118,12 +125,11 @@ class DosenTidakTetapApiController extends Controller
     {
         try {
             $dosenTidakTetap = DosenTidakTetap::findOrFail($id);
-            $delete = $dosenTidakTetap->delete();
+            $dosenTidakTetap->delete();
 
-            return response()->json(['message' => 'Dosen Tidak Tetap deleted'], Response::HTTP_OK);
-
+            return response()->json(['message' => 'Data berhasil dihapus'], Response::HTTP_OK);
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
+            return response()->json(['error' => 'Gagal menghapus data'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
