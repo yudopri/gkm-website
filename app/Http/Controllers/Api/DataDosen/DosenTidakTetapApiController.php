@@ -2,128 +2,70 @@
 
 namespace App\Http\Controllers\Api\DataDosen;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BaseApiTrait;
 use App\Models\DosenTidakTetap;
-use App\Models\JabatanFungsional;
 use App\Http\Controllers\Controller;
-use App\Models\TahunAjaranSemester;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Response;
 
+/**
+ * Controller for managing DosenTidakTetap endpoints.
+ * 
+ * @package App\Http\Controllers\Api\DataDosen
+ */
 class DosenTidakTetapApiController extends Controller
 {
+    use BaseApiTrait;
+
     /**
-     * Display a listing of the resource.
+     * Get the model class name.
+     *
+     * @return string
      */
-    public function index(string $tahunAjaran)
+    protected function getModelClass()
     {
-        try {
-            $userId = Auth::id();
-            $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
-
-            $dosenTidakTetap = DosenTidakTetap::with('user')
-                ->where('user_id', $userId)
-                ->where('tahun_ajaran_id', $tahunAjaranId)
-                ->paginate(8);
-
-            $title = 'Hapus Data!';
-            $text = "Apakah kamu yakin ingin menghapus?";
-            confirmDelete($title, $text);
-
-            return response()->json($dosenTidakTetap, Response::HTTP_OK);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+        return DosenTidakTetap::class;
     }
-
-
-
+    
     /**
-     * Store a newly created resource in storage.
+     * Get validation rules for storing a new record.
+     *
+     * @return array
      */
-    public function store(Request $request)
+    protected function getStoreValidationRules()
     {
-        try {
-            $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
-                'nidn_nidk' => 'nullable|numeric',
-                'pendidikan_pascasarjana' => 'nullable|string',
-                'bidang_keahlian' => 'nullable|string|max:255',
-                'jabatan_akademik' => 'nullable|string',
-                'sertifikat_pendidik' => 'nullable|string',
-                'sertifikat_kompetensi' => 'nullable|string',
-                'mk_diampu' => 'nullable|string',
-                'kesesuaian_keahlian_mk' => 'nullable|boolean',
-            ]);
-
-
-            $validated = $request->all();
-            $validated['user_id'] = Auth::id();
-            $validated['kesesuaian_keahlian_mk'] = $request->has('kesesuaian_keahlian_mk') ? 1 : 0;
-            $create = DosenTidakTetap::create($validated);
-
-            return response()->json($create, Response::HTTP_CREATED);
-
-            throw new \Exception('Data dosen tidak tetap gagal ditambahkan');
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
-        }
+        return [
+            'user_id' => 'required|exists:users,id',
+            'tahun_ajaran_id' => 'required|exists:tahun_ajaran_semester,id',
+            'nama_dosen' => 'required|string|max:255',
+            'nidn_nidk' => 'nullable|string',
+            'pendidikan_pascasarjana' => 'nullable|string',
+            'bidang_keahlian' => 'nullable|string|max:255',
+            'jabatan_akademik' => 'nullable|string|exists:jabatan_fungsional,nama',
+            'sertifikat_pendidik' => 'nullable|string',
+            'sertifikat_kompetensi' => 'nullable|string',
+            'mk_diampu' => 'nullable|string',
+            'kesesuaian_keahlian_mk' => 'nullable|boolean',
+        ];
     }
-
+    
     /**
-     * Display the specified resource.
+     * Get validation rules for updating a record.
+     *
+     * @return array
      */
-    public function show(string $id)
+    protected function getUpdateValidationRules()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
-                'nidn_nidk' => 'nullable|numeric',
-                'pendidikan_pascasarjana' => 'nullable|string',
-                'bidang_keahlian' => 'nullable|string|max:255',
-                'jabatan_akademik' => 'nullable|string',
-                'sertifikat_pendidik' => 'nullable|string',
-                'sertifikat_kompetensi' => 'nullable|string',
-                'mk_diampu' => 'nullable|string',
-                'kesesuaian_keahlian_mk' => 'nullable|boolean',
-            ]);
-
-
-            $validated = $request->all();
-            $validated['kesesuaian_keahlian_mk'] = $request->has('kesesuaian_keahlian_mk') ? 1 : 0;
-
-            $dosenTidakTetap = DosenTidakTetap::findOrFail($id);
-            $update = $dosenTidakTetap->update($validated);
-            return response()->json($update, Response::HTTP_OK);
-
-            throw new \Exception('Data dosen tidak tetap gagal diupdate');
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        try {
-            $dosenTidakTetap = DosenTidakTetap::findOrFail($id);
-            $delete = $dosenTidakTetap->delete();
-
-            return response()->json(['message' => 'Dosen Tidak Tetap deleted'], Response::HTTP_OK);
-
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+        return [
+            'user_id' => 'sometimes|required|exists:users,id',
+            'tahun_ajaran_id' => 'sometimes|required|exists:tahun_ajaran_semester,id',
+            'nama_dosen' => 'sometimes|required|string|max:255',
+            'nidn_nidk' => 'nullable|string',
+            'pendidikan_pascasarjana' => 'nullable|string',
+            'bidang_keahlian' => 'nullable|string|max:255',
+            'jabatan_akademik' => 'nullable|string|exists:jabatan_fungsional,nama',
+            'sertifikat_pendidik' => 'nullable|string',
+            'sertifikat_kompetensi' => 'nullable|string',
+            'mk_diampu' => 'nullable|string',
+            'kesesuaian_keahlian_mk' => 'nullable|boolean',
+        ];
     }
 }

@@ -2,104 +2,68 @@
 
 namespace App\Http\Controllers\Api\DataDosen;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\BaseApiTrait;
 use App\Models\DosenIndustriPraktisi;
-use App\Models\TahunAjaranSemester;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 
+/**
+ * Controller for managing DosenIndustriPraktisi endpoints.
+ * 
+ * @package App\Http\Controllers\Api\DataDosen
+ */
 class DosenPraktisiApiController extends Controller
 {
+    use BaseApiTrait;
+
     /**
-     * Display a listing of the resource.
+     * Get the model class name.
+     *
+     * @return string
      */
-    public function index()
+    protected function getModelClass()
     {
-        return response()->json(DosenIndustriPraktisi::all(), Response::HTTP_OK);
+        return DosenIndustriPraktisi::class;
     }
-
-
+    
     /**
-     * Store a newly created resource in storage.
+     * Get validation rules for storing a new record.
+     *
+     * @return array
      */
-    public function store(Request $request, string $tahunAjaran)
+    protected function getStoreValidationRules()
     {
-        try {
-            $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
-                'nidk' => 'nullable|numeric',
-                'perusahaan' => 'nullable|string',
-                'pendidikan_tertinggi' => 'nullable|string',
-                'bidang_keahlian' => 'nullable|string|max:255',
-                'sertifikat_kompetensi' => 'nullable|string',
-                'mk_diampu' => 'nullable|string',
-                'bobot_kredit_sks' => 'nullable|numeric',
-            ]);
-
-            $validated = $request->all();
-            $validated['user_id'] = Auth::id();
-            $validated['tahun_ajaran_id'] = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
-            $create = DosenIndustriPraktisi::create($validated);
-
-                return response()->json($create, Response::HTTP_CREATED);
-
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
-        }
+        return [
+            'user_id' => 'required|exists:users,id',
+            'tahun_ajaran_id' => 'required|exists:tahun_ajaran_semester,id',
+            'nama_dosen' => 'required|string|max:255',
+            'nidk' => 'nullable|numeric',
+            'perusahaan' => 'nullable|string',
+            'pendidikan_tertinggi' => 'nullable|string',
+            'bidang_keahlian' => 'nullable|string|max:255',
+            'sertifikat_kompetensi' => 'nullable|string',
+            'mk_diampu' => 'nullable|string',
+            'bobot_kredit_sks' => 'nullable|numeric',
+        ];
     }
-
+    
     /**
-     * Display the specified resource.
+     * Get validation rules for updating a record.
+     *
+     * @return array
      */
-    public function show(string $id)
+    protected function getUpdateValidationRules()
     {
-        //
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
-                'nidk' => 'nullable|numeric',
-                'perusahaan' => 'nullable|string',
-                'pendidikan_tertinggi' => 'nullable|string',
-                'bidang_keahlian' => 'nullable|string|max:255',
-                'sertifikat_kompetensi' => 'nullable|string',
-                'mk_diampu' => 'nullable|string',
-                'bobot_kredit_sks' => 'nullable|numeric',
-            ]);
-
-
-            $validated = $request->all();
-
-            $dosenPraktisi = DosenIndustriPraktisi::findOrFail($id);
-            $update = $dosenPraktisi->update($validated);
-            return response()->json($update, Response::HTTP_OK);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        try {
-            $dosenPraktisi = DosenIndustriPraktisi::findOrFail($id);
-            $delete = $dosenPraktisi->delete();
-
-            return response()->json(['message' => 'Dosen Praktisi deleted'], Response::HTTP_OK);
-
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+        return [
+            'user_id' => 'sometimes|required|exists:users,id',
+            'tahun_ajaran_id' => 'sometimes|required|exists:tahun_ajaran_semester,id',
+            'nama_dosen' => 'sometimes|required|string|max:255',
+            'nidk' => 'nullable|numeric',
+            'perusahaan' => 'nullable|string',
+            'pendidikan_tertinggi' => 'nullable|string',
+            'bidang_keahlian' => 'nullable|string|max:255',
+            'sertifikat_kompetensi' => 'nullable|string',
+            'mk_diampu' => 'nullable|string',
+            'bobot_kredit_sks' => 'nullable|numeric',
+        ];
     }
 }
