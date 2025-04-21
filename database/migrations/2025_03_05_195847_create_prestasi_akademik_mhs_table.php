@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nama_kegiatan');
             $table->string('tingkat');
             $table->string('prestasi');
-            $table->string('tahun', 4)->nullable();
+            $table->string('tahun')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();

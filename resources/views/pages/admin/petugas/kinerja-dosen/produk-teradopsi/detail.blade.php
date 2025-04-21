@@ -27,7 +27,7 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Nama Dosen</th>
-                                        <th>Nama Produk/Jasa</th>
+                                        <th>Nama Poduk/Jasa</th>
                                         <th>Deskripsi <br>Poduk/Jasa</th>
                                         <th>Bukti</th>
                                         <th>Tahun <br>(YYYY)</th>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('eval_waktu_tunggu', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('tahun', 4)->nullable();
+            $table->string('tahun')->nullable();
             $table->integer('jumlah_lulusan');
             $table->integer('jumlah_lulusan_terlacak');
             $table->integer('jumlah_lulusan_terlacak_dipesan');

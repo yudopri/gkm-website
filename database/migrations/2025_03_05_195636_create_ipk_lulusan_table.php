@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ipk_lulusan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('tahun', 4)->nullable();
+            $table->string('tahun')->nullable();
             $table->integer('jumlah_lulusan');
             $table->double('ipk');
             $table->softDeletes();

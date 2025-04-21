@@ -78,8 +78,8 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $rekognisi->tahun) }}"
-                                        required />
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ $tahun }}"
+                                        readonly />
                                 </div>
                             </div>
 

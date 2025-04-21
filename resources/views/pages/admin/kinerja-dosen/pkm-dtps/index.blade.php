@@ -32,44 +32,45 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                @php
-    $sumberDana = [
-        'lokal' => "a. Perguruan Tinggi (POLIJE) \n b. Mandiri",
+                                    @php
+                                    $sumberDana = [
+                                        'lokal' => "a. Perguruan Tinggi (POLIJE) \n b. Mandiri",
+                                
+                                        'nasional' => "Lembaga Dalam Negeri (Diluar Polije)",
+                                
+                                        'internasional' => "Lembaga Luar Negeri"
+                                    ];
+                                @endphp
+                                
 
-        'nasional' => "Lembaga Dalam Negeri (Diluar Polije)",
-
-        'internasional' => "Lembaga Luar Negeri"
-    ];
-@endphp
-
-                                    @foreach ($pkm_dtps as $index => $pkm)
-                                        <tr>
-                                            <td class="text-center">{{ $index + 1 }}</td>
-                                            <td>{{ $sumberDana[$pkm_dtps->sumber_dana] ?? '-' }}</td>
-                                            <td class="text-center">{{ number_format($totals[$pkm_dtps->sumber_dana] ?? 0) }}</td>
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                @foreach ($pkm_dtps as $index => $pkm)
+                                <tr>
+                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    <td>{{ $sumberDana[$pkm->sumber_dana] ?? '-' }}</td>
+                                    <td class="text-center">{{ number_format($totals[$pkm->sumber_dana] ?? 0) }}</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.pkm-dtps.edit', ['pkmId' => $pkm->id, 'tahunAjaran' => $tahun_ajaran]) }}">
+                                                    <i class="bx bx-edit-alt me-1"></i> Edit
+                                                </a>
+                            
+                                                <form action="{{ route('admin.kinerja-dosen.pkm-dtps.destroy', ['pkmId' => $pkm->id, 'tahunAjaran' => $tahun_ajaran]) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                        <i class="bx bx-trash me-1"></i> Delete
                                                     </button>
-                                                    <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.pkm_dtps-dtps.edit', ['pkmId' => $pkm_dtps->id, 'tahunAjaran' => $tahun_ajaran]) }}">
-    <i class="bx bx-edit-alt me-1"></i> Edit
-</a>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
 
-<form action="{{ route('admin.kinerja-dosen.pkm_dtps-dtps.destroy', ['pkmId' => $pkm_dtps->id, 'tahunAjaran' => $tahun_ajaran]) }}" method="POST" style="display:inline;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
-        <i class="bx bx-trash me-1"></i> Delete
-    </button>
-</form>
-
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
                                     @if($pkm_dtps->isEmpty())
                                         <tr>
                                             <td class="text-center" colspan="4">Belum ada data pkm</td>

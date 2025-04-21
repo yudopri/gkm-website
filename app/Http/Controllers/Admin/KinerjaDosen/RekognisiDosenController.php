@@ -19,10 +19,12 @@ class RekognisiDosenController extends Controller
     {
         try {
             $userId = Auth::id();
-            $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
-
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
             $rekognisi = RekognisiDosen::with('user')
                 ->where('user_id', $userId)
+                ->where('tahun', $tahun)
                 ->paginate(5);
 
             $title = 'Hapus Data!';
@@ -32,6 +34,7 @@ class RekognisiDosenController extends Controller
             return view('pages.admin.kinerja-dosen.rekognisi-dosen.index', [
                 'rekognisi_dosen' => $rekognisi,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
             ]);
 
         } catch (\Exception $e) {
@@ -46,9 +49,13 @@ class RekognisiDosenController extends Controller
     {
         try {
             $rekognisiDosen = new RekognisiDosen();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
             return view('pages.admin.kinerja-dosen.rekognisi-dosen.form', [
                 'rekognisi' => $rekognisiDosen,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
                 'form_action' => route('admin.kinerja-dosen.rekognisi-dtps.store', $tahunAjaran),
                 'form_method' => "POST",
@@ -99,7 +106,16 @@ class RekognisiDosenController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'rekognisi_dtps')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kinerja-dosen.detail-mhs-asing', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**
@@ -109,10 +125,13 @@ class RekognisiDosenController extends Controller
     {
         try {
             $rekognisi = RekognisiDosen::with('user')->first();
-
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
             return view('pages.admin.kinerja-dosen.rekognisi-dosen.form', [
                 'rekognisi' => $rekognisi,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'form_title' => 'Edit Data',
                 'form_action' => route('admin.kinerja-dosen.rekognisi-dtps.update', [
                     'tahunAjaran' => $tahunAjaran,

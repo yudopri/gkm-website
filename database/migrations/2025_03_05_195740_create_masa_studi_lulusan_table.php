@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('masa_studi_lulusan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('tahun', 4)->nullable();
+            $table->string('tahun')->nullable();
             $table->integer('jumlah_mhs_diterima');
             $table->integer('jumlah_mhs_lulus');
             $table->integer('jumlah_lulusan');
