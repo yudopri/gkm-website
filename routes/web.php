@@ -238,9 +238,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/pkm-dtps', [PkmDtpsController::class, 'index'])->name('pkm-dtps.index');
     Route::post('/pkm-dtps', [PkmDtpsController::class, 'store'])->name('pkm-dtps.store');
     Route::get('/pkm-dtps/create', [PkmDtpsController::class, 'create'])->name('pkm-dtps.create');
-    Route::get('/pkm-dtps/{dosenPraktisiId}', [PkmDtpsController::class, 'edit'])->name('pkm-dtps.edit');
-    Route::put('/pkm-dtps/{dosenPraktisiId}', [PkmDtpsController::class, 'update'])->name('pkm-dtps.update');
-    Route::delete('/pkm-dtps/{dosenPraktisiId}', [PkmDtpsController::class, 'destroy'])->name('pkm-dtps.destroy');
+    Route::get('/pkm-dtps/{pkmId}', [PkmDtpsController::class, 'edit'])->name('pkm-dtps.edit');
+    Route::put('/pkm-dtps/{pkmId}', [PkmDtpsController::class, 'update'])->name('pkm-dtps.update');
+    Route::delete('/pkm-dtps/{pkmId}', [PkmDtpsController::class, 'destroy'])->name('pkm-dtps.destroy');
         // Route::resource('publikasi-ilmiah', PublikasiIlmiahController::class)->except('show');
         Route::get('/publikasi-ilmiah', [PublikasiIlmiahController::class, 'index'])->name('publikasi-ilmiah.index');
     Route::post('/publikasi-ilmiah', [PublikasiIlmiahController::class, 'store'])->name('publikasi-ilmiah.store');

@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Rekognisi DTPS </h5>
+                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/PKM DTPS </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -22,50 +22,25 @@
                             @csrf @method($form_method)
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $rekognisi->nama_dosen) }}" autofocus required />
-                                </div>
-                            </div>
+    <label class="col-sm-2 col-form-label" for="jumlah_judul">Jumlah Judul PKM</label>
+    <div class="col-sm-10">
+        <input type="number" class="form-control" id="jumlah_judul" name="jumlah_judul"
+            value="{{ $totals[$pkm_dtps->sumber_dana] ?? 0 }}"
+            autofocus required />
+    </div>
+</div>
 
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="bidangKeahlian">Bidang Keahlian</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="bidangKeahlian" name="bidang_keahlian"
-                                        value="{{ old('bidang_keahlian', $rekognisi->bidang_keahlian) }}" placeholder="keahlian1, keahlian2, dst."
-                                        required />
-                                    <div class="form-text"> pisahkan dengan koma (,) </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaRekognisi">Nama Rekognisi</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaRekognisi" name="nama_rekognisi"
-                                        value="{{ old('nama_rekognisi', $rekognisi->nama_rekognisi) }}" placeholder="Reviewer Jurnal.." required />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="buktiPendukung">Bukti Pendukung Rekognisi (URL)</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="text" id="buktiPendukung" name="bukti_pendukung"
-                                        value="{{ old('bukti_pendukung', $rekognisi->bukti_pendukung) }}" placeholder="https://drive.google.com/.."
-                                        required />
-                                </div>
-                            </div>
 
                             @php
-                                $options = ['lokal' => 'Wilayah/Lokal', 'nasional' => 'Nasional', 'internasional' => 'Internasional'];
+                                $options = ['lokal' => 'Perguruan Tinggi (POLIJE)/Mandiri', 'nasional' => 'Lembaga Dalam Negeri (Diluar Polije)', 'internasional' => 'Lembaga Luar Negeri'];
                             @endphp
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="tingkat">Tingkat</label>
+                                <label class="col-sm-2 col-form-label" for="sumber_dana">Sumber Dana</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" id="tingkat" name="tingkat" required>
+                                    <select class="form-select" id="sumber_dana" name="sumber_dana" required>
                                         @foreach ($options as $value => $label)
-                                            <option value="{{ $value }}" {{ old('tingkat', $rekognisi->tingkat) === $value ? 'selected' : '' }}>
+                                            <option value="{{ $value }}" {{ old('sumber_dana', $pkm_dtps->sumber_dana) === $value ? 'selected' : '' }}>
                                                 {{ $label }}
                                             </option>
                                         @endforeach
@@ -74,12 +49,12 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="Tahun">
-                                    Tahun (YYYY)
+                                <label class="col-sm-2 col-form-label" for="tahun">
+                                    Tahun Penelitian
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $rekognisi->tahun) }}"
-                                        required />
+                                    <input type="text" class="form-control" id="tahun" name="tahun" value="{{ $tahun }}"
+                                    readonly />
                                 </div>
                             </div>
 

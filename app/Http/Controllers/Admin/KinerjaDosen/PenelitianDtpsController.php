@@ -20,17 +20,21 @@ class PenelitianDtpsController extends Controller
         try {
             $userId = Auth::id();
             $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
-
-            $penelitianDtps = PenelitianDtps::whereIn('id', function ($query) use ($userId) {
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
+            $penelitianDtps = PenelitianDtps::whereIn('id', function ($query) use ($userId,$tahun) {
                 $query->selectRaw('MAX(id)') // Ambil ID terbesar (terbaru)
                     ->from('penelitian_dtps')
                     ->where('user_id', $userId)
+                    ->where('tahun_penelitian', $tahun)
                     ->whereNull('deleted_at')
                     ->groupBy('sumber_dana');
             })->get();
 
         // Ambil total jumlah_judul per sumber_dana dalam bentuk array
         $totals = PenelitianDtps::where('user_id', $userId)
+            ->where('tahun_penelitian', $tahun)
             ->whereNull('deleted_at')
             ->groupBy('sumber_dana')
             ->selectRaw('sumber_dana, SUM(jumlah_judul) as total')
@@ -43,6 +47,7 @@ class PenelitianDtpsController extends Controller
             return view('pages.admin.kinerja-dosen.penelitian-dtps.index', [
                 'penelitian_dtps' => $penelitianDtps,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'totals' => $totals,
             ]);
         } catch (\Exception $e) {
@@ -57,9 +62,13 @@ class PenelitianDtpsController extends Controller
     {
         try {
             $penelitianDtps = new PenelitianDtps();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
             return view('pages.admin.kinerja-dosen.penelitian-dtps.form', [
                 'penelitian_dtps' => $penelitianDtps,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
                 'form_action' => route('admin.kinerja-dosen.penelitian-dtps.store', $tahunAjaran),
                 'form_method' => "POST",
@@ -127,7 +136,11 @@ class PenelitianDtpsController extends Controller
         // Gunakan find() agar bisa menangani null
         $penelitianDtps = PenelitianDtps::with('user')->find($id);
         $userId = Auth::id();
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
         $totals = PenelitianDtps::where('user_id', $userId)
+        ->where('tahun_penelitian', $tahun)
         ->whereNull('deleted_at')
         ->groupBy('sumber_dana')
         ->selectRaw('sumber_dana, SUM(jumlah_judul) as total')
@@ -140,6 +153,7 @@ class PenelitianDtpsController extends Controller
         return view('pages.admin.kinerja-dosen.penelitian-dtps.form', [
             'penelitian_dtps' => $penelitianDtps,
             'tahun_ajaran' => $tahunAjaran,
+            'tahun' => $tahun,
             'form_title' => 'Edit Data',
             'form_action' => route('admin.kinerja-dosen.penelitian-dtps.update', [
                 'penelitianId' => $penelitianDtps->id,

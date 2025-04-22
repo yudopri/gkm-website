@@ -4,14 +4,14 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
             <span class="text-muted fw-light">Kinerja Dosen /</span>
-            Produk/Jasa DTPS yang Diadopsi oleh Industri/Masyarakat
+            Karya Ilmiah DTPS yang Disitasi
         </h4>
 
         <div class="row">
             <div class="col-md-12">
 
                 <div class="card mb-4">
-                    <h5 class="card-header">Tabel Produk/Jasa DTPS yang Diadopsi oleh Industri/Masyarakat</h5>
+                    <h5 class="card-header">Tabel Karya Ilmiah DTPS yang Disitasi</h5>
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
@@ -27,10 +27,8 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Nama Dosen</th>
-                                        <th>Nama Produk/Jasa</th>
-                                        <th>Deskripsi <br>Poduk/Jasa</th>
-                                        <th>Bukti</th>
-                                        <th>Tahun <br>(YYYY)</th>
+                                        <th>Judul Artikel yang Disitasi (Jurnal, Volume, Tahun, Nomor, Halaman)</th>
+                                        <th>Jumlah Sitasi</th>
 
                                         <!-- Aksi -->
                                         <th>Aksi</th>
@@ -39,11 +37,42 @@
                                 <tbody class="table-border-bottom-0">
                                     <tr>
                                         <td class="text-center">1</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
+                                        <td class="text-wrap">Ahmad Fahriyannur Rosyady, S.Kom, M.MT</td>
+                                        <td class="text-wrap">
+                                            Pengembangan Digi Ecosmart, Ekosistem Ekonomi Digital Cerdas Berbasis Immersive Technology
+                                            PT Nuswantoro Informasi Teknologi (Journal of Electrical Engineering and Computer
+                                            (JEECOM), Vol. 5, 2023, No. 1, Hal. 1-3)
+                                        </td>
+                                        <td class="text-center">2</td>
+
+                                        <!-- Aksi -->
+                                        <td class="text-center">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                        <i class="bx bx-edit-alt me-1"></i> Edit
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                        <i class="bx bx-trash me-1"></i>
+                                                        Delete
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td class="text-wrap">Sholihah Ayu Wulandari, S.ST, M.Tr.T.</td>
+                                        <td class="text-wrap">
+                                            Pengembangan Digi Ecosmart, Ekosistem Ekonomi Digital Cerdas Berbasis Immersive Technology
+                                            PT Nuswantoro Informasi Teknologi (Journal of Electrical Engineering and Computer
+                                            (JEECOM), Vol. 5, 2023, No. 1, Hal. 1-3)
+                                        </td>
+                                        <td class="text-center">2</td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">

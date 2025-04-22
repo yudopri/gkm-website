@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nama_rekognisi')->nullable();
             $table->string('bukti_pendukung')->nullable();
             $table->string('tingkat')->nullable();
-            $table->string('tahun', 4)->nullable();
+            $table->string('tahun')->nullable();
 
             /* foreign_keys */
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
