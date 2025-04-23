@@ -16,7 +16,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="javascript:void(0);" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kinerja-dosen.luaran-lain.teknologi-karya.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -42,17 +42,12 @@
                                             Teknologi Tepat Guna, Produk (Produk Terstandarisasi, Produk Tersertifikasi), Karya Seni, Rekayasa Sosial
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-wrap">
-                                            MetaPolije
-                                        </td>
-                                        <td class="text-center">2023</td>
-                                        <td class="text-wrap">
-                                            Platform GIS data Analysis Berbasis Cloud
-                                        </td>
-
+                                    @foreach ($teknologi_karya as $karya)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
+                                            <td class="text-wrap">{{ $karya->luaran_penelitian }}</td>
+                                            <td class="text-center">{{ $karya->tahun }}</td>
+                                            <td class="text-wrap">{{ $karya->keterangan }}</td>
                                         <!-- Aksi -->
                                         <td class="text-center">
                                             <div class="dropdown">
@@ -72,6 +67,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

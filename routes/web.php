@@ -244,8 +244,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         // Route::resource('publikasi-ilmiah', PublikasiIlmiahController::class)->except('show');
         Route::get('/publikasi-ilmiah', [PublikasiIlmiahController::class, 'index'])->name('publikasi-ilmiah.index');
     Route::post('/publikasi-ilmiah', [PublikasiIlmiahController::class, 'store'])->name('publikasi-ilmiah.store');
-    // Route::get('/publikasi-ilmiah/{jenisArtikel}', [PublikasiIlmiahController::class, 'detail'])->name('publikasi-ilmiah.detail');
-
     Route::get('/publikasi-ilmiah/create', [PublikasiIlmiahController::class, 'create'])->name('publikasi-ilmiah.create');
     Route::get('/publikasi-ilmiah/{publikasiId}', [PublikasiIlmiahController::class, 'edit'])->name('publikasi-ilmiah.edit');
     Route::put('/publikasi-ilmiah/{publikasiId}', [PublikasiIlmiahController::class, 'update'])->name('publikasi-ilmiah.update');

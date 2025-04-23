@@ -24,18 +24,19 @@ class PublikasiIlmiahController extends Controller
         $tahun = $tahunAjaranObj->tahun_ajaran;
 
         $userId = Auth::id();
-
+        $publikasi = PublikasiIlmiahDosen::with('user')->get();
         // Get the totals grouped by 'jenis_artikel' for the given year and user
-        $totals = PublikasiIlmiahDosen::where('user_id', $userId)
-            ->whereNull('deleted_at')  // Soft delete check
-            ->where('tahun', $tahun)
-            ->groupBy('jenis_artikel')
-            ->selectRaw('jenis_artikel, COUNT(judul_artikel) as total')
-            ->get();  // Get results as a collection
+        $total = PublikasiIlmiahDosen::where('user_id', $userId)
+    ->whereNull('deleted_at')
+    ->where('tahun', $tahun)
+    ->count();
+
+
 
         // Return the view with just the total counts and unique 'jenis_artikel'
         return view('pages.admin.kinerja-dosen.publikasi-ilmiah.index', [
-            'totals' => $totals,
+            'publikasi' => $publikasi,
+            'totals' => $total,
             'tahun_ajaran' => $tahunAjaran,
             'tahun' => $tahun,
         ]);
@@ -47,41 +48,6 @@ class PublikasiIlmiahController extends Controller
         return back()->withErrors($e->getMessage());
     }
 }
-public function detail(string $tahunAjaran,string $jenisArtikel)
-{
-    try {
-        // Fetch the Year Object and ensure it's valid
-        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
-        $tahunAjaranId = $tahunAjaranObj->id;
-        $tahun = $tahunAjaranObj->tahun_ajaran;
-
-        $userId = Auth::id();
-
-        // Get the publication details
-        $publikasi = PublikasiIlmiahDosen::where('user_id', $userId)
-            ->whereNull('deleted_at')
-            ->where('tahun', $tahun)
-            ->where('jenis_artikel', $jenisArtikel)
-            ->get();  // Fetch the publication details
-
-
-
-        // Return the view with the fetched data
-        return view('pages.admin.kinerja-dosen.publikasi-ilmiah.detail', [
-            'publikasi' => $publikasi,
-            'tahun_ajaran' => $tahunAjaran,
-            'tahun' => $tahun,
-        ]);
-    } catch (\Exception $e) {
-        // Log the error for debugging purposes
-        \Log::error('Error fetching Publikasi Ilmiah Dosen data: ' . $e->getMessage());
-
-        // Return back with the error message
-        return back()->withErrors('There was an error fetching the publication details. Please try again.');
-    }
-}
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -151,7 +117,7 @@ public function detail(string $tahunAjaran,string $jenisArtikel)
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id,string $tahunAjaran)
+    public function edit(string $tahunAjaran,string $id)
     {
         try {
             $publikasi = PublikasiIlmiahDosen::with('user')->first();
@@ -178,7 +144,7 @@ public function detail(string $tahunAjaran,string $jenisArtikel)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id,string $tahunAjaran)
+    public function update(Request $request, string $tahunAjaran,string $id)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -210,7 +176,7 @@ public function detail(string $tahunAjaran,string $jenisArtikel)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $publikasi = PublikasiIlmiahDosen::findOrFail($id);

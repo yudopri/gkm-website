@@ -64,9 +64,8 @@ class HkiPatenController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
-                'judul_artikel' => 'required|string|max:255',
-                'jumlah_hki_paten' => 'required|string',
+                'luaran_penelitian' => 'required|string|max:255',
+                'keterangan' => 'required|string',
                 'tahun' => 'required|string',
             ]);
 
@@ -131,9 +130,8 @@ class HkiPatenController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
-                'judul_artikel' => 'required|string|max:255',
-                'jumlah_hki_paten' => 'required|string',
+                'luaran_penelitian' => 'required|string|max:255',
+                'keterangan' => 'required|string',
                 'tahun' => 'required|string',
             ]);
 

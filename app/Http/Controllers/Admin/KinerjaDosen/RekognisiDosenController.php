@@ -112,7 +112,7 @@ class RekognisiDosenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id,string $tahunAjaran)
+    public function edit(string $tahunAjaran,string $id)
     {
         try {
             $rekognisi = RekognisiDosen::with('user')->first();
@@ -138,7 +138,7 @@ class RekognisiDosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id,string $tahunAjaran)
+    public function update(Request $request,string $tahunAjaran,string $id)
     {
         try {
             $validator = Validator::make($request->all(), [

@@ -130,4 +130,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(PkmDtps::class, 'user_id');
     }
+    public function hki_paten()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
+    public function hki_cipta()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
+    public function buku_chapter()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
+    public function teknologi_karya()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
 }

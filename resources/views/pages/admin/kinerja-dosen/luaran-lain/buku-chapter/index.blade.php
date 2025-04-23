@@ -16,7 +16,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="javascript:void(0);" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kinerja-dosen.luaran-lain.buku-chapter.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -42,14 +42,14 @@
                                             Buku ber-ISBN, <i>Book Chapter</i>
                                         </td>
                                     </tr>
+                                    @foreach ($buku_chapter as $book)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
+                                            <td class="text-wrap">{{ $book->luaran_penelitian }}</td>
+                                            <td class="text-center">{{ $book->tahun }}</td>
+                                            <td class="text-wrap">{{ $book->keterangan }}</td>
 
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-wrap"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-wrap"> </td>
 
-                                        <!-- Aksi -->
                                         <td class="text-center">
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
@@ -68,6 +68,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

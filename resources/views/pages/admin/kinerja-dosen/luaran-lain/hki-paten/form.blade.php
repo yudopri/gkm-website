@@ -21,20 +21,14 @@
                         <form action="{{ $form_action }}" method="POST" enctype="multipart/form-data">
                             @csrf @method($form_method)
 
-                            @php
-                                $options = ['a' => 'Paten', 'b' => 'Paten Sederhana'];
-                            @endphp
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="luaran_penelitian">luaran penelitian</label>
+                                <label class="col-sm-2 col-form-label" for="luaran_penelitian">
+                                    Luaran Penelitian
+                                </label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" id="luaran_penelitian" name="luaran_penelitian" required>
-                                        @foreach ($options as $value => $label)
-                                            <option value="{{ $value }}" {{ old('luaran_penelitian', $hki_paten->luaran_penelitian) === $value ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control" id="luaran_penelitian" name="luaran_penelitian" value="{{ old('luaran_penelitian', $hki_paten->luaran_penelitian) }}"
+                                        autofocus required />
                                 </div>
                             </div>
 

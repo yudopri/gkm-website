@@ -35,18 +35,20 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody class="table-border-bottom-0">
+                                <tbody class="table-border-bottom-0">z
                                     <tr>
                                         <td class="text-center fw-bold">I</td>
                                         <td class="text-wrap fw-bold" colspan="4">
                                             HKI: a) Paten, b) Paten Sederhana
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
+                                    @foreach ($hki_paten as $paten)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
+                                            <td class="text-wrap">{{ $paten->luaran_penelitian }}</td>
+                                            <td class="text-center">{{ $paten->tahun }}</td>
+                                            <td class="text-wrap">{{ $paten->keterangan }}</td>
+
 
                                         <!-- Aksi -->
                                         <td class="text-center">
@@ -67,6 +69,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -25,22 +25,21 @@
                                 <thead class="table-info">
                                     <tr>
                                         <th rowspan="2">No.</th>
+                                        <th rowspan="2">Judul Artikel</th>
                                         <th rowspan="2">Jenis Publikasi</th>
-                                        <th rowspan="1">Jumlah Judul</th>
+                                        <th rowspan="2">Tahun <br>(YYYY)</th>
 
                                         <!-- Aksi -->
                                         <th rowspan="2">Aksi</th>
                                     </tr>
-                                    <tr>
-                                        <th class="text-center">TS</th>
-                                    </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                @foreach ($totals as $total)
+                                @foreach ($publikasi as $publik)
     <tr>
-        <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
-        <td>{{ $total->jenis_artikel }}</td>
-        <td class="text-center">{{ $total->total }}</td> <!-- Display the count -->
+        <td class="text-center">{{ $loop->iteration }}</td>
+        <td>{{ $publik->judul_artikel }}</td> <!-- Iteration counter -->
+        <td>{{ $publik->jenis_artikel }}</td><!-- Display the count -->
+        <td>{{ $publik->tahun }}</td>
 
         <!-- Aksi (Actions) -->
         <td class="text-center">
@@ -49,8 +48,8 @@
                     <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.detail', ['tahunAjaran' => $tahun_ajaran, 'jenisArtikel' => $total->jenis_artikel]) }}">
-    <i class="bx bx-edit-alt me-1"></i> Detail
+                <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.edit', ['tahunAjaran' => $tahun_ajaran, 'publikasiId' => $publik->id]) }}">
+    <i class="bx bx-edit-alt me-1"></i> Edit
 </a>
 
 </div>
@@ -62,8 +61,8 @@
                                 </tbody>
                                 <tfoot class="table-border-bottom-0">
                                     <tr>
-                                        <th colspan="2" class="rounded-start-bottom">Jumlah</th>
-                                        <th class="text-center">46</th>
+                                        <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
+                                        <th class="text-center">{{ $totals}}</th>
                                         <th class="rounded-end-bottom">Aksi</th>
                                     </tr>
                                 </tfoot>

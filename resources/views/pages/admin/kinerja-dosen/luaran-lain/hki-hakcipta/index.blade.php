@@ -16,7 +16,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="javascript:void(0);" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kinerja-dosen.luaran-lain.hki-hakcipta.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -45,15 +45,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-wrap">
-                                            Program Metaverse Untuk Media Pembelajaran Sistem Cerdas Dan Manajemen Agroindustri
-                                            Perkebunan
-                                        </td>
-                                        <td class="text-center">2024</td>
-                                        <td class="text-wrap">
-                                            HKI - Jenis Ciptaan Kompilasi Ciptaan/Data, Nomor Catatan 000583892
-                                        </td>
+                                        @foreach ($hki_hakcipta as $hki)
+                                            <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
+                                            <td class="text-wrap">{{ $hki->luaran_penelitian }}</td>
+                                            <td class="text-center">{{ $hki->tahun }}</td>
+                                            <td class="text-wrap">{{ $hki->keterangan }}</td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">
@@ -74,6 +70,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                        @endforeach
                                 </tbody>
                             </table>
                         </div>
