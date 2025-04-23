@@ -13,11 +13,6 @@
                     <h5 class="card-header">Tabel Pagelaran/Pameran/Presentasi/Publikasi Ilmiah DTPS</h5>
                     <hr class="my-0" />
                     <div class="card-body">
-                        <!-- #s btn tambah -->
-                        <a href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
-                            <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
-                        </a>
-                        <!-- #e btn tambah -->
 
                         <!-- #s tabel -->
                         <div class="table-responsive text-nowrap">
@@ -25,23 +20,21 @@
                                 <thead class="table-info">
                                     <tr>
                                         <th rowspan="2">No.</th>
+                                        <th rowspan="2">Nama Dosen</th>
+                                        <th rowspan="2">Judul Publikasi</th>
                                         <th rowspan="2">Jenis Publikasi</th>
-                                        <th rowspan="1">Jumlah Judul</th>
 
                                         <!-- Aksi -->
                                         <th rowspan="2">Aksi</th>
                                     </tr>
-                                    <tr>
-                                        <th class="text-center">TS</th>
-                                    </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                @foreach ($totals as $total)
+                                @foreach ($publikasi as $publik)
     <tr>
         <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
-        <td>{{ $total->jenis_artikel }}</td>
-        <td class="text-center">{{ $total->total }}</td> <!-- Display the count -->
-
+        <td>{{ $publik->nama_dosen }}</td>
+        <td>{{ $publik->judul_artikel }}</td>
+        <td>{{ $publik->jenis_artikel }}</td>
         <!-- Aksi (Actions) -->
         <td class="text-center">
             <div class="dropdown">
@@ -49,24 +42,18 @@
                     <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.detail', ['tahunAjaran' => $tahun_ajaran, 'jenisArtikel' => $total->jenis_artikel]) }}">
-    <i class="bx bx-edit-alt me-1"></i> Detail
-</a>
-
-</div>
-
+                <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.publikasi-ilmiah.edit', ['tahunAjaran' => $tahun_ajaran, 'publikasiId' => $publik->id, 'jenisArtikel' => $publik->jenis_artikel]) }}">
+                        <i class="bx bx-edit-alt me-1"></i> Edit
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0);">
+                        <i class="bx bx-trash me-1"></i> Delete
+                    </a>
+                </div>
             </div>
         </td>
     </tr>
 @endforeach
                                 </tbody>
-                                <tfoot class="table-border-bottom-0">
-                                    <tr>
-                                        <th colspan="2" class="rounded-start-bottom">Jumlah</th>
-                                        <th class="text-center">46</th>
-                                        <th class="rounded-end-bottom">Aksi</th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                         <!-- #e tabel -->

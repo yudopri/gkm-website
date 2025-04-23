@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin\KinerjaDosen;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\ProdukTeradopsiDosen;
 use Illuminate\Http\Request;
+use App\Models\TahunAjaranSemester;
 
 class ProdukTeradopsiController extends Controller
 {
@@ -15,7 +19,9 @@ class ProdukTeradopsiController extends Controller
     {
         try {
             $produk = ProdukTeradopsiDosen::with('user')->get();
-
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);
@@ -23,6 +29,7 @@ class ProdukTeradopsiController extends Controller
             return view('pages.admin.kinerja-dosen.produk-teradopsi.index', [
                 'produk_teradopsi' => $produk,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
@@ -36,9 +43,13 @@ class ProdukTeradopsiController extends Controller
     {
         try {
             $produk = new ProdukTeradopsiDosen();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
             return view('pages.admin.kinerja-dosen.produk-teradopsi.form', [
                 'produk_teradopsi' => $produk,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
                 'form_action' => route('admin.kinerja-dosen.produk-teradopsi.store', $tahunAjaran),
                 'form_method' => "POST",
@@ -107,6 +118,9 @@ class ProdukTeradopsiController extends Controller
     try {
         // Gunakan find() agar bisa menangani null
         $ProdukTeradopsiDosen = ProdukTeradopsiDosen::with('user')->find($id);
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
         $userId = Auth::id();
         if (!$ProdukTeradopsiDosen) {
             return back()->withErrors('Data tidak ditemukan.');
@@ -115,6 +129,7 @@ class ProdukTeradopsiController extends Controller
         return view('pages.admin.kinerja-dosen.produk-teradopsi.form', [
             'produk_teradopsi' => $ProdukTeradopsiDosen,
             'tahun_ajaran' => $tahunAjaran,
+            'tahun' => $tahun,
             'form_title' => 'Edit Data',
             'form_action' => route('admin.kinerja-dosen.produk-teradopsi.update', [
                 'produkId' => $ProdukTeradopsiDosen->id,

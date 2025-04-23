@@ -15,7 +15,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="javascript:void(0);" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kinerja-dosen.produk-teradopsi.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -24,6 +24,7 @@
                         <div class="table-responsive text-nowrap">
                             <table class="table table-bordered table-hover">
                                 <thead class="table-info">
+
                                     <tr>
                                         <th>No.</th>
                                         <th>Nama Dosen</th>
@@ -37,13 +38,14 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
+                                @foreach ($produk_teradopsi as $index => $produk)
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
+                                        <td class="text-center">{{ $index + 1 }}</td>
+                                        <td> {{ $produk->nama_dosen}} </td>
+                                        <td> {{ $produk->nama_produk}} </td>
+                                        <td> {{ $produk->deskripsi_produk}} </td>
+                                        <td> {{ $produk->bukti}}</td>
+                                        <td> {{ $produk->tahun}}</td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">
@@ -53,99 +55,22 @@
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                    <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.produk-teradopsi.edit', ['produkId' => $produk->id, 'tahunAjaran' => $tahun_ajaran]) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                                     </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
+                                                    <form action="{{ route('admin.kinerja-dosen.produk-teradopsi.destroy', ['produkId' => $produk->id, 'tahunAjaran' => $tahun_ajaran]) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                        <i class="bx bx-trash me-1"></i> Delete
+                                                    </button>
+                                                </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
 
-                                    {{-- @forelse ($penelitian_dtps as $penelitian)
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>
-                                                a) Perguruan Tinggi (POLIJE) <br>
-                                                b) Mandiri
-                                            </td>
-                                            <td class="text-center">12</td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td>Lembaga dalam negeri (diluar POLIJE)</td>
-                                            <td class="text-center">1</td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">3</td>
-                                            <td>Lembaga luar negeri</td>
-                                            <td class="text-center"> </td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td class="text-center" colspan="15"> Belum ada data kerjasama </td>
-                                        </tr>
-                                    @endforelse --}}
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

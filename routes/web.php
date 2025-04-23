@@ -244,6 +244,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         // Route::resource('publikasi-ilmiah', PublikasiIlmiahController::class)->except('show');
         Route::get('/publikasi-ilmiah', [PublikasiIlmiahController::class, 'index'])->name('publikasi-ilmiah.index');
     Route::post('/publikasi-ilmiah', [PublikasiIlmiahController::class, 'store'])->name('publikasi-ilmiah.store');
+    // Route::get('/publikasi-ilmiah/{jenisArtikel}', [PublikasiIlmiahController::class, 'detail'])->name('publikasi-ilmiah.detail');
+
     Route::get('/publikasi-ilmiah/create', [PublikasiIlmiahController::class, 'create'])->name('publikasi-ilmiah.create');
     Route::get('/publikasi-ilmiah/{publikasiId}', [PublikasiIlmiahController::class, 'edit'])->name('publikasi-ilmiah.edit');
     Route::put('/publikasi-ilmiah/{publikasiId}', [PublikasiIlmiahController::class, 'update'])->name('publikasi-ilmiah.update');
@@ -253,17 +255,17 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/sitasi-karya', [SitasiKaryaController::class, 'index'])->name('sitasi-karya.index');
     Route::post('/sitasi-karya', [SitasiKaryaController::class, 'store'])->name('sitasi-karya.store');
     Route::get('/sitasi-karya/create', [SitasiKaryaController::class, 'create'])->name('sitasi-karya.create');
-    Route::get('/sitasi-karya/{dosenPraktisiId}', [SitasiKaryaController::class, 'edit'])->name('sitasi-karya.edit');
-    Route::put('/sitasi-karya/{dosenPraktisiId}', [SitasiKaryaController::class, 'update'])->name('sitasi-karya.update');
-    Route::delete('/sitasi-karya/{dosenPraktisiId}', [SitasiKaryaController::class, 'destroy'])->name('sitasi-karya.destroy');
+    Route::get('/sitasi-karya/{sitasiId}', [SitasiKaryaController::class, 'edit'])->name('sitasi-karya.edit');
+    Route::put('/sitasi-karya/{sitasiId}', [SitasiKaryaController::class, 'update'])->name('sitasi-karya.update');
+    Route::delete('/sitasi-karya/{sitasiId}', [SitasiKaryaController::class, 'destroy'])->name('sitasi-karya.destroy');
         // Route::resource('produk-teradopsi', ProdukTeradopsiController::class)->except('show');
 
         Route::get('/produk-teradopsi', [ProdukTeradopsiController::class, 'index'])->name('produk-teradopsi.index');
     Route::post('/produk-teradopsi', [ProdukTeradopsiController::class, 'store'])->name('produk-teradopsi.store');
     Route::get('/produk-teradopsi/create', [ProdukTeradopsiController::class, 'create'])->name('produk-teradopsi.create');
-    Route::get('/produk-teradopsi/{dosenPraktisiId}', [ProdukTeradopsiController::class, 'edit'])->name('produk-teradopsi.edit');
-    Route::put('/produk-teradopsi/{dosenPraktisiId}', [ProdukTeradopsiController::class, 'update'])->name('produk-teradopsi.update');
-    Route::delete('/produk-teradopsi/{dosenPraktisiId}', [ProdukTeradopsiController::class, 'destroy'])->name('produk-teradopsi.destroy');
+    Route::get('/produk-teradopsi/{produkId}', [ProdukTeradopsiController::class, 'edit'])->name('produk-teradopsi.edit');
+    Route::put('/produk-teradopsi/{produkId}', [ProdukTeradopsiController::class, 'update'])->name('produk-teradopsi.update');
+    Route::delete('/produk-teradopsi/{produkId}', [ProdukTeradopsiController::class, 'destroy'])->name('produk-teradopsi.destroy');
         Route::prefix('luaran-lain')->name('luaran-lain.')->group(function () {
             // Route::resource('hki-paten', HkiPatenController::class)->except('show');
             Route::get('/hki-paten', [HkiPatenController::class, 'index'])->name('hki-paten.index');

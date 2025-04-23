@@ -1,10 +1,10 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
             <span class="text-muted fw-light">Kinerja Dosen /</span>
-            <span class="text-muted fw-light">Pengakuan/Rekognisi DTPS /</span>
+            <span class="text-muted fw-light">Pengakuan/sitasi DTPS /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Rekognisi DTPS </h5>
+                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/sitasi DTPS </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -25,51 +25,24 @@
                                 <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $rekognisi->nama_dosen) }}" autofocus required />
+                                        value="{{ old('nama_dosen', $sitasi->nama_dosen) }}" autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="bidangKeahlian">Bidang Keahlian</label>
+                                <label class="col-sm-2 col-form-label" for="judul_artikel">Judul Artikel</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="bidangKeahlian" name="bidang_keahlian"
-                                        value="{{ old('bidang_keahlian', $rekognisi->bidang_keahlian) }}" placeholder="keahlian1, keahlian2, dst."
-                                        required />
-                                    <div class="form-text"> pisahkan dengan koma (,) </div>
+                                    <input type="text" class="form-control" id="judul_artikel" name="judul_artikel"
+                                        value="{{ old('judul_artikel', $sitasi->judul_artikel) }}" placeholder="Reviewer Jurnal.." required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaRekognisi">Nama Rekognisi</label>
+                                <label class="col-sm-2 col-form-label" for="jumlah_sitasi">Jumlah Sitasi</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaRekognisi" name="nama_rekognisi"
-                                        value="{{ old('nama_rekognisi', $rekognisi->nama_rekognisi) }}" placeholder="Reviewer Jurnal.." required />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="buktiPendukung">Bukti Pendukung Rekognisi (URL)</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="text" id="buktiPendukung" name="bukti_pendukung"
-                                        value="{{ old('bukti_pendukung', $rekognisi->bukti_pendukung) }}" placeholder="https://drive.google.com/.."
-                                        required />
-                                </div>
-                            </div>
-
-                            @php
-                                $options = ['lokal' => 'Wilayah/Lokal', 'nasional' => 'Nasional', 'internasional' => 'Internasional'];
-                            @endphp
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="tingkat">Tingkat</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" id="tingkat" name="tingkat" required>
-                                        @foreach ($options as $value => $label)
-                                            <option value="{{ $value }}" {{ old('tingkat', $rekognisi->tingkat) === $value ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <input type="number" class="form-control" id="jumlah_sitasi" name="jumlah_sitasi"
+                                        value="{{ $sitasi->jumlah_sitasi ?? 0 }}"
+                                        autofocus required />
                                 </div>
                             </div>
 
@@ -78,7 +51,7 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $rekognisi->tahun) }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ $tahun }}"
                                         required />
                                 </div>
                             </div>

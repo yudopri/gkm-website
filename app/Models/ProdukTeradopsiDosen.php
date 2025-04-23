@@ -16,7 +16,9 @@ class ProdukTeradopsiDosen extends Model
      * @var string
      */
     protected $table = 'produk_teradopsi_dosen';
-    protected $fiilable = [
+
+    // Correct the typo here
+    protected $fillable = [
         'user_id',
         'nama_dosen',
         'nama_produk',
@@ -24,4 +26,9 @@ class ProdukTeradopsiDosen extends Model
         'bukti',
         'tahun',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

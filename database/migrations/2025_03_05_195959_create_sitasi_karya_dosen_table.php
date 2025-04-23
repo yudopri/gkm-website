@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('nama_dosen');
-            $table->string('judul_sitasi');
+            $table->string('judul_artikel');
+            $table->integer('jumlah_sitasi');
             $table->string('tahun')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
