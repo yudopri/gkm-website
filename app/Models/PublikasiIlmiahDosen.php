@@ -16,13 +16,16 @@ class PublikasiIlmiahDosen extends Model
      * @var string
      */
     protected $table = 'publikasi_ilmiah_dosen';
-    protected $fiilable = [
+
+    // Correct the typo here
+    protected $fillable = [
         'user_id',
         'nama_dosen',
         'judul_artikel',
         'jenis_artikel',
         'tahun',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

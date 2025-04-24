@@ -20,6 +20,6 @@ class EvalKesesuaianKerja extends Model
         'tahun',
         'jumlah_lulusan',
         'jumlah_lulusan_terlacak',
-        'jumlah_lulusan_tingkat',
+        'jumlah_lulusan_bekerja',
     ];
 }

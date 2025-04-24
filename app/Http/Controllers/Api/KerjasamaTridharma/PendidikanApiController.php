@@ -44,7 +44,7 @@ class PendidikanApiController extends Controller
             'tahun_berakhir' => 'required|string',
         ];
     }
-    
+
     /**
      * Get validation rules for updating a record.
      *

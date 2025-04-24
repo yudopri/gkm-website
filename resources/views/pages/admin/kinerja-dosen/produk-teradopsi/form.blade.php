@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -53,7 +53,7 @@
                                         required />
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="Tahun">
                                     Tahun (YYYY)

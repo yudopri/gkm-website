@@ -17,8 +17,14 @@ class EvalKepuasanPengguna extends Model
     protected $table = 'eval_kepuasan_pengguna';
     protected $fiilable = [
         'user_id',
-        'tahun',
+        'jenis_kemampuan',
+        'tingkat_kepuasan_sangat_baik',
+        'tingkat_kepuasan_baik',
+        'tingkat_kepuasan_cukup',
+        'tingkat_kepuasan_kurang',
+        'rencana_tindakan',
         'jumlah_lulusan',
-        'jumlah_tanggapan',
+        'jumlah_responden',
+        'tahun',
     ];
 }

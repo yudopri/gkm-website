@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('tahun')->nullable();
-            $table->integer('jumlah_lulusan');
-            $table->integer('jumlah_lulusan_terlacak');
-            $table->integer('jumlah_lulusan_terlacak_dipesan');
-            $table->double('jumlah_lulusan_waktu');
+            $table->integer('jumlah_lulusan')->default(0);
+            $table->integer('jumlah_lulusan_terlacak')->default(0);
+            $table->integer('jumlah_lulusan_terlacak_dipesan')->default(0);
+            $table->integer('jumlah_lulusan_waktu_tiga_bulan')->default(0);
+            $table->integer('jumlah_lulusan_waktu_enam_bulan')->default(0);
+            $table->integer('jumlah_lulusan_waktu_sembilan_bulan')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();

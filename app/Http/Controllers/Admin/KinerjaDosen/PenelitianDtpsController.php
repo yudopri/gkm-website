@@ -81,34 +81,45 @@ class PenelitianDtpsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,string $tahunAjaran)
-    {
-        try {
-            // dd($request->all());
-            $validator = Validator::make($request->all(), [
-                'jumlah_judul' => 'required|integer',
-                'sumber_dana' => 'required|string|in:lokal,nasional,internasional',
-                'tahun_penelitian' => 'required|string',
-            ]);
+    public function store(Request $request, string $tahunAjaran)
+{
+    try {
+        $validator = Validator::make($request->all(), [
+            'jumlah_judul' => 'required|integer',
+            'sumber_dana' => 'required|string|in:lokal,nasional,internasional',
+            'tahun_penelitian' => 'required|string',
+        ]);
 
-            if ($validator->fails()) {
-                return back()->withErrors($validator->messages()->all()[0])->withInput();
-            }
-            $validated = $request->all();
-            $validated['user_id'] = Auth::id();
-
-            $create = PenelitianDtps::create($validated);
-
-            if ($create) {
-                return redirect()->route('admin.kinerja-dosen.penelitian-dtps.index', $tahunAjaran)
-                    ->with('toast_success', 'Data penelitian dtps berhasil ditambahkan');
-            }
-
-            throw new \Exception('Data penelitian dtps gagal ditambahkan');
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages()->all()[0])->withInput();
         }
+
+        $validated = $request->only(['jumlah_judul', 'sumber_dana', 'tahun_penelitian']);
+        $validated['user_id'] = Auth::id();
+
+        // Cari data yang sudah ada
+        $existing = PenelitianDtps::where('user_id', $validated['user_id'])
+            ->where('tahun_penelitian', $validated['tahun_penelitian'])
+            ->where('sumber_dana', $validated['sumber_dana'])
+            ->first();
+
+        if ($existing) {
+            // Tambahkan jumlah_judul
+            $existing->jumlah_judul += $validated['jumlah_judul'];
+            $existing->save();
+        } else {
+            // Buat data baru
+            PenelitianDtps::create($validated);
+        }
+
+        return redirect()->route('admin.kinerja-dosen.penelitian-dtps.index', $tahunAjaran)
+            ->with('toast_success', 'Data penelitian dtps berhasil disimpan');
+    } catch (\Exception $e) {
+        return back()->withErrors($e->getMessage())->withInput();
     }
+}
+
+
 
     /**
      * Display the specified resource.
@@ -116,10 +127,10 @@ class PenelitianDtpsController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'kerjasama_tridharma_pendidikan')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'penelitian_dtp')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.kerjasama-tridharma.detail-pendidikan', [
-                'data_dosen' => $dosen,
+            return view('pages.admin.petugas.kinerja-dosen.penelitian-dtps.show', [
+                'penelitian' => $dosen,
                 'dosenId' => $dosen->id,
             ]);
         } catch (\Exception $e) {

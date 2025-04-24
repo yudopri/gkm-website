@@ -15,7 +15,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="javascript:void(0);" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.create', $tahun_ajaran)}}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -50,114 +50,47 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">TIF410701</td>
-                                        <td>Agama</td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">100</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">RPS</td>
-                                        <td class="text-center">POLIJE</td>
+                                    @foreach ($kurikulum_pembelajaran as $kurikulum)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-center">{{ $kurikulum->semester }}</td>
+                                            <td class="text-center">{{ $kurikulum->kode_mata_kuliah }}</td>
+                                            <td>{{ $kurikulum->nama_mata_kuliah }}</td>
+                                            <td class="text-center">{{ $kurikulum->mata_kuliah_kompetensi ? '✓' : ''}}</td>
+                                            <td class="text-center">{{ $kurikulum->sks_kuliah }}</td>
+                                            <td class="text-center">{{ $kurikulum->sks_seminar }}</td>
+                                            <td class="text-center">{{ $kurikulum->sks_praktikum }}</td>
+                                            <td class="text-center">{{ $kurikulum->konversi_sks }}</td>
+                                            <td class="text-center">{{ $kurikulum->capaian_kuliah_sikap ? '✓' : '' }}</td>
+                                            <td class="text-center">{{ $kurikulum->capaian_kuliah_pengetahuan ? '✓' : '' }}</td>
+                                            <td class="text-center">{{ $kurikulum->capaian_kuliah_keterampilan_umum ? '✓' : '' }}</td>
+                                            <td class="text-center">{{ $kurikulum->capaian_kuliah_keterampilan_khusus ? '✓' : '' }}</td>
+                                            <td class="text-center">{{ $kurikulum->dokumen }}</td>
+                                            <td class="text-center">{{ $kurikulum->unit_penyelenggara }}</td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">
                                             <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                    <a class="dropdown-item" href="{{ route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.edit', ['tahunAjaran' => $tahun_ajaran, 'kurikulumId' => $kurikulum->id]) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                                     </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">TIF410702</td>
-                                        <td>Pancasila</td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">100</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">RPS</td>
-                                        <td class="text-center">POLIJE</td>
 
-                                        <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
+                                                    <form action="{{ route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.destroy', ['tahunAjaran' => $tahun_ajaran, 'kurikulumId' => $kurikulum->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="text-center">3</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">TIF410703</td>
-                                        <td>Basic English</td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">0</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">170</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center">RPS</td>
-                                        <td class="text-center">JTI</td>
-
-                                        <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

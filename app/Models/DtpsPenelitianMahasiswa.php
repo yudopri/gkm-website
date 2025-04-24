@@ -15,11 +15,16 @@ class DtpsPenelitianMahasiswa extends Model
      * @var string
      */
     protected $table = 'dtps_penelitian_mahasiswa';
-    protected $fiilable = [
+    protected $fillable = [
         'user_id',
         'nama_dosen',
         'tema_penelitian',
         'nama_mahasiswa',
         'judul',
+        'tahun',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

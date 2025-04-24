@@ -106,22 +106,13 @@ class RekognisiDosenController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            $dosen = User::with('profile', 'rekognisi_dtps')->whereId($id)->firstOrFail();
-
-            return view('pages.admin.petugas.kinerja-dosen.detail-mhs-asing', [
-                'data_dosen' => $dosen,
-                'dosenId' => $dosen->id,
-            ]);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id,string $tahunAjaran)
+    public function edit(string $tahunAjaran,string $id)
     {
         try {
             $rekognisi = RekognisiDosen::with('user')->first();
@@ -147,7 +138,7 @@ class RekognisiDosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id,string $tahunAjaran)
+    public function update(Request $request,string $tahunAjaran,string $id)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -183,7 +174,7 @@ class RekognisiDosenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $dosenPraktisi = RekognisiDosen::findOrFail($id);

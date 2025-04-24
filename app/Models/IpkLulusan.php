@@ -19,6 +19,8 @@ class IpkLulusan extends Model
         'user_id',
         'tahun',
         'jumlah_lulusan',
-        'ipk',
+        'ipk_minimal',
+        'ipk_maksimal',
+        'ipk_rata_rata',
     ];
 }

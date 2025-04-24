@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('tema_penelitian')->nullable();
             $table->string('nama_mahasiswa')->nullable();
             $table->string('judul')->nullable();
+            $table->string('tahun')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();

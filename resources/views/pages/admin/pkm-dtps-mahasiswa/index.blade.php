@@ -34,66 +34,36 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
+                                    @foreach ($pkm_dtps_mhs as $pkm)
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-wrap">Cloud Computing</td>
-                                        <td class="text-wrap">
-                                            Irsyad Romadloni, Ageng Puji Pangestu
-                                        </td>
-                                        <td class="text-wrap">
-                                            PEMANFAATAN MODUL SMART FINANCE UNTUK MENDUKUNG EFEKTIFITAS PENGELOLAHAN AKTIFITAS TERPADU
-                                            SD KHADIJAH WONOREJO SURABAYA
-                                        </td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-wrap">{{ $pkm->tema }}</td>
+                                        <td class="text-wrap">{{ $pkm->nama_mhs }}</td>
+                                        <td class="text-wrap">{{ $pkm->judul }}</td>
 
-                                        <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-wrap">Digital Marketing</td>
-                                        <td class="text-wrap">
-                                            Nabila Rahma Y, Mohammad Dwiky R.A., Rizma Qhuzaimatul Abidah
-                                        </td>
-                                        <td class="text-wrap">
-                                            PENERAPAN TEKNOLOGI PRODUKSI, MODERNISASI DESAIN KEMASAN, DAN PEMASARAN DIGITAL UNTUK
-                                            MENINGKATKAN DAYA SAING PRODUK KRUPUK RAMBAK SAPI DI UD. IKABA KABUPATEN MOJOKERTO
-                                        </td>
+                                    <!-- Aksi -->
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{ route('admin.dtps-mahasiswa.pkm-dtps-mahasiswa.edit', ['tahunAjaran' => $tahun_ajaran, 'pkmId' => $pkm->id]) }}">
+                                                    <i class="bx bx-edit-alt me-1"></i> Edit
+                                                </a>
 
-                                        <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
-                                                </div>
+                                                <form action="{{ route('admin.dtps-mahasiswa.pkm-dtps-mahasiswa.destroy', ['tahunAjaran' => $tahun_ajaran, 'pkmId' => $pkm->id]) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                        <i class="bx bx-trash me-1"></i> Delete
+                                                    </button>
+                                                </form>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

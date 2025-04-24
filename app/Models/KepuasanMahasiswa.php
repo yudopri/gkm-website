@@ -16,4 +16,20 @@ class KepuasanMahasiswa extends Model
      * @var string
      */
     protected $table = 'kepuasan_mahasiswa';
+
+protected $fillable = [
+        'user_id',
+        'aspek_penilaian',
+        'tingkat_kepuasan_sangat_baik',
+        'tingkat_kepuasan_baik',
+        'tingkat_kepuasan_cukup',
+        'tingkat_kepuasan_kurang',
+        'rencana_tindakan',
+        'tahun',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

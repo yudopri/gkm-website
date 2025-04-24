@@ -36,32 +36,37 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-wrap"> </td>
-                                        <td class="text-wrap"> </td>
-                                        <td class="text-wrap"> </td>
-                                        <td class="text-wrap"> </td>
+                                    @foreach ($rujukan_tesis as $rujukan)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-wrap">{{ $rujukan->nama_dosen }}</td>
+                                            <td class="text-wrap">{{ $rujukan->tema_penelitian }}</td>
+                                            <td class="text-wrap">{{ $rujukan->nama_mahasiswa }}</td>
+                                            <td class="text-wrap">{{ $rujukan->judul }}</td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">
                                             <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                    <a class="dropdown-item" href="{{ route('admin.penelitian-dtps.rujukan-tesis.edit', ['tahunAjaran' => $tahun_ajaran, 'rujukanId' => $rujukan->id]) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                                     </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
+
+                                                    <form action="{{ route('admin.penelitian-dtps.rujukan-tesis.destroy', ['tahunAjaran' => $tahun_ajaran, 'rujukanId' => $rujukan->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
