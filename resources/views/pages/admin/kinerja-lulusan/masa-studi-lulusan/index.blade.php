@@ -19,6 +19,12 @@
                     <div class="collapse show" id="masa-studi-d3">
                         <hr class="my-0" />
                         <div class="card-body">
+
+                        <!-- #s btn tambah -->
+                        <a href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.create', $tahun_ajaran) . '?masaStudi=' . urlencode('Diploma Tiga') }}" class="btn btn-info mb-3">
+                            <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
+                        </a>
+                        <!-- #e btn tambah -->
                             <!-- #s tabel -->
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-hover">
@@ -42,36 +48,41 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        <tr>
-                                            <td class="text-center">TS-2</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
+                                        @foreach ($diploma as $data)
+                                            <tr>
+                                                <td class="text-center">{{ $data->tahun }}</td>
+                                                <td class="text-center">{{ $data->jumlah_mhs_diterima }}</td>
+                                                <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_4 }}</td>
+                                                <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_3 }}</td>
+                                                <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_2 }}</td>
+                                                <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_1 }}</td>
+                                                <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts }}</td>
+                                                <td class="text-center">{{ $data->jumlah_lulusan }}</td>
+                                                <td class="text-center">{{ $data->mean_masa_studi }}</td>
 
                                             <!-- Aksi -->
                                             <td class="text-center">
                                                 <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
+                                                        <a class="dropdown-item" href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.edit', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) . '?masaStudi=' . urlencode('Diploma Tiga') }}">
                                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                                         </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
+
+                                                        <form action="{{ route('admin.kinerja-lulusan.masa-studi-lulusan.destroy', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) }}" method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                                <i class="bx bx-trash me-1"></i> Delete
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -91,6 +102,11 @@
                     <div class="collapse show" id="masa-studi-d4">
                         <hr class="my-0" />
                         <div class="card-body">
+                            <!-- #s btn tambah -->
+                            <a href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.create', $tahun_ajaran) . '?masaStudi=' . urlencode('Sarjana/Sarjana Terapan') }}" class="btn btn-info mb-3">
+                                <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
+                            </a>
+                            <!-- #e btn tambah -->
                             <!-- #s tabel -->
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-hover">
@@ -116,38 +132,43 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
+                                        @foreach ($sarjana as $data)
                                         <tr>
-                                            <td class="text-center">TS-2</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
+                                            <td class="text-center">{{ $data->tahun }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_diterima }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_6 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_5 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_4 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_3 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_2 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_1 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts }}</td>
+                                            <td class="text-center">{{ $data->jumlah_lulusan }}</td>
+                                            <td class="text-center">{{ $data->mean_masa_studi }}</td>
 
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
+                                        <!-- Aksi -->
+                                        <td class="text-center">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.edit', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) . '?masaStudi=' . urlencode('Sarjana/Sarjana Terapan') }}">
+                                                        <i class="bx bx-edit-alt me-1"></i> Edit
+                                                    </a>
+
+                                                    <form action="{{ route('admin.kinerja-lulusan.masa-studi-lulusan.destroy', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -167,6 +188,11 @@
                     <div class="collapse show" id="masa-studi-s2">
                         <hr class="my-0" />
                         <div class="card-body">
+                            <!-- #s btn tambah -->
+                            <a href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.create', $tahun_ajaran) . '?masaStudi=' . urlencode('Magister/Magister Terapan') }}" class="btn btn-info mb-3">
+                                <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
+                            </a>
+                            <!-- #e btn tambah -->
                             <!-- #s tabel -->
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-hover">
@@ -189,35 +215,40 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
+                                        @foreach ($magister as $data)
                                         <tr>
-                                            <td class="text-center">TS-1</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
+                                            <td class="text-center">{{ $data->tahun }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_diterima }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_3 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_2 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts_1 }}</td>
+                                            <td class="text-center">{{ $data->jumlah_mhs_lulus_akhir_ts }}</td>
+                                            <td class="text-center">{{ $data->jumlah_lulusan }}</td>
+                                            <td class="text-center">{{ $data->mean_masa_studi }}</td>
 
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
+                                        <!-- Aksi -->
+                                        <td class="text-center">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.edit', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) . '?masaStudi=' . urlencode('Magister/Magister Terapan') }}">
+                                                        <i class="bx bx-edit-alt me-1"></i> Edit
+                                                    </a>
+
+                                                    <form action="{{ route('admin.kinerja-lulusan.masa-studi-lulusan.destroy', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

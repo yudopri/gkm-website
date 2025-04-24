@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -22,70 +22,45 @@
                             @csrf @method($form_method)
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen Industri/Praktisi</label>
+                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan">Jumlah Lulusan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $dosen->nama_dosen) }}" required />
+                                    <input type="number" class="form-control" id="jumlah_lulusan" name="jumlah_lulusan"
+                                        value="{{ old('jumlah_lulusan', $ipk_lulusan->jumlah_lulusan) }}" required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="NIDK">NIDK</label>
+                                <label class="col-sm-2 col-form-label" for="ipk_minimal">IPK Minimal</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="NIDK" name="nidk" value="{{ old('nidk', $dosen->nidk) }}" />
+                                    <input type="number" step="0.01" class="form-control" id="ipk_minimal" name="ipk_minimal"
+                                        value="{{ old('ipk_minimal', $ipk_lulusan->ipk_minimal) }}" required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="PerusahaanIndustri">
-                                    Perusahaan/Industri
+                                <label class="col-sm-2 col-form-label" for="ipk_maksimal">IPK Maksimal</label>
+                                <div class="col-sm-10">
+                                    <input type="number" step="0.01" class="form-control" id="ipk_maksimal" name="ipk_maksimal"
+                                        value="{{ old('ipk_maksimal', $ipk_lulusan->ipk_maksimal) }}" required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="ipk_rata_rata">IPK Rata Rata</label>
+                                <div class="col-sm-10">
+                                    <input type="number" step="0.01" class="form-control" id="ipk_rata_rata" name="ipk_rata_rata"
+                                        value="{{ old('ipk_rata_rata', $ipk_lulusan->ipk_rata_rata) }}" required />
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="Tahun">
+                                    Tahun Lulusan (YYYY/YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="PerusahaanIndustri" name="perusahaan"
-                                        value="{{ old('perusahaan', $dosen->perusahaan) }}" />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="PendTertinggi">
-                                    Pendidikan Tertinggi
-                                </label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="PendTertinggi" name="pendidikan_tertinggi"
-                                        value="{{ old('pendidikan_tertinggi', $dosen->pendidikan_tertinggi) }}" />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="bidangKeahlian">Bidang Keahlian</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="bidangKeahlian" name="bidang_keahlian"
-                                        value="{{ old('bidang_keahlian', $dosen->bidang_keahlian) }}" placeholder="keahlian1, keahlian2, dst." />
-                                    <div class="form-text"> pisahkan dengan koma (,) </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="sertifikatKompetensi">Sertifikat Kompetensi/ Profesi/ Industri</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="sertifikatKompetensi" name="sertifikat_kompetensi">{{ old('sertifikat_kompetensi', $dosen->sertifikat_kompetensi) }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="matkulDiampu">
-                                    Mata Kuliah yang Diampu
-                                </label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="matkulDiampu" name="mk_diampu">{{ old('mk_diampu', $dosen->mk_diampu) }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="BobotKredit">Bobot Kredit (sks)</label>
-                                <div class="col-sm-10">
-                                    <input type="number" min="0" class="form-control" id="BobotKredit" name="bobot_kredit_sks"
-                                        value="{{ old('bobot_kredit_sks', $dosen->bobot_kredit_sks) }}" />
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $ipk_lulusan->tahun)}}"
+                                        required />
                                 </div>
                             </div>
 

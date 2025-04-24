@@ -15,7 +15,7 @@ class MasaStudiLulusan extends Model
      * @var string
      */
     protected $table = 'masa_studi_lulusan';
-    protected $fiilable = [
+    protected $fillable = [
         'user_id',
         'tahun',
         'masa_studi',
@@ -30,4 +30,8 @@ class MasaStudiLulusan extends Model
         'jumlah_lulusan',
         'mean_masa_studi',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

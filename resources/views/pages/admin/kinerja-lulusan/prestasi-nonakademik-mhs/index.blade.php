@@ -9,7 +9,7 @@
         </h4>
 
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12">
 
                 <div class="card mb-4">
                     <h5 class="card-header">Tabel 8.B.2 | Prestasi Non-akademik Mahasiswa</h5>
@@ -41,64 +41,45 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
+                                    @foreach ($prestasi_nonakademik as $nonakademik)
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-wrap">
-                                            Kenyo Gendis - Kejuaraan Daerah Atletik Se Jawa Timur Tahun 2023
-                                        </td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td>Juara 3</td>
-
-                                        <!-- Aksi -->
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-wrap">{{ $nonakademik->nama_kegiatan }}</td>
                                         <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            @if ($nonakademik->tingkat == 'lokal') ✓ @endif
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-wrap">
-                                            Kenyo Gendis - Lomba Atletik 400M Putri Pekan Olahraga dan Seni (PORSENI) XIV Tahun 2024
-                                        </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center">✓</td>
-                                        <td class="text-center"> </td>
-                                        <td>Juara 1</td>
-
-                                        <!-- Aksi -->
                                         <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            @if ($nonakademik->tingkat == 'nasional') ✓ @endif
                                         </td>
-                                    </tr>
+                                        <td class="text-center">
+                                            @if ($nonakademik->tingkat == 'internasional') ✓ @endif
+                                        </td>
+
+                                        <td class="text-wrap">{{ $nonakademik->prestasi }}</td>
+
+                                    <!-- Aksi -->
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.edit', ['tahunAjaran' => $tahun_ajaran, 'nonakademikId' => $nonakademik->id]) }}">
+                                                    <i class="bx bx-edit-alt me-1"></i> Edit
+                                                </a>
+
+                                                <form action="{{ route('admin.kinerja-lulusan.prestasi-mahasiswa.nonakademik.destroy', ['tahunAjaran' => $tahun_ajaran, 'nonakademikId' => $nonakademik->id]) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                        <i class="bx bx-trash me-1"></i> Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
