@@ -299,68 +299,68 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/pkm-dtps-mahasiswa', [PkmDtpsMahasiswaController::class, 'index'])->name('pkm-dtps-mahasiswa.index');
     Route::post('/pkm-dtps-mahasiswa', [PkmDtpsMahasiswaController::class, 'store'])->name('pkm-dtps-mahasiswa.store');
     Route::get('/pkm-dtps-mahasiswa/create', [PkmDtpsMahasiswaController::class, 'create'])->name('pkm-dtps-mahasiswa.create');
-    Route::get('/pkm-dtps-mahasiswa/{dosenPraktisiId}', [PkmDtpsMahasiswaController::class, 'edit'])->name('pkm-dtps-mahasiswa.edit');
-    Route::put('/pkm-dtps-mahasiswa/{dosenPraktisiId}', [PkmDtpsMahasiswaController::class, 'update'])->name('pkm-dtps-mahasiswa.update');
-    Route::delete('/pkm-dtps-mahasiswa/{dosenPraktisiId}', [PkmDtpsMahasiswaController::class, 'destroy'])->name('pkm-dtps-mahasiswa.destroy');
+    Route::get('/pkm-dtps-mahasiswa/{pkmId}', [PkmDtpsMahasiswaController::class, 'edit'])->name('pkm-dtps-mahasiswa.edit');
+    Route::put('/pkm-dtps-mahasiswa/{pkmId}', [PkmDtpsMahasiswaController::class, 'update'])->name('pkm-dtps-mahasiswa.update');
+    Route::delete('/pkm-dtps-mahasiswa/{pkmId}', [PkmDtpsMahasiswaController::class, 'destroy'])->name('pkm-dtps-mahasiswa.destroy');
     });
     Route::prefix('kinerja-lulusan/{tahunAjaran}')->name('kinerja-lulusan.')->group(function () {
 
     Route::get('/ipk-lulusan', [IpkLulusanController::class, 'index'])->name('ipk-lulusan.index');
         Route::post('/ipk-lulusan', [IpkLulusanController::class, 'store'])->name('ipk-lulusan.store');
         Route::get('/ipk-lulusan/create', [IpkLulusanController::class, 'create'])->name('ipk-lulusan.create');
-        Route::get('/ipk-lulusan/{dosenPraktisiId}', [IpkLulusanController::class, 'edit'])->name('ipk-lulusan.edit');
-        Route::put('/ipk-lulusan/{dosenPraktisiId}', [IpkLulusanController::class, 'update'])->name('ipk-lulusan.update');
-        Route::delete('/ipk-lulusan/{dosenPraktisiId}', [IpkLulusanController::class, 'destroy'])->name('ipk-lulusan.destroy');
+        Route::get('/ipk-lulusan/{ipkId}', [IpkLulusanController::class, 'edit'])->name('ipk-lulusan.edit');
+        Route::put('/ipk-lulusan/{ipkId}', [IpkLulusanController::class, 'update'])->name('ipk-lulusan.update');
+        Route::delete('/ipk-lulusan/{ipkId}', [IpkLulusanController::class, 'destroy'])->name('ipk-lulusan.destroy');
 
     Route::prefix('prestasi-mahasiswa')->name('prestasi-mahasiswa.')->group(function () {
         Route::get('/akademik', [AkademikController::class, 'index'])->name('akademik.index');
         Route::post('/akademik', [AkademikController::class, 'store'])->name('akademik.store');
         Route::get('/akademik/create', [AkademikController::class, 'create'])->name('akademik.create');
-        Route::get('/akademik/{dosenPraktisiId}', [AkademikController::class, 'edit'])->name('akademik.edit');
-        Route::put('/akademik/{dosenPraktisiId}', [AkademikController::class, 'update'])->name('akademik.update');
-        Route::delete('/akademik/{dosenPraktisiId}', [AkademikController::class, 'destroy'])->name('akademik.destroy');
+        Route::get('/akademik/{akademikId}', [AkademikController::class, 'edit'])->name('akademik.edit');
+        Route::put('/akademik/{akademikId}', [AkademikController::class, 'update'])->name('akademik.update');
+        Route::delete('/akademik/{akademikId}', [AkademikController::class, 'destroy'])->name('akademik.destroy');
 
         Route::get('/nonakademik', [NonakademikController::class, 'index'])->name('nonakademik.index');
         Route::post('/nonakademik', [NonakademikController::class, 'store'])->name('nonakademik.store');
         Route::get('/nonakademik/create', [NonakademikController::class, 'create'])->name('nonakademik.create');
-        Route::get('/nonakademik/{dosenPraktisiId}', [NonakademikController::class, 'edit'])->name('nonakademik.edit');
-        Route::put('/nonakademik/{dosenPraktisiId}', [NonakademikController::class, 'update'])->name('nonakademik.update');
-        Route::delete('/nonakademik/{dosenPraktisiId}', [NonakademikController::class, 'destroy'])->name('nonakademik.destroy');
+        Route::get('/nonakademik/{nonakademikId}', [NonakademikController::class, 'edit'])->name('nonakademik.edit');
+        Route::put('/nonakademik/{nonakademikId}', [NonakademikController::class, 'update'])->name('nonakademik.update');
+        Route::delete('/nonakademik/{nonakademikId}', [NonakademikController::class, 'destroy'])->name('nonakademik.destroy');
     });
     Route::get('/masa-studi-lulusan', [MasaStudiLulusanController::class, 'index'])->name('masa-studi-lulusan.index');
         Route::post('/masa-studi-lulusan', [MasaStudiLulusanController::class, 'store'])->name('masa-studi-lulusan.store');
         Route::get('/masa-studi-lulusan/create', [MasaStudiLulusanController::class, 'create'])->name('masa-studi-lulusan.create');
-        Route::get('/masa-studi-lulusan/{dosenPraktisiId}', [MasaStudiLulusanController::class, 'edit'])->name('masa-studi-lulusan.edit');
-        Route::put('/masa-studi-lulusan/{dosenPraktisiId}', [MasaStudiLulusanController::class, 'update'])->name('masa-studi-lulusan.update');
-        Route::delete('/masa-studi-lulusan/{dosenPraktisiId}', [MasaStudiLulusanController::class, 'destroy'])->name('masa-studi-lulusan.destroy');
+        Route::get('/masa-studi-lulusan/{masastudiId}', [MasaStudiLulusanController::class, 'edit'])->name('masa-studi-lulusan.edit');
+        Route::put('/masa-studi-lulusan/{masastudiId}', [MasaStudiLulusanController::class, 'update'])->name('masa-studi-lulusan.update');
+        Route::delete('/masa-studi-lulusan/{masastudiId}', [MasaStudiLulusanController::class, 'destroy'])->name('masa-studi-lulusan.destroy');
     Route::prefix('evaluasi-lulusan')->name('evaluasi-lulusan.')->group(function () {
         Route::get('/waktu-tunggu', [WaktuTungguController::class, 'index'])->name('waktu-tunggu.index');
         Route::post('/waktu-tunggu', [WaktuTungguController::class, 'store'])->name('waktu-tunggu.store');
         Route::get('/waktu-tunggu/create', [WaktuTungguController::class, 'create'])->name('waktu-tunggu.create');
-        Route::get('/waktu-tunggu/{dosenPraktisiId}', [WaktuTungguController::class, 'edit'])->name('waktu-tunggu.edit');
-        Route::put('/waktu-tunggu/{dosenPraktisiId}', [WaktuTungguController::class, 'update'])->name('waktu-tunggu.update');
-        Route::delete('/waktu-tunggu/{dosenPraktisiId}', [WaktuTungguController::class, 'destroy'])->name('waktu-tunggu.destroy');
+        Route::get('/waktu-tunggu/{waktuId}', [WaktuTungguController::class, 'edit'])->name('waktu-tunggu.edit');
+        Route::put('/waktu-tunggu/{waktuId}', [WaktuTungguController::class, 'update'])->name('waktu-tunggu.update');
+        Route::delete('/waktu-tunggu/{waktuId}', [WaktuTungguController::class, 'destroy'])->name('waktu-tunggu.destroy');
 
         Route::get('/kesesuaian-kerja', [KesesuaianKerjaController::class, 'index'])->name('kesesuaian-kerja.index');
         Route::post('/kesesuaian-kerja', [KesesuaianKerjaController::class, 'store'])->name('kesesuaian-kerja.store');
         Route::get('/kesesuaian-kerja/create', [KesesuaianKerjaController::class, 'create'])->name('kesesuaian-kerja.create');
-        Route::get('/kesesuaian-kerja/{dosenPraktisiId}', [KesesuaianKerjaController::class, 'edit'])->name('kesesuaian-kerja.edit');
-        Route::put('/kesesuaian-kerja/{dosenPraktisiId}', [KesesuaianKerjaController::class, 'update'])->name('kesesuaian-kerja.update');
-        Route::delete('/kesesuaian-kerja/{dosenPraktisiId}', [KesesuaianKerjaController::class, 'destroy'])->name('kesesuaian-kerja.destroy');
+        Route::get('/kesesuaian-kerja/{kesesuaianId}', [KesesuaianKerjaController::class, 'edit'])->name('kesesuaian-kerja.edit');
+        Route::put('/kesesuaian-kerja/{kesesuaianId}', [KesesuaianKerjaController::class, 'update'])->name('kesesuaian-kerja.update');
+        Route::delete('/kesesuaian-kerja/{kesesuaianId}', [KesesuaianKerjaController::class, 'destroy'])->name('kesesuaian-kerja.destroy');
 
         Route::get('/tempat-kerja', [TempatKerjaController::class, 'index'])->name('tempat-kerja.index');
         Route::post('/tempat-kerja', [TempatKerjaController::class, 'store'])->name('tempat-kerja.store');
         Route::get('/tempat-kerja/create', [TempatKerjaController::class, 'create'])->name('tempat-kerja.create');
-        Route::get('/tempat-kerja/{dosenPraktisiId}', [TempatKerjaController::class, 'edit'])->name('tempat-kerja.edit');
-        Route::put('/tempat-kerja/{dosenPraktisiId}', [TempatKerjaController::class, 'update'])->name('tempat-kerja.update');
-        Route::delete('/tempat-kerja/{dosenPraktisiId}', [TempatKerjaController::class, 'destroy'])->name('tempat-kerja.destroy');
+        Route::get('/tempat-kerja/{tempatId}', [TempatKerjaController::class, 'edit'])->name('tempat-kerja.edit');
+        Route::put('/tempat-kerja/{tempatId}', [TempatKerjaController::class, 'update'])->name('tempat-kerja.update');
+        Route::delete('/tempat-kerja/{tempatId}', [TempatKerjaController::class, 'destroy'])->name('tempat-kerja.destroy');
 
         Route::get('/kepuasan-pengguna', [KepuasanPenggunaController::class, 'index'])->name('kepuasan-pengguna.index');
         Route::post('/kepuasan-pengguna', [KepuasanPenggunaController::class, 'store'])->name('kepuasan-pengguna.store');
         Route::get('/kepuasan-pengguna/create', [KepuasanPenggunaController::class, 'create'])->name('kepuasan-pengguna.create');
-        Route::get('/kepuasan-pengguna/{dosenPraktisiId}', [KepuasanPenggunaController::class, 'edit'])->name('kepuasan-pengguna.edit');
-        Route::put('/kepuasan-pengguna/{dosenPraktisiId}', [KepuasanPenggunaController::class, 'update'])->name('kepuasan-pengguna.update');
-        Route::delete('/kepuasan-pengguna/{dosenPraktisiId}', [KepuasanPenggunaController::class, 'destroy'])->name('kepuasan-pengguna.destroy');
+        Route::get('/kepuasan-pengguna/{kepuasanId}', [KepuasanPenggunaController::class, 'edit'])->name('kepuasan-pengguna.edit');
+        Route::put('/kepuasan-pengguna/{kepuasanId}', [KepuasanPenggunaController::class, 'update'])->name('kepuasan-pengguna.update');
+        Route::delete('/kepuasan-pengguna/{kepuasanId}', [KepuasanPenggunaController::class, 'destroy'])->name('kepuasan-pengguna.destroy');
     });
 
     });
@@ -368,16 +368,16 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/penelitian-mahasiswa', [PenelitianMahasiswaController::class, 'index'])->name('penelitian-mahasiswa.index');
         Route::post('/penelitian-mahasiswa', [PenelitianMahasiswaController::class, 'store'])->name('penelitian-mahasiswa.store');
         Route::get('/penelitian-mahasiswa/create', [PenelitianMahasiswaController::class, 'create'])->name('penelitian-mahasiswa.create');
-        Route::get('/penelitian-mahasiswa/{dosenPraktisiId}', [PenelitianMahasiswaController::class, 'edit'])->name('penelitian-mahasiswa.edit');
-        Route::put('/penelitian-mahasiswa/{dosenPraktisiId}', [PenelitianMahasiswaController::class, 'update'])->name('penelitian-mahasiswa.update');
-        Route::delete('/penelitian-mahasiswa/{dosenPraktisiId}', [PenelitianMahasiswaController::class, 'destroy'])->name('penelitian-mahasiswa.destroy');
+        Route::get('/penelitian-mahasiswa/{penelitianId}', [PenelitianMahasiswaController::class, 'edit'])->name('penelitian-mahasiswa.edit');
+        Route::put('/penelitian-mahasiswa/{penelitianId}', [PenelitianMahasiswaController::class, 'update'])->name('penelitian-mahasiswa.update');
+        Route::delete('/penelitian-mahasiswa/{penelitianId}', [PenelitianMahasiswaController::class, 'destroy'])->name('penelitian-mahasiswa.destroy');
 
         Route::get('/rujukan-tesis', [RujukanTesisController::class, 'index'])->name('rujukan-tesis.index');
         Route::post('/rujukan-tesis', [RujukanTesisController::class, 'store'])->name('rujukan-tesis.store');
         Route::get('/rujukan-tesis/create', [RujukanTesisController::class, 'create'])->name('rujukan-tesis.create');
-        Route::get('/rujukan-tesis/{dosenPraktisiId}', [RujukanTesisController::class, 'edit'])->name('rujukan-tesis.edit');
-        Route::put('/rujukan-tesis/{dosenPraktisiId}', [RujukanTesisController::class, 'update'])->name('rujukan-tesis.update');
-        Route::delete('/rujukan-tesis/{dosenPraktisiId}', [RujukanTesisController::class, 'destroy'])->name('rujukan-tesis.destroy');
+        Route::get('/rujukan-tesis/{rujukanId}', [RujukanTesisController::class, 'edit'])->name('rujukan-tesis.edit');
+        Route::put('/rujukan-tesis/{rujukanId}', [RujukanTesisController::class, 'update'])->name('rujukan-tesis.update');
+        Route::delete('/rujukan-tesis/{rujukanId}', [RujukanTesisController::class, 'destroy'])->name('rujukan-tesis.destroy');
     });
     Route::prefix('kualitas-pembelajaran/{tahunAjaran}')->name('kualitas-pembelajaran.')->group(function () {
         Route::get('/kurikulum-pembelajaran', [KurikulumPembelajaranController::class, 'index'])->name('kurikulum-pembelajaran.index');

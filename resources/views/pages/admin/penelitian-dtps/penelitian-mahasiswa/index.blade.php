@@ -36,68 +36,37 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-wrap">Sholihah Ayu Wulandari, S.ST., M.Tr.T.</td>
-                                        <td class="text-wrap">Artificial Intelligent</td>
-                                        <td class="text-wrap">
-                                            Dyiono, Moch. Enrique Lazuardi R., Muhammad Zaky, Aulia Dewi Puspitasari
-                                        </td>
-                                        <td class="text-wrap">
-                                            RANCANG BANGUN ALAT IDENTIFIKASI DAN AKTUASI KECURANGAN UJIAN MAHASISWA BERBASIS DIGITAL
-                                            SINYAL PROCESSING DAN MACHINE LEARNING
-                                        </td>
+                                    @foreach ($penelitian_mahasiswa as $penelitian)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-wrap">{{ $penelitian->nama_dosen }}</td>
+                                            <td class="text-wrap">{{ $penelitian->tema_penelitian }}</td>
+                                            <td class="text-wrap">{{ $penelitian->nama_mahasiswa }}</td>
+                                            <td class="text-wrap">{{ $penelitian->judul }}</td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">
                                             <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                    <a class="dropdown-item" href="{{ route('admin.penelitian-dtps.penelitian-mahasiswa.edit', ['tahunAjaran' => $tahun_ajaran, 'penelitianId' => $penelitian->id]) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                                     </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-wrap">Adi Sucipto, S.ST., M.Tr.T.</td>
-                                        <td class="text-wrap">Artificial Intelligent</td>
-                                        <td class="text-wrap">
-                                            Dyiono, Moch. Enrique Lazuardi R., Muhammad Zaky, Aulia Dewi Puspitasari
-                                        </td>
-                                        <td class="text-wrap">
-                                            RANCANG BANGUN ALAT IDENTIFIKASI DAN AKTUASI KECURANGAN UJIAN MAHASISWA BERBASIS DIGITAL
-                                            SINYAL PROCESSING DAN MACHINE LEARNING
-                                        </td>
 
-                                        <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
+                                                    <form action="{{ route('admin.penelitian-dtps.penelitian-mahasiswa.destroy', ['tahunAjaran' => $tahun_ajaran, 'penelitianId' => $penelitian->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

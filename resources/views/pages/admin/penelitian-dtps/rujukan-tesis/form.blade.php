@@ -25,51 +25,33 @@
                                 <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $rekognisi->nama_dosen) }}" autofocus required />
+                                        value="{{ old('nama_dosen', $rujukanTesis->nama_dosen) }}" autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="bidangKeahlian">Bidang Keahlian</label>
+                                <label class="col-sm-2 col-form-label" for="tema_penelitian">Tema Penelitian</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="bidangKeahlian" name="bidang_keahlian"
-                                        value="{{ old('bidang_keahlian', $rekognisi->bidang_keahlian) }}" placeholder="keahlian1, keahlian2, dst."
+                                    <input type="text" class="form-control" id="tema_penelitian" name="tema_penelitian"
+                                        value="{{ old('tema_penelitian', $rujukanTesis->tema_penelitian) }}" autofocus required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="nama_mahasiswa">Nama Mahasiswa</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="nama_mahasiswa" name="nama_mahasiswa"
+                                        value="{{ old('nama_mahasiswa', $rujukanTesis->nama_mahasiswa) }}" placeholder="keahlian1, keahlian2, dst."
                                         required />
                                     <div class="form-text"> pisahkan dengan koma (,) </div>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaRekognisi">Nama Rekognisi</label>
+                                <label class="col-sm-2 col-form-label" for="judul">Judul Penelitian</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaRekognisi" name="nama_rekognisi"
-                                        value="{{ old('nama_rekognisi', $rekognisi->nama_rekognisi) }}" placeholder="Reviewer Jurnal.." required />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="buktiPendukung">Bukti Pendukung Rekognisi (URL)</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="text" id="buktiPendukung" name="bukti_pendukung"
-                                        value="{{ old('bukti_pendukung', $rekognisi->bukti_pendukung) }}" placeholder="https://drive.google.com/.."
-                                        required />
-                                </div>
-                            </div>
-
-                            @php
-                                $options = ['lokal' => 'Wilayah/Lokal', 'nasional' => 'Nasional', 'internasional' => 'Internasional'];
-                            @endphp
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="tingkat">Tingkat</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" id="tingkat" name="tingkat" required>
-                                        @foreach ($options as $value => $label)
-                                            <option value="{{ $value }}" {{ old('tingkat', $rekognisi->tingkat) === $value ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control" id="judul" name="judul"
+                                        value="{{ old('judul', $rujukanTesis->judul) }}" autofocus required />
                                 </div>
                             </div>
 
@@ -78,7 +60,7 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $rekognisi->tahun) }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $rujukanTesis->tahun)}}"
                                         required />
                                 </div>
                             </div>
