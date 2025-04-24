@@ -18,8 +18,15 @@ class MasaStudiLulusan extends Model
     protected $fiilable = [
         'user_id',
         'tahun',
+        'masa_studi',
         'jumlah_mhs_diterima',
-        'jumlah_mhs_lulus',
+        'jumlah_mhs_lulus_akhir_ts',
+        'jumlah_mhs_lulus_akhir_ts_1',
+        'jumlah_mhs_lulus_akhir_ts_2',
+        'jumlah_mhs_lulus_akhir_ts_3',
+        'jumlah_mhs_lulus_akhir_ts_4',
+        'jumlah_mhs_lulus_akhir_ts_5',
+        'jumlah_mhs_lulus_akhir_ts_6',
         'jumlah_lulusan',
         'mean_masa_studi',
     ];

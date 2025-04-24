@@ -21,6 +21,8 @@ class EvalWaktuTunggu extends Model
         'jumlah_lulusan',
         'jumlah_lulusan_terlacak',
         'jumlah_lulusan_terlacak_dipesan',
-        'jumlah_lulusan_waktu',
+        'jumlah_lulusan_waktu_tiga_bulan',
+        'jumlah_lulusan_waktu_enam_bulan',
+        'jumlah_lulusan_waktu_sembilan_bulan',
     ];
 }

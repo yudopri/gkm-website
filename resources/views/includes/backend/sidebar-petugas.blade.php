@@ -113,8 +113,8 @@
                 <div data-i18n="Kinerja Dosen">Kinerja Dosen</div>
             </a>
             <ul class="menu-sub">
-            <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.rekognisi-dtps.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.petugas.detail.kd.rekognisi-dtps.show', $dosenId) }}" class="menu-link">
+            <li class="menu-item {{ request()->routeIs('ps.shoadmin.petugas.detail.kd.rekognisi-dtps.*') ? 'active' : '' }}">
+    <a href="{{ route('admin.petugas.detail.kd.rekognisi-dtps', $dosenId) }}" class="menu-link">
         <div data-i18n="Pengakuan/Rekognisi Dosen">Pengakuan/Rekognisi Dosen</div>
     </a>
 </li>
