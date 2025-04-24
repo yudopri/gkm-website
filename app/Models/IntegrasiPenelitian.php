@@ -24,4 +24,8 @@ class IntegrasiPenelitian extends Model
         'bentuk_integrasi',
         'tahun',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

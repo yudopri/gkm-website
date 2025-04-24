@@ -16,10 +16,15 @@ class SitasiKaryaDosen extends Model
      * @var string
      */
     protected $table = 'sitasi_karya_dosen';
-    protected $fiilable = [
+    protected $fillable = [
         'user_id',
         'nama_dosen',
-        'judul_sitasi',
+        'judul_artikel',
+        'jumlah_sitasi',
         'tahun',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

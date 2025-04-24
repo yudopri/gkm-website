@@ -53,8 +53,8 @@
                                     Tahun Penelitian
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="tahun_penelitian" name="tahun_penelitian" value="{{ old('tahun_penelitian', $penelitian_dtps->tahun_penelitian) }}"
-                                        required />
+                                    <input type="text" class="form-control" id="tahun_penelitian" name="tahun_penelitian" value="{{ $tahun }}"
+                                        readonly />
                                 </div>
                             </div>
 

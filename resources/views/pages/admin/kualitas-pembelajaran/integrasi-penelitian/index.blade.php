@@ -15,7 +15,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="javascript:void(0);" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kualitas-pembelajaran.integrasi-penelitian.create', $tahun_ajaran)}}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -37,33 +37,38 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
+                                    @foreach ($integrasi_penelitian as $penelitian)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-wrap">{{ $penelitian->judul_penelitian }}</td>
+                                            <td class="text-wrap">{{ $penelitian->nama_dosen }}</td>
+                                            <td class="text-wrap">{{ $penelitian->mata_kuliah }}</td>
+                                            <td class="text-wrap">{{ $penelitian->bentuk_integrasi }}</td>
+                                            <td class="text-center">{{ $penelitian->tahun }}</td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">
                                             <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                    <a class="dropdown-item" href="{{ route('admin.kualitas-pembelajaran.integrasi-penelitian.edit', ['tahunAjaran' => $tahun_ajaran, 'penelitianId' => $penelitian->id]) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                                     </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
+
+                                                    <form action="{{ route('admin.kualitas-pembelajaran.integrasi-penelitian.destroy', ['tahunAjaran' => $tahun_ajaran, 'penelitianId' => $penelitian->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

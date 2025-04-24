@@ -35,10 +35,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        <tr>
-                                            <td class="text-center">TS-2</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
+                                        @foreach ($kepuasan_pengguna as $pengguna)
+                                            <tr>
+                                                <td class="text-center">{{ $pengguna->tahun_lulus }}</td>
+                                                <td class="text-center">{{ $pengguna->jumlah_lulusan }}</td>
+                                                <td class="text-center">{{ $pengguna->jumlah_tanggapan }}</td>
 
                                             <!-- Aksi -->
                                             <td class="text-center">
@@ -59,6 +60,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                     <tfoot class="table-border-bottom-0 table-secondary">
                                         <tr>

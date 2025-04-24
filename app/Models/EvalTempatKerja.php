@@ -20,6 +20,8 @@ class EvalTempatKerja extends Model
         'tahun',
         'jumlah_lulusan',
         'jumlah_lulusan_terlacak',
-        'jumlah_lulusan_tingkat',
+        'jumlah_lulusan_bekerja_lokal',
+        'jumlah_lulusan_bekerja_nasional',
+        'jumlah_lulusan_bekerja_internasional',
     ];
 }

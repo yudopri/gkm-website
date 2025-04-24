@@ -37,7 +37,7 @@ use App\Http\Controllers\Api\Petugas\ListDosenController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-Route::post('/token', [AuthControllerApi::class, 'requestToken']);
+Route::post('/token', [AuthControkenllerApi::class, 'requestTo']);
 Route::middleware('auth:sanctum')->apiResource('/user-profiles', UserProfileController::class);
 Route::middleware('auth:sanctum')->apiResource('/dosen-praktisi', DosenPraktisiApiController::class);
 Route::middleware('auth:sanctum')->apiResource('/dosen-tetap', DosenTetapApiController::class);

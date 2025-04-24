@@ -1,10 +1,10 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
             <span class="text-muted fw-light">Kinerja Dosen /</span>
-            <span class="text-muted fw-light">Pengakuan/Rekognisi DTPS /</span>
+            <span class="text-muted fw-light">Pengakuan/Produk Teradopsi DTPS /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Rekognisi DTPS </h5>
+                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Produk Teradopsi DTPS </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -25,51 +25,32 @@
                                 <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $rekognisi->nama_dosen) }}" autofocus required />
+                                        value="{{ old('nama_dosen', $produk_teradopsi->nama_dosen) }}" autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="bidangKeahlian">Bidang Keahlian</label>
+                                <label class="col-sm-2 col-form-label" for="namaProduk">Nama Produk/Jasa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="bidangKeahlian" name="bidang_keahlian"
-                                        value="{{ old('bidang_keahlian', $rekognisi->bidang_keahlian) }}" placeholder="keahlian1, keahlian2, dst."
+                                    <input type="text" class="form-control" id="namaProduk" name="nama_produk"
+                                        value="{{ old('nama_produk', $produk_teradopsi->nama_produk) }}" placeholder="Reviewer Jurnal.." required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="deskripsiProduk">Deskripsi Produk/Jasa</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="deskripsiProduk" name="deskripsi_produk"
+                                        value="{{ old('deskripsi_produk', $produk_teradopsi->deskripsi_produk) }}" placeholder="Reviewer Jurnal.." required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="bukti">Bukti Pendukung Produk/Jasa (URL)</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="bukti" name="bukti"
+                                        value="{{ old('bukti', $produk_teradopsi->bukti) }}" placeholder="https://drive.google.com/.."
                                         required />
-                                    <div class="form-text"> pisahkan dengan koma (,) </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaRekognisi">Nama Rekognisi</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaRekognisi" name="nama_rekognisi"
-                                        value="{{ old('nama_rekognisi', $rekognisi->nama_rekognisi) }}" placeholder="Reviewer Jurnal.." required />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="buktiPendukung">Bukti Pendukung Rekognisi (URL)</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="text" id="buktiPendukung" name="bukti_pendukung"
-                                        value="{{ old('bukti_pendukung', $rekognisi->bukti_pendukung) }}" placeholder="https://drive.google.com/.."
-                                        required />
-                                </div>
-                            </div>
-
-                            @php
-                                $options = ['lokal' => 'Wilayah/Lokal', 'nasional' => 'Nasional', 'internasional' => 'Internasional'];
-                            @endphp
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="tingkat">Tingkat</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" id="tingkat" name="tingkat" required>
-                                        @foreach ($options as $value => $label)
-                                            <option value="{{ $value }}" {{ old('tingkat', $rekognisi->tingkat) === $value ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
 
@@ -78,7 +59,7 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $rekognisi->tahun) }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $produk_teradopsi->tahun) }}"
                                         required />
                                 </div>
                             </div>

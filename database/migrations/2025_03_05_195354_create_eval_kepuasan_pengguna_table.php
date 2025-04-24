@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('eval_kepuasan_pengguna', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('tahun', 4)->nullable();
-            $table->integer('jumlah_lulusan');
-            $table->integer('jumlah_tanggapan');
+            $table->string('jenis_kemampuan');
+            $table->integer('tingkat_kepuasan_sangat_baik')->default(0);
+            $table->integer('tingkat_kepuasan_baik')->default(0);
+            $table->integer('tingkat_kepuasan_cukup')->default(0);
+            $table->integer('tingkat_kepuasan_kurang')->default(0);
+            $table->text('rencana_tindakan')->nullable();
+            $table->integer('jumlah_lulusan')->default(0);
+            $table->integer('jumlah_responden')->default(0);
+            $table->year('tahun')->default(date('Y'));
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();

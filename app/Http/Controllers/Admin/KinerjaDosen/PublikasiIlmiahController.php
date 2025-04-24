@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin\KinerjaDosen;
 
 use App\Http\Controllers\Controller;
 use App\Models\PublikasiIlmiahDosen;
-use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class PublikasiIlmiahController extends Controller
 {
@@ -15,22 +16,38 @@ class PublikasiIlmiahController extends Controller
      * Display a listing of the resource.
      */
     public function index(string $tahunAjaran)
-    {
-        try {
-            $publikasi = PublikasiIlmiahDosen::with('user')->get();
+{
+    try {
+        // Fetch the Year Object and ensure it's valid
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
 
-            $title = 'Hapus Data!';
-            $text = "Apakah kamu yakin ingin menghapus?";
-            confirmDelete($title, $text);
+        $userId = Auth::id();
+        $publikasi = PublikasiIlmiahDosen::with('user')->get();
+        // Get the totals grouped by 'jenis_artikel' for the given year and user
+        $total = PublikasiIlmiahDosen::where('user_id', $userId)
+    ->whereNull('deleted_at')
+    ->where('tahun', $tahun)
+    ->count();
 
-            return view('pages.admin.kinerja-dosen.publikasi-ilmiah.index', [
-                'publikasi_ilmiah' => $publikasi,
-                'tahun_ajaran' => $tahunAjaran,
-            ]);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+
+
+        // Return the view with just the total counts and unique 'jenis_artikel'
+        return view('pages.admin.kinerja-dosen.publikasi-ilmiah.index', [
+            'publikasi' => $publikasi,
+            'totals' => $total,
+            'tahun_ajaran' => $tahunAjaran,
+            'tahun' => $tahun,
+        ]);
+    } catch (\Exception $e) {
+        // Log the error for debugging purposes
+        \Log::error('Error fetching Publikasi Ilmiah Dosen data: ' . $e->getMessage());
+
+        // Return back with the error message
+        return back()->withErrors($e->getMessage());
     }
+}
 
     /**
      * Show the form for creating a new resource.
@@ -39,9 +56,13 @@ class PublikasiIlmiahController extends Controller
     {
         try {
             $publikasi = new PublikasiIlmiahDosen();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
             return view('pages.admin.kinerja-dosen.publikasi-ilmiah.form', [
                 'publikasi_ilmiah' => $publikasi,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
                 'form_action' => route('admin.kinerja-dosen.publikasi-ilmiah.store', $tahunAjaran),
                 'form_method' => "POST",
@@ -59,11 +80,9 @@ class PublikasiIlmiahController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
-                'bidang_keahlian' => 'required|string|max:255',
-                'nama_rekognisi' => 'required|string',
-                'bukti_pendukung' => 'required|url',
-                'tingkat' => 'required|string|in:lokal,nasional,internasional',
+                'nama_dosen' => 'required|string',
+                'judul_artikel' => 'required|string',
+                'jenis_artikel' => 'required|string',
                 'tahun' => 'required|string',
             ]);
 
@@ -98,14 +117,18 @@ class PublikasiIlmiahController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id,string $tahunAjaran)
+    public function edit(string $tahunAjaran,string $id)
     {
         try {
             $publikasi = PublikasiIlmiahDosen::with('user')->first();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
 
             return view('pages.admin.kinerja-dosen.publikasi-ilmiah.form', [
                 'publikasi_ilmiah' => $publikasi,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'form_title' => 'Edit Data',
                 'form_action' => route('admin.kinerja-dosen.publikasi-ilmiah.update', [
                     'tahunAjaran' => $tahunAjaran,
@@ -121,18 +144,14 @@ class PublikasiIlmiahController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id,string $tahunAjaran)
+    public function update(Request $request, string $tahunAjaran,string $id)
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
-                'nidk' => 'nullable|numeric',
-                'perusahaan' => 'nullable|string',
-                'pendidikan_tertinggi' => 'nullable|string',
-                'bidang_keahlian' => 'nullable|string|max:255',
-                'sertifikat_kompetensi' => 'nullable|string',
-                'mk_diampu' => 'nullable|string',
-                'bobot_kredit_sks' => 'nullable|numeric',
+                'nama_dosen' => 'required|string',
+                'judul_artikel' => 'required|string',
+                'jenis_artikel' => 'required|string',
+                'tahun' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -157,7 +176,7 @@ class PublikasiIlmiahController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $publikasi = PublikasiIlmiahDosen::findOrFail($id);

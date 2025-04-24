@@ -114,4 +114,36 @@ class User extends Authenticatable
     {
         return $this->hasMany(EwmpDosen::class, 'user_id');
     }
+    public function rekognisi_dtps()
+    {
+        return $this->hasMany(RekognisiDosen::class, 'user_id');
+    }
+    public function penelitian_dtps()
+    {
+        return $this->hasMany(RekognisiDosen::class, 'user_id');
+    }
+    public function produk_teradopsi()
+    {
+        return $this->hasMany(RekognisiDosen::class, 'user_id');
+    }
+    public function pkm_dtps()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
+    public function hki_paten()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
+    public function hki_cipta()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
+    public function buku_chapter()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
+    public function teknologi_karya()
+    {
+        return $this->hasMany(PkmDtps::class, 'user_id');
+    }
 }

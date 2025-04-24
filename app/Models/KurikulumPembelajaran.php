@@ -20,13 +20,24 @@ class KurikulumPembelajaran extends Model
         'user_id',
         'nama_mata_kuliah',
         'kode_mata_kuliah',
-        'sks',
+        'mata_kuliah_kompetensi',
+        'sks_kuliah',
+        'sks_seminar',
+        'sks_praktikum',
+        'konversi_sks',
         'semester',
         'metode_pembelajaran',
         'dokumen',
-        'unit_penyelengara',
-        'sks_kuliah',
-        'capaian_kuliah',
+        'unit_penyelenggara',
+        'capaian_kuliah_sikap',
+        'capaian_kuliah_pengetahuan',
+        'capaian_kuliah_keterampilan_umum',
+        'capaian_kuliah_keterampilan_khusus',
+        'tahun',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
 }

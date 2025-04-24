@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -78,8 +78,8 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $rekognisi->tahun) }}"
-                                        required />
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ $tahun }}"
+                                        readonly />
                                 </div>
                             </div>
 

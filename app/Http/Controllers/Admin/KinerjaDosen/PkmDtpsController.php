@@ -7,6 +7,7 @@ use App\Models\PkmDtps;
 use App\Models\TahunAjaranSemester;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class PkmDtpsController extends Controller
@@ -17,21 +18,25 @@ class PkmDtpsController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $pkmDtps = PkmDtps::with('user')->get();
-            $userId = Auth::id();
-            $tahunAjaranId = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
 
-            $pkmDtps = PkmDtps::whereIn('id', function ($query) use ($userId) {
-                $query->selectRaw('MAX(id)') // Ambil ID terbesar (terbaru)
+            $userId = Auth::id();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
+            $pkmDtps = PkmDtps::whereIn('id', function ($query) use ($userId, $tahun) {
+                $query->selectRaw('MAX(id)')
                     ->from('pkm_dtps')
                     ->where('user_id', $userId)
+                    ->where('tahun', $tahun)
                     ->whereNull('deleted_at')
                     ->groupBy('sumber_dana');
             })->get();
 
+
         // Ambil total jumlah_judul per sumber_dana dalam bentuk array
         $totals = PkmDtps::where('user_id', $userId)
             ->whereNull('deleted_at')
+            ->where('tahun', $tahun)
             ->groupBy('sumber_dana')
             ->selectRaw('sumber_dana, SUM(jumlah_judul) as total')
             ->pluck('total', 'sumber_dana'); // Mengubah ke bentuk [sumber_dana => total]
@@ -43,6 +48,7 @@ class PkmDtpsController extends Controller
             return view('pages.admin.kinerja-dosen.pkm-dtps.index', [
                 'pkm_dtps' => $pkmDtps,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'totals' => $totals,
             ]);
         } catch (\Exception $e) {
@@ -58,9 +64,13 @@ class PkmDtpsController extends Controller
     {
         try {
             $pkmDtps = new PkmDtps();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
             return view('pages.admin.kinerja-dosen.pkm-dtps.form', [
                 'pkm_dtps' => $pkmDtps,
                 'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
                 'form_action' => route('admin.kinerja-dosen.pkm-dtps.store', $tahunAjaran),
                 'form_method' => "POST",
@@ -73,34 +83,44 @@ class PkmDtpsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,string $tahunAjaran)
-    {
-        try {
-            // dd($request->all());
-            $validator = Validator::make($request->all(), [
-                'jumlah_judul' => 'required|integer',
-                'sumber_dana' => 'required|string|in:lokal,nasional,internasional',
-                'tahun' => 'required|string',
-            ]);
+    public function store(Request $request, string $tahunAjaran)
+{
+    try {
+        $validator = Validator::make($request->all(), [
+            'jumlah_judul' => 'required|integer',
+            'sumber_dana' => 'required|string|in:lokal,nasional,internasional',
+            'tahun' => 'required|string',
+        ]);
 
-            if ($validator->fails()) {
-                return back()->withErrors($validator->messages()->all()[0])->withInput();
-            }
-            $validated = $request->all();
-            $validated['user_id'] = Auth::id();
-
-            $create = PkmDtps::create($validated);
-
-            if ($create) {
-                return redirect()->route('admin.kinerja-dosen.pkm-dtps.index', $tahunAjaran)
-                    ->with('toast_success', 'Data penelitian dtps berhasil ditambahkan');
-            }
-
-            throw new \Exception('Data penelitian dtps gagal ditambahkan');
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput();
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages()->all()[0])->withInput();
         }
+
+        $validated = $request->only(['jumlah_judul', 'sumber_dana', 'tahun']);
+        $validated['user_id'] = Auth::id();
+
+        // Cek apakah data dengan kombinasi tersebut sudah ada
+        $existing = PkmDtps::where('user_id', $validated['user_id'])
+            ->where('tahun', $validated['tahun'])
+            ->where('sumber_dana', $validated['sumber_dana'])
+            ->first();
+
+        if ($existing) {
+            // Tambahkan jumlah judul ke data yang sudah ada
+            $existing->jumlah_judul += $validated['jumlah_judul'];
+            $existing->save();
+        } else {
+            // Buat data baru jika tidak ditemukan
+            PkmDtps::create($validated);
+        }
+
+        return redirect()->route('admin.kinerja-dosen.pkm-dtps.index', $tahunAjaran)
+            ->with('toast_success', 'Data PKM DTPS berhasil disimpan');
+    } catch (\Exception $e) {
+        return back()->withErrors($e->getMessage())->withInput();
     }
+}
+
 
     /**
      * Display the specified resource.
@@ -119,22 +139,27 @@ class PkmDtpsController extends Controller
         // Gunakan find() agar bisa menangani null
         $pkmDtps = PkmDtps::with('user')->find($id);
         $userId = Auth::id();
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
         $totals = PkmDtps::where('user_id', $userId)
-        ->whereNull('deleted_at')
-        ->groupBy('sumber_dana')
-        ->selectRaw('sumber_dana, SUM(jumlah_judul) as total')
-        ->pluck('total', 'sumber_dana'); // Mengubah ke bentuk [sumber_dana => total]
+            ->whereNull('deleted_at')
+            ->where('tahun', $tahun)
+            ->groupBy('sumber_dana')
+            ->selectRaw('sumber_dana, SUM(jumlah_judul) as total')
+            ->pluck('total', 'sumber_dana'); // Mengubah ke bentuk [sumber_dana => total]
 
-        if (!$penelitianDtps) {
+        if (!$pkmDtps) {
             return back()->withErrors('Data tidak ditemukan.');
         }
 
         return view('pages.admin.kinerja-dosen.pkm-dtps.form', [
             'pkm_dtps' => $pkmDtps,
             'tahun_ajaran' => $tahunAjaran,
+            'tahun' => $tahun,
             'form_title' => 'Edit Data',
             'form_action' => route('admin.kinerja-dosen.pkm-dtps.update', [
-                'penelitianId' => $penelitianDtps->id,
+                'pkmId' => $pkmDtps->id,
                 'tahunAjaran' => $tahunAjaran,
             ]),
             'form_method' => "PUT",
@@ -184,7 +209,7 @@ class PkmDtpsController extends Controller
     {
         try {
         $pkmDtps = PkmDtps::findOrFail($id);
-        $delete = $PenelitianDtps->delete();
+        $delete = $pkmDtps->delete();
 
         if ($delete) {
             return redirect()->route('admin.kinerja-dosen.pkm-dtps.index', $tahunAjaran)

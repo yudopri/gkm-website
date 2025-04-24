@@ -28,4 +28,8 @@ class BukuChapterDosen extends Model
         'tahun',
         'keterangan',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

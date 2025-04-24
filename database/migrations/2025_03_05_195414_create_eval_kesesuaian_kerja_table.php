@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('eval_kesesuaian_kerja', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('tahun', 4)->nullable();
-            $table->integer('jumlah_lulusan');
-            $table->integer('jumlah_lulusan_terlacak');
-            $table->integer('jumlah_lulusan_tingkat');
+            $table->string('tahun')->nullable();
+            $table->integer('jumlah_lulusan')->default(0);
+            $table->integer('jumlah_lulusan_terlacak')->default(0);
+            $table->integer('jumlah_lulusan_bekerja')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
