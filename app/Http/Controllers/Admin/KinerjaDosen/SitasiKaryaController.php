@@ -158,7 +158,7 @@ class SitasiKaryaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $dosenPraktisi = SitasiKaryaDosen::findOrFail($id);

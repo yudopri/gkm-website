@@ -51,18 +51,21 @@
                                         <!-- Aksi -->
                                         <td class="text-center">
                                             <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                    <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.luaran-lain.teknologi-karya.edit', ['tahunAjaran' => $tahun_ajaran, 'karyaId' => $karya->id]) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                                     </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
+
+                                                    <form action="{{ route('admin.kinerja-dosen.luaran-lain.teknologi-karya.destroy', ['tahunAjaran' => $tahun_ajaran, 'karyaId' => $karya->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>

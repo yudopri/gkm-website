@@ -114,7 +114,7 @@ class TeknologiKaryaController extends Controller
                 'form_title' => 'Edit Data',
                 'form_action' => route('admin.kinerja-dosen.luaran-lain.teknologi-karya.update', [
                     'tahunAjaran' => $tahunAjaran,
-                    'teknologi_karyaId' => $teknologi_karya->id,
+                    'karyaId' => $teknologi_karya->id,
                 ]),
                 'form_method' => "PUT",
             ]);
@@ -157,7 +157,7 @@ class TeknologiKaryaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $dosenPraktisi = TeknologiKaryaDosen::findOrFail($id);

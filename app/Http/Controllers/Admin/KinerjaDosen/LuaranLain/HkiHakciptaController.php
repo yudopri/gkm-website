@@ -114,7 +114,7 @@ class HkiHakciptaController extends Controller
                 'form_title' => 'Edit Data',
                 'form_action' => route('admin.kinerja-dosen.luaran-lain.hki-hakcipta.update', [
                     'tahunAjaran' => $tahunAjaran,
-                    'hki_ciptaId' => $hki_cipta->id,
+                    'hkiciptaId' => $hki_cipta->id,
                 ]),
                 'form_method' => "PUT",
             ]);
@@ -157,7 +157,7 @@ class HkiHakciptaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $dosenPraktisi = HkiHakciptaDosen::findOrFail($id);

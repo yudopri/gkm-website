@@ -114,7 +114,7 @@ class BukuChapterController extends Controller
                 'form_title' => 'Edit Data',
                 'form_action' => route('admin.kinerja-dosen.luaran-lain.buku-chapter.update', [
                     'tahunAjaran' => $tahunAjaran,
-                    'buku_chapterId' => $buku_chapter->id,
+                    'bookId' => $buku_chapter->id,
                 ]),
                 'form_method' => "PUT",
             ]);
@@ -157,7 +157,7 @@ class BukuChapterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $dosenPraktisi = BukuChapterDosen::findOrFail($id);

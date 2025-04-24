@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class KurikulumPembelajaranController extends Controller
 {
@@ -42,12 +43,12 @@ class KurikulumPembelajaranController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.kurikulum-pembelajaran.form', [
+            return view('pages.admin.kualitas-pembelajaran.kurikulum-pembelajaran.form', [
                 'kurikulum' => $KurikulumPembelajaran,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-dosen.kurikulum-pembelajaran.store', $tahunAjaran),
+                'form_action' => route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -91,7 +92,7 @@ class KurikulumPembelajaranController extends Controller
 
             $create = KurikulumPembelajaran::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-dosen.kurikulum-pembelajaran.index', $tahunAjaran)
+                return redirect()->route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.index', $tahunAjaran)
                     ->with('toast_success', 'Data kurikulum dtps berhasil ditambahkan');
             }
 
@@ -119,12 +120,12 @@ class KurikulumPembelajaranController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.kurikulum-pembelajaran.form', [
+            return view('pages.admin.kualitas-pembelajaran.kurikulum-pembelajaran.form', [
                 'kurikulum' => $kurikulum,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-dosen.kurikulum-pembelajaran.update', [
+                'form_action' => route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.update', [
                     'tahunAjaran' => $tahunAjaran,
                     'kurikulumId' => $kurikulum->id,
                 ]),
@@ -169,7 +170,7 @@ class KurikulumPembelajaranController extends Controller
             $dosenPraktisi = KurikulumPembelajaran::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.kinerja-dosen.kurikulum-pembelajaran.index', $tahunAjaran)
+                return redirect()->route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
             }
 
@@ -189,7 +190,7 @@ class KurikulumPembelajaranController extends Controller
             $delete = $dosenPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.kinerja-dosen.kurikulum-pembelajaran.index', $tahunAjaran)
+                return redirect()->route('admin.kualitas-pembelajaran.kurikulum-pembelajaran.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
             }
 

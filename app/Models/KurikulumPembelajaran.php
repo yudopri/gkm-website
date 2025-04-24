@@ -35,5 +35,9 @@ class KurikulumPembelajaran extends Model
         'capaian_kuliah_keterampilan_khusus',
         'tahun',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
 }
