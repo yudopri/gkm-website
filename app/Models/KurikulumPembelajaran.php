@@ -28,11 +28,12 @@ class KurikulumPembelajaran extends Model
         'semester',
         'metode_pembelajaran',
         'dokumen',
-        'unit_penyelengara',
+        'unit_penyelenggara',
         'capaian_kuliah_sikap',
         'capaian_kuliah_pengetahuan',
         'capaian_kuliah_keterampilan_umum',
         'capaian_kuliah_keterampilan_khusus',
+        'tahun',
     ];
 
 }
