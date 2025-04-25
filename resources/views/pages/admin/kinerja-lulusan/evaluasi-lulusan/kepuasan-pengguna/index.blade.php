@@ -10,7 +10,11 @@
 
         <div class="row">
             <div class="col-md-12">
-
+<!-- #s btn tambah -->
+<a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
+    <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
+</a>
+<!-- #e btn tambah -->
                 <!--#s tabel-ref-8e2 -->
                 <div class="card mb-4">
                     <h5 class="card-header" data-bs-toggle="collapse" href="#tabel-ref-8e2" role="button" aria-expanded="false"
@@ -37,9 +41,9 @@
                                     <tbody class="table-border-bottom-0">
                                         @foreach ($kepuasan_pengguna as $pengguna)
                                             <tr>
-                                                <td class="text-center">{{ $pengguna->tahun_lulus }}</td>
+                                                <td class="text-center">{{ $pengguna->tahun }}</td>
                                                 <td class="text-center">{{ $pengguna->jumlah_lulusan }}</td>
-                                                <td class="text-center">{{ $pengguna->jumlah_tanggapan }}</td>
+                                                <td class="text-center">{{ $pengguna->jumlah_responden }}</td>
 
                                             <!-- Aksi -->
                                             <td class="text-center">
@@ -49,13 +53,19 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
+                                                        <!-- Edit -->
+                                                            <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.edit', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId'=>$pengguna->id]) }}">
+                                                                <i class="bx bx-edit-alt me-1"></i> Edit
+                                                            </a>
+
+                                                            <!-- Delete -->
+                                                            <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.destroy', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId'=>$pengguna->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="dropdown-item text-danger">
+                                                                    <i class="bx bx-trash me-1"></i> Delete
+                                                                </button>
+                                                            </form>
                                                     </div>
                                                 </div>
                                             </td>
@@ -65,11 +75,16 @@
                                     <tfoot class="table-border-bottom-0 table-secondary">
                                         <tr>
                                             <th class="rounded-start-bottom">Jumlah</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
+                                            <th class="text-center">
+                                                {{ $kepuasan_pengguna->sum('jumlah_lulusan') }}
+                                            </th>
+                                            <th class="text-center">
+                                                {{ $kepuasan_pengguna->sum('jumlah_responden') }}
+                                            </th>
                                             <th class="rounded-end-bottom">Aksi</th>
                                         </tr>
                                     </tfoot>
+
                                 </table>
                             </div>
                             <!-- #e tabel -->
@@ -108,15 +123,15 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        <!-- 1. etika -->
+                                        @foreach ($kepuasan_pengguna as $pengguna)
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td class="text-wrap">Etika</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
+                                            <td class="text-center">{{$loop->iteration}}</td>
+                                            <td class="text-wrap">{{ $pengguna->jenis_kemampuan}}</td>
+                                            <td class="text-center"> {{ $pengguna->tingkat_kepuasan_sangat_baik}}</td>
+                                            <td class="text-center"> {{ $pengguna->tingkat_kepuasan_baik}}</td>
+                                            <td class="text-center"> {{ $pengguna->tingkat_kepuasan_cukup}}</td>
+                                            <td class="text-center"> {{ $pengguna->tingkat_kepuasan_kurang}}</td>
+                                            <td class="text-center"> {{ $pengguna->rencana_tindakan}}</td>
 
                                             <!-- Aksi -->
                                             <td class="text-center">
@@ -126,197 +141,24 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
+                                                         <!-- Edit -->
+                                                         <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.edit', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId'=>$pengguna->id]) }}">
                                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                                         </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
+
+                                                        <!-- Delete -->
+                                                        <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.destroy', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId'=>$pengguna->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item text-danger">
+                                                                <i class="bx bx-trash me-1"></i> Delete
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-
-                                        <!-- 2. Keahlian pada bidang ilmu (kompetensi utama) -->
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td class="text-wrap">Keahlian pada bidang ilmu (kompetensi utama)</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- 3. Kemampuan berbahasa asing -->
-                                        <tr>
-                                            <td class="text-center">3</td>
-                                            <td class="text-wrap">Kemampuan berbahasa asing</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- 4. Penggunaan teknologi informasi -->
-                                        <tr>
-                                            <td class="text-center">4</td>
-                                            <td class="text-wrap">Penggunaan teknologi informasi</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- 5. Kemampuan berkomunikasi -->
-                                        <tr>
-                                            <td class="text-center">5</td>
-                                            <td class="text-wrap">Kemampuan berkomunikasi</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- 6. Kerjasama -->
-                                        <tr>
-                                            <td class="text-center">6</td>
-                                            <td class="text-wrap">Kerjasama</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- 7. Pengembangan diri -->
-                                        <tr>
-                                            <td class="text-center">7</td>
-                                            <td class="text-wrap">Pengembangan diri</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @endforeach
 
                                     </tbody>
 
@@ -324,11 +166,11 @@
                                         <tr>
                                             <th class="rounded-start-bottom"> </th>
                                             <th class="text-center">Jumlah</th>
-                                            <th class="text-center"> </th>
-                                            <th class="text-center"> </th>
-                                            <th class="text-center"> </th>
-                                            <th class="text-center"> </th>
-                                            <th class="text-center"> </th>
+                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_sangat_baik')}}</th>
+                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_baik')}} </th>
+                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_cukup')}} </th>
+                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_kurang')}} </th>
+                                            <th class="text-center"></th>
                                             <th class="rounded-end-bottom">Aksi</th>
                                         </tr>
                                     </tfoot>

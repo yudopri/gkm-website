@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin\KinerjaLulusan\EvaluasiLulusan;
+namespace App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain;
 
 use App\Http\Controllers\Controller;
-use App\Models\EvalTempatKerja;
+use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\HkiPatenMahasiswa;
 
-class TempatKerjaController extends Controller
+class HkiPatenMahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +18,14 @@ class TempatKerjaController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $tempatKerja = EvalTempatKerja::with('user')->get();
+            $hki = HkiPatenMahasiswa::with('user')->get();
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);
 
-            return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', [
-                'tempat_kerja' => $tempatKerja,
+            return view('pages.admin.kinerja-dosen.luaran-lain.hki-paten.index', [
+                'hki_paten' => $hki,
                 'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {
@@ -39,16 +39,16 @@ class TempatKerjaController extends Controller
     public function create(string $tahunAjaran)
     {
         try {
-            $EvalTempatKerjaMhs = new EvalTempatKerja();
+            $HkiPatenMahasiswa = new HkiPatenMahasiswa();
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.form', [
-                'tempat_kerja' => $EvalTempatKerjaMhs,
+            return view('pages.admin.kinerja-dosen.luaran-lain.hki-paten.form', [
+                'hki_paten' => $HkiPatenMahasiswa,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.store', $tahunAjaran),
+                'form_action' => route('admin.kinerja-dosen.luaran-lain.hki-paten.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -59,16 +59,13 @@ class TempatKerjaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,string $tahunAjaran)
+    public function store(Request $request, string $tahunAjaran)
     {
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'jumlah_lulusan' => 'required|numeric',
-                'jumlah_lulusan_terlacak' => 'required|numeric',
-                'jumlah_lulusan_bekerja_lokal' => 'required|numeric',
-                'jumlah_lulusan_bekerja_nasional' => 'required|numeric',
-                'jumlah_lulusan_bekerja_internasional' => 'required|numeric',
+                'luaran_penelitian' => 'required|string|max:255',
+                'keterangan' => 'required|string',
                 'tahun' => 'required|string',
             ]);
 
@@ -80,13 +77,13 @@ class TempatKerjaController extends Controller
             $validated['user_id'] = Auth::id();
             // dd($validated);
 
-            $create = EvalTempatKerja::create($validated);
+            $create = HkiPatenMahasiswa::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
-                    ->with('toast_success', 'Data rekognisi dtps berhasil ditambahkan');
+                return redirect()->route('admin.kinerja-dosen.luaran-lain.hki-paten.index', $tahunAjaran)
+                    ->with('toast_success', 'Data hki_paten dtps berhasil ditambahkan');
             }
 
-            throw new \Exception('Data rekognisi dtps gagal ditambahkan');
+            throw new \Exception('Data hki_paten dtps gagal ditambahkan');
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage())->withInput();
         }
@@ -106,19 +103,18 @@ class TempatKerjaController extends Controller
     public function edit(string $tahunAjaran,string $id)
     {
         try {
-            $EvalTempatKerjaMhs = EvalTempatKerja::with('user')->first();
+            $hki_paten = HkiPatenMahasiswa::with('user')->find($id);
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-
-            return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.form', [
-                'tempat_kerja' => $EvalTempatKerjaMhs,
+            return view('pages.admin.kinerja-dosen.luaran-lain.hki-paten.form', [
+                'hki_paten' => $hki_paten,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.update', [
+                'form_action' => route('admin.kinerja-dosen.luaran-lain.hki-paten.update', [
                     'tahunAjaran' => $tahunAjaran,
-                    'tempatId' => $EvalTempatKerjaMhs->id,
+                    'hki_patenId' => $hki_paten->id,
                 ]),
                 'form_method' => "PUT",
             ]);
@@ -130,13 +126,12 @@ class TempatKerjaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $tahunAjaran,string $id)
+    public function update(Request $request, string $tahunAjaran, string $id)
     {
         try {
             $validator = Validator::make($request->all(), [
-                'jumlah_lulusan' => 'required|numeric',
-                'jumlah_lulusan_terlacak' => 'required|numeric',
-                'jumlah_lulusan_bekerja' => 'required|numeric',
+                'luaran_penelitian' => 'required|string|max:255',
+                'keterangan' => 'required|string',
                 'tahun' => 'required|string',
             ]);
 
@@ -146,10 +141,10 @@ class TempatKerjaController extends Controller
 
             $validated = $request->all();
 
-            $dosenPraktisi = IpkLulusan::findOrFail($id);
+            $dosenPraktisi = HkiPatenMahasiswa::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
+                return redirect()->route('admin.kinerja-dosen.luaran-lain.hki-paten.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
             }
 
@@ -165,11 +160,11 @@ class TempatKerjaController extends Controller
     public function destroy(string $tahunAjaran,string $id)
     {
         try {
-            $EvalTempatKerjaMhs = IpkLulusan::findOrFail($id);
-            $delete = $EvalTempatKerjaMhs->delete();
+            $dosenPraktisi = HkiPatenMahasiswa::findOrFail($id);
+            $delete = $dosenPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
+                return redirect()->route('admin.kinerja-dosen.luaran-lain.hki-paten.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
             }
 

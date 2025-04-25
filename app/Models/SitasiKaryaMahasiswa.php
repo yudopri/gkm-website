@@ -2,25 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EvalKesesuaianKerja extends Model
+class SitasiKaryaMahasiswa extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'eval_kesesuaian_kerja';
+    protected $table = 'sitasi_karya_mahasiswa';
     protected $fillable = [
         'user_id',
+        'nama_mahasiswa',
+        'judul_artikel',
+        'jumlah_sitasi',
         'tahun',
-        'jumlah_lulusan',
-        'jumlah_lulusan_terlacak',
-        'jumlah_lulusan_bekerja',
     ];
     public function user()
     {

@@ -2,25 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EvalKesesuaianKerja extends Model
+class TeknologiKaryaMahasiswa extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'eval_kesesuaian_kerja';
+    protected $table = 'teknologi_karya_mahasiswa';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
+        'luaran_penelitian',
         'tahun',
-        'jumlah_lulusan',
-        'jumlah_lulusan_terlacak',
-        'jumlah_lulusan_bekerja',
+        'keterangan',
     ];
     public function user()
     {

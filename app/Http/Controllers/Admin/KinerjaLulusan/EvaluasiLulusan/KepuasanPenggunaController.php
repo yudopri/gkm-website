@@ -64,8 +64,14 @@ class KepuasanPenggunaController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'jumlah_lulusan' => 'required|string|max:255',
-                'jumlah_tanggapan' => 'required|string',
+                'jenis_kemampuan' => 'required|string|max:255',
+                'tingkat_kepuasan_sangat_baik' => 'required|numeric',
+                'tingkat_kepuasan_baik' => 'required|numeric',
+                'tingkat_kepuasan_cukup' => 'required|numeric',
+                'tingkat_kepuasan_kurang' => 'required|numeric',
+                'rencana_tindakan' => 'required|string',
+                'jumlah_lulusan' => 'required|integer',
+                'jumlah_responden' => 'required|integer',
                 'tahun' => 'required|string',
             ]);
 
@@ -114,7 +120,7 @@ class KepuasanPenggunaController extends Controller
                 'form_title' => 'Edit Data',
                 'form_action' => route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.update', [
                     'tahunAjaran' => $tahunAjaran,
-                    'kepuasan_penggunaId' => $kepuasan_pengguna->id,
+                    'kepuasanId' => $kepuasan_pengguna->id,
                 ]),
                 'form_method' => "PUT",
             ]);
@@ -130,8 +136,14 @@ class KepuasanPenggunaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'jumlah_lulusan' => 'required|string|max:255',
-                'jumlah_tanggapan' => 'required|string',
+                'jenis_kemampuan' => 'required|string|max:255',
+                'tingkat_kepuasan_sangat_baik' => 'required|numeric',
+                'tingkat_kepuasan_baik' => 'required|numeric',
+                'tingkat_kepuasan_cukup' => 'required|numeric',
+                'tingkat_kepuasan_kurang' => 'required|numeric',
+                'rencana_tindakan' => 'required|string',
+                'jumlah_lulusan' => 'required|integer',
+                'jumlah_responden' => 'required|integer',
                 'tahun' => 'required|string',
             ]);
 
@@ -157,7 +169,7 @@ class KepuasanPenggunaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,string $tahunAjaran)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $dosenPraktisi = EvalKepuasanPengguna::findOrFail($id);

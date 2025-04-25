@@ -15,7 +15,7 @@ class EvalTempatKerja extends Model
      * @var string
      */
     protected $table = 'eval_tempat_kerja';
-    protected $fiilable = [
+    protected $fillable = [
         'user_id',
         'tahun',
         'jumlah_lulusan',
@@ -24,4 +24,8 @@ class EvalTempatKerja extends Model
         'jumlah_lulusan_bekerja_nasional',
         'jumlah_lulusan_bekerja_internasional',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

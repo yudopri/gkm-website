@@ -1,10 +1,10 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Data Dosen /</span>
-            <span class="text-muted fw-light">Dosen Industri/Praktisi /</span>
+            <span class="text-muted fw-light">Kinerja Dosen /</span>
+            <span class="text-muted fw-light">Pengakuan/Produk Teradopsi DTPS /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Data Dosen | Dosen Industri/Praktisi </h5>
+                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Produk Teradopsi DTPS </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -22,51 +22,44 @@
                             @csrf @method($form_method)
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan">Jumlah Lulusan</label>
+                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_lulusan" name="jumlah_lulusan"
-                                        value="{{ old('jumlah_lulusan', $tempat_kerja->jumlah_lulusan) }}" required />
+                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
+                                        value="{{ old('nama_dosen', $produk_teradopsi->nama_dosen) }}" autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan_terlacak">Jumlah Lulusan Terlacak</label>
+                                <label class="col-sm-2 col-form-label" for="namaProduk">Nama Produk/Jasa</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_lulusan_terlacak" name="jumlah_lulusan_terlacak"
-                                        value="{{ old('jumlah_lulusan_terlacak', $tempat_kerja->jumlah_lulusan_terlacak) }}" required />
+                                    <input type="text" class="form-control" id="namaProduk" name="nama_produk"
+                                        value="{{ old('nama_produk', $produk_teradopsi->nama_produk) }}" placeholder="Reviewer Jurnal.." required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan_bekerja_lokal">Jumlah Lulusan Bekerja Lokal/Wilayah</label>
+                                <label class="col-sm-2 col-form-label" for="deskripsiProduk">Deskripsi Produk/Jasa</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_lulusan_bekerja_lokal" name="jumlah_lulusan_bekerja_lokal"
-                                        value="{{ old('jumlah_lulusan_bekerja_lokal', $tempat_kerja->jumlah_lulusan_bekerja_lokal) }}" required />
+                                    <input type="text" class="form-control" id="deskripsiProduk" name="deskripsi_produk"
+                                        value="{{ old('deskripsi_produk', $produk_teradopsi->deskripsi_produk) }}" placeholder="Reviewer Jurnal.." required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan_bekerja_nasional">Jumlah Lulusan Bekerja Nasional</label>
+                                <label class="col-sm-2 col-form-label" for="bukti">Bukti Pendukung Produk/Jasa (URL)</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_lulusan_bekerja_nasional" name="jumlah_lulusan_bekerja_nasional"
-                                        value="{{ old('jumlah_lulusan_bekerja_nasional', $tempat_kerja->jumlah_lulusan_bekerja_nasional) }}" required />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan_bekerja_internasional">Jumlah Lulusan Bekerja Internasional</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_lulusan_bekerja_internasional" name="jumlah_lulusan_bekerja_internasional"
-                                        value="{{ old('jumlah_lulusan_bekerja_internasional', $tempat_kerja->jumlah_lulusan_bekerja_internasional) }}" required />
+                                    <input class="form-control" type="text" id="bukti" name="bukti"
+                                        value="{{ old('bukti', $produk_teradopsi->bukti) }}" placeholder="https://drive.google.com/.."
+                                        required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="Tahun">
-                                    Tahun Lulusan (YYYY/YYYY)
+                                    Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $tempat_kerja->tahun) }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $produk_teradopsi->tahun) }}"
                                         required />
                                 </div>
                             </div>

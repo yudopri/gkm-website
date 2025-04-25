@@ -3,8 +3,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Data Dosen /</span>
-            <span class="text-muted fw-light">Dosen Industri/Praktisi /</span>
+            <span class="text-muted fw-light">Kinerja Dosen /</span>
+            <span class="text-muted fw-light">Pengakuan/sitasi DTPS /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Data Dosen | Dosen Industri/Praktisi </h5>
+                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/sitasi DTPS </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -22,35 +22,36 @@
                             @csrf @method($form_method)
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan">Jumlah Lulusan</label>
+                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_lulusan" name="jumlah_lulusan"
-                                        value="{{ old('jumlah_lulusan', $kesesuaian_kerja->jumlah_lulusan) }}" required />
+                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
+                                        value="{{ old('nama_dosen', $sitasi->nama_dosen) }}" autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan_terlacak">Jumlah Lulusan Terlacak</label>
+                                <label class="col-sm-2 col-form-label" for="judul_artikel">Judul Artikel</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_lulusan_terlacak" name="jumlah_lulusan_terlacak"
-                                        value="{{ old('jumlah_lulusan_terlacak', $kesesuaian_kerja->jumlah_lulusan_terlacak) }}" required />
+                                    <input type="text" class="form-control" id="judul_artikel" name="judul_artikel"
+                                        value="{{ old('judul_artikel', $sitasi->judul_artikel) }}" placeholder="Reviewer Jurnal.." required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_lulusan_bekerja">Jumlah Lulusan Bekerja</label>
+                                <label class="col-sm-2 col-form-label" for="jumlah_sitasi">Jumlah Sitasi</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_lulusan_bekerja" name="jumlah_lulusan_bekerja"
-                                        value="{{ old('jumlah_lulusan_bekerja', $kesesuaian_kerja->jumlah_lulusan_bekerja) }}" required />
+                                    <input type="number" class="form-control" id="jumlah_sitasi" name="jumlah_sitasi"
+                                        value="{{ $sitasi->jumlah_sitasi ?? 0 }}"
+                                        autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="Tahun">
-                                    Tahun Lulusan (YYYY/YYYY)
+                                    Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $kesesuaian_kerja->tahun) }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ $tahun }}"
                                         required />
                                 </div>
                             </div>

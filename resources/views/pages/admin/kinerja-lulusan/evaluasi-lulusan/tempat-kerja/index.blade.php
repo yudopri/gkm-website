@@ -15,6 +15,11 @@
                     <h5 class="card-header">Tabel 8.E.1 | Tempat Kerja Lulusan</h5>
                     <hr class="my-0" />
                     <div class="card-body">
+                        <!-- #s btn tambah -->
+                        <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
+                            <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
+                        </a>
+                        <!-- #e btn tambah -->
                         <!-- #s  tabel -->
                         <div class="table-responsive text-nowrap">
                             <table class="table table-bordered table-hover">
@@ -38,13 +43,14 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
+                                    @foreach ($tempat_kerja as $data)
                                     <tr>
-                                        <td class="text-center">TS-2</td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
+                                        <td class="text-center">{{$data->tahun}}</td>
+                                        <td class="text-center">{{$data->jumlah_lulusan}} </td>
+                                        <td class="text-center">{{$data->jumlah_lulusan_terlacak}} </td>
+                                        <td class="text-center">{{$data->jumlah_lulusan_bekerja_lokal}} </td>
+                                        <td class="text-center">{{$data->jumlah_lulusan_bekerja_nasional}} </td>
+                                        <td class="text-center">{{$data->jumlah_lulusan_bekerja_internasional}} </td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">
@@ -54,17 +60,25 @@
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
+                                                    <!-- Edit -->
+                                                    <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.edit', ['tahunAjaran' => $tahun_ajaran, 'tempatId'=>$data->id]) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Edit
                                                     </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
+
+                                                    <!-- Delete -->
+                                                    <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.destroy', ['tahunAjaran' => $tahun_ajaran, 'tempatId'=>$data->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item text-danger">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
+
+                                    @endforeach
                                 </tbody>
                                 <tfoot class="table-border-bottom-0 table-secondary">
                                     <tr>

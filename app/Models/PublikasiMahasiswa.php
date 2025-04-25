@@ -2,26 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EvalKesesuaianKerja extends Model
+class PublikasiMahasiswa extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'eval_kesesuaian_kerja';
+    protected $table = 'publikasi_mahasiswa';
+
+    // Correct the typo here
     protected $fillable = [
         'user_id',
+        'nama_mahasiswa',
+        'judul_artikel',
+        'jenis_artikel',
         'tahun',
-        'jumlah_lulusan',
-        'jumlah_lulusan_terlacak',
-        'jumlah_lulusan_bekerja',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

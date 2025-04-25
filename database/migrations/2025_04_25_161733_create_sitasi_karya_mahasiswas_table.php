@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('eval_kesesuaian_kerja', function (Blueprint $table) {
+        Schema::create('sitasi_karya_mahasiswa', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('tahun');
-            $table->integer('jumlah_lulusan')->default(0);
-            $table->integer('jumlah_lulusan_terlacak')->default(0);
-            $table->integer('jumlah_lulusan_bekerja')->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('nama_mahasiswa');
+            $table->string('judul_artikel');
+            $table->integer('jumlah_sitasi');
+            $table->string('tahun')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('eval_kesesuaian_kerja');
+        Schema::dropIfExists('sitasi_karya_mahasiswa');
     }
 };

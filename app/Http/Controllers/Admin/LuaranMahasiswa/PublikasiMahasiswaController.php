@@ -1,37 +1,53 @@
 <?php
 
-namespace App\Http\Controllers\Admin\KinerjaLulusan\EvaluasiLulusan;
+namespace App\Http\Controllers\Admin\LuaranMahasiswa;
 
 use App\Http\Controllers\Controller;
-use App\Models\EvalTempatKerja;
+use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\PublikasiMahasiswa;
 
-class TempatKerjaController extends Controller
+class PublikasiMahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(string $tahunAjaran)
-    {
-        try {
-            $tempatKerja = EvalTempatKerja::with('user')->get();
+{
+    try {
+        // Fetch the Year Object and ensure it's valid
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
 
-            $title = 'Hapus Data!';
-            $text = "Apakah kamu yakin ingin menghapus?";
-            confirmDelete($title, $text);
+        $userId = Auth::id();
+        $publikasi = PublikasiMahasiswa::with('user')->get();
+        // Get the totals grouped by 'jenis_artikel' for the given year and user
+        $total = PublikasiMahasiswa::where('user_id', $userId)
+    ->whereNull('deleted_at')
+    ->where('tahun', $tahun)
+    ->count();
 
-            return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', [
-                'tempat_kerja' => $tempatKerja,
-                'tahun_ajaran' => $tahunAjaran,
-            ]);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+
+
+        // Return the view with just the total counts and unique 'jenis_artikel'
+        return view('pages.admin.kinerja-dosen.publikasi-ilmiah.index', [
+            'publikasi' => $publikasi,
+            'totals' => $total,
+            'tahun_ajaran' => $tahunAjaran,
+            'tahun' => $tahun,
+        ]);
+    } catch (\Exception $e) {
+        // Log the error for debugging purposes
+        \Log::error('Error fetching Publikasi Ilmiah Dosen data: ' . $e->getMessage());
+
+        // Return back with the error message
+        return back()->withErrors($e->getMessage());
     }
+}
 
     /**
      * Show the form for creating a new resource.
@@ -39,16 +55,16 @@ class TempatKerjaController extends Controller
     public function create(string $tahunAjaran)
     {
         try {
-            $EvalTempatKerjaMhs = new EvalTempatKerja();
+            $publikasi = new PublikasiMahasiswa();
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.form', [
-                'tempat_kerja' => $EvalTempatKerjaMhs,
+            return view('pages.admin.kinerja-dosen.publikasi-ilmiah.form', [
+                'publikasi_ilmiah' => $publikasi,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.store', $tahunAjaran),
+                'form_action' => route('admin.kinerja-dosen.publikasi-ilmiah.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -64,11 +80,9 @@ class TempatKerjaController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'jumlah_lulusan' => 'required|numeric',
-                'jumlah_lulusan_terlacak' => 'required|numeric',
-                'jumlah_lulusan_bekerja_lokal' => 'required|numeric',
-                'jumlah_lulusan_bekerja_nasional' => 'required|numeric',
-                'jumlah_lulusan_bekerja_internasional' => 'required|numeric',
+                'nama_dosen' => 'required|string',
+                'judul_artikel' => 'required|string',
+                'jenis_artikel' => 'required|string',
                 'tahun' => 'required|string',
             ]);
 
@@ -80,9 +94,9 @@ class TempatKerjaController extends Controller
             $validated['user_id'] = Auth::id();
             // dd($validated);
 
-            $create = EvalTempatKerja::create($validated);
+            $create = PublikasiMahasiswa::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
+                return redirect()->route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahunAjaran)
                     ->with('toast_success', 'Data rekognisi dtps berhasil ditambahkan');
             }
 
@@ -106,19 +120,19 @@ class TempatKerjaController extends Controller
     public function edit(string $tahunAjaran,string $id)
     {
         try {
-            $EvalTempatKerjaMhs = EvalTempatKerja::with('user')->first();
+            $publikasi = PublikasiMahasiswa::with('user')->first();
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
 
-            return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.form', [
-                'tempat_kerja' => $EvalTempatKerjaMhs,
+            return view('pages.admin.kinerja-dosen.publikasi-ilmiah.form', [
+                'publikasi_ilmiah' => $publikasi,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.update', [
+                'form_action' => route('admin.kinerja-dosen.publikasi-ilmiah.update', [
                     'tahunAjaran' => $tahunAjaran,
-                    'tempatId' => $EvalTempatKerjaMhs->id,
+                    'publikasiId' => $publikasi->id,
                 ]),
                 'form_method' => "PUT",
             ]);
@@ -134,9 +148,9 @@ class TempatKerjaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'jumlah_lulusan' => 'required|numeric',
-                'jumlah_lulusan_terlacak' => 'required|numeric',
-                'jumlah_lulusan_bekerja' => 'required|numeric',
+                'nama_dosen' => 'required|string',
+                'judul_artikel' => 'required|string',
+                'jenis_artikel' => 'required|string',
                 'tahun' => 'required|string',
             ]);
 
@@ -146,10 +160,10 @@ class TempatKerjaController extends Controller
 
             $validated = $request->all();
 
-            $dosenPraktisi = IpkLulusan::findOrFail($id);
+            $dosenPraktisi = PublikasiMahasiswa::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
+                return redirect()->route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
             }
 
@@ -165,11 +179,11 @@ class TempatKerjaController extends Controller
     public function destroy(string $tahunAjaran,string $id)
     {
         try {
-            $EvalTempatKerjaMhs = IpkLulusan::findOrFail($id);
-            $delete = $EvalTempatKerjaMhs->delete();
+            $publikasi = PublikasiMahasiswa::findOrFail($id);
+            $delete = $dosenPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
+                return redirect()->route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
             }
 

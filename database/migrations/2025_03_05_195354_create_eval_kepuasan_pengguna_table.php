@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('rencana_tindakan')->nullable();
             $table->integer('jumlah_lulusan')->default(0);
             $table->integer('jumlah_responden')->default(0);
-            $table->year('tahun')->default(date('Y'));
+            $table->string('tahun');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();

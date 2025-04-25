@@ -16,7 +16,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="javascript:void(0);" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -41,13 +41,43 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
+                                    @foreach ($kesesuaian_kerja as $data)
+                                    @php
+                                        $persentase = $data->jumlah_lulusan_terlacak > 0
+                                            ? ($data->jumlah_lulusan_bekerja / $data->jumlah_lulusan_terlacak) * 100
+                                            : 0;
+
+                                        $sangat_sesuai = $persentase >= 70;
+                                        $sesuai = $persentase >= 40 && $persentase < 70;
+                                        $kurang_sesuai = $persentase < 40;
+                                    @endphp
+
                                     <tr>
-                                        <td class="text-center">TS-2</td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
-                                        <td class="text-center"> </td>
+                                        <td class="text-center">{{ $data->tahun }}</td>
+                                        <td class="text-center">{{ $data->jumlah_lulusan }}</td>
+                                        <td class="text-center">{{ $data->jumlah_lulusan_terlacak }}</td>
+
+                                        <!-- Kategori: Sangat Sesuai -->
+                                        <td class="text-center">
+                                            @if ($kurang_sesuai)
+                                                ✓
+                                            @endif
+
+                                        </td>
+
+                                        <!-- Kategori: Sesuai -->
+                                        <td class="text-center">
+                                            @if ($sesuai)
+                                                ✓
+                                            @endif
+                                        </td>
+
+                                        <!-- Kategori: Kurang Sesuai -->
+                                        <td class="text-center">
+                                            @if ($sangat_sesuai)
+                                            ✓
+                                        @endif
+                                        </td>
 
                                         <!-- Aksi -->
                                         <td class="text-center">
@@ -57,17 +87,25 @@
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                        Delete
-                                                    </a>
+                                                    <!-- Edit -->
+                                                        <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.edit', ['tahunAjaran' => $tahun_ajaran, 'kesesuaianId'=>$data->id]) }}">
+                                                            <i class="bx bx-edit-alt me-1"></i> Edit
+                                                        </a>
+
+                                                        <!-- Delete -->
+                                                        <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.destroy', ['tahunAjaran' => $tahun_ajaran, 'kesesuaianId'=>$data->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item text-danger">
+                                                                <i class="bx bx-trash me-1"></i> Delete
+                                                            </button>
+                                                        </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
+
                                 </tbody>
                                 <tfoot class="table-border-bottom-0 table-secondary">
                                     <tr>
