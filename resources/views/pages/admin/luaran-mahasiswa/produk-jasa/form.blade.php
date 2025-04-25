@@ -3,8 +3,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Kinerja Dosen /</span>
-            <span class="text-muted fw-light">Pengakuan/sitasi DTPS /</span>
+            <span class="text-muted fw-light">Luaran Karya Mahasiswa /</span>
+            <span class="text-muted fw-light">Pengakuan/Produk jasa Mahasiswa /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/sitasi DTPS </h5>
+                        <h5 class="mb-0">Luaran Karya Mahasiswa | Pengakuan/Produk jasa Mahasiswa </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -22,27 +22,35 @@
                             @csrf @method($form_method)
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
+                                <label class="col-sm-2 col-form-label" for="namaMahasiswa">Nama Mahasiswa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $sitasi->nama_dosen) }}" autofocus required />
+                                    <input type="text" class="form-control" id="namaMahasiswa" name="nama_mahasiswa"
+                                        value="{{ old('nama_mahasiswa', $produk_jasa->nama_mahasiswa) }}" autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="judul_artikel">Judul Artikel</label>
+                                <label class="col-sm-2 col-form-label" for="namaProduk">Nama Produk/Jasa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="judul_artikel" name="judul_artikel"
-                                        value="{{ old('judul_artikel', $sitasi->judul_artikel) }}" placeholder="Reviewer Jurnal.." required />
+                                    <input type="text" class="form-control" id="namaProduk" name="nama_produk"
+                                        value="{{ old('nama_produk', $produk_jasa->nama_produk) }}" placeholder="Reviewer Jurnal.." required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="jumlah_sitasi">Jumlah Sitasi</label>
+                                <label class="col-sm-2 col-form-label" for="deskripsiProduk">Deskripsi Produk/Jasa</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="jumlah_sitasi" name="jumlah_sitasi"
-                                        value="{{ $sitasi->jumlah_sitasi ?? 0 }}"
-                                        autofocus required />
+                                    <input type="text" class="form-control" id="deskripsiProduk" name="deskripsi_produk"
+                                        value="{{ old('deskripsi_produk', $produk_jasa->deskripsi_produk) }}" placeholder="Reviewer Jurnal.." required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="bukti">Bukti Pendukung Produk/Jasa (URL)</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" id="bukti" name="bukti"
+                                        value="{{ old('bukti', $produk_jasa->bukti) }}" placeholder="https://drive.google.com/.."
+                                        required />
                                 </div>
                             </div>
 
@@ -51,7 +59,7 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ $tahun }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $produk_jasa->tahun) }}"
                                         required />
                                 </div>
                             </div>

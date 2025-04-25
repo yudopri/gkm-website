@@ -3,8 +3,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Kinerja Dosen /</span>
-            <span class="text-muted fw-light">Pengakuan/Produk Teradopsi DTPS /</span>
+            <span class="text-muted fw-light">Luaran Karya Mahasiswa /</span>
+            <span class="text-muted fw-light">Pengakuan/HKI Hak Cipta Mahasiswa /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Produk Teradopsi DTPS </h5>
+                        <h5 class="mb-0">Luaran Karya Mahasiswa | Pengakuan/HKI Hak Cipta Mahasiswa </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -21,35 +21,23 @@
                         <form action="{{ $form_action }}" method="POST" enctype="multipart/form-data">
                             @csrf @method($form_method)
 
+
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
+                                <label class="col-sm-2 col-form-label" for="luaran_penelitian">
+                                    Luaran Penelitian
+                                </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $produk_teradopsi->nama_dosen) }}" autofocus required />
+                                    <input type="text" class="form-control" id="luaran_penelitian" name="luaran_penelitian" value="{{ old('luaran_penelitian', $hki_cipta->luaran_penelitian) }}"
+                                        autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaProduk">Nama Produk/Jasa</label>
+                                <label class="col-sm-2 col-form-label" for="keterangan">
+                                    keterangan
+                                </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaProduk" name="nama_produk"
-                                        value="{{ old('nama_produk', $produk_teradopsi->nama_produk) }}" placeholder="Reviewer Jurnal.." required />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="deskripsiProduk">Deskripsi Produk/Jasa</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="deskripsiProduk" name="deskripsi_produk"
-                                        value="{{ old('deskripsi_produk', $produk_teradopsi->deskripsi_produk) }}" placeholder="Reviewer Jurnal.." required />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="bukti">Bukti Pendukung Produk/Jasa (URL)</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="text" id="bukti" name="bukti"
-                                        value="{{ old('bukti', $produk_teradopsi->bukti) }}" placeholder="https://drive.google.com/.."
+                                    <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ old('keterangan', $hki_cipta->keterangan) }}"
                                         required />
                                 </div>
                             </div>
@@ -59,10 +47,11 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $produk_teradopsi->tahun) }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $hki_cipta->tahun) }}"
                                         required />
                                 </div>
                             </div>
+
 
                             <!-- Submit -->
                             <div class="row justify-content-end">

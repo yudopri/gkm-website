@@ -3,8 +3,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Kinerja Dosen /</span>
-            <span class="text-muted fw-light">Luaran Penelitian/PkM Lainnya oleh DTPS /</span>
+            <span class="text-muted fw-light">Luaran Karya Mahasiswa /</span>
+            <span class="text-muted fw-light">Luaran Penelitian/PkM Lainnya oleh Mahasiswa /</span>
             Buku Ber-ISBN, Book Chapter
         </h4>
 
@@ -16,7 +16,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <!-- #s btn tambah -->
-                        <a href="{{ route('admin.kinerja-dosen.luaran-lain.buku-chapter.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
+                        <a href="{{ route('admin.luaran-mahasiswa.luaran-lain.buku-chapter.create', $tahun_ajaran) }}" class="btn btn-info mb-3">
                             <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
                         </a>
                         <!-- #e btn tambah -->
@@ -56,11 +56,11 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="{{ route('admin.kinerja-dosen.luaran-lain.buku-chapter.edit', ['tahunAjaran' => $tahun_ajaran, 'bookId' => $book->id]) }}">
+                                                        <a class="dropdown-item" href="{{ route('admin.luaran-mahasiswa.luaran-lain.buku-chapter.edit', ['tahunAjaran' => $tahun_ajaran, 'bookId' => $book->id]) }}">
                                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                                         </a>
 
-                                                        <form action="{{ route('admin.kinerja-dosen.luaran-lain.buku-chapter.destroy', ['tahunAjaran' => $tahun_ajaran, 'bookId' => $book->id]) }}" method="POST" style="display:inline;">
+                                                        <form action="{{ route('admin.luaran-mahasiswa.luaran-lain.buku-chapter.destroy', ['tahunAjaran' => $tahun_ajaran, 'bookId' => $book->id]) }}" method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">

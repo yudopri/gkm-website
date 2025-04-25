@@ -3,8 +3,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Kinerja Dosen /</span>
-            <span class="text-muted fw-light">Pengakuan/Teknologi Karya /</span>
+            <span class="text-muted fw-light">Luaran Karya Mahasiswa /</span>
+            <span class="text-muted fw-light">Pengakuan/Buku Chapter Mahasiswa/</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Teknologi Karya </h5>
+                        <h5 class="mb-0">Luaran Karya Mahasiswa | Pengakuan/Buku Chapter Mahasiswa</h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -27,7 +27,7 @@
                                     Luaran Penelitian
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="luaran_penelitian" name="luaran_penelitian" value="{{ old('luaran_penelitian', $teknologi_karya->luaran_penelitian) }}"
+                                    <input type="text" class="form-control" id="luaran_penelitian" name="luaran_penelitian" value="{{ old('luaran_penelitian', $buku_chapter->luaran_penelitian) }}"
                                         autofocus required />
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                     keterangan
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ old('keterangan', $teknologi_karya->keterangan) }}"
+                                    <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ old('keterangan', $buku_chapter->keterangan) }}"
                                         required />
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $teknologi_karya->tahun) }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $buku_chapter->tahun) }}"
                                         required />
                                 </div>
                             </div>

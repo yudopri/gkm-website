@@ -25,7 +25,7 @@ class TeknologiKaryaMahasiswaController extends Controller
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);
 
-            return view('pages.admin.kinerja-dosen.luaran-lain.teknologi-karya.index', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.teknologi-karya.index', [
                 'teknologi_karya' => $tnk,
                 'tahun_ajaran' => $tahunAjaran,
             ]);
@@ -44,12 +44,12 @@ class TeknologiKaryaMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.luaran-lain.teknologi-karya.form', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.teknologi-karya.form', [
                 'teknologi_karya' => $TeknologiKaryaMahasiswa,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-dosen.luaran-lain.teknologi-karya.store', $tahunAjaran),
+                'form_action' => route('admin.luaran-mahasiswa.luaran-lain.teknologi-karya.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -80,7 +80,7 @@ class TeknologiKaryaMahasiswaController extends Controller
 
             $create = TeknologiKaryaMahasiswa::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.teknologi-karya.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.teknologi-karya.index', $tahunAjaran)
                     ->with('toast_success', 'Data teknologi_karya dtps berhasil ditambahkan');
             }
 
@@ -108,12 +108,12 @@ class TeknologiKaryaMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.luaran-lain.teknologi-karya.form', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.teknologi-karya.form', [
                 'teknologi_karya' => $teknologi_karya,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-dosen.luaran-lain.teknologi-karya.update', [
+                'form_action' => route('admin.luaran-mahasiswa.luaran-lain.teknologi-karya.update', [
                     'tahunAjaran' => $tahunAjaran,
                     'karyaId' => $teknologi_karya->id,
                 ]),
@@ -145,7 +145,7 @@ class TeknologiKaryaMahasiswaController extends Controller
             $dosenPraktisi = TeknologiKaryaMahasiswa::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.teknologi-karya.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.teknologi-karya.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
             }
 
@@ -165,7 +165,7 @@ class TeknologiKaryaMahasiswaController extends Controller
             $delete = $dosenPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.teknologi-karya.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.teknologi-karya.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
             }
 

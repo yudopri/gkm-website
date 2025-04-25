@@ -24,7 +24,7 @@ class BukuChapterMahasiswaController extends Controller
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);
 
-            return view('pages.admin.kinerja-dosen.luaran-lain.buku-chapter.index', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.buku-chapter.index', [
                 'buku_chapter' => $bookChapter,
                 'tahun_ajaran' => $tahunAjaran,
             ]);
@@ -43,12 +43,12 @@ class BukuChapterMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.luaran-lain.buku-chapter.form', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.buku-chapter.form', [
                 'buku_chapter' => $BukuChapterMahasiswa,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-dosen.luaran-lain.buku-chapter.store', $tahunAjaran),
+                'form_action' => route('admin.luaran-mahasiswa.luaran-lain.buku-chapter.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -79,7 +79,7 @@ class BukuChapterMahasiswaController extends Controller
 
             $create = BukuChapterMahasiswa::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.buku-chapter.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.buku-chapter.index', $tahunAjaran)
                     ->with('toast_success', 'Data buku_chapter dtps berhasil ditambahkan');
             }
 
@@ -107,12 +107,12 @@ class BukuChapterMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.luaran-lain.buku-chapter.form', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.buku-chapter.form', [
                 'buku_chapter' => $buku_chapter,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-dosen.luaran-lain.buku-chapter.update', [
+                'form_action' => route('admin.luaran-mahasiswa.luaran-lain.buku-chapter.update', [
                     'tahunAjaran' => $tahunAjaran,
                     'bookId' => $buku_chapter->id,
                 ]),
@@ -144,7 +144,7 @@ class BukuChapterMahasiswaController extends Controller
             $dosenPraktisi = BukuChapterMahasiswa::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.buku-chapter.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.buku-chapter.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
             }
 
@@ -164,7 +164,7 @@ class BukuChapterMahasiswaController extends Controller
             $delete = $dosenPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.buku-chapter.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.buku-chapter.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
             }
 

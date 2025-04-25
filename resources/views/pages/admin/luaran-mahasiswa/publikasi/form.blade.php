@@ -3,8 +3,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Kinerja Dosen /</span>
-            <span class="text-muted fw-light">Pengakuan/Publikasi Ilmiah DTPS /</span>
+            <span class="text-muted fw-light">Luaran Karya Mahasiswa /</span>
+            <span class="text-muted fw-light">Pengakuan/Publikasi Mahasiswa /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Publikasi Ilmiah DTPS </h5>
+                        <h5 class="mb-0">Luaran Karya Mahasiswa | Pengakuan/Publikasi Mahasiswa </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -21,10 +21,10 @@
                     <form action="{{ $form_action }}" method="POST" enctype="multipart/form-data">
                             @csrf @method($form_method)
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen</label>
+                                <label class="col-sm-2 col-form-label" for="namaMahasiswa">Nama Mahasiswa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $publikasi_ilmiah->nama_dosen) }}" autofocus required />
+                                    <input type="text" class="form-control" id="namaMahasiswa" name="nama_mahasiswa"
+                                        value="{{ old('nama_mahasiswa', $publikasi_ilmiah->nama_mahasiswa) }}" autofocus required />
                                 </div>
                             </div>
                             <div class="row mb-3">

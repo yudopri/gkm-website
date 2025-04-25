@@ -3,8 +3,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Kinerja Dosen /</span>
-            <span class="text-muted fw-light">Pengakuan/Rekognisi DTPS /</span>
+            <span class="text-muted fw-light">Luaran Karya Mahasiswa /</span>
+            <span class="text-muted fw-light">Pengakuan/sitasi Mahasiswa /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +13,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Kinerja Dosen | Pengakuan/Rekognisi DTPS </h5>
+                        <h5 class="mb-0">Luaran Karya Mahasiswa | Pengakuan/sitasi Mahasiswa </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -21,24 +21,28 @@
                         <form action="{{ $form_action }}" method="POST" enctype="multipart/form-data">
                             @csrf @method($form_method)
 
-
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="luaran_penelitian">
-                                    Luaran Penelitian
-                                </label>
+                                <label class="col-sm-2 col-form-label" for="namaMahasiswa">Nama Mahasiswa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="luaran_penelitian" name="luaran_penelitian" value="{{ old('luaran_penelitian', $hki_cipta->luaran_penelitian) }}"
-                                        autofocus required />
+                                    <input type="text" class="form-control" id="namaMahasiswa" name="nama_mahasiswa"
+                                        value="{{ old('nama_mahasiswa', $sitasi->nama_mahasiswa) }}" autofocus required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="keterangan">
-                                    keterangan
-                                </label>
+                                <label class="col-sm-2 col-form-label" for="judul_artikel">Judul Artikel</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ old('keterangan', $hki_cipta->keterangan) }}"
-                                        required />
+                                    <input type="text" class="form-control" id="judul_artikel" name="judul_artikel"
+                                        value="{{ old('judul_artikel', $sitasi->judul_artikel) }}" placeholder="Reviewer Jurnal.." required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="jumlah_sitasi">Jumlah Sitasi</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="jumlah_sitasi" name="jumlah_sitasi"
+                                        value="{{ $sitasi->jumlah_sitasi ?? 0 }}"
+                                        autofocus required />
                                 </div>
                             </div>
 
@@ -47,11 +51,10 @@
                                     Tahun (YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $hki_cipta->tahun) }}"
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ $tahun }}"
                                         required />
                                 </div>
                             </div>
-
 
                             <!-- Submit -->
                             <div class="row justify-content-end">

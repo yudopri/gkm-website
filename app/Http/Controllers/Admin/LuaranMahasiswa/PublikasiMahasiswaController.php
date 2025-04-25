@@ -34,7 +34,7 @@ class PublikasiMahasiswaController extends Controller
 
 
         // Return the view with just the total counts and unique 'jenis_artikel'
-        return view('pages.admin.kinerja-dosen.publikasi-ilmiah.index', [
+        return view('pages.admin.luaran-mahasiswa.publikasi.index', [
             'publikasi' => $publikasi,
             'totals' => $total,
             'tahun_ajaran' => $tahunAjaran,
@@ -59,12 +59,12 @@ class PublikasiMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.publikasi-ilmiah.form', [
+            return view('pages.admin.luaran-mahasiswa.publikasi.form', [
                 'publikasi_ilmiah' => $publikasi,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-dosen.publikasi-ilmiah.store', $tahunAjaran),
+                'form_action' => route('admin.luaran-mahasiswa.publikasi.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -80,7 +80,7 @@ class PublikasiMahasiswaController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string',
+                'nama_mahasiswa' => 'required|string',
                 'judul_artikel' => 'required|string',
                 'jenis_artikel' => 'required|string',
                 'tahun' => 'required|string',
@@ -96,7 +96,7 @@ class PublikasiMahasiswaController extends Controller
 
             $create = PublikasiMahasiswa::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.publikasi.index', $tahunAjaran)
                     ->with('toast_success', 'Data rekognisi dtps berhasil ditambahkan');
             }
 
@@ -125,12 +125,12 @@ class PublikasiMahasiswaController extends Controller
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
 
-            return view('pages.admin.kinerja-dosen.publikasi-ilmiah.form', [
+            return view('pages.admin.luaran-mahasiswa.publikasi.form', [
                 'publikasi_ilmiah' => $publikasi,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-dosen.publikasi-ilmiah.update', [
+                'form_action' => route('admin.luaran-mahasiswa.publikasi.update', [
                     'tahunAjaran' => $tahunAjaran,
                     'publikasiId' => $publikasi->id,
                 ]),
@@ -148,7 +148,7 @@ class PublikasiMahasiswaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string',
+                'nama_mahasiswa' => 'required|string',
                 'judul_artikel' => 'required|string',
                 'jenis_artikel' => 'required|string',
                 'tahun' => 'required|string',
@@ -163,7 +163,7 @@ class PublikasiMahasiswaController extends Controller
             $dosenPraktisi = PublikasiMahasiswa::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.publikasi.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
             }
 
@@ -183,7 +183,7 @@ class PublikasiMahasiswaController extends Controller
             $delete = $dosenPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahunAjaran)
+                return redirect()->route('admin.kinerja-dosen.publikasi.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
             }
 

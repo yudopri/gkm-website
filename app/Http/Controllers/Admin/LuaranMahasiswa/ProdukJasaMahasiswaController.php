@@ -26,8 +26,8 @@ class ProdukJasaMahasiswaController extends Controller
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);
 
-            return view('pages.admin.kinerja-dosen.produk-teradopsi.index', [
-                'produk_teradopsi' => $produk,
+            return view('pages.admin.luaran-mahasiswa.produk-jasa.index', [
+                'produk_jasa' => $produk,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
             ]);
@@ -46,12 +46,12 @@ class ProdukJasaMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.produk-teradopsi.form', [
-                'produk_teradopsi' => $produk,
+            return view('pages.admin.luaran-mahasiswa.produk-jasa.form', [
+                'produk_jasa' => $produk,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-dosen.produk-teradopsi.store', $tahunAjaran),
+                'form_action' => route('admin.luaran-mahasiswa.produk-jasa.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -67,7 +67,7 @@ class ProdukJasaMahasiswaController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string',
+                'nama_mahasiswa' => 'required|string',
                 'nama_produk' => 'required|string',
                 'deskripsi_produk' => 'required|string',
                 'bukti' => 'required|string',
@@ -83,7 +83,7 @@ class ProdukJasaMahasiswaController extends Controller
             $create = ProdukJasaMahasiswa::create($validated);
 
             if ($create) {
-                return redirect()->route('admin.kinerja-dosen.produk-teradopsi.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.produk-jasa.index', $tahunAjaran)
                     ->with('toast_success', 'Data penelitian dtps berhasil ditambahkan');
             }
 
@@ -99,11 +99,11 @@ class ProdukJasaMahasiswaController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'kerjasama_tridharma_pendidikan')->whereId($id)->firstOrFail();
+            $mahasiswa = User::with('profile', 'kerjasama_tridharma_pendidikan')->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kerjasama-tridharma.detail-pendidikan', [
-                'data_dosen' => $dosen,
-                'dosenId' => $dosen->id,
+                'data_mahasiswa' => $mahasiswa,
+                'mahasiswaId' => $mahasiswa->id,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());
@@ -126,12 +126,12 @@ class ProdukJasaMahasiswaController extends Controller
             return back()->withErrors('Data tidak ditemukan.');
         }
 
-        return view('pages.admin.kinerja-dosen.produk-teradopsi.form', [
-            'produk_teradopsi' => $ProdukJasaMahasiswa,
+        return view('pages.admin.luaran-mahasiswa.produk-jasa.form', [
+            'produk_jasa' => $ProdukJasaMahasiswa,
             'tahun_ajaran' => $tahunAjaran,
             'tahun' => $tahun,
             'form_title' => 'Edit Data',
-            'form_action' => route('admin.kinerja-dosen.produk-teradopsi.update', [
+            'form_action' => route('admin.luaran-mahasiswa.produk-jasa.update', [
                 'produkId' => $ProdukJasaMahasiswa->id,
                 'tahunAjaran' => $tahunAjaran,
             ]),
@@ -150,7 +150,7 @@ class ProdukJasaMahasiswaController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string',
+                'nama_mahasiswa' => 'required|string',
                 'nama_produk' => 'required|string',
                 'deskripsi_produk' => 'required|string',
                 'bukti' => 'required|string',
@@ -166,7 +166,7 @@ class ProdukJasaMahasiswaController extends Controller
             $update = $ProdukJasaMahasiswa->update($validated);
 
             if ($update) {
-                return redirect()->route('admin.kinerja-dosen.produk-teradopsi.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.produk-jasa.index', $tahunAjaran)
                     ->with('toast_success', 'Data penelitian dtps berhasil ditambahkan');
             }
 
@@ -186,7 +186,7 @@ class ProdukJasaMahasiswaController extends Controller
         $delete = $ProdukJasaMahasiswa->delete();
 
         if ($delete) {
-            return redirect()->route('admin.kinerja-dosen.produk-teradopsi.index', $tahunAjaran)
+            return redirect()->route('admin.luaran-mahasiswa.produk-jasa.index', $tahunAjaran)
                 ->with('toast_success', 'Data penelitian dtps berhasil ditambahkan');
         }
         throw new \Exception('Data penelitian dtps gagal dihapus');

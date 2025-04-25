@@ -23,7 +23,7 @@ class SitasiKaryaMahasiswaController extends Controller
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);
 
-            return view('pages.admin.kinerja-dosen.sitasi-karya.index', [
+            return view('pages.admin.luaran-mahasiswa.sitasi-karya.index', [
                 'sitasi_karya' => $sitasi,
                 'tahun_ajaran' => $tahunAjaran,
             ]);
@@ -42,12 +42,12 @@ class SitasiKaryaMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.sitasi-karya.form', [
+            return view('pages.admin.luaran-mahasiswa.sitasi-karya.form', [
                 'sitasi' => $SitasiKaryaMahasiswa,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-dosen.sitasi-karya.store', $tahunAjaran),
+                'form_action' => route('admin.luaran-mahasiswa.sitasi-karya.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -63,7 +63,7 @@ class SitasiKaryaMahasiswaController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
+                'nama_mahasiswa' => 'required|string|max:255',
                 'judul_artikel' => 'required|string|max:255',
                 'jumlah_sitasi' => 'required|string',
                 'tahun' => 'required|string',
@@ -79,7 +79,7 @@ class SitasiKaryaMahasiswaController extends Controller
 
             $create = SitasiKaryaMahasiswa::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-dosen.sitasi-karya.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.sitasi-karya.index', $tahunAjaran)
                     ->with('toast_success', 'Data sitasi dtps berhasil ditambahkan');
             }
 
@@ -107,12 +107,12 @@ class SitasiKaryaMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.sitasi-karya.form', [
+            return view('pages.admin.luaran-mahasiswa.sitasi-karya.form', [
                 'sitasi' => $sitasi,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-dosen.sitasi-karya.update', [
+                'form_action' => route('admin.luaran-mahasiswa.sitasi-karya.update', [
                     'tahunAjaran' => $tahunAjaran,
                     'sitasiId' => $sitasi->id,
                 ]),
@@ -130,7 +130,7 @@ class SitasiKaryaMahasiswaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nama_dosen' => 'required|string|max:255',
+                'nama_mahasiswa' => 'required|string|max:255',
                 'judul_artikel' => 'required|string|max:255',
                 'jumlah_sitasi' => 'required|string',
                 'tahun' => 'required|string',
@@ -142,14 +142,14 @@ class SitasiKaryaMahasiswaController extends Controller
 
             $validated = $request->all();
 
-            $dosenPraktisi = SitasiKaryaMahasiswa::findOrFail($id);
-            $update = $dosenPraktisi->update($validated);
+            $mahasiswaPraktisi = SitasiKaryaMahasiswa::findOrFail($id);
+            $update = $mahasiswaPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.kinerja-dosen.sitasi-karya.index', $tahunAjaran)
-                    ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
+                return redirect()->route('admin.luaran-mahasiswa.sitasi-karya.index', $tahunAjaran)
+                    ->with('toast_success', 'Data mahasiswa praktisi berhasil diupdate');
             }
 
-            throw new \Exception('Data dosen praktisi gagal diupdate');
+            throw new \Exception('Data mahasiswa praktisi gagal diupdate');
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage())->withInput();
         }
@@ -161,12 +161,12 @@ class SitasiKaryaMahasiswaController extends Controller
     public function destroy(string $tahunAjaran,string $id)
     {
         try {
-            $dosenPraktisi = SitasiKaryaMahasiswa::findOrFail($id);
-            $delete = $dosenPraktisi->delete();
+            $mahasiswaPraktisi = SitasiKaryaMahasiswa::findOrFail($id);
+            $delete = $mahasiswaPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.kinerja-dosen.sitasi-karya.index', $tahunAjaran)
-                    ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
+                return redirect()->route('admin.luaran-mahasiswa.sitasi-karya.index', $tahunAjaran)
+                    ->with('toast_success', 'Data mahasiswa praktisi berhasil dihapus');
             }
 
             throw new \Exception('Data dosen praktisi gagal dihapus');

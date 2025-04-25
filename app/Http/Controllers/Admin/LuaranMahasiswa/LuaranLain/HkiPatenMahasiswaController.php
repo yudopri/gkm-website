@@ -24,7 +24,7 @@ class HkiPatenMahasiswaController extends Controller
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);
 
-            return view('pages.admin.kinerja-dosen.luaran-lain.hki-paten.index', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.hki-paten.index', [
                 'hki_paten' => $hki,
                 'tahun_ajaran' => $tahunAjaran,
             ]);
@@ -43,12 +43,12 @@ class HkiPatenMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.luaran-lain.hki-paten.form', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.hki-paten.form', [
                 'hki_paten' => $HkiPatenMahasiswa,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Tambah Data',
-                'form_action' => route('admin.kinerja-dosen.luaran-lain.hki-paten.store', $tahunAjaran),
+                'form_action' => route('admin.luaran-mahasiswa.luaran-lain.hki-paten.store', $tahunAjaran),
                 'form_method' => "POST",
             ]);
         } catch (\Exception $e) {
@@ -79,7 +79,7 @@ class HkiPatenMahasiswaController extends Controller
 
             $create = HkiPatenMahasiswa::create($validated);
             if ($create) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.hki-paten.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.hki-paten.index', $tahunAjaran)
                     ->with('toast_success', 'Data hki_paten dtps berhasil ditambahkan');
             }
 
@@ -107,12 +107,12 @@ class HkiPatenMahasiswaController extends Controller
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
-            return view('pages.admin.kinerja-dosen.luaran-lain.hki-paten.form', [
+            return view('pages.admin.luaran-mahasiswa.luaran-lain.hki-paten.form', [
                 'hki_paten' => $hki_paten,
                 'tahun_ajaran' => $tahunAjaran,
                 'tahun' => $tahun,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.kinerja-dosen.luaran-lain.hki-paten.update', [
+                'form_action' => route('admin.luaran-mahasiswa.luaran-lain.hki-paten.update', [
                     'tahunAjaran' => $tahunAjaran,
                     'hki_patenId' => $hki_paten->id,
                 ]),
@@ -144,7 +144,7 @@ class HkiPatenMahasiswaController extends Controller
             $dosenPraktisi = HkiPatenMahasiswa::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.hki-paten.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.hki-paten.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
             }
 
@@ -164,7 +164,7 @@ class HkiPatenMahasiswaController extends Controller
             $delete = $dosenPraktisi->delete();
 
             if ($delete) {
-                return redirect()->route('admin.kinerja-dosen.luaran-lain.hki-paten.index', $tahunAjaran)
+                return redirect()->route('admin.luaran-mahasiswa.luaran-lain.hki-paten.index', $tahunAjaran)
                     ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
             }
 
