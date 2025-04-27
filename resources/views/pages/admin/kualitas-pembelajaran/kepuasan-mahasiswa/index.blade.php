@@ -78,10 +78,10 @@
                                     <tr>
                                         <th class="rounded-start-bottom"> </th>
                                         <th class="text-center">Jumlah</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
+                                        <th class="text-center">{{$kepuasan_mahasiswa->sum('tingkat_kepuasan_sangat_baik')}}</th>
+                                        <th class="text-center">{{$kepuasan_mahasiswa->sum('tingkat_kepuasan_baik')}}</th>
+                                        <th class="text-center">{{$kepuasan_mahasiswa->sum('tingkat_kepuasan_cukup')}}</th>
+                                        <th class="text-center">{{$kepuasan_mahasiswa->sum('tingkat_kepuasan_buruk')}}</th>
                                         <th class="text-center"> </th>
                                         <th class="rounded-end-bottom">Aksi</th>
                                     </tr>

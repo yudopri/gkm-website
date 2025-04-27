@@ -83,11 +83,11 @@
                                 <tfoot class="table-border-bottom-0 table-secondary">
                                     <tr>
                                         <th class="rounded-start-bottom">Jumlah</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
+                                        <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan')}}</th>
+                                        <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan_terlacak')}}</th>
+                                        <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan_bekerja_lokal')}}</th>
+                                        <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan_bekerja_nasional')}}</th>
+                                        <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan_bekerja_internasional')}}</th>
                                         <th class="rounded-end-bottom">Aksi</th>
                                     </tr>
                                 </tfoot>

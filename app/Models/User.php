@@ -105,6 +105,10 @@ class User extends Authenticatable
         return $this->hasMany(DosenTetapPT::class, 'user_id');
     }
 
+    public function dosen_tidak_tetap()
+    {
+        return $this->hasMany(DosenTidakTetap::class, 'user_id');
+    }
     public function dosen_pembimbing_ta()
     {
         return $this->hasMany(DosenPembimbingTA::class, 'user_id');
@@ -114,15 +118,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(EwmpDosen::class, 'user_id');
     }
+    public function dosen_praktisi()
+    {
+        return $this->hasMany(DosenIndustriPraktisi::class, 'user_id');
+    }
+
     public function rekognisi_dtps()
-    {
-        return $this->hasMany(RekognisiDosen::class, 'user_id');
-    }
-    public function penelitian_dtps()
-    {
-        return $this->hasMany(RekognisiDosen::class, 'user_id');
-    }
-    public function produk_teradopsi()
     {
         return $this->hasMany(RekognisiDosen::class, 'user_id');
     }
@@ -130,20 +131,120 @@ class User extends Authenticatable
     {
         return $this->hasMany(PkmDtps::class, 'user_id');
     }
-    public function hki_paten()
+    public function penelitian_dtps()
     {
-        return $this->hasMany(PkmDtps::class, 'user_id');
+        return $this->hasMany(PenelitianDtps::class, 'user_id');
     }
-    public function hki_cipta()
+    public function publikasi_ilmiah()
     {
-        return $this->hasMany(PkmDtps::class, 'user_id');
+        return $this->hasMany(PublikasiIlmiahDosen::class, 'user_id');
     }
-    public function buku_chapter()
+    public function sitasi_karya_dosen()
     {
-        return $this->hasMany(PkmDtps::class, 'user_id');
+        return $this->hasMany(SitasiKaryaDosen::class, 'user_id');
     }
-    public function teknologi_karya()
+    public function produk_teradopsi()
     {
-        return $this->hasMany(PkmDtps::class, 'user_id');
+        return $this->hasMany(ProdukTeradopsiDosen::class, 'user_id');
+    }
+    public function hki_paten_dosen()
+    {
+        return $this->hasMany(HkiPatenDosen::class, 'user_id');
+    }
+    public function hki_cipta_dosen()
+    {
+        return $this->hasMany(HkiHakciptaDosen::class, 'user_id');
+    }
+    public function buku_chapter_dosen()
+    {
+        return $this->hasMany(BukuChapterDosen::class, 'user_id');
+    }
+    public function teknologi_karya_dosen()
+    {
+        return $this->hasMany(TeknologiKaryaDosen::class, 'user_id');
+    }
+    public function ipk_lulusan()
+    {
+        return $this->hasMany(IpkLulusan::class, 'user_id');
+    }
+    public function masa_studi_lulusan()
+    {
+        return $this->hasMany(MasaStudiLulusan::class, 'user_id');
+    }
+    public function eval_kepuasan_pengguna()
+    {
+        return $this->hasMany(EvalKepuasanPengguna::class, 'user_id');
+    }
+    public function eval_kesesuaian_kerja()
+    {
+        return $this->hasMany(EvalKesesuaianKerja::class, 'user_id');
+    }
+    public function eval_tempat_kerja()
+    {
+        return $this->hasMany(EvalTempatKerja::class, 'user_id');
+    }
+    public function eval_waktu_tunggu()
+    {
+        return $this->hasMany(EvalWaktuTunggu::class, 'user_id');
+    }
+    public function prestasi_akademik()
+    {
+        return $this->hasMany(PrestasiAkademikMhs::class, 'user_id');
+    }
+    public function prestasi_nonakademik()
+    {
+        return $this->hasMany(PrestasiNonakademikMhs::class, 'user_id');
+    }
+    public function integrasi_penelitian()
+    {
+        return $this->hasMany(IntegrasiPenelitian::class, 'user_id');
+    }
+    public function kepuasan_mahasiswa()
+    {
+        return $this->hasMany(KepuasanMahasiswa::class, 'user_id');
+    }
+    public function kurikulum_pembelajaran()
+    {
+        return $this->hasMany(KurikulumPembelajaran::class, 'user_id');
+    }
+    public function penelitian_mahasiswa()
+    {
+        return $this->hasMany(DtpsPenelitianMahasiswa::class, 'user_id');
+    }
+    public function rujukan_tesis_mahasiswa()
+    {
+        return $this->hasMany(DtpsRujukanTesis::class, 'user_id');
+    }
+    public function pkm_dtps_mahasiswa()
+    {
+        return $this->hasMany(PkmDtpsMahasiswa::class, 'user_id');
+    }
+    public function publikasi_mahasiswa()
+    {
+        return $this->hasMany(PublikasiMahasiswa::class, 'user_id');
+    }
+    public function sitasi_karya_mahasiswa()
+    {
+        return $this->hasMany(SitasiKaryaDosen::class, 'user_id');
+    }
+    public function produk_jasa_mahasiswa()
+    {
+        return $this->hasMany(ProdukJasaMahasiswa::class, 'user_id');
+    }
+    public function hki_paten_mahasiswa()
+    {
+        return $this->hasMany(HkiPatenMahasiswa::class, 'user_id');
+    }
+    public function hki_cipta_mahasiswa()
+    {
+        return $this->hasMany(HkiHakCiptaMahasiswa::class, 'user_id');
+    }
+    public function buku_chapter_mahasiswa()
+    {
+        return $this->hasMany(BukuChapterMahasiswa::class, 'user_id');
+    }
+    public function teknologi_karya_mahasiswa()
+    {
+        return $this->hasMany(TeknologiKaryaMahasiswa::class, 'user_id');
     }
 }

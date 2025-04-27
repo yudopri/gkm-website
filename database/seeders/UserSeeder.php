@@ -29,6 +29,7 @@ class UserSeeder extends Seeder
             'nama' => 'Ryan Reynolds',
             'jabatan_fungsional' => 'Super Admin',
             'jabatan_id' => 1,
+            'program_studi_id' => 1,
             'handphone' => '08123456789',
             'user_id' => $Admin->id,
         ]);

@@ -110,12 +110,11 @@
                                 <tfoot class="table-border-bottom-0 table-secondary">
                                     <tr>
                                         <th class="rounded-start-bottom">Jumlah</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="text-center">0</th>
-                                        <th class="rounded-end-bottom">Aksi</th>
+                                        <th class="text-center">{{$kesesuaian_kerja->sum('jumlah_lulusan')}}</th>
+                                        <th class="text-center">{{$kesesuaian_kerja->sum('jumlah_lulusan_terlacak')}}</th>
+                                        <th class="text-center"></th>
+                                        <th class="text-center"></th>
+                                        <th class="text-center"></th>
                                     </tr>
                                 </tfoot>
                             </table>

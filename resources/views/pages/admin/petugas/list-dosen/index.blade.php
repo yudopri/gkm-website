@@ -38,7 +38,7 @@
                                                     class="btn btn-sm btn-danger">
                                                     <span class="tf-icons bx bxs-file-pdf bx-18px me-2"></span>PDF
                                                 </a>
-                                                <a href="javascript:;" class="btn btn-sm btn-success">
+                                                <a href="{{ route('admin.petugas.list-dosen.export.excel', $dosen->id) }}" class="btn btn-sm btn-success">
                                                     <span class="tf-icons bx bx-spreadsheet bx-18px me-2"></span>Excel
                                                 </a>
                                             </td>

@@ -34,4 +34,8 @@ class MahasiswaAsing extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
+    }
 }
