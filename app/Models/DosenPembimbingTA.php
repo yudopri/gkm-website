@@ -34,4 +34,8 @@ class DosenPembimbingTA extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaranSemester::class, 'tahun_ajaran_id');
+    }
 }

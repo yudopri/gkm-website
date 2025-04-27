@@ -594,7 +594,6 @@
                     <th>No.</th>
                     <th>Sumber Pembiayaan</th>
                     <th>Jumlah Judul Penelitian</th>
-                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -615,7 +614,7 @@ $sumberDana = [
                         <td class="text-center">{{ number_format($penelitian->jumlah_judul ?? 0) }}</td>
                     </tr>
                 @endforeach
-                @if($penelitian_dtps->isEmpty())
+                @if($data->penelitian_dtps->isEmpty())
                     <tr>
                         <td class="text-center" colspan="4">Belum ada data penelitian</td>
                     </tr>
@@ -624,7 +623,7 @@ $sumberDana = [
             <tfoot class="table-border-bottom-0">
                 <tr>
                     <th colspan="2" class="rounded-start-bottom">Jumlah</th>
-                    <th class="text-center">{{ number_format($penelitian->sum('jumlah_judul')) }}</th>
+                    <th class="text-center">{{ number_format($data->penelitian_dtps->sum('jumlah_judul')) }}</th>
                 </tr>
             </tfoot>
         </table>
@@ -638,7 +637,6 @@ $sumberDana = [
                         <th>No.</th>
                         <th>Sumber Pembiayaan</th>
                         <th>Jumlah Judul PKM</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -670,8 +668,7 @@ $sumberDana = [
                 <tfoot class="table-border-bottom-0">
                     <tr>
                         <th colspan="2" class="rounded-start-bottom">Jumlah</th>
-                        <th class="text-center">{{ number_format($pkm->sum('jumlah_judul')) }}</th>
-                        <th class="rounded-end-bottom">Aksi</th>
+                        <th class="text-center">{{ number_format($data->pkm_dtps->sum('jumlah_judul')) }}</th>
                     </tr>
                 </tfoot>
         </table>
@@ -731,7 +728,7 @@ $sumberDana = [
             <tfoot class="table-border-bottom-0">
                 <tr>
                     <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
-                    <th class="text-center">{{ $publik->count('judul_artikel')}}</th>
+                    <th class="text-center">{{ $data->publikasi_ilmiah->count('judul_artikel')}}</th>
                 </tr>
             </tfoot>
         </table>
@@ -805,7 +802,7 @@ $sumberDana = [
             <tbody class="table-border-bottom-0">
                 <tr>
                     <td class="text-center fw-bold">II</td>
-                    <td class="text-wrap fw-bold" colspan="4">
+                    <td class="text-wrap fw-bold" colspan="3">
                         HKI: a) Hak Cipta, b) Desain Produk Industri, c) Perlindungan Varietas Tanaman (Sertifikat Perlindungan
                         Varietas Tanaman, Sertifikat Pelepasan Varietas, Sertifikat Pendaftaran Varietas), d) Desain Tata Letak
                         Sirkuit Terpadu, e) dll.)
@@ -837,7 +834,7 @@ $sumberDana = [
             <tbody class="table-border-bottom-0">
                 <tr>
                     <td class="text-center fw-bold">III</td>
-                    <td class="text-wrap fw-bold" colspan="4">
+                    <td class="text-wrap fw-bold" colspan="3">
                         Teknologi Tepat Guna, Produk (Produk Terstandarisasi, Produk Tersertifikasi), Karya Seni, Rekayasa Sosial
                     </td>
                 </tr>
@@ -867,7 +864,7 @@ $sumberDana = [
             <tbody class="table-border-bottom-0">
                 <tr>
                     <td class="text-center fw-bold">IV</td>
-                    <td class="text-wrap fw-bold" colspan="4">
+                    <td class="text-wrap fw-bold" colspan="3">
                         Buku ber-ISBN, <i>Book Chapter</i>
                     </td>
                 </tr>
@@ -1165,11 +1162,11 @@ $sumberDana = [
             <tfoot class="table-border-bottom-0 table-secondary">
                 <tr>
                     <th class="rounded-start-bottom">Jumlah</th>
-                    <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan')}}</th>
-                    <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan_terlacak')}}</th>
-                    <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan_bekerja_lokal')}}</th>
-                    <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan_bekerja_nasional')}}</th>
-                    <th class="text-center">{{$tempat_kerja->sum('jumlah_lulusan_bekerja_internasional')}}</th>
+                    <th class="text-center">{{$data->eval_tempat_kerja->sum('jumlah_lulusan')}}</th>
+                    <th class="text-center">{{$data->eval_tempat_kerja->sum('jumlah_lulusan_terlacak')}}</th>
+                    <th class="text-center">{{$data->eval_tempat_kerja->sum('jumlah_lulusan_bekerja_lokal')}}</th>
+                    <th class="text-center">{{$data->eval_tempat_kerja->sum('jumlah_lulusan_bekerja_nasional')}}</th>
+                    <th class="text-center">{{$data->eval_tempat_kerja->sum('jumlah_lulusan_bekerja_internasional')}}</th>
                 </tr>
             </tfoot>
         </table>
@@ -1516,7 +1513,7 @@ $sumberDana = [
             <tbody class="table-border-bottom-0">z
                 <tr>
                     <td class="text-center fw-bold">I</td>
-                    <td class="text-wrap fw-bold" colspan="4">
+                    <td class="text-wrap fw-bold" colspan="3">
                         HKI: a) Paten, b) Paten Sederhana
                     </td>
                 </tr>
@@ -1546,7 +1543,7 @@ $sumberDana = [
             <tbody class="table-border-bottom-0">
                 <tr>
                     <td class="text-center fw-bold">II</td>
-                    <td class="text-wrap fw-bold" colspan="4">
+                    <td class="text-wrap fw-bold" colspan="3">
                         HKI: a) Hak Cipta, b) Desain Produk Industri, c) Perlindungan Varietas Tanaman (Sertifikat Perlindungan
                         Varietas Tanaman, Sertifikat Pelepasan Varietas, Sertifikat Pendaftaran Varietas), d) Desain Tata Letak
                         Sirkuit Terpadu, e) dll.)
@@ -1578,7 +1575,7 @@ $sumberDana = [
             <tbody class="table-border-bottom-0">
                 <tr>
                     <td class="text-center fw-bold">III</td>
-                    <td class="text-wrap fw-bold" colspan="4">
+                    <td class="text-wrap fw-bold" colspan="3">
                         Teknologi Tepat Guna, Produk (Produk Terstandarisasi, Produk Tersertifikasi), Karya Seni, Rekayasa Sosial
                     </td>
                 </tr>
@@ -1608,7 +1605,7 @@ $sumberDana = [
             <tbody class="table-border-bottom-0">
                 <tr>
                     <td class="text-center fw-bold">IV</td>
-                    <td class="text-wrap fw-bold" colspan="4">
+                    <td class="text-wrap fw-bold" colspan="3">
                         Buku ber-ISBN, <i>Book Chapter</i>
                     </td>
                 </tr>

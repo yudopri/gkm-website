@@ -39,8 +39,16 @@
                                                     <span class="tf-icons bx bxs-file-pdf bx-18px me-2"></span>PDF
                                                 </a>
                                                 <a href="{{ route('admin.petugas.list-dosen.export.excel', $dosen->id) }}" class="btn btn-sm btn-success">
-                                                    <span class="tf-icons bx bx-spreadsheet bx-18px me-2"></span>Excel
+                                                    <span class="tf-icons bx bx-spreadsheet bx-18px me-2"></span>Export Excel
                                                 </a>
+                                                <form action="{{ route('admin.petugas.list-dosen.import.excel') }}" method="POST" enctype="multipart/form-data" class="d-inline">
+                                                    @csrf
+                                                    <label for="file-upload" class="btn btn-sm btn-primary">
+                                                        <span class="tf-icons bx bx-upload bx-18px me-2"></span>Import Excel
+                                                    </label>
+                                                    <input id="file-upload" type="file" name="file" accept=".xlsx,.csv" onchange="this.form.submit()" style="display: none;">
+                                                </form>
+
                                             </td>
                                         </tr>
                                     @empty

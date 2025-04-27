@@ -73,6 +73,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/list-dosen', [ListDosenController::class, 'index'])->name('list-dosen.index');
         Route::get('/export-pdf/{dosenId}', [ListDosenController::class, 'exportPdf'])->name('list-dosen.export.pdf');
         Route::get('/export-excel/{dosenId}', [ListDosenController::class, 'exportExcel'])->name('list-dosen.export.excel');
+        Route::post('/import-excel', [ListDosenController::class, 'importExcel'])->name('list-dosen.import.excel');
 
         Route::prefix('detail')->name('detail.')->group(function () {
             Route::prefix('kerjasama-tridharma')->name('kt.')->group(function () {
