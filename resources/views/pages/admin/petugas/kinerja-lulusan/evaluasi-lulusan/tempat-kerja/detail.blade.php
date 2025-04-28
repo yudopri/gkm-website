@@ -43,31 +43,6 @@
                                         <td class="text-center">{{$data->jumlah_lulusan_bekerja_lokal}} </td>
                                         <td class="text-center">{{$data->jumlah_lulusan_bekerja_nasional}} </td>
                                         <td class="text-center">{{$data->jumlah_lulusan_bekerja_internasional}} </td>
-
-                                        <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <!-- Edit -->
-                                                    <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.edit', ['tahunAjaran' => $tahun_ajaran, 'tempatId'=>$data->id]) }}">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-
-                                                    <!-- Delete -->
-                                                    <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.destroy', ['tahunAjaran' => $tahun_ajaran, 'tempatId'=>$data->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="dropdown-item text-danger">
-                                                            <i class="bx bx-trash me-1"></i> Delete
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
 
                                     @endforeach
@@ -80,7 +55,6 @@
                                         <th class="text-center">{{$data_dosen->eval_tempat_kerja->sum('jumlah_lulusan_bekerja_lokal')}}</th>
                                         <th class="text-center">{{$data_dosen->eval_tempat_kerja->sum('jumlah_lulusan_bekerja_nasional')}}</th>
                                         <th class="text-center">{{$data_dosen->eval_tempat_kerja->sum('jumlah_lulusan_bekerja_internasional')}}</th>
-                                        <th class="rounded-end-bottom">Aksi</th>
                                     </tr>
                                 </tfoot>
                             </table>

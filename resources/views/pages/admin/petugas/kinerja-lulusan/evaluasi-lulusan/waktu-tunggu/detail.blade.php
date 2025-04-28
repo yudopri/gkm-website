@@ -38,7 +38,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach ($diploma as $data)
+                                        @foreach ($data_dosen->eval_waktu_tunggu->where('masa_studi', 'Diploma Tiga') as $data)
                                             <tr>
                                                 <td class="text-center">{{ $data->tahun }}</td>
                                                 <td class="text-center">{{ $data->jumlah_lulusan }}</td>
@@ -53,13 +53,12 @@
                                     <tfoot class="table-border-bottom-0 table-secondary">
                                         <tr>
                                             <th class="rounded-start-bottom">Jumlah</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="rounded-end-bottom">Aksi</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Diploma Tiga')->sum('jumlah_lulusan')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Diploma Tiga')->sum('jumlah_lulusan_terlacak')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Diploma Tiga')->sum('jumlah_lulusan_terlacak_dipesan')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Diploma Tiga')->sum('jumlah_lulusan_waktu_tiga_bulan')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Diploma Tiga')->sum('jumlah_lulusan_waktu_enam_bulan')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Diploma Tiga')->sum('jumlah_lulusan_waktu_sembilan_bulan')}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -80,11 +79,6 @@
                     <div class="collapse show" id="waktu-tunggu-d4">
                         <hr class="my-0" />
                         <div class="card-body">
-                            <!-- #s btn tambah -->
-                            <a href="{{ url()->route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.create', $tahun_ajaran) . '?masaStudi=' . urlencode('Sarjana/Sarjana Terapan') }}" class="btn btn-info mb-3">
-                                <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
-                            </a>
-                            <!-- #e btn tambah -->
                             <!-- #s tabel -->
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-hover">
@@ -94,9 +88,6 @@
                                             <th rowspan="2">Jumlah Lulusan</th>
                                             <th rowspan="2">Jumlah Lulusan <br>yang Terlacak</th>
                                             <th colspan="3">Jumlah Lulusan Terlacak dengan Waktu Tunggu <br>Mendapatkan Pekerjaan</th>
-
-                                            <!-- Aksi -->
-                                            <th rowspan="2">Aksi</th>
                                         </tr>
                                         <tr>
                                             <th>WT < 3 bulan</th>
@@ -105,7 +96,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach ($sarjana as $data)
+                                        @foreach ($data_dosen->eval_waktu_tunggu->where('masa_studi', 'Sarjana/Sarjana Terapan') as $data)
                                         <tr>
                                             <td class="text-center">{{ $data->tahun }}</td>
                                             <td class="text-center">{{ $data->jumlah_lulusan }}</td>
@@ -113,41 +104,18 @@
                                             <td class="text-center">{{ $data->jumlah_lulusan_waktu_tiga_bulan }}</td>
                                             <td class="text-center">{{ $data->jumlah_lulusan_waktu_enam_bulan }}</td>
                                             <td class="text-center">{{ $data->jumlah_lulusan_waktu_sembilan_bulan }}</td>
-
-
-                                             <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ url()->route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.edit', ['tahunAjaran' => $tahun_ajaran, 'waktuId' => $data->id]) . '?masaStudi=' . urlencode('Sarjana/Sarjana Terapan') }}">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-
-                                                    <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.destroy', ['tahunAjaran' => $tahun_ajaran, 'waktuId' => $data->id]) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
-                                                            <i class="bx bx-trash me-1"></i> Delete
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot class="table-border-bottom-0 table-secondary">
                                         <tr>
                                             <th class="rounded-start-bottom">Jumlah</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="text-center">0</th>
-                                            <th class="rounded-end-bottom">Aksi</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Sarjana/Sarjana Terapan')->sum('jumlah_lulusan')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Sarjana/Sarjana Terapan')->sum('jumlah_lulusan_terlacak')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Sarjana/Sarjana Terapan')->sum('jumlah_lulusan_terlacak_dipesan')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Sarjana/Sarjana Terapan')->sum('jumlah_lulusan_waktu_tiga_bulan')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Sarjana/Sarjana Terapan')->sum('jumlah_lulusan_waktu_enam_bulan')}}</th>
+                                            <th class="text-center">{{$data_dosen->eval_waktu_tunggu->where('masa_studi', 'Sarjana/Sarjana Terapan')->sum('jumlah_lulusan_waktu_sembilan_bulan')}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>

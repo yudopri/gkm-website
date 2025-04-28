@@ -97,7 +97,7 @@ class BukuChapterController extends Controller
         try {
             $dosen = User::with('profile', 'buku_chapter_dosen')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+            return view('pages.admin.petugas.kinerja-dosen.luaran-lain.buku-chapter.detail', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);

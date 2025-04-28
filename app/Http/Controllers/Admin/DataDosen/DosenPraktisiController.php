@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DosenIndustriPraktisi;
 use App\Models\TahunAjaranSemester;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class DosenPraktisiController extends Controller
 {

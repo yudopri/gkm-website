@@ -99,9 +99,9 @@ class ProdukTeradopsiController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'kerjasama_tridharma_pendidikan')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'produk_teradopsi')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.kerjasama-tridharma.detail-pendidikan', [
+            return view('pages.admin.petugas.kinerja-dosen.produk-teradopsi.detail', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);

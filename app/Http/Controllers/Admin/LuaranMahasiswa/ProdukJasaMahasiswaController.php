@@ -99,11 +99,11 @@ class ProdukJasaMahasiswaController extends Controller
     public function show(string $id)
     {
         try {
-            $mahasiswa = User::with('profile', 'kerjasama_tridharma_pendidikan')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'produk_jasa_mahasiswa')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.kerjasama-tridharma.detail-pendidikan', [
-                'data_mahasiswa' => $mahasiswa,
-                'mahasiswaId' => $mahasiswa->id,
+            return view('pages.admin.petugas.luaran-mahasiswa.produk-jasa.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
             ]);
         } catch (\Exception $e) {
             return back()->withErrors($e->getMessage());

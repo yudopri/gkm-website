@@ -112,9 +112,9 @@ class PublikasiIlmiahController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tetap')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'publikasi_ilmiah')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+            return view('pages.admin.petugas.kinerja-dosen.publikasi-ilmiah.detail', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);

@@ -96,9 +96,9 @@ class AkademikController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tetap')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'prestasi_akademik')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+            return view('pages.admin.petugas.kinerja-lulusan.prestasi-akademik-mhs.detail', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);

@@ -135,6 +135,18 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
                 Route::resource('kurikulum-pembelajaran', KurikulumPembelajaranController::class)->only('show');
                 Route::resource('kepuasan-mahasiswa', KepuasanMahasiswaController::class)->only('show');
             });
+            Route::prefix('luaran-mahasiswa')->name('lm.')->group(function () {
+                Route::resource('publikasi-mahasiswa', PublikasiMahasiswaController::class)->only('show');
+                Route::resource('sitasi-karya-mahasiswa', SitasiKaryaMahasiswaController::class)->only('show');
+                Route::resource('produk-jasa-mahasiswa', ProdukJasaMahasiswaController::class)->only('show');
+                Route::prefix('luaran-lain')->name('luaran-lain.')->group(function () {
+                    Route::resource('hki-paten-mahasiswa', HkiPatenMahasiswaController::class)->only('show');
+                    Route::resource('hki-hakcipta-mahasiswa', HkiHakCiptaMahasiswaController::class)->only('show');
+                    Route::resource('teknologi-karya-mahasiswa', TeknologiKaryaMahasiswaController::class)->only('show');
+                    Route::resource('buku-chapter-mahasiswa', BukuChapterMahasiswaController::class)->only('show');
+                });
+            });
+            
 
 
         });

@@ -125,9 +125,9 @@ class MasaStudiLulusanController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tetap')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'masa_studi_lulusan')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+            return view('pages.admin.petugas.kinerja-lulusan.masa-studi-lulusan.detail', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);

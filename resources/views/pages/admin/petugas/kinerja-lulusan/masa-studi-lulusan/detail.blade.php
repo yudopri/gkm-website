@@ -39,7 +39,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach ($diploma as $data)
+                                        @foreach ($data_dosen->masa_studi_lulusan->where('masa_studi','Diploma Tiga') as $data)
                                             <tr>
                                                 <td class="text-center">{{ $data->tahun }}</td>
                                                 <td class="text-center">{{ $data->jumlah_mhs_diterima }}</td>
@@ -71,11 +71,6 @@
                     <div class="collapse show" id="masa-studi-d4">
                         <hr class="my-0" />
                         <div class="card-body">
-                            <!-- #s btn tambah -->
-                            <a href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.create', $tahun_ajaran) . '?masaStudi=' . urlencode('Sarjana/Sarjana Terapan') }}" class="btn btn-info mb-3">
-                                <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
-                            </a>
-                            <!-- #e btn tambah -->
                             <!-- #s tabel -->
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-hover">
@@ -85,10 +80,7 @@
                                             <th rowspan="2">Jumlah <br>Mahasiswa <br>Diterima</th>
                                             <th colspan="7">Jumlah Mahasiswa yang lulus pada</th>
                                             <th rowspan="2">Jumlah <br>Lulusan s.d. <br>akhir TS</th>
-                                            <th rowspan="2">Rata-rata <br>Masa Studi</th>
-
-                                            <!-- Aksi -->
-                                            <th rowspan="2">Aksi</th>
+                                            <th rowspan="2">Rata-rata <br>Masa Studi</th>\
                                         </tr>
                                         <tr>
                                             <th>akhir TS-6</th>
@@ -101,7 +93,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach ($sarjana as $data)
+                                        @foreach ($data_dosen->masa_studi_lulusan->where('masa_studi','Sarjana/Sarjana Terapan') as $data)
                                         <tr>
                                             <td class="text-center">{{ $data->tahun }}</td>
                                             <td class="text-center">{{ $data->jumlah_mhs_diterima }}</td>
@@ -115,27 +107,6 @@
                                             <td class="text-center">{{ $data->jumlah_lulusan }}</td>
                                             <td class="text-center">{{ $data->mean_masa_studi }}</td>
 
-                                        <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.edit', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) . '?masaStudi=' . urlencode('Sarjana/Sarjana Terapan') }}">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-
-                                                    <form action="{{ route('admin.kinerja-lulusan.masa-studi-lulusan.destroy', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
-                                                            <i class="bx bx-trash me-1"></i> Delete
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
                                     @endforeach
                                     </tbody>
@@ -157,11 +128,6 @@
                     <div class="collapse show" id="masa-studi-s2">
                         <hr class="my-0" />
                         <div class="card-body">
-                            <!-- #s btn tambah -->
-                            <a href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.create', $tahun_ajaran) . '?masaStudi=' . urlencode('Magister/Magister Terapan') }}" class="btn btn-info mb-3">
-                                <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
-                            </a>
-                            <!-- #e btn tambah -->
                             <!-- #s tabel -->
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-hover">
@@ -171,10 +137,7 @@
                                             <th rowspan="2">Jumlah <br>Mahasiswa <br>Diterima</th>
                                             <th colspan="4">Jumlah Mahasiswa yang lulus pada</th>
                                             <th rowspan="2">Jumlah <br>Lulusan s.d. <br>akhir TS</th>
-                                            <th rowspan="2">Rata-rata <br>Masa Studi</th>
-
-                                            <!-- Aksi -->
-                                            <th rowspan="2">Aksi</th>
+                                            <th rowspan="2">Rata-rata <br>Masa Studi</th>\
                                         </tr>
                                         <tr>
                                             <th>akhir TS-3</th>
@@ -184,7 +147,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach ($magister as $data)
+                                        @foreach ($data_dosen->masa_studi_lulusan->where('masa_studi','Magister/Magister Terapan') as $data)
                                         <tr>
                                             <td class="text-center">{{ $data->tahun }}</td>
                                             <td class="text-center">{{ $data->jumlah_mhs_diterima }}</td>
@@ -195,27 +158,6 @@
                                             <td class="text-center">{{ $data->jumlah_lulusan }}</td>
                                             <td class="text-center">{{ $data->mean_masa_studi }}</td>
 
-                                        <!-- Aksi -->
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ url()->route('admin.kinerja-lulusan.masa-studi-lulusan.edit', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) . '?masaStudi=' . urlencode('Magister/Magister Terapan') }}">
-                                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                                    </a>
-
-                                                    <form action="{{ route('admin.kinerja-lulusan.masa-studi-lulusan.destroy', ['tahunAjaran' => $tahun_ajaran, 'masastudiId' => $data->id]) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
-                                                            <i class="bx bx-trash me-1"></i> Delete
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
                                     @endforeach
                                     </tbody>

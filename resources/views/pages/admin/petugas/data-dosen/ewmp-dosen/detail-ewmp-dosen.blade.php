@@ -9,9 +9,6 @@
 
         <div class="row">
             <div class="col-md-12">
-                <!-- #s navpills -->
-                @include('includes.backend.navpills.data-dosen')
-                <!-- #e navpills -->
 
                 <div class="card mb-4">
                     <h5 class="card-header">Tabel Ekuivalen Waktu Mengajar Penuh (EWMP) Dosen</h5>

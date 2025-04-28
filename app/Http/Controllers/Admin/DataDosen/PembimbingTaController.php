@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TahunAjaranSemester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class PembimbingTaController extends Controller
 {
@@ -95,7 +96,7 @@ class PembimbingTaController extends Controller
         try {
             $dosen = User::with('profile', 'dosen_pembimbing_ta')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+            return view('pages.admin.petugas.data-dosen.dospem-ta.detail-dospem-ta', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);

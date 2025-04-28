@@ -96,9 +96,9 @@ class KesesuaianKerjaController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tetap')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'eval_kesesuaian_kerja')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+            return view('pages.admin.petugas.kinerja-lulusan.evaluasi-lulusan.kesesuaian-kerja.detail', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);

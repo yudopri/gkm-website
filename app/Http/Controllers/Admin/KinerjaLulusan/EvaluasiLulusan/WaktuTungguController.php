@@ -120,9 +120,9 @@ class WaktuTungguController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tetap')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'eval_waktu_tunggu')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+            return view('pages.admin.petugas.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.detail', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);

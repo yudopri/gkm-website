@@ -96,9 +96,9 @@ class PkmDtpsMahasiswaController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tetap')->whereId($id)->firstOrFail();
+            $dosen = User::with('profile', 'pkm_dtps_mahasiswa')->whereId($id)->firstOrFail();
 
-            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+            return view('pages.admin.petugas.pkm-dtps-mahasiswa.detail', [
                 'data_dosen' => $dosen,
                 'dosenId' => $dosen->id,
             ]);
