@@ -37,7 +37,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    @forelse ($rekognisi_dosen as $rekognisi)
+                                    @forelse ($data_dosen->rekognisi_dtps as $rekognisi)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $rekognisi->nama_dosen }}</td>

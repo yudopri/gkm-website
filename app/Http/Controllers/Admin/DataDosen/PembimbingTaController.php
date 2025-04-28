@@ -92,7 +92,16 @@ class PembimbingTaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'dosen_pembimbing_ta')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.data-dosen.detail-dosen-tetap', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

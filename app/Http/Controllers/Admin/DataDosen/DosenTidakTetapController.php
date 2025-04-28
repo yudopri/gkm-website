@@ -103,7 +103,16 @@ class DosenTidakTetapController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'dosen_tidak_tetap')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.data-dosen.dosen-tidak-tetap.detail-dosen-tidak-tetap', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**
