@@ -18,10 +18,10 @@ class ProdukJasaMahasiswaController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $produk = ProdukJasaMahasiswa::with('user')->get();
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
+            $produk = ProdukJasaMahasiswa::with('user')->where('tahun', $tahun)->get();
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
             confirmDelete($title, $text);

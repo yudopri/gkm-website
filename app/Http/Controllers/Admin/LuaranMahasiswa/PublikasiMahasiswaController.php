@@ -24,7 +24,7 @@ class PublikasiMahasiswaController extends Controller
         $tahun = $tahunAjaranObj->tahun_ajaran;
 
         $userId = Auth::id();
-        $publikasi = PublikasiMahasiswa::with('user')->get();
+        $publikasi = PublikasiMahasiswa::with('user')->where('tahun', $tahun)->get();
         // Get the totals grouped by 'jenis_artikel' for the given year and user
         $total = PublikasiMahasiswa::where('user_id', $userId)
     ->whereNull('deleted_at')

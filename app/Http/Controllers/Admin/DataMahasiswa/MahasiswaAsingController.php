@@ -35,7 +35,7 @@ class MahasiswaAsingController extends Controller
             SUM(mhs_asing_fulltime) as total_mhs_asing_fulltime,
             SUM(mhs_asing_parttime) as total_mhs_asing_parttime
         ')->first();
-        
+
         // Set title and text for delete confirmation (Ensure this JS function exists and works on the front-end)
         $title = 'Hapus Data!';
         $text = "Apakah kamu yakin ingin menghapus?";

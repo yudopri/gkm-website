@@ -50,7 +50,7 @@
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="tahun_penelitian">
-                                    Tahun Penelitian
+                                    Tahun Penelitian (YYYY/YYYY)
                                 </label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="tahun_penelitian" name="tahun_penelitian" value="{{ $tahun }}"

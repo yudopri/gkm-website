@@ -56,7 +56,7 @@
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="Tahun">
-                                    Tahun (YYYY)
+                                    Tahun (YYYY/YYYY)
                                 </label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $produk_teradopsi->tahun) }}"

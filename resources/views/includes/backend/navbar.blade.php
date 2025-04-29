@@ -43,7 +43,7 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="javascript:void(0);">
+                        <a class="dropdown-item" href="{{route('admin.profile.show',Auth::user()->id)}}">
                             <i class="bx bx-user me-2"></i>
                             <span class="align-middle">My Profile</span>
                         </a>

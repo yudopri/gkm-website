@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\UserProfileControllers;
 use App\Http\Controllers\Admin\KerjasamaTridharma\PendidikanController;
 use App\Http\Controllers\Admin\KerjasamaTridharma\PenelitianController;
 use App\Http\Controllers\Admin\KerjasamaTridharma\PengmasController;
@@ -67,7 +68,14 @@ Auth::routes();
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Untuk menampilkan profile
+    Route::get('profile/{id}', [UserProfileControllers::class, 'show'])->name('profile.show');
 
+    // Untuk mengedit profile
+    Route::get('profile/{id}/edit', [UserProfileControllers::class, 'edit'])->name('profile.edit');
+
+    // Untuk update profile
+    Route::put('profile/{id}', [UserProfileControllers::class, 'update'])->name('profile.update');
     // ROLE ADMIN & PETUGAS
     Route::middleware('role:admin|petugas')->prefix('petugas')->name('petugas.')->group(function () {
         Route::get('/list-dosen', [ListDosenController::class, 'index'])->name('list-dosen.index');
@@ -146,7 +154,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
                     Route::resource('buku-chapter-mahasiswa', BukuChapterMahasiswaController::class)->only('show');
                 });
             });
-            
+
 
 
         });

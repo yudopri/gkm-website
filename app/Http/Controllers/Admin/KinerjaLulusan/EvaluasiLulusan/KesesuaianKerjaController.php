@@ -18,7 +18,10 @@ class KesesuaianKerjaController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $kesesuaianKerja = EvalKesesuaianKerja::with('user')->get();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
+            $kesesuaianKerja = EvalKesesuaianKerja::with('user')->where('tahun', $tahun)->get();
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";

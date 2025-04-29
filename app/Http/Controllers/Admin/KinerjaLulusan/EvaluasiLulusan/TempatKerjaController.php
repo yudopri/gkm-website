@@ -18,7 +18,10 @@ class TempatKerjaController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $tempatKerja = EvalTempatKerja::with('user')->get();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
+            $tempatKerja = EvalTempatKerja::with('user')->where('tahun', $tahun)->get();
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";

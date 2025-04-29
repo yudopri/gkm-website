@@ -18,7 +18,10 @@ class BukuChapterMahasiswaController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $bookChapter = BukuChapterMahasiswa::with('user')->get();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
+            $bookChapter = BukuChapterMahasiswa::with('user')->where('tahun', $tahun)->get();
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
