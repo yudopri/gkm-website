@@ -47,6 +47,7 @@ use App\Http\Controllers\Api\DataDosen\EwmpDosenApiController;
 use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
 use App\Http\Controllers\Api\DataMahasiswa\MahasiswaAsingApiController;
 use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
+use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
 
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPendidikan2Controller;
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPenelitian2Controller;
@@ -444,6 +445,10 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     });
 
 
+
+    
+
+
     Route::prefix('rekap-data')->name('rekap-data.')->group(function () {
         Route::get('/kerjasama-tridharma-pendidikan/{tahun_ajaran}', [KerjasamaTridharmaPendidikan2Controller::class, 'index'])->name('kerjasama-tridharma.pendidikan');
         Route::get('/kerjasama-tridharma-penelitian/{tahun_ajaran}', [KerjasamaTridharmaPenelitian2Controller::class, 'index'])->name('kerjasama-tridharma.penelitian');
@@ -491,6 +496,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 
 });
+
+Route::get('/admin/rekap-data-utama', [RekapUtamaController::class, 'index']);
+
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
