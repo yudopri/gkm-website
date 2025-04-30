@@ -113,8 +113,8 @@
                 <div data-i18n="Kinerja Dosen">Kinerja Dosen</div>
             </a>
             <ul class="menu-sub">
-            <li class="menu-item {{ request()->routeIs('ps.shoadmin.petugas.detail.kd.rekognisi-dtps.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.petugas.detail.kd.rekognisi-dtps', $dosenId) }}" class="menu-link">
+            <li class="menu-item {{ request()->routeIs('admin.petugas.detail.kd.rekognisi-dtps.*') ? 'active' : '' }}">
+    <a href="{{ route('admin.petugas.detail.kd.rekognisi-dtps.show', $dosenId) }}" class="menu-link">
         <div data-i18n="Pengakuan/Rekognisi Dosen">Pengakuan/Rekognisi Dosen</div>
     </a>
 </li>
@@ -298,48 +298,48 @@
         <!-- #e 8. kinerja lulusan -->
 
         <!-- #s 8.f -->
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <div data-i18n="Luaran Karya Mahasiswa">Luaran Karya Mahasiswa</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="lkm-publikasi-mhs.html" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.publikasi-mahasiswa.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.lm.publikasi-mahasiswa.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Publikasi Mahasiswa">Publikasi Mahasiswa</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="lkm-sitasi-mhs.html" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.sitasi-karya-mahasiswa.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.lm.sitasi-karya-mahasiswa.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Sitasi Karya Mahasiswa">Sitasi Karya Mahasiswa</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="lkm-produk-mhs.html" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.produk-jasa-mahasiswa.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.petugas.detail.lm.produk-jasa-mahasiswa.show', $dosenId) }}" class="menu-link">
                         <div data-i18n="Produk/Jasa Mahasiswa">Produk/Jasa Mahasiswa</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.luaran-lain.*') ? 'active open' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <div data-i18n="Luaran Mahasiswa Lainnya">Luaran Mahasiswa Lainnya</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="lkm-hki-mhs-paten.html" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.luaran-lain.hki-paten-mahasiswa.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.lm.luaran-lain.hki-paten-mahasiswa.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="HKI Mahasiswa (Paten)">HKI Mahasiswa (Paten)</div>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="lkm-hki-mhs-hakcipta.html" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.luaran-lain.hki-hakcipta-mahasiswa.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.lm.luaran-lain.hki-hakcipta-mahasiswa.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="HKI Mahasiswa (Hak Cipta)">HKI Mahasiswa (Hak Cipta)</div>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="lkm-teknologi-karya.html" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.luaran-lain.teknologi-karya-mahasiswa.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.lm.luaran-lain.teknologi-karya-mahasiswa.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Teknologi & Karya Mahasiswa">Teknologi & Karya Mahasiswa</div>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="lkm-buku-chapter.html" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('admin.petugas.detail.lm.luaran-lain.buku-chapter-mahasiswa.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.petugas.detail.lm.luaran-lain.buku-chapter-mahasiswa.show', $dosenId) }}" class="menu-link">
                                 <div data-i18n="Buku & Chapter Mahasiswa">Buku & Chapter Mahasiswa</div>
                             </a>
                         </li>

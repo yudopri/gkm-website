@@ -28,6 +28,7 @@ class DosenSeeder extends Seeder
             'nama' => 'Rani Purbaningtyas, S.Kom., MT.',
             'jabatan_fungsional' => 'Lektor Kepala',
             'jabatan_id' => 4,
+            'program_studi_id' => 6,
             'handphone' => '081234567892',
             'user_id' => $dosen1->id,
         ]);
@@ -48,6 +49,7 @@ class DosenSeeder extends Seeder
             'nama' => 'Sholihah Ayu Wulandari, S.ST., M.Tr.T.',
             'jabatan_fungsional' => 'Asisten Ahli',
             'jabatan_id' => 8,
+            'program_studi_id' => 6,
             'handphone' => '081234567892',
             'user_id' => $dosen2->id,
         ]);

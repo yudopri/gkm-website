@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TahunAjaranSemester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class EwmpDosenController extends Controller
 {
@@ -102,7 +103,16 @@ class EwmpDosenController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'ewmp_dosen')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.data-dosen.ewmp-dosen.detail-ewmp-dosen', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

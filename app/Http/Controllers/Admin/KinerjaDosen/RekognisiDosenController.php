@@ -106,7 +106,16 @@ class RekognisiDosenController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'rekognisi_dtps')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kinerja-dosen.rekognisi-dosen.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

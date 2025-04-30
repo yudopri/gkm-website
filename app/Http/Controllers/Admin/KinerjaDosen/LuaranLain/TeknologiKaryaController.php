@@ -94,7 +94,16 @@ class TeknologiKaryaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'teknologi_karya_dosen')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kinerja-dosen.luaran-lain.teknologi-karya.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

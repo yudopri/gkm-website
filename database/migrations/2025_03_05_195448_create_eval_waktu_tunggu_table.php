@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('tahun')->nullable();
+            $table->string('masa_studi')->nullable();
             $table->integer('jumlah_lulusan')->default(0);
             $table->integer('jumlah_lulusan_terlacak')->default(0);
             $table->integer('jumlah_lulusan_terlacak_dipesan')->default(0);

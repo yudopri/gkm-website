@@ -96,7 +96,16 @@ class RujukanTesisController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'rujukan_tesis_mahasiswa')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.penelitian-dtps.rujukan-tesis.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

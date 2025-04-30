@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin\KinerjaLulusan\EvaluasiLulusan;
 
 use App\Http\Controllers\Controller;
 use App\Models\EvalTempatKerja;
+use App\Models\TahunAjaranSemester;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class TempatKerjaController extends Controller
@@ -34,15 +38,58 @@ class TempatKerjaController extends Controller
      */
     public function create(string $tahunAjaran)
     {
-        //
+        try {
+            $EvalTempatKerjaMhs = new EvalTempatKerja();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
+            return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.form', [
+                'tempat_kerja' => $EvalTempatKerjaMhs,
+                'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
+                'form_title' => 'Tambah Data',
+                'form_action' => route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.store', $tahunAjaran),
+                'form_method' => "POST",
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,string $tahunAjaran)
     {
-        //
+        try {
+            // dd($request->all());
+            $validator = Validator::make($request->all(), [
+                'jumlah_lulusan' => 'required|numeric',
+                'jumlah_lulusan_terlacak' => 'required|numeric',
+                'jumlah_lulusan_bekerja_lokal' => 'required|numeric',
+                'jumlah_lulusan_bekerja_nasional' => 'required|numeric',
+                'jumlah_lulusan_bekerja_internasional' => 'required|numeric',
+                'tahun' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->withErrors($validator->messages()->all()[0])->withInput();
+            }
+
+            $validated = $request->all();
+            $validated['user_id'] = Auth::id();
+            // dd($validated);
+
+            $create = EvalTempatKerja::create($validated);
+            if ($create) {
+                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
+                    ->with('toast_success', 'Data rekognisi dtps berhasil ditambahkan');
+            }
+
+            throw new \Exception('Data rekognisi dtps gagal ditambahkan');
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
@@ -50,30 +97,94 @@ class TempatKerjaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'eval_tempat_kerja')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $tahunAjaran,string $id)
     {
-        //
+        try {
+            $EvalTempatKerjaMhs = EvalTempatKerja::with('user')->first();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+            $tahunAjaranId = $tahunAjaranObj->id;
+            $tahun = $tahunAjaranObj->tahun_ajaran;
+
+            return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.form', [
+                'tempat_kerja' => $EvalTempatKerjaMhs,
+                'tahun_ajaran' => $tahunAjaran,
+                'tahun' => $tahun,
+                'form_title' => 'Edit Data',
+                'form_action' => route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.update', [
+                    'tahunAjaran' => $tahunAjaran,
+                    'tempatId' => $EvalTempatKerjaMhs->id,
+                ]),
+                'form_method' => "PUT",
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $tahunAjaran,string $id)
     {
-        //
+        try {
+            $validator = Validator::make($request->all(), [
+                'jumlah_lulusan' => 'required|numeric',
+                'jumlah_lulusan_terlacak' => 'required|numeric',
+                'jumlah_lulusan_bekerja' => 'required|numeric',
+                'tahun' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->withErrors($validator->messages()->all()[0])->withInput();
+            }
+
+            $validated = $request->all();
+
+            $dosenPraktisi = IpkLulusan::findOrFail($id);
+            $update = $dosenPraktisi->update($validated);
+            if ($update) {
+                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
+                    ->with('toast_success', 'Data dosen praktisi berhasil diupdate');
+            }
+
+            throw new \Exception('Data dosen praktisi gagal diupdate');
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage())->withInput();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $tahunAjaran,string $id)
     {
-        //
+        try {
+            $EvalTempatKerjaMhs = IpkLulusan::findOrFail($id);
+            $delete = $EvalTempatKerjaMhs->delete();
+
+            if ($delete) {
+                return redirect()->route('admin.kinerja-lulusan.evaluasi-lulusan.tempat-kerja.index', $tahunAjaran)
+                    ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
+            }
+
+            throw new \Exception('Data dosen praktisi gagal dihapus');
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 }

@@ -15,11 +15,15 @@ class EvalKesesuaianKerja extends Model
      * @var string
      */
     protected $table = 'eval_kesesuaian_kerja';
-    protected $fiilable = [
+    protected $fillable = [
         'user_id',
         'tahun',
         'jumlah_lulusan',
         'jumlah_lulusan_terlacak',
         'jumlah_lulusan_bekerja',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

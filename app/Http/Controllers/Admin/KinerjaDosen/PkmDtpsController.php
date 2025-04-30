@@ -125,9 +125,18 @@ class PkmDtpsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id,string $tahunAjaran)
+    public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'pkm_dtps')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kinerja-dosen.pkm-dtps.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

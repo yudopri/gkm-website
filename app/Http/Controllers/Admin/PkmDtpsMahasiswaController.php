@@ -95,7 +95,16 @@ class PkmDtpsMahasiswaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'pkm_dtps_mahasiswa')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.pkm-dtps-mahasiswa.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

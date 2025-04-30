@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('eval_kesesuaian_kerja', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('tahun')->nullable();
+            $table->string('tahun');
             $table->integer('jumlah_lulusan')->default(0);
             $table->integer('jumlah_lulusan_terlacak')->default(0);
             $table->integer('jumlah_lulusan_bekerja')->default(0);

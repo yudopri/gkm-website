@@ -95,9 +95,18 @@ class KepuasanMahasiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id,string $tahunAjaran)
+    public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'kepuasan_mahasiswa')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kualitas-pembelajaran.kepuasan-mahasiswa.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

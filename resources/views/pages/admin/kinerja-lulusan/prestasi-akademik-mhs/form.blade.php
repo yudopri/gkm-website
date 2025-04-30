@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -22,70 +22,46 @@
                             @csrf @method($form_method)
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen Industri/Praktisi</label>
+                                <label class="col-sm-2 col-form-label" for="nama_kegiatan">Nama Kegiatan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $dosen->nama_dosen) }}" required />
+                                    <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan"
+                                        value="{{ old('nama_kegiatan', $akademik->nama_kegiatan) }}" required />
+                                </div>
+                            </div>
+
+                            @php
+                                $options = ['lokal' => 'Lokal', 'nasional' => 'Nasional', 'internasional' => 'Internasional'];
+                            @endphp
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="tingkat">Tingkat</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="tingkat" name="tingkat" required>
+                                        @foreach ($options as $value => $label)
+                                            <option value="{{ $value }}" {{ old('tingkat', $akademik->tingkat) === $value ? 'selected' : '' }}>
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="NIDK">NIDK</label>
+                                <label class="col-sm-2 col-form-label" for="prestasi">Prestasi yang dicapai</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="NIDK" name="nidk" value="{{ old('nidk', $dosen->nidk) }}" />
+                                    <input type="text"  class="form-control" id="prestasi" name="prestasi"
+                                        value="{{ old('prestasi', $akademik->prestasi) }}" required />
                                 </div>
                             </div>
 
+
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="PerusahaanIndustri">
-                                    Perusahaan/Industri
+                                <label class="col-sm-2 col-form-label" for="Tahun">
+                                    Tahun Lulusan (YYYY/YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="PerusahaanIndustri" name="perusahaan"
-                                        value="{{ old('perusahaan', $dosen->perusahaan) }}" />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="PendTertinggi">
-                                    Pendidikan Tertinggi
-                                </label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="PendTertinggi" name="pendidikan_tertinggi"
-                                        value="{{ old('pendidikan_tertinggi', $dosen->pendidikan_tertinggi) }}" />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="bidangKeahlian">Bidang Keahlian</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="bidangKeahlian" name="bidang_keahlian"
-                                        value="{{ old('bidang_keahlian', $dosen->bidang_keahlian) }}" placeholder="keahlian1, keahlian2, dst." />
-                                    <div class="form-text"> pisahkan dengan koma (,) </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="sertifikatKompetensi">Sertifikat Kompetensi/ Profesi/ Industri</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="sertifikatKompetensi" name="sertifikat_kompetensi">{{ old('sertifikat_kompetensi', $dosen->sertifikat_kompetensi) }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="matkulDiampu">
-                                    Mata Kuliah yang Diampu
-                                </label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="matkulDiampu" name="mk_diampu">{{ old('mk_diampu', $dosen->mk_diampu) }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="BobotKredit">Bobot Kredit (sks)</label>
-                                <div class="col-sm-10">
-                                    <input type="number" min="0" class="form-control" id="BobotKredit" name="bobot_kredit_sks"
-                                        value="{{ old('bobot_kredit_sks', $dosen->bobot_kredit_sks) }}" />
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $akademik->tahun)}}"
+                                        required />
                                 </div>
                             </div>
 

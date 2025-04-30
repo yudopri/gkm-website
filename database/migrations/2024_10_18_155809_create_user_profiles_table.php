@@ -19,10 +19,13 @@ return new class extends Migration
             $table->string('nama');
             $table->string('jabatan_fungsional')->nullable();
             $table->unsignedBigInteger('jabatan_id')->nullable();
-            $table->foreign('jabatan_id')->references('id')->on('jabatan')->cascadeOnDelete();
+            $table->unsignedBigInteger('program_studi_id')->nullable();
             $table->string('handphone');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('jabatan_id')->references('id')->on('jabatan')->cascadeOnDelete();
+$table->foreign('program_studi_id')->references('id')->on('program_studi')->cascadeOnDelete();
+$table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

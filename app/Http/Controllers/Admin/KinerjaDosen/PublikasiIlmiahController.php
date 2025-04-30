@@ -111,7 +111,16 @@ class PublikasiIlmiahController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'publikasi_ilmiah')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kinerja-dosen.publikasi-ilmiah.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

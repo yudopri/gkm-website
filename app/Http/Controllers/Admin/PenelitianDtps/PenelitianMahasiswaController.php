@@ -96,7 +96,16 @@ class PenelitianMahasiswaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'penelitian_mahasiswa')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.penelitian-dtps.penelitian-mahasiswa.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

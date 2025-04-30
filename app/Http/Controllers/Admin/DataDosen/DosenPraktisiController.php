@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DosenIndustriPraktisi;
 use App\Models\TahunAjaranSemester;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class DosenPraktisiController extends Controller
 {
@@ -99,7 +100,16 @@ class DosenPraktisiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'dosen_praktisi')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.data-dosen.dosen-praktisi.detail-dosen-praktisi', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

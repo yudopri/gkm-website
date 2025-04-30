@@ -93,9 +93,18 @@ class IntegrasiPenelitianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id,string $tahunAjaran)
+    public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'integrasi_penelitian')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kualitas-pembelajaran.integrasi-penelitian.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

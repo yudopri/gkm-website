@@ -20,6 +20,11 @@
                     <div class="collapse show" id="waktu-tunggu-d3">
                         <hr class="my-0" />
                         <div class="card-body">
+                            <!-- #s btn tambah -->
+                            <a href="{{ url()->route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.create', $tahun_ajaran) . '?masaStudi=' . urlencode('Diploma Tiga') }}" class="btn btn-info mb-3">
+                                <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
+                            </a>
+                            <!-- #e btn tambah -->
                             <!-- #s tabel -->
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-hover">
@@ -41,34 +46,39 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        <tr>
-                                            <td class="text-center">TS-2</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
+                                        @foreach ($diploma as $data)
+                                            <tr>
+                                                <td class="text-center">{{ $data->tahun }}</td>
+                                                <td class="text-center">{{ $data->jumlah_lulusan }}</td>
+                                                <td class="text-center">{{ $data->jumlah_lulusan_terlacak }}</td>
+                                                <td class="text-center">{{ $data->jumlah_lulusan_terlacak_dipesan }}</td>
+                                                <td class="text-center">{{ $data->jumlah_lulusan_waktu_tiga_bulan }}</td>
+                                                <td class="text-center">{{ $data->jumlah_lulusan_waktu_enam_bulan }}</td>
+                                                <td class="text-center">{{ $data->jumlah_lulusan_waktu_sembilan_bulan }}</td>
 
                                             <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
+                                        <td class="text-center">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{{ url()->route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.edit', ['tahunAjaran' => $tahun_ajaran, 'waktuId' => $data->id]) . '?masaStudi=' . urlencode('Diploma Tiga') }}">
+                                                        <i class="bx bx-edit-alt me-1"></i> Edit
+                                                    </a>
+
+                                                    <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.destroy', ['tahunAjaran' => $tahun_ajaran, 'waktuId' => $data->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
-                                            </td>
+                                            </div>
+                                        </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                     <tfoot class="table-border-bottom-0 table-secondary">
                                         <tr>
@@ -100,6 +110,11 @@
                     <div class="collapse show" id="waktu-tunggu-d4">
                         <hr class="my-0" />
                         <div class="card-body">
+                            <!-- #s btn tambah -->
+                            <a href="{{ url()->route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.create', $tahun_ajaran) . '?masaStudi=' . urlencode('Sarjana/Sarjana Terapan') }}" class="btn btn-info mb-3">
+                                <span class="tf-icons bx bx-plus bx-18px me-2"></span>Tambah Data
+                            </a>
+                            <!-- #e btn tambah -->
                             <!-- #s tabel -->
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-bordered table-hover">
@@ -120,33 +135,39 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
+                                        @foreach ($sarjana as $data)
                                         <tr>
-                                            <td class="text-center">TS-2</td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
-                                            <td class="text-center"> </td>
+                                            <td class="text-center">{{ $data->tahun }}</td>
+                                            <td class="text-center">{{ $data->jumlah_lulusan }}</td>
+                                            <td class="text-center">{{ $data->jumlah_lulusan_terlacak }}</td>
+                                            <td class="text-center">{{ $data->jumlah_lulusan_waktu_tiga_bulan }}</td>
+                                            <td class="text-center">{{ $data->jumlah_lulusan_waktu_enam_bulan }}</td>
+                                            <td class="text-center">{{ $data->jumlah_lulusan_waktu_sembilan_bulan }}</td>
 
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">
-                                                            <i class="bx bx-trash me-1"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
+
+                                             <!-- Aksi -->
+                                        <td class="text-center">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{{ url()->route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.edit', ['tahunAjaran' => $tahun_ajaran, 'waktuId' => $data->id]) . '?masaStudi=' . urlencode('Sarjana/Sarjana Terapan') }}">
+                                                        <i class="bx bx-edit-alt me-1"></i> Edit
+                                                    </a>
+
+                                                    <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.waktu-tunggu.destroy', ['tahunAjaran' => $tahun_ajaran, 'waktuId' => $data->id]) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item" onclick="return confirm('Yakin ingin menghapus?');">
+                                                            <i class="bx bx-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
-                                            </td>
+                                            </div>
+                                        </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                     <tfoot class="table-border-bottom-0 table-secondary">
                                         <tr>

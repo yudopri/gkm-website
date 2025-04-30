@@ -1,10 +1,11 @@
-@extends('layouts.dashboard')
+@extends('layouts.dosen')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Data Dosen /</span>
-            <span class="text-muted fw-light">Dosen Industri/Praktisi /</span>
+            <span class="text-muted fw-light">Kinerja Lulusan /</span>
+            <span class="text-muted fw-light">Masa Studi Lulusan /</span>
+            <span class="text-muted fw-light">({{ $masaStudi}}) /</span>
             {{ $form_title }}
         </h4>
 
@@ -13,7 +14,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Data Dosen | Dosen Industri/Praktisi </h5>
+                        <h5 class="mb-0"> Kinerja Lulusan / Masa Studi Lulusan / ({{ $masaStudi}}) </h5>
                         <small class="text-muted float-end"> - </small>
                     </div>
 
@@ -21,71 +22,66 @@
                         <form action="{{ $form_action }}" method="POST" enctype="multipart/form-data">
                             @csrf @method($form_method)
 
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="namaDosen">Nama Dosen Industri/Praktisi</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="namaDosen" name="nama_dosen"
-                                        value="{{ old('nama_dosen', $dosen->nama_dosen) }}" required />
+                                    <input type="hidden" class="form-control" id="masa_studi" name="masa_studi"
+                                      value="{{ old('masa_studi') ?? $masaStudi }}"  />
+                                </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="jumlah_mhs_diterima">Jumlah Mahasiswa Diterima</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="jumlah_mhs_diterima" name="jumlah_mhs_diterima"
+                                        value="{{ old('jumlah_mhs_diterima', $MasaStudiLulusan->jumlah_mhs_diterima) }}" required />
+                                </div>
+                            </div>
+                            @php
+    $maxStudi = match($masaStudi) {
+        'Diploma Tiga' => 4,
+        'Sarjana/Sarjana Terapan' => 6,
+        'Magister/Magister Terapan' => 3,
+        default => 0
+    };
+@endphp
+
+
+                           {{-- TS --}}
+<div class="row mb-3">
+    <label class="col-sm-2 col-form-label" for="jumlah_mhs_lulus_akhir_ts">Jumlah Mahasiswa Lulus Akhir TS</label>
+    <div class="col-sm-10">
+        <input type="number" class="form-control" id="jumlah_mhs_lulus_akhir_ts" name="jumlah_mhs_lulus_akhir_ts"
+            value="{{ old('jumlah_mhs_lulus_akhir_ts', $MasaStudiLulusan->jumlah_mhs_lulus_akhir_ts) }}" required />
+    </div>
+</div>
+
+@for ($i = 1; $i <= $maxStudi; $i++)
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label" for="jumlah_mhs_lulus_akhir_ts_{{ $i }}">
+            Jumlah Mahasiswa Lulus Akhir TS {{ $i }}
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="jumlah_mhs_lulus_akhir_ts_{{ $i }}" name="jumlah_mhs_lulus_akhir_ts_{{ $i }}"
+                value="{{ old("jumlah_mhs_lulus_akhir_ts_$i", $MasaStudiLulusan?->{"jumlah_mhs_lulus_akhir_ts_$i"} ?? '') }}" required />
+        </div>
+    </div>
+@endfor
+
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="mean_masa_studi">Rata Rata Masa Studi</label>
+                                <div class="col-sm-10">
+                                    <input type="number" step="0.01" class="form-control" id="mean_masa_studi" name="mean_masa_studi"
+                                        value="{{ old('mean_masa_studi', $MasaStudiLulusan->mean_masa_studi) }}" required />
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="NIDK">NIDK</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="NIDK" name="nidk" value="{{ old('nidk', $dosen->nidk) }}" />
-                                </div>
-                            </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="PerusahaanIndustri">
-                                    Perusahaan/Industri
+                                <label class="col-sm-2 col-form-label" for="Tahun">
+                                    Tahun Lulusan (YYYY/YYYY)
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="PerusahaanIndustri" name="perusahaan"
-                                        value="{{ old('perusahaan', $dosen->perusahaan) }}" />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="PendTertinggi">
-                                    Pendidikan Tertinggi
-                                </label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="PendTertinggi" name="pendidikan_tertinggi"
-                                        value="{{ old('pendidikan_tertinggi', $dosen->pendidikan_tertinggi) }}" />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="bidangKeahlian">Bidang Keahlian</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="bidangKeahlian" name="bidang_keahlian"
-                                        value="{{ old('bidang_keahlian', $dosen->bidang_keahlian) }}" placeholder="keahlian1, keahlian2, dst." />
-                                    <div class="form-text"> pisahkan dengan koma (,) </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="sertifikatKompetensi">Sertifikat Kompetensi/ Profesi/ Industri</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="sertifikatKompetensi" name="sertifikat_kompetensi">{{ old('sertifikat_kompetensi', $dosen->sertifikat_kompetensi) }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="matkulDiampu">
-                                    Mata Kuliah yang Diampu
-                                </label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="matkulDiampu" name="mk_diampu">{{ old('mk_diampu', $dosen->mk_diampu) }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="BobotKredit">Bobot Kredit (sks)</label>
-                                <div class="col-sm-10">
-                                    <input type="number" min="0" class="form-control" id="BobotKredit" name="bobot_kredit_sks"
-                                        value="{{ old('bobot_kredit_sks', $dosen->bobot_kredit_sks) }}" />
+                                    <input type="text" class="form-control" id="Tahun" name="tahun" value="{{ old('tahun', $MasaStudiLulusan->tahun)}}"
+                                        required />
                                 </div>
                             </div>
 

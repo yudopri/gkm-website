@@ -94,7 +94,16 @@ class HkiHakciptaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $dosen = User::with('profile', 'hki_cipta_dosen')->whereId($id)->firstOrFail();
+
+            return view('pages.admin.petugas.kinerja-dosen.luaran-lain.hki-hakcipta.detail', [
+                'data_dosen' => $dosen,
+                'dosenId' => $dosen->id,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
 
     /**

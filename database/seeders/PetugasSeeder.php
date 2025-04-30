@@ -28,6 +28,7 @@ class PetugasSeeder extends Seeder
             'nama' => 'John Doe',
             'jabatan_fungsional' => null,
             'jabatan_id' => 2,
+            'program_studi_id' => 1,
             'handphone' => '081234567890',
             'user_id' => $petugas1->id,
         ]);
@@ -48,6 +49,7 @@ class PetugasSeeder extends Seeder
             'nama' => 'Jane Smith',
             'jabatan_fungsional' => null,
             'jabatan_id' => 2,
+            'program_studi_id' => 1,
             'handphone' => '081234567891',
             'user_id' => $petugas2->id,
         ]);

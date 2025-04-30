@@ -15,7 +15,7 @@ class IpkLulusan extends Model
      * @var string
      */
     protected $table = 'ipk_lulusan';
-    protected $fiilable = [
+    protected $fillable = [
         'user_id',
         'tahun',
         'jumlah_lulusan',
@@ -23,4 +23,8 @@ class IpkLulusan extends Model
         'ipk_maksimal',
         'ipk_rata_rata',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

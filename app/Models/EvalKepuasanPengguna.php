@@ -15,7 +15,7 @@ class EvalKepuasanPengguna extends Model
      * @var string
      */
     protected $table = 'eval_kepuasan_pengguna';
-    protected $fiilable = [
+    protected $fillable = [
         'user_id',
         'jenis_kemampuan',
         'tingkat_kepuasan_sangat_baik',
@@ -27,4 +27,8 @@ class EvalKepuasanPengguna extends Model
         'jumlah_responden',
         'tahun',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

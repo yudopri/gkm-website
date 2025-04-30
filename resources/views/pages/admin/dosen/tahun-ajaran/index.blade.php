@@ -24,7 +24,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    @forelse ($tahun_ajaran as $value)
+                                   </tr>  @forelse ($tahun_ajaran as $value)
                                         <tr>
                                             <td class="text-center">{{ $value->tahun_ajaran }}</td>
                                             <td class="text-center text-capitalize">{{ $value->semester }}</td>
@@ -35,7 +35,7 @@
                                                     <span class="tf-icons bx bx-edit bx-18px me-2"></span>Isi Form
                                                 </a>
                                             </td>
-                                        </tr>
+
                                     @empty
                                         <tr>
                                             <td class="text-center" colspan="11"> Belum ada data tahun ajaran semester </td>
