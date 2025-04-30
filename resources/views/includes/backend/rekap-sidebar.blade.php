@@ -32,21 +32,22 @@
         
                 <!-- #s 9. rekap data -->
                 <li class="menu-item">
-                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
-                    <div data-i18n="Rekap Data">Kerjasama Tridharma Pendidikan</div>
+                <a href="{{ route('admin.rekap-data.kurikulum-dan-mahasiswa', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Kurikulum dan Mahasiswa</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
-                    <div data-i18n="Rekap Data">Rekap Data</div>
+                <a href="{{ route('admin.rekap-data.penelitian-dtps', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
+                    <div data-i18n="Rekap Data">Penelitian DTPS</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
-                    <div data-i18n="Rekap Data">Rekap Data</div>
+                <a href="{{ route('admin.rekap-data.pkm-dtps', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">PKM DTPS</div>
                 </a>
                 
-                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
-                    <div data-i18n="Rekap Data">Rekap Data</div>
+                <a href="{{ route('admin.rekap-data.kualitas-pembelajaran', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
+                    <div data-i18n="Rekap Data">Kualitas Pembelajaran</div>
                 </a>
+
             
         </li>
 <!-- #e . rekap data -->
