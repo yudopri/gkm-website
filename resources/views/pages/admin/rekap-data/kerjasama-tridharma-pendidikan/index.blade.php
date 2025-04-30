@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="card-header">Tabel 7 | PkM DTPS yang Melibatkan Mahasiswa</h5>
+                const route = "{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '__REPLACE__']) }}";
                 <hr class="my-0" />
                 <div class="card-body">
                     <a href="#" class="btn btn-info mb-3">

@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="card-header">kerjasama-tridharma-penelitian</h5>
+                <h5 class="card-header">TABEL 4 | luaran-penelitian-yang-dihasilkan-mahasiswa-buku-ber-isbn-book-chapter</h5>
                 <hr class="my-0" />
                 <div class="card-body">
                     <a href="#" class="btn btn-info mb-3">
