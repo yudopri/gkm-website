@@ -32,8 +32,11 @@
         
                 <!-- #s 9. rekap data -->
                 <li class="menu-item">
-                <a href="{{ route('admin.rekap-data.kurikulum-dan-mahasiswa', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
-                    <div data-i18n="Rekap Data">Kurikulum dan Mahasiswa</div>
+                <a href="{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Kerjasama Tridharma</div>
+                </a>
+                <a href="{{ route('admin.rekap-data.kurikulum', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Kualitas Pembelajaran</div>
                 </a>
 
                 <a href="{{ route('admin.rekap-data.penelitian-dtps', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
@@ -43,11 +46,29 @@
                 <a href="{{ route('admin.rekap-data.pkm-dtps', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
                     <div data-i18n="Rekap Data">PKM DTPS</div>
                 </a>
+
+                <a href="{{ route('admin.rekap-data.ipk-lulusan', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">IPK Lulusan</div>
+                </a>
                 
-                <a href="{{ route('admin.rekap-data.kualitas-pembelajaran', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
-                    <div data-i18n="Rekap Data">Kualitas Pembelajaran</div>
+                <a href="{{ route('admin.rekap-data.prestasi-akademik', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Prestasi Mahasiswa</div>
                 </a>
 
+                <a href="{{ route('admin.rekap-data.masa-studi', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Masa studi Lulusan</div>
+                </a>
+
+                <a href="{{ route('admin.rekap-data.waktu-tunggu', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Evaluasi Lulusan</div>
+                </a>
+
+                <a href="{{ route('admin.rekap-data.pagelaran-mahasiswa', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Luaran Karya Mahasiswa</div>
+                </a>
+
+                
+                </a>
             
         </li>
 <!-- #e . rekap data -->

@@ -18,7 +18,7 @@ class PenelitianDtps2Controller extends Controller
         $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
         return $item;
     });
-        return view('pages.admin.rekap-data.penelitian-dtps-yang-menjadi-rujukan-tema-tesis-disertasi.index', compact('tahun_ajaran', 'tahunAjaranList'));
+        return view('pages.admin.rekap-data.penelitian-dtps-yang-melibatkan-mahasiswa.index', compact('tahun_ajaran', 'tahunAjaranList'));
     }
 
     /**

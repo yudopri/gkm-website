@@ -35,7 +35,37 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="card-header">TABEL 6.a | Penelitian DTPS yang Melibatkan Mahasiswa</h5>
+                <h5 class="card-header">TABEL 1.a | Kerja Sama Tridharma-Pendidikan </h5>
+                <hr class="my-0" />
+                <div class="card-body">
+                    
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-info">
+                                <tr>
+                                    <th>Total</th>
+                                    <th>Keterangan</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td class="text-center">1</td>
+                                    <td class="text-wrap">
+                                        PEMANFAATAN MODUL SMART FINANCE UNTUK MENDUKUNG EFEKTIFITAS PENGELOLAHAN AKTIFITAS TERPADU
+                                        SD KHADIJAH WONOREJO SURABAYA
+                                    </td>
+                                    
+                                </tr>
+                                {{-- Tambahkan data dinamis di sini --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <h5 class="card-header">TABEL 1.b | Kerja Sama Tridharma-Penelitian </h5>
                 <hr class="my-0" />
                 <div class="card-body">
                     
@@ -64,14 +94,12 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="card-header">TABEL 6.b | Penelitian DTPS yang Menjadi Rujukan Tema Tesis/Disertasi</h5>
+                <h5 class="card-header">TABEL 1.c | Kerja Sama Tridharma-Pengabdian </h5>
                 <hr class="my-0" />
                 <div class="card-body">
-                  
+                    
 
                     <div class="table-responsive text-nowrap">
                         <table class="table table-bordered table-hover">
@@ -97,10 +125,15 @@
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
+
+
+
+
+
 
     
-
-    </div>
 </div>
 @endsection

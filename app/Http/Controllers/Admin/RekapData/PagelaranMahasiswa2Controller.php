@@ -4,15 +4,20 @@ namespace App\Http\Controllers\Admin\RekapData;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\TahunAjaranSemester;
 
 class PagelaranMahasiswa2Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($tahun_ajaran)
     {
-        //
+    $tahunAjaranList = TahunAjaranSemester::all()->map(function ($item) {
+        $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
+        return $item;
+    });
+        return view('pages.admin.rekap-data.pagelaran-pameran-presentasi-publikasi-ilmiah-mahasiswa.index', compact('tahun_ajaran', 'tahunAjaranList'));
     }
 
     /**
