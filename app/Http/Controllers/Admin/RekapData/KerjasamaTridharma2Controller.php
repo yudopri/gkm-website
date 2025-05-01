@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
 
-class KerjasamaTridharmaPendidikan2Controller extends Controller
+class KerjasamaTridharma2Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class KerjasamaTridharmaPendidikan2Controller extends Controller
         $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
         return $item;
     });
-        return view('pages.admin.rekap-data.kerjasama-tridharma-pendidikan.index', compact('tahun_ajaran', 'tahunAjaranList'));
+        return view('pages.admin.rekap-data.kerjasama-tridharma.index', compact('tahun_ajaran', 'tahunAjaranList'));
     }
 
     /**

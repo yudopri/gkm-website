@@ -35,7 +35,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="card-header">Tabel 1 | kerjasama tridharma-pengabdian kepada masyarakat</h5>
+                <h5 class="card-header">Tabel 2  | Seleksi Mahasiwa 
+                                                
                 <hr class="my-0" />
                 <div class="card-body">
                     <a href="#" class="btn btn-info mb-3">
@@ -78,6 +79,9 @@
                             </tbody>
                         </table>
                     </div>
+
+                    
+
                 </div>
             </div>
         </div>

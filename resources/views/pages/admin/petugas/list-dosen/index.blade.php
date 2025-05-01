@@ -41,7 +41,7 @@
                                                 <a href="javascript:;" class="btn btn-sm btn-success">
                                                     <span class="tf-icons bx bx-spreadsheet bx-18px me-2"></span>Excel
                                                 </a>
-                                                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}" class="btn btn-sm" style="background-color: orange; color: white;">
+                                                <a href="{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '2024-2025']) }}" class="btn btn-sm" style="background-color: orange; color: white;">
                                                     <span class="tf-icons bx bx-file bx-18px me-2"></span>Rekap
                                                 </a>
                                             </td>

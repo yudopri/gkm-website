@@ -24,7 +24,7 @@
         function changeTahunAjaran(select) {
             let selected = select.value;
             if (selected) {
-                const route = "{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '__REPLACE__']) }}";
+                const route = "{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '__REPLACE__']) }}";
                 const finalUrl = route.replace('__REPLACE__', selected);  // Sudah pakai format yang bersih
                 console.log("Final URL:", finalUrl);
                 window.location.href = finalUrl;
@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="card-header">Tabel 7 | PkM DTPS yang Melibatkan Mahasiswa</h5>
+                <h5 class="card-header">Tabel 3 | pengakuan rekognisi dosen</h5>
                 <hr class="my-0" />
                 <div class="card-body">
                     <a href="#" class="btn btn-info mb-3">

@@ -32,20 +32,24 @@
         
                 <!-- #s 9. rekap data -->
                 <li class="menu-item">
-                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
-                    <div data-i18n="Rekap Data">Kerjasama Tridharma Pendidikan</div>
+                <a href="{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Kerjasama Tridharma</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
-                    <div data-i18n="Rekap Data">Rekap Data</div>
+                <a href="{{ route('admin.rekap-data.seleksi-mahasiswa', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
+                    <div data-i18n="Rekap Data">Mahasiswa</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
-                    <div data-i18n="Rekap Data">Rekap Data</div>
+                <a href="{{ route('admin.rekap-data.dosen-tetap', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Dosen</div>
                 </a>
                 
-                <a href="{{ route('admin.rekap-data.kerjasama-tridharma.pendidikan', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
-                    <div data-i18n="Rekap Data">Rekap Data</div>
+                <a href="{{ route('admin.rekap-data.penelitian-dtps', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
+                    <div data-i18n="Rekap Data">DTPS</div>
+                </a>
+
+                <a href="{{ route('admin.rekap-data.hki.hak-cipta', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
+                    <div data-i18n="Rekap Data">PKM</div>
                 </a>
             
         </li>

@@ -48,7 +48,7 @@ use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
 use App\Http\Controllers\Api\DataMahasiswa\MahasiswaAsingApiController;
 use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
 
-use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPendidikan2Controller;
+use App\Http\Controllers\Admin\RekapData\KerjasamaTridharma2Controller;
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPenelitian2Controller;
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPengabdian2Controller;
 use App\Http\Controllers\Admin\RekapData\SeleksiMahasiswa2Controller;
@@ -445,7 +445,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 
     Route::prefix('rekap-data')->name('rekap-data.')->group(function () {
-        Route::get('/kerjasama-tridharma-pendidikan/{tahun_ajaran}', [KerjasamaTridharmaPendidikan2Controller::class, 'index'])->name('kerjasama-tridharma.pendidikan');
+        Route::get('/kerjasama-tridharma/{tahun_ajaran}', [KerjasamaTridharma2Controller::class, 'index'])->name('kerjasama-tridharma');
         Route::get('/kerjasama-tridharma-penelitian/{tahun_ajaran}', [KerjasamaTridharmaPenelitian2Controller::class, 'index'])->name('kerjasama-tridharma.penelitian');
         Route::get('/kerjasama-tridharma-pengabdian/{tahun_ajaran}', [KerjasamaTridharmaPengabdian2Controller::class, 'index'])->name('kerjasama-tridharma.pengabdian');
         Route::get('/seleksi-mahasiswa/{tahun_ajaran}', [SeleksiMahasiswa2Controller::class, 'index'])->name('seleksi-mahasiswa');
