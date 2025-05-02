@@ -35,7 +35,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <h5 class="card-header">TABEL 8 | IPK Lulusan </h5>
+            <h5 class="card-header">TABEL 3 | Dosen </h5>
             <hr class="my-0" />
             <div class="card-body">
                 
@@ -55,14 +55,45 @@
                             
                             <tr>
                                 <td class="text-center">1</td>
-                                <td class="text-wrap">Tabel 8.a | IPK Lulusan</td>
+                                <td class="text-wrap">Tabel 3.a.1| Dosen Tetap Perguruan Tinggi</td>
                                 <td class="text-center">1</td>
                                 <td class="text-wrap">
                                     Kurang
                                 </td>
                             </tr>
 
-                            
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td class="text-wrap">Tabel 3.a.2| Dosen Pembimbing Utama Tugas Akhir		</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td class="text-wrap">Tabel 3.a.3| Ekuivalen Waktu Mengajar Penuh (EWMP) Dosen Tetap Perguruan Tinggi		</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td class="text-wrap">Tabel 3.a.4| Dosen Tidak Tetap</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td class="text-wrap">Tabel 3.a.5| Dosen Industri/Praktisi</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
                             {{-- Tambahkan data dinamis di sini --}}
                         </tbody>
                     </table>
@@ -75,6 +106,7 @@
 
     </div>
 </div>
-</div>
+   
+    </div>
 </div>
 @endsection

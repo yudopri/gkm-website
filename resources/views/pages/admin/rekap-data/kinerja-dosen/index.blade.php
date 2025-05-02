@@ -35,7 +35,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <h5 class="card-header">TABEL 8 | IPK Lulusan </h5>
+            <h5 class="card-header">TABEL 4 | Kinerja Dosen </h5>
             <hr class="my-0" />
             <div class="card-body">
                 
@@ -55,13 +55,52 @@
                             
                             <tr>
                                 <td class="text-center">1</td>
-                                <td class="text-wrap">Tabel 8.a | IPK Lulusan</td>
+                                <td class="text-wrap">Tabel 3.b.1| Pengakuan/Rekognisi Dosen</td>
                                 <td class="text-center">1</td>
                                 <td class="text-wrap">
                                     Kurang
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td class="text-wrap">Tabel 3.b.2| Penelitian DTPS</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td class="text-wrap">Tabel 3.b.3| PkM DTPS</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td class="text-wrap">Tabel 3.b.4| Pagelaran/Pameran/Presentasi/Publikasi Ilmiah DTPS</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td class="text-wrap">Tabel 3.b.5| Karya Ilmiah DTPS yang Disitasi</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">6</td>
+                                <td class="text-wrap">Tabel 3.b.6| Produk/Jasa DTPS yang Diadopsi oleh Industri/Masyarakat</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
                             
                             {{-- Tambahkan data dinamis di sini --}}
                         </tbody>
@@ -75,6 +114,6 @@
 
     </div>
 </div>
-</div>
+
 </div>
 @endsection

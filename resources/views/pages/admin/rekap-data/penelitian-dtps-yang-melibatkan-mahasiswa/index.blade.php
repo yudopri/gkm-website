@@ -32,75 +32,65 @@
         }
     </script>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card mb-4">
-                <h5 class="card-header">TABEL 6.a | Penelitian DTPS yang Melibatkan Mahasiswa</h5>
-                <hr class="my-0" />
-                <div class="card-body">
-                    
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <h5 class="card-header">TABEL 6 | Kualitas Pembelajaran </h5>
+            <hr class="my-0" />
+            <div class="card-body">
+                
 
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-bordered table-hover">
-                            <thead class="table-info">
-                                <tr>
-                                    <th>Total</th>
-                                    <th>Keterangan</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td class="text-wrap">
-                                        PEMANFAATAN MODUL SMART FINANCE UNTUK MENDUKUNG EFEKTIFITAS PENGELOLAHAN AKTIFITAS TERPADU
-                                        SD KHADIJAH WONOREJO SURABAYA
-                                    </td>
-                                    
-                                </tr>
-                                {{-- Tambahkan data dinamis di sini --}}
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-info">
+                            <tr>
+                                <th>No</th>
+                                <th>Komponen</th>
+                                <th>Total</th>
+                                <th>Keterangan</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">Tabel 6.a Penelitian DTPS yang Melibatkan Mahasiswa</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td class="text-wrap">Tabel 6.b Penelitian DTPS yang Menjadi Rujukan Tema Tesis/Disertasi</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td class="text-wrap">Tabel 5.c Kepuasan Mahasiswa</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            
+                            
+                            
+                            {{-- Tambahkan data dinamis di sini --}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        
 
-        <div class="col-md-12">
-            <div class="card mb-4">
-                <h5 class="card-header">TABEL 6.b | Penelitian DTPS yang Menjadi Rujukan Tema Tesis/Disertasi</h5>
-                <hr class="my-0" />
-                <div class="card-body">
-                  
-
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-bordered table-hover">
-                            <thead class="table-info">
-                                <tr>
-                                    <th>Total</th>
-                                    <th>Keterangan</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td class="text-wrap">
-                                        PEMANFAATAN MODUL SMART FINANCE UNTUK MENDUKUNG EFEKTIFITAS PENGELOLAHAN AKTIFITAS TERPADU
-                                        SD KHADIJAH WONOREJO SURABAYA
-                                    </td>
-                                    
-                                </tr>
-                                {{-- Tambahkan data dinamis di sini --}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    
+        
 
     </div>
+</div>
 </div>
 @endsection

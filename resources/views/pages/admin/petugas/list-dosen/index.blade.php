@@ -41,9 +41,6 @@
                                                 <a href="{{ route('admin.petugas.list-dosen.export.excel', $dosen->id) }}" class="btn btn-sm btn-success">
                                                     <span class="tf-icons bx bx-spreadsheet bx-18px me-2"></span>Export Excel
                                                 </a>
-                                                <a href="{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '2024-2025']) }}" class="btn btn-sm" style="background-color: orange; color: white;">
-                                                    <span class="tf-icons bx bx-file bx-18px me-2"></span>Rekap
-                                                </a>
                                                 <form action="{{ route('admin.petugas.list-dosen.import.excel') }}" method="POST" enctype="multipart/form-data" class="d-inline">
                                                     @csrf
                                                     <label for="file-upload" class="btn btn-sm btn-primary">
@@ -51,6 +48,9 @@
                                                     </label>
                                                     <input id="file-upload" type="file" name="file" accept=".xlsx,.csv" onchange="this.form.submit()" style="display: none;">
                                                 </form>
+                                                <a href="{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '2024-2025']) }}" class="btn btn-sm" style="background-color: orange; color: white;">
+                                                    <span class="tf-icons bx bx-file bx-18px me-2"></span>Rekap
+                                                </a>
                                             </td>
                                         </tr>
                                     @empty

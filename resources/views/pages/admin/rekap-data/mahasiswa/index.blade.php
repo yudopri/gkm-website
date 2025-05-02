@@ -35,7 +35,37 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <h5 class="card-header">TABEL 8 | IPK Lulusan </h5>
+            <h5 class="card-header">TABEL 2.a | Seleksi Mahasiswa </h5>
+            <hr class="my-0" />
+            <div class="card-body">
+                
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-info">
+                            <tr>
+                                <th>Total</th>
+                                <th>Keterangan</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    PEMANFAATAN MODUL SMART FINANCE UNTUK MENDUKUNG EFEKTIFITAS PENGELOLAHAN AKTIFITAS TERPADU
+                                    SD KHADIJAH WONOREJO SURABAYA
+                                </td>
+                                
+                            </tr>
+                            {{-- Tambahkan data dinamis di sini --}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <h5 class="card-header">TABEL 2.b | Mahasiswa Asing </h5>
             <hr class="my-0" />
             <div class="card-body">
                 
@@ -44,37 +74,32 @@
                     <table class="table table-bordered table-hover">
                         <thead class="table-info">
                             <tr>
-                                <th>No</th>
-                                <th>Komponen</th>
                                 <th>Total</th>
                                 <th>Keterangan</th>
                                 
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            
                             <tr>
                                 <td class="text-center">1</td>
-                                <td class="text-wrap">Tabel 8.a | IPK Lulusan</td>
-                                <td class="text-center">1</td>
                                 <td class="text-wrap">
-                                    Kurang
+                                    PEMANFAATAN MODUL SMART FINANCE UNTUK MENDUKUNG EFEKTIFITAS PENGELOLAHAN AKTIFITAS TERPADU
+                                    SD KHADIJAH WONOREJO SURABAYA
                                 </td>
+                                
                             </tr>
-
-                            
                             {{-- Tambahkan data dinamis di sini --}}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        
 
         
 
     </div>
 </div>
-</div>
+   
+    </div>
 </div>
 @endsection

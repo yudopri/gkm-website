@@ -17,7 +17,7 @@ class IntegrasiPembelajaran2Controller extends Controller
         $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
         return $item;
     });
-        return view('pages.admin.rekap-data.kerjasama-tridharma.index', compact('tahun_ajaran', 'tahunAjaranList'));
+        return view('pages.admin.rekap-data.kinerja-dosen.index', compact('tahun_ajaran', 'tahunAjaranList'));
     }
 
     /**

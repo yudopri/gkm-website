@@ -35,10 +35,21 @@
                 <a href="{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Kerjasama Tridharma</div>
                 </a>
+                <a href="{{ route('admin.rekap-data.seleksi-mahasiswa', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Mahasiswa</div>
+                </a>
+                <a href="{{ route('admin.rekap-data.dosen-tetap', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Dosen</div>
+                </a>
+                <a href="{{ route('admin.rekap-data.integrasi-pembelajaran', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Kinerja Dosen</div>
+                </a>
+                <a href="{{ route('admin.rekap-data.hki.paten', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
+                    <div data-i18n="Rekap Data">Luaran Lainnya</div>
+                </a>
                 <a href="{{ route('admin.rekap-data.kurikulum', ['tahun_ajaran' => '2024-2025']) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Kualitas Pembelajaran</div>
                 </a>
-
                 <a href="{{ route('admin.rekap-data.penelitian-dtps', ['tahun_ajaran' => '2024-2025']) }}"class="menu-link">
                     <div data-i18n="Rekap Data">Penelitian DTPS</div>
                 </a>

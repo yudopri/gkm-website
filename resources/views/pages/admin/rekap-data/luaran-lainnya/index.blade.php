@@ -35,7 +35,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <h5 class="card-header">TABEL 8 | IPK Lulusan </h5>
+            <h5 class="card-header">TABEL 5 | Luaran Lainnya </h5>
             <hr class="my-0" />
             <div class="card-body">
                 
@@ -55,13 +55,37 @@
                             
                             <tr>
                                 <td class="text-center">1</td>
-                                <td class="text-wrap">Tabel 8.a | IPK Lulusan</td>
+                                <td class="text-wrap">Tabel 3.b.7| Luaran Penelitian/PkM Lainnya - HKI (Paten, Paten Sederhana)</td>
                                 <td class="text-center">1</td>
                                 <td class="text-wrap">
                                     Kurang
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td class="text-wrap">Tabel 3.b.8| Luaran Penelitian/PkM Lainnya - HKI (Hak Cipta, Desain Produk Industri, dll.)</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td class="text-wrap">Tabel 3.b.9| Luaran Penelitian/PkM Lainnya - Teknologi Tepat Guna, Produk, Karya Seni, Rekayasa Sosial</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td class="text-wrap">Tabel 3.b.10| Luaran Penelitian/PkM Lainnya - Buku ber-ISBN, Book Chapter</td>
+                                <td class="text-center">1</td>
+                                <td class="text-wrap">
+                                    Kurang
+                                </td>
+                            </tr>
+                            
                             
                             {{-- Tambahkan data dinamis di sini --}}
                         </tbody>
@@ -75,6 +99,7 @@
 
     </div>
 </div>
-</div>
+   
+    </div>
 </div>
 @endsection
