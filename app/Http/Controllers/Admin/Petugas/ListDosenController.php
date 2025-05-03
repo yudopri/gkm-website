@@ -18,17 +18,24 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 class ListDosenController extends Controller
 {
     public function index()
-    {
-        try {
-            $listDosen = User::with('profile')->role('dosen')->get();
-            return view('pages.admin.petugas.list-dosen.index', [
-                'list_dosen' => $listDosen,
-            ]);
-        } catch (\Exception $e) {
-            // return back()->withErrors('Oops something went wrong!');
-            return back()->withErrors($e->getMessage());
-        }
+{
+    try {
+        $userProdiId = auth()->user()->profile->program_studi_id;
+
+        $listDosen = User::with('profile')
+            ->role('dosen')
+            ->whereHas('profile', function ($query) use ($userProdiId) {
+                $query->where('program_studi_id', $userProdiId);
+            })
+            ->get();
+
+        return view('pages.admin.petugas.list-dosen.index', [
+            'list_dosen' => $listDosen,
+        ]);
+    } catch (\Exception $e) {
+        return back()->withErrors($e->getMessage());
     }
+}
 
     public function exportPdf(string $dosenId)
     {
