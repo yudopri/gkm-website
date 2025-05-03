@@ -66,11 +66,11 @@
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item"
-                                                            href="{{ route('admin.data-dosen.dosen-tidak-tetap.edit', $dosen->id) }}">
+                                                            href="{{ route('admin.dosen.dd.dosen-tidak-tetap.edit', ['tahunAjaran' => $tahun_ajaran, 'dosenTidakTetapId' => $dosen->id]) }}">
                                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                                         </a>
                                                         <a class="dropdown-item"
-                                                            href="{{ route('admin.data-dosen.dosen-tidak-tetap.destroy', $dosen->id) }}"
+                                                            href="{{ route('admin.dosen.dd.dosen-tidak-tetap.destroy',  ['tahunAjaran' => $tahun_ajaran, 'dosenTidakTetapId' => $dosen->id]) }}"
                                                             data-confirm-delete="true">
                                                             <i class="bx bx-trash me-1"></i>
                                                             Delete

@@ -33,31 +33,36 @@
             @endif
         </div>
 
-        <label for="avatar" class="cursor-pointer text-sm underline text-white hover:text-gray-300">Change Profile Image</label>
+        <label for="avatar" class="cursor-pointer text-xs underline text-white hover:text-gray-300">Change Profile Image</label>
         <input type="file" id="avatar" name="avatar" class="hidden" accept="image/*"/>
     </div>
 
     <!-- Nama Lengkap -->
     <div>
-        <label for="nama" class="block mb-1 font-semibold text-sm">Nama Lengkap</label>
+        <label for="nama" class="block mb-1 font-semibold text-xs">Nama Lengkap</label>
         <input id="nama" name="nama" type="text" value="{{$profile->nama ?? ''}}" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required/>
     </div>
 
     <!-- NIP -->
     <div>
-        <label for="nip" class="block mb-1 font-semibold text-sm">NIP</label>
+        <label for="nip" class="block mb-1 font-semibold text-xs">NIP</label>
         <input id="nip" name="nip" type="text" value="{{$profile->nip ?? ''}}" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required/>
     </div>
 
     <!-- NIDN -->
     <div>
-        <label for="nidn" class="block mb-1 font-semibold text-sm">NIDN</label>
+        <label for="nidn" class="block mb-1 font-semibold text-xs">NIDN</label>
         <input id="nidn" name="nidn" type="text" value="{{$profile->nidn ?? ''}}" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required/>
+    </div>
+    <!-- NO Handphone -->
+    <div>
+        <label for="handphone" class="block mb-1 font-semibold text-xs">No Handphone</label>
+        <input id="handphone" name="handphone" type="text" value="{{$profile->nidn ?? ''}}" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required/>
     </div>
 
     <!-- Jabatan Fungsional -->
     <div>
-        <label for="jabatan_fungsional" class="block mb-1 font-semibold text-sm">Jabatan Fungsional</label>
+        <label for="jabatan_fungsional" class="block mb-1 font-semibold text-xs">Jabatan Fungsional</label>
         <select id="jabatan_fungsional" name="jabatan_fungsional" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required>
             <option value="">Pilih Jabatan Fungsional</option>
             @foreach($jabatanFungsionalList as $jabatanFungsi)
@@ -68,36 +73,45 @@
 
     <!-- Jabatan -->
     <div>
-        <label for="jabatan" class="block mb-1 font-semibold text-sm">Jabatan</label>
+        <label for="jabatan" class="block mb-1 font-semibold text-xs">Jabatan</label>
         <select id="jabatan" name="jabatan_id" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required>
             <option value="">Pilih Jabatan</option>
             @foreach($jabatanList as $jabatan)
-                <option value="{{ $jabatan->id }}" {{ $profile->jabatan->id == $jabatan->id ? 'selected' : '' }}>{{ $jabatan->nama }}</option>
+                <option value="{{ $jabatan->id }}" {{ ($profile->jabatan->id ?? '') == $jabatan->id ? 'selected' : '' }}>{{ $jabatan->nama }}</option>
             @endforeach
         </select>
     </div>
 
     <!-- Jurusan -->
-    <div>
-        <label for="jurusan" class="block mb-1 font-semibold text-sm">Jurusan</label>
-        <select id="jurusan" name="jurusan_id" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required>
-            <option value="">Pilih Jurusan</option>
-            @foreach($jurusanList as $jurusan)
-                <option value="{{ $jurusan->id }}" {{ $profile->program_studi->jurusan->id == $jurusan->id ? 'selected' : '' }}>{{ $jurusan->nama }}</option>
-            @endforeach
-        </select>
-    </div>
+<div>
+    <label for="jurusan" class="block mb-1 font-semibold text-xs">Jurusan</label>
+    <select id="jurusan" name="jurusan_id" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required>
+        <option value="">Pilih Jurusan</option>
+        @foreach($jurusanList as $jurusan)
+            <option value="{{ $jurusan->id }}"
+                {{ optional(optional(optional($profile)->program_studi)->jurusan)->id == $jurusan->id ? 'selected' : '' }}>
+                {{ $jurusan->nama }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
-    <!-- Program Studi -->
-    <div>
-        <label for="program_studi" class="block mb-1 font-semibold text-sm">Program Studi</label>
-        <select id="program_studi" name="program_studi_id" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required>
-            <option value="">Pilih Program Studi</option>
-            @foreach($profile->program_studi->jurusan->program_studi as $program)
-                <option value="{{ $program->id }}" {{ $profile->program_studi->id == $program->id ? 'selected' : '' }}>{{ $program->nama }}</option>
-            @endforeach
-        </select>
-    </div>
+<!-- Program Studi -->
+<div>
+    <label for="program_studi" class="block mb-1 font-semibold text-xs">Program Studi</label>
+    <select id="program_studi" name="program_studi_id" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required>
+        <option value="">Pilih Program Studi</option>
+        @foreach($programStudiList as $program)
+            <option value="{{ $program->id }}"
+                data-jurusan="{{ $program->jurusan_id }}"
+                {{ optional($profile->program_studi)->id == $program->id ? 'selected' : '' }}>
+                {{ $program->nama }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+
 
     <!-- Buttons -->
     <div class="flex justify-end gap-4">
@@ -113,25 +127,32 @@
   </main>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const jurusanSelect = document.getElementById('jurusan');
-      const programStudiSelect = document.getElementById('program_studi');
+        const jurusanSelect = document.getElementById('jurusan');
+        const programStudiSelect = document.getElementById('program_studi');
 
-      function filterProgramStudi(jurusanId) {
-        for (let option of programStudiSelect.options) {
-          if (!option.value) continue; // skip "Pilih Program Studi"
-          option.style.display = (option.dataset.jurusan == jurusanId) ? 'block' : 'none';
-        }
-      }
+        // Simpan semua opsi program studi
+        const allProgramOptions = Array.from(programStudiSelect.querySelectorAll('option'))
+            .filter(option => option.value !== ""); // Buang opsi placeholder
 
-      // Ketika halaman pertama kali load
-      filterProgramStudi(jurusanSelect.value);
+        jurusanSelect.addEventListener('change', function () {
+            const selectedJurusanId = this.value;
 
-      // Kalau jurusan berubah
-      jurusanSelect.addEventListener('change', function () {
-        programStudiSelect.value = ''; // Reset pilihannya
-        filterProgramStudi(this.value);
-      });
+            // Hapus semua opsi sekarang
+            programStudiSelect.innerHTML = '<option value="">Pilih Program Studi</option>';
+
+            // Filter berdasarkan jurusan_id
+            allProgramOptions.forEach(option => {
+                if (option.getAttribute('data-jurusan') === selectedJurusanId) {
+                    programStudiSelect.appendChild(option);
+                }
+            });
+        });
+
+        // Trigger sekali saat awal jika ada jurusan yang sudah selected
+        jurusanSelect.dispatchEvent(new Event('change'));
     });
+
+
 document.getElementById('avatar').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const previewContainer = document.getElementById('avatarPreview');

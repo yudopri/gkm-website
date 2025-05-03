@@ -48,7 +48,7 @@ class DosenTidakTetapController extends Controller
         try {
             $dosenTidakTetap = new DosenTidakTetap();
             $jabatanAkademik = JabatanFungsional::all()->reverse();
-            return view('pages.admin.data-dosen.dosen-tidak-tetap.form', [
+            return view('pages.admin.dosen.data-dosen.dosen-tidak-tetap.form', [
                 'dosen' => $dosenTidakTetap,
                 'tahun_ajaran' => $tahunAjaran,
                 'jabatanAkademik' => $jabatanAkademik,
@@ -64,7 +64,7 @@ class DosenTidakTetapController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $tahunAjaran)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -86,10 +86,11 @@ class DosenTidakTetapController extends Controller
             $validated = $request->all();
             $validated['user_id'] = Auth::id();
             $validated['kesesuaian_keahlian_mk'] = $request->has('kesesuaian_keahlian_mk') ? 1 : 0;
+            $validated['tahun_ajaran_id'] = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
             $create = DosenTidakTetap::create($validated);
 
             if ($create) {
-                return redirect()->route('admin.data-dosen.dosen-tidak-tetap.index')
+                return redirect()->route('admin.dosen.dd.dosen-tidak-tetap.index',$tahunAjaran)
                     ->with('toast_success', 'Data dosen tidak tetap berhasil ditambahkan');
             }
 
@@ -119,16 +120,17 @@ class DosenTidakTetapController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $tahunAjaran,string $id)
     {
         try {
             $dosenTidakTetap = DosenTidakTetap::with('user')->whereId($id)->first();
             $jabatanAkademik = JabatanFungsional::all()->reverse();
-            return view('pages.admin.data-dosen.dosen-tidak-tetap.form', [
+            return view('pages.admin.dosen.data-dosen.dosen-tidak-tetap.form', [
                 'dosen' => $dosenTidakTetap,
                 'jabatanAkademik' => $jabatanAkademik,
+                'tahun_ajaran' => $tahunAjaran,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.data-dosen.dosen-tidak-tetap.update', $dosenTidakTetap->id),
+                'form_action' => route('admin.dosen.dd.dosen-tidak-tetap.update', ['tahunAjaran'=> $tahunAjaran, 'dosenTidakTetapId' => $dosenTidakTetap->id]),
                 'form_method' => "PUT",
             ]);
         } catch (\Exception $e) {
@@ -139,7 +141,7 @@ class DosenTidakTetapController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $tahunAjaran, string $id)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -160,11 +162,12 @@ class DosenTidakTetapController extends Controller
 
             $validated = $request->all();
             $validated['kesesuaian_keahlian_mk'] = $request->has('kesesuaian_keahlian_mk') ? 1 : 0;
+            $validated['tahun_ajaran_id'] = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
 
             $dosenTidakTetap = DosenTidakTetap::findOrFail($id);
             $update = $dosenTidakTetap->update($validated);
             if ($update) {
-                return redirect()->route('admin.data-dosen.dosen-tidak-tetap.index')
+                return redirect()->route('admin.dosen.dd.dosen-tidak-tetap.index',$tahunAjaran)
                     ->with('toast_success', 'Data dosen tidak tetap berhasil diupdate');
             }
 
@@ -177,14 +180,14 @@ class DosenTidakTetapController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $tahunAjaran, string $id)
     {
         try {
             $dosenTidakTetap = DosenTidakTetap::findOrFail($id);
             $delete = $dosenTidakTetap->delete();
 
             if ($delete) {
-                return redirect()->route('admin.data-dosen.dosen-tidak-tetap.index')
+                return redirect()->route('admin.dosen.dd.dosen-tidak-tetap.index',$tahunAjaran)
                     ->with('toast_success', 'Data dosen tidak tetap berhasil dihapus');
             }
 

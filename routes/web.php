@@ -161,7 +161,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     });
 
     // ROLE DOSEN, STAFF, D3, D4, S2
-    Route::middleware('role:dosen|staff|D3|D4|S2')->prefix('dosen')->name('dosen.')->group(function () {
+    Route::middleware('role:dosen|staff|teknisi|D3|D4|S2')->prefix('dosen')->name('dosen.')->group(function () {
         Route::get('/tahun-ajaran-semester', [TahunAjaranController::class, 'index'])->name('tahun-ajaran.index');
 
         Route::prefix('kerjasama-tridharma/{tahunAjaran}')->name('kt.')->group(function () {

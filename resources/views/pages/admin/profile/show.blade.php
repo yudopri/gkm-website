@@ -37,31 +37,40 @@
      Edit Profile
     </a>
     <div class="w-full text-white mt-4">
-     <h2 class="font-semibold text-lg border-b border-white pb-1 max-w-max mb-4">
+     <h2 class="font-semibold text-sm border-b border-white pb-1 max-w-max mb-4">
         {{$profile->nama ?? ""}}
      </h2>
-     <p class="text-sm mb-2">
+     <p class="text-xs mb-2">
         {{$profile->nip ?? ""}}
      </p>
-     <p class="text-sm mb-2">
+     <p class="text-xs mb-2">
         {{$profile->nidn ?? ""}}
      </p>
-     <p class="text-sm mb-2">
+     <p class="text-xs mb-2">
         {{$profile->jabatan_fungsional ?? ""}}
      </p>
-     <p class="text-sm mb-2">
+     <p class="text-xs mb-2">
         {{$profile->jabatan->nama ?? ""}}
      </p>
-     <p class="text-sm mb-2">
+     <p class="text-xs mb-2">
         {{$profile->program_studi->jurusan->nama ?? ""}}
      </p>
-     <p class="text-sm">
+     <p class="text-xs">
         {{$profile->program_studi->nama ?? ""}}
      </p>
     </div>
    </section>
    <!-- Right panel -->
    <section class="col-span-12 md:col-span-9 flex flex-col gap-6">
+
+    <!-- Top image -->
+    <div class="overflow-hidden rounded-xl">
+        <picture>
+            <source srcset="{{ asset('frontend/img/bannner.png') }}" type="image/webp">
+            <img src="{{ asset('frontend/img/hqdefault.jpg') }}" alt="Politeknik Negeri Jember"
+                 class="w-full object-cover rounded-xl" height="150" width="900" loading="lazy">
+          </picture>
+       </div>
     <!-- Skills and description container -->
     <div class="col-span-12 md:col-span-7 bg-[#0F5B4F] rounded-xl p-6 flex flex-col gap-6">
         <h3 class="text-white font-semibold text-base border-b border-white pb-2">
@@ -97,19 +106,6 @@
       SI GKM di Program Studi Teknik Informatika PSDKU Sidoarjo adalah sebuah Sistem Informasi yang dirancang untuk membantu dalam mengelola, mendokumentasikan, dan memantau seluruh kegiatan penjaminan mutu akademik di tingkat program studi. Sistem ini berfungsi sebagai platform terintegrasi yang mendukung berbagai aktivitas evaluasi internal, perencanaan peningkatan mutu, serta pelaporan kinerja akademik secara berkelanjutan. Melalui SI GKM, Prodi Teknik Informatika dapat lebih efektif dalam memastikan bahwa standar kualitas pendidikan tercapai dan terus mengalami peningkatan dari waktu ke waktu.
      </div>
     </div>
-    <!-- Empty green box below skills -->
-    <div class="col-span-12 md:col-span-7 bg-[#0F5B4F] rounded-xl h-48">
-    </div>
-    <!-- Buttom image -->
-    <div class="overflow-hidden rounded-xl">
-        <picture>
-            <source srcset="{{ asset('frontend/img/hqdefault.webp') }}" type="image/webp">
-            <img src="{{ asset('frontend/img/hqdefault.jpg') }}" alt="Politeknik Negeri Jember"
-                 class="w-full object-cover rounded-xl" height="150" width="900" loading="lazy">
-          </picture>
-
-
-       </div>
    </section>
   </main>
  </body>
