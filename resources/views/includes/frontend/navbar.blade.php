@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
             <a href="{{ url('/') }}" class="nav-item nav-link">Beranda</a>
-            <a href="#" class="nav-item nav-link">Informasi</a>
+            <a href="{{ url('/informasi')}}" class="nav-item nav-link">Informasi</a>
         </div>
         <a href="{{ route('login') }}" class="btn btn-light rounded-pill text-primary py-2 px-4 ms-lg-5">Login</a>
     </div>

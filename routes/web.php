@@ -64,6 +64,9 @@ Route::get('/', function () {
     return view('pages.front.index');
 });
 
+Route::get('/informasi', function () {
+    return view('pages.front.informasi');
+});
 Auth::routes();
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
