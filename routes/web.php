@@ -43,7 +43,7 @@ use App\Http\Controllers\Admin\LuaranMahasiswa\SitasiKaryaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\TeknologiKaryaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\BukuChapterMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiPatenMahasiswaController;
-use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiHakciptaMahasiswaController;
+use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiHakCiptaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\ProdukJasaMahasiswaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
