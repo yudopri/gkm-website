@@ -39,6 +39,9 @@ use App\Http\Controllers\Api\KualitasPembelajaran\KurikulumPembelajaranControlle
 use App\Http\Controllers\Api\PenelitianDtps\PenelitianMahasiswaController;
 use App\Http\Controllers\Api\PenelitianDtps\RujukanTesisController;
 use App\Http\Controllers\Api\Petugas\ListDosenController;
+use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -80,3 +83,8 @@ Route::middleware('auth:sanctum')->apiResource('/kurikulum-pembelajaran', Kuriku
 Route::middleware('auth:sanctum')->apiResource('/penelitian-mahasiswa', PenelitianMahasiswaController::class);
 Route::middleware('auth:sanctum')->apiResource('/rujukan-tesis', RujukanTesisController::class);
 Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenController::class);
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/rekap', [RekapUtamaController::class, 'index']);
+});
