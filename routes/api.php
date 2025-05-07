@@ -27,6 +27,12 @@ use App\Http\Controllers\Api\KinerjaLulusan\PrestasiMahasiswa\AkademikController
 use App\Http\Controllers\Api\KinerjaLulusan\PrestasiMahasiswa\NonAkademikController;
 use App\Http\Controllers\Api\KinerjaLulusan\IpkLulusanController;
 use App\Http\Controllers\Api\KinerjaLulusan\MasaStudiLulusanController;
+use App\Http\Controllers\Api\KinerjaLulusan\PkmDtpsApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\ProdukTeradopsiApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\PublikasiIlmiahApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\RekognisiDosenApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\PenelitianDtpsApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\SitasiKaryaApiController;
 use App\Http\Controllers\Api\KualitasPembelajaran\IntegrasiPenelitianController;
 use App\Http\Controllers\Api\KualitasPembelajaran\KepuasanMahasiswaController;
 use App\Http\Controllers\Api\KualitasPembelajaran\KurikulumPembelajaranController;
