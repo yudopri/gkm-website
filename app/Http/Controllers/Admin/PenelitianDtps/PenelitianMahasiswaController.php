@@ -18,7 +18,10 @@ class PenelitianMahasiswaController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $penelitian = DtpsPenelitianMahasiswa::with('user')->get();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
+            $penelitian = DtpsPenelitianMahasiswa::with('user')->where('tahun', $tahun)->get();
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";

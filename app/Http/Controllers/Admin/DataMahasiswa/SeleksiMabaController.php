@@ -146,7 +146,7 @@ class SeleksiMabaController extends Controller
                 'form_action' => route('admin.dosen.dm.seleksi-maba.update', [
                     'tahunAjaran' => $tahunAjaran,
                     'seleksiMabaId' => $seleksiMaba->id,
-                ]),                
+                ]),
                 'form_method' => "PUT",
             ]);
         } catch (\Exception $e) {

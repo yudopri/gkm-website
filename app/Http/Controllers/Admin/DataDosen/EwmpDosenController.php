@@ -118,14 +118,14 @@ class EwmpDosenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $tahunAjaran,string $id)
     {
         try {
             $ewmp = EwmpDosen::with('user')->whereId($id)->first();
             return view('pages.admin.dosen.data-dosen.ewmp-dosen.form', [
                 'ewmp' => $ewmp,
                 'form_title' => 'Edit Data',
-                'form_action' => route('admin.data-dosen.ewmp-dosen.update', $ewmp->id),
+                'form_action' => route('admin.dosen.dd.ewmp-dosen.update', $ewmp->id),
                 'form_method' => "PUT",
             ]);
         } catch (\Exception $e) {
@@ -136,7 +136,7 @@ class EwmpDosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $tahunAjaran,string $id)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -163,7 +163,7 @@ class EwmpDosenController extends Controller
             $ewmp = EwmpDosen::findOrFail($id);
             $update = $ewmp->update($validated);
             if ($update) {
-                return redirect()->route('admin.data-dosen.ewmp-dosen.index')
+                return redirect()->route('admin.dosen.dd.ewmp-dosen.index')
                     ->with('toast_success', 'Data ewmp dosen berhasil diupdate');
             }
 
@@ -176,14 +176,14 @@ class EwmpDosenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $tahunAjaran,string $id)
     {
         try {
             $ewmp = EwmpDosen::findOrFail($id);
             $delete = $ewmp->delete();
 
             if ($delete) {
-                return redirect()->route('admin.data-dosen.ewmp-dosen.index')
+                return redirect()->route('admin.dosen.dd.ewmp-dosen.index')
                     ->with('toast_success', 'Data ewmp dosen berhasil dihapus');
             }
 

@@ -8,7 +8,7 @@ use App\Models\TahunAjaranSemester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use App\Models\HkiHakciptaMahasiswa;
+use App\Models\HkiHakCiptaMahasiswa;
 
 class HkiHakCiptaMahasiswaController extends Controller
 {
@@ -18,7 +18,10 @@ class HkiHakCiptaMahasiswaController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $hki = HkiHakciptaMahasiswa::with('user')->get();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
+            $hki = HkiHakCiptaMahasiswa::with('user')->where('tahun', $tahun)->get();
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
@@ -39,7 +42,7 @@ class HkiHakCiptaMahasiswaController extends Controller
     public function create(string $tahunAjaran)
     {
         try {
-            $HkiHakciptaMahasiswa = new HkiHakciptaMahasiswa();
+            $HkiHakciptaMahasiswa = new HkiHakCiptaMahasiswa();
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
@@ -77,7 +80,7 @@ class HkiHakCiptaMahasiswaController extends Controller
             $validated['user_id'] = Auth::id();
             // dd($validated);
 
-            $create = HkiHakciptaMahasiswa::create($validated);
+            $create = HkiHakCiptaMahasiswa::create($validated);
             if ($create) {
                 return redirect()->route('admin.luaran-mahasiswa.luaran-lain.hki-hakcipta.index', $tahunAjaran)
                     ->with('toast_success', 'Data hki_cipta dtps berhasil ditambahkan');
@@ -112,7 +115,7 @@ class HkiHakCiptaMahasiswaController extends Controller
     public function edit(string $tahunAjaran,string $id)
     {
         try {
-            $hki_cipta = HkiHakciptaMahasiswa::with('user')->find($id);
+            $hki_cipta = HkiHakCiptaMahasiswa::with('user')->find($id);
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
             $tahunAjaranId = $tahunAjaranObj->id;
             $tahun = $tahunAjaranObj->tahun_ajaran;
@@ -150,7 +153,7 @@ class HkiHakCiptaMahasiswaController extends Controller
 
             $validated = $request->all();
 
-            $dosenPraktisi = HkiHakciptaMahasiswa::findOrFail($id);
+            $dosenPraktisi = HkiHakCiptaMahasiswa::findOrFail($id);
             $update = $dosenPraktisi->update($validated);
             if ($update) {
                 return redirect()->route('admin.luaran-mahasiswa.luaran-lain.hki-hakcipta.index', $tahunAjaran)
@@ -169,7 +172,7 @@ class HkiHakCiptaMahasiswaController extends Controller
     public function destroy(string $tahunAjaran,string $id)
     {
         try {
-            $dosenPraktisi = HkiHakciptaMahasiswa::findOrFail($id);
+            $dosenPraktisi = HkiHakCiptaMahasiswa::findOrFail($id);
             $delete = $dosenPraktisi->delete();
 
             if ($delete) {

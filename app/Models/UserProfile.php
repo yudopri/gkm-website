@@ -28,6 +28,7 @@ class UserProfile extends Model
         'nama',
         'jabatan_fungsional',
         'jabatan_id',
+        'program_studi_id',
         'handphone',
         'user_id',
     ];
@@ -35,5 +36,13 @@ class UserProfile extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class, 'jabatan_id');
+    }
+    public function program_studi()
+    {
+        return $this->belongsTo(ProgramStudi::class, 'program_studi_id');
     }
 }

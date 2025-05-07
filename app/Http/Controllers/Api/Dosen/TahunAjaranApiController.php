@@ -32,7 +32,7 @@ class TahunAjaranApiController extends Controller
     public function index()
     {
         try {
-            $data = TahunAjaranSemester::all()->reverse();
+            $data = TahunAjaranSemester::all();
             return response()->json($data, Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json([

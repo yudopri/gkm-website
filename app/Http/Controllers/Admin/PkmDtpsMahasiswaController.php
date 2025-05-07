@@ -18,7 +18,10 @@ class PkmDtpsMahasiswaController extends Controller
     public function index(string $tahunAjaran)
     {
         try {
-            $pkmDtpsMhs = PkmDtpsMahasiswa::with('user')->get();
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
+        $tahunAjaranId = $tahunAjaranObj->id;
+        $tahun = $tahunAjaranObj->tahun_ajaran;
+            $pkmDtpsMhs = PkmDtpsMahasiswa::with('user')->where('tahun', $tahun)->get();
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";

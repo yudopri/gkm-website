@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\DataDosen;
+namespace App\Http\Controllers\Api\KinerjaDosen;
 
 use App\Http\Controllers\Api\BaseApiTrait;
 use App\Http\Controllers\Controller;

@@ -18,6 +18,7 @@
     <!-- Template Stylesheet -->
     @include('includes.frontend.style')
     @stack('after-style')
+    @stack('styles')
 </head>
 
 <body>
@@ -36,10 +37,10 @@
         <div class="container-xxl position-relative p-0">
             @include('includes.frontend.navbar')
 
-            @yield('hero')
+
         </div>
         <!-- Navbar & Hero End -->
-
+        @yield('hero')
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-light footer pt-5 wow fadeIn" data-wow-delay="0.1s" style="margin-top: 6rem;">
@@ -101,6 +102,7 @@
     @stack('after-script')
 
     @include('sweetalert::alert')
+    @stack('scripts')
 </body>
 
 </html>

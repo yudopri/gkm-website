@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\UserProfileControllers;
 use App\Http\Controllers\Admin\KerjasamaTridharma\PendidikanController;
 use App\Http\Controllers\Admin\KerjasamaTridharma\PenelitianController;
 use App\Http\Controllers\Admin\KerjasamaTridharma\PengmasController;
@@ -42,7 +43,7 @@ use App\Http\Controllers\Admin\LuaranMahasiswa\SitasiKaryaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\TeknologiKaryaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\BukuChapterMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiPatenMahasiswaController;
-use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiHakciptaMahasiswaController;
+use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiHakCiptaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\ProdukJasaMahasiswaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -103,11 +104,21 @@ Route::get('/', function () {
     return view('pages.front.index');
 });
 
+Route::get('/informasi', function () {
+    return view('pages.front.informasi');
+});
 Auth::routes();
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Untuk menampilkan profile
+    Route::get('profile/{id}', [UserProfileControllers::class, 'show'])->name('profile.show');
 
+    // Untuk mengedit profile
+    Route::get('profile/{id}/edit', [UserProfileControllers::class, 'edit'])->name('profile.edit');
+
+    // Untuk update profile
+    Route::put('profile/{id}', [UserProfileControllers::class, 'update'])->name('profile.update');
     // ROLE ADMIN & PETUGAS
     Route::middleware('role:admin|petugas')->prefix('petugas')->name('petugas.')->group(function () {
         Route::get('/list-dosen', [ListDosenController::class, 'index'])->name('list-dosen.index');
@@ -186,14 +197,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
                     Route::resource('buku-chapter-mahasiswa', BukuChapterMahasiswaController::class)->only('show');
                 });
             });
-            
+
 
 
         });
     });
 
     // ROLE DOSEN, STAFF, D3, D4, S2
-    Route::middleware('role:dosen|staff|D3|D4|S2')->prefix('dosen')->name('dosen.')->group(function () {
+    Route::middleware('role:dosen|staff|teknisi|D3|D4|S2')->prefix('dosen')->name('dosen.')->group(function () {
         Route::get('/tahun-ajaran-semester', [TahunAjaranController::class, 'index'])->name('tahun-ajaran.index');
 
         Route::prefix('kerjasama-tridharma/{tahunAjaran}')->name('kt.')->group(function () {
