@@ -5,20 +5,68 @@ namespace App\Http\Controllers\Admin\RekapData;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
+use App\Models\User;
+use App\Models\SeleksiMahasiswaBaru;
+use App\Models\Rekap; // DTO Rekap
+use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
 
 class MasaStudi2Controller extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan halaman rekap kerjasama tridharma.
+     * Sekarang menerima parameter tahun ajaran dan dosen_id.
+     *
+     * @param string $tahun_ajaran
+     * @param int    $dosenId
      */
-    public function index($tahun_ajaran)
+    public function index($tahun_ajaran, int $dosenId)
     {
-    $tahunAjaranList = TahunAjaranSemester::all()->map(function ($item) {
-        $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
-        return $item;
-    });
-        return view('pages.admin.rekap-data.masa-studi-lulusan.index', compact('tahun_ajaran', 'tahunAjaranList'));
-    }
+        // 1. Daftar tahun ajaran untuk dropdown
+        $tahunAjaranList = TahunAjaranSemester::all()->map(function ($item) {
+            $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
+            return $item;
+        });
+    
+        // 2. Validasi dosen_id
+        $user = User::find($dosenId);
+        if (! $user) {
+            abort(404, 'Dosen tidak ditemukan');
+        }
+    
+        // 3. Ambil data rekap seluruh metrik
+        $rekapArray = (new RekapUtamaController)->getRekap($dosenId);
+    
+        // 4. Filter hanya key tridharma
+        $masaKeys = [
+            'masa_studi_lulusan',
+            
+            
+              
+        ];
+    
+        $masaKeyAliases = [
+            'masa_studi_lulusan' => 'Tabel 8.c Masa Studi Lulusan',
+            
+              
+        ];
+    
+        // Gunakan array_map untuk memproses data
+        $rows = array_map(function ($key) use ($rekapArray, $masaKeyAliases) {
+            return [
+                'label'     => $masaKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
+                'count'     => $rekapArray[$key]['count'] ?? 0,
+                'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
+            ];
+        }, $masaKeys);
+    
+        // 5. Pass ke view
+        return view('pages.admin.rekap-data.masa-studi-lulusan.index', [
+            'tahun_ajaran'    => $tahun_ajaran,
+            'tahunAjaranList' => $tahunAjaranList,
+            'dosen'           => $user,
+            'rows'            => $rows,
+        ]);
+    } 
 
     /**
      * Show the form for creating a new resource.

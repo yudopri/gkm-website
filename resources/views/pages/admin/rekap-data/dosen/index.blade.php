@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold mb-0">Rekap Data Dosen</h4>
 
-        <select class="form-select" onchange="changeTahunAjaran(this)">
+        {{-- <select class="form-select" onchange="changeTahunAjaran(this)">
             <option value="">-- Pilih Tahun Ajaran --</option>
             @foreach($tahunAjaranList as $ta)
                 <option 
@@ -16,11 +16,11 @@
                     {{ $ta->tahun_ajaran }}
                 </option>
             @endforeach
-        </select>
+        </select> --}}
     </div>
 
     {{-- Script langsung ditaruh di sini --}}
-    <script>
+    {{-- <script>
         function changeTahunAjaran(select) {
             let selected = select.value;
             if (selected) {
@@ -30,7 +30,7 @@
                 window.location.href = finalUrl;
             }
         }
-    </script>
+    </script> --}}
 
 <div class="row">
     <div class="col-md-12">
@@ -53,47 +53,15 @@
                         </thead>
                         <tbody class="table-border-bottom-0">
                             
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">Tabel 3.a.1| Dosen Tetap Perguruan Tinggi</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
+                            @foreach($rows as $i => $row)
+                                    <tr>
+                                        <td class="text-center">{{ $i + 1 }}</td>
+                                        <td class="text-wrap">{{ $row['label'] }}</td>
+                                        <td class="text-center">{{ $row['count'] }}</td>
+                                        <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
+                                    </tr>
+                                @endforeach
 
-                            <tr>
-                                <td class="text-center">2</td>
-                                <td class="text-wrap">Tabel 3.a.2| Dosen Pembimbing Utama Tugas Akhir		</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">3</td>
-                                <td class="text-wrap">Tabel 3.a.3| Ekuivalen Waktu Mengajar Penuh (EWMP) Dosen Tetap Perguruan Tinggi		</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">4</td>
-                                <td class="text-wrap">Tabel 3.a.4| Dosen Tidak Tetap</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">5</td>
-                                <td class="text-wrap">Tabel 3.a.5| Dosen Industri/Praktisi</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
                             {{-- Tambahkan data dinamis di sini --}}
                         </tbody>
                     </table>

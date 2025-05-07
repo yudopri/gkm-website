@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold mb-0">Rekap Data Dosen</h4>
 
-        <select class="form-select" onchange="changeTahunAjaran(this)">
+        {{-- <select class="form-select" onchange="changeTahunAjaran(this)">
             <option value="">-- Pilih Tahun Ajaran --</option>
             @foreach($tahunAjaranList as $ta)
                 <option 
@@ -16,11 +16,11 @@
                     {{ $ta->tahun_ajaran }}
                 </option>
             @endforeach
-        </select>
+        </select> --}}
     </div>
 
     {{-- Script langsung ditaruh di sini --}}
-    <script>
+    {{-- <script>
         function changeTahunAjaran(select) {
             let selected = select.value;
             if (selected) {
@@ -30,12 +30,12 @@
                 window.location.href = finalUrl;
             }
         }
-    </script>
+    </script> --}}
 
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <h5 class="card-header">TABEL 2.a | Seleksi Mahasiswa </h5>
+            <h5 class="card-header">TABEL 2 | Mahasiswa </h5>
             <hr class="my-0" />
             <div class="card-body">
                 
@@ -43,57 +43,29 @@
                     <table class="table table-bordered table-hover">
                         <thead class="table-info">
                             <tr>
+                                <th>No</th>
+                                <th>Komponen</th>
                                 <th>Total</th>
                                 <th>Keterangan</th>
-                                
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    PEMANFAATAN MODUL SMART FINANCE UNTUK MENDUKUNG EFEKTIFITAS PENGELOLAHAN AKTIFITAS TERPADU
-                                    SD KHADIJAH WONOREJO SURABAYA
-                                </td>
-                                
-                            </tr>
-                            {{-- Tambahkan data dinamis di sini --}}
+                            @foreach($rows as $i => $row)
+                                <tr>
+                                    <td class="text-center">{{ $i + 1 }}</td>
+                                    <td class="text-wrap">{{ $row['label'] }}</td>
+                                    <td class="text-center">{{ $row['count'] }}</td>
+                                    <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <div class="card mb-4">
-            <h5 class="card-header">TABEL 2.b | Mahasiswa Asing </h5>
-            <hr class="my-0" />
-            <div class="card-body">
-                
-
-                <div class="table-responsive text-nowrap">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-info">
-                            <tr>
-                                <th>Total</th>
-                                <th>Keterangan</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0">
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    PEMANFAATAN MODUL SMART FINANCE UNTUK MENDUKUNG EFEKTIFITAS PENGELOLAHAN AKTIFITAS TERPADU
-                                    SD KHADIJAH WONOREJO SURABAYA
-                                </td>
-                                
-                            </tr>
-                            {{-- Tambahkan data dinamis di sini --}}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        
 
         
 

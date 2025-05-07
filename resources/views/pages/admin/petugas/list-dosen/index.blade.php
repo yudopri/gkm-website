@@ -48,7 +48,8 @@
                                                     </label>
                                                     <input id="file-upload" type="file" name="file" accept=".xlsx,.csv" onchange="this.form.submit()" style="display: none;">
                                                 </form>
-                                                <a href="{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '2024-2025']) }}" class="btn btn-sm" style="background-color: orange; color: white;">
+                                                <a href="{{
+                                                    route('admin.rekap-data.kerjasama-tridharma',['tahun_ajaran' => '2024-2025', $dosen->id])}}" class="btn btn-sm" style="background-color: orange; color: white;">
                                                     <span class="tf-icons bx bx-file bx-18px me-2"></span>Rekap
                                                 </a>
                                             </td>

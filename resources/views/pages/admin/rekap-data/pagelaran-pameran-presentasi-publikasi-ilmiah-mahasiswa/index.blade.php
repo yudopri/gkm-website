@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold mb-0">Rekap Data Dosen</h4>
 
-        <select class="form-select" onchange="changeTahunAjaran(this)">
+        {{-- <select class="form-select" onchange="changeTahunAjaran(this)">
             <option value="">-- Pilih Tahun Ajaran --</option>
             @foreach($tahunAjaranList as $ta)
                 <option 
@@ -16,11 +16,11 @@
                     {{ $ta->tahun_ajaran }}
                 </option>
             @endforeach
-        </select>
+        </select> --}}
     </div>
 
     {{-- Script langsung ditaruh di sini --}}
-    <script>
+    {{-- <script>
         function changeTahunAjaran(select) {
             let selected = select.value;
             if (selected) {
@@ -30,7 +30,7 @@
                 window.location.href = finalUrl;
             }
         }
-    </script>
+    </script> --}}
 
 <div class="row">
     <div class="col-md-12">
@@ -53,62 +53,14 @@
                         </thead>
                         <tbody class="table-border-bottom-0">
                             
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">Tabel 8.f.1| Pagelaran/Pameran/Presentasi/Publikasi Ilmiah Mahasiswa</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">2</td>
-                                <td class="text-wrap">Tabel 8.f.2| Karya Ilmiah Mahasiswa yang Disitasi</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">3</td>
-                                <td class="text-wrap">Tabel 8.f.3| Produk/Jasa Mahasiswa yang Diadopsi oleh Industri/Masyarakat</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">4</td>
-                                <td class="text-wrap">Tabel 8.f.4| Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Paten, Paten Sederhana)</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">5</td>
-                                <td class="text-wrap">Tabel 8.f.5| Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Hak Cipta, Desain Produk Industri, dll.)</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">6</td>
-                                <td class="text-wrap">Tabel 8.f.6| Luaran Penelitian yang Dihasilkan Mahasiswa - Teknologi Tepat Guna, Produk, Karya Seni, Rekayasa Sosial</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">7</td>
-                                <td class="text-wrap">Tabel 8.f.4| Luaran Penelitian yang Dihasilkan Mahasiswa - Buku ber-ISBN, Book Chapter</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
+                            @foreach($rows as $i => $row)
+                                    <tr>
+                                        <td class="text-center">{{ $i + 1 }}</td>
+                                        <td class="text-wrap">{{ $row['label'] }}</td>
+                                        <td class="text-center">{{ $row['count'] }}</td>
+                                        <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
+                                    </tr>
+                            @endforeach
                             
                             
                             {{-- Tambahkan data dinamis di sini --}}

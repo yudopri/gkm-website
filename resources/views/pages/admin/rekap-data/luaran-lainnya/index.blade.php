@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold mb-0">Rekap Data Dosen</h4>
 
-        <select class="form-select" onchange="changeTahunAjaran(this)">
+        {{-- <select class="form-select" onchange="changeTahunAjaran(this)">
             <option value="">-- Pilih Tahun Ajaran --</option>
             @foreach($tahunAjaranList as $ta)
                 <option 
@@ -16,11 +16,11 @@
                     {{ $ta->tahun_ajaran }}
                 </option>
             @endforeach
-        </select>
+        </select> --}}
     </div>
 
     {{-- Script langsung ditaruh di sini --}}
-    <script>
+    {{-- <script>
         function changeTahunAjaran(select) {
             let selected = select.value;
             if (selected) {
@@ -30,7 +30,7 @@
                 window.location.href = finalUrl;
             }
         }
-    </script>
+    </script> --}}
 
 <div class="row">
     <div class="col-md-12">
@@ -53,38 +53,14 @@
                         </thead>
                         <tbody class="table-border-bottom-0">
                             
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">Tabel 3.b.7| Luaran Penelitian/PkM Lainnya - HKI (Paten, Paten Sederhana)</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">2</td>
-                                <td class="text-wrap">Tabel 3.b.8| Luaran Penelitian/PkM Lainnya - HKI (Hak Cipta, Desain Produk Industri, dll.)</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">3</td>
-                                <td class="text-wrap">Tabel 3.b.9| Luaran Penelitian/PkM Lainnya - Teknologi Tepat Guna, Produk, Karya Seni, Rekayasa Sosial</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">4</td>
-                                <td class="text-wrap">Tabel 3.b.10| Luaran Penelitian/PkM Lainnya - Buku ber-ISBN, Book Chapter</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
-                            </tr>
+                            @foreach($rows as $i => $row)
+                                    <tr>
+                                        <td class="text-center">{{ $i + 1 }}</td>
+                                        <td class="text-wrap">{{ $row['label'] }}</td>
+                                        <td class="text-center">{{ $row['count'] }}</td>
+                                        <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
+                                    </tr>
+                                @endforeach
                             
                             
                             {{-- Tambahkan data dinamis di sini --}}

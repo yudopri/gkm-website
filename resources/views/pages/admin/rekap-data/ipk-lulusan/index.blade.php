@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold mb-0">Rekap Data Dosen</h4>
 
-        <select class="form-select" onchange="changeTahunAjaran(this)">
+        {{-- <select class="form-select" onchange="changeTahunAjaran(this)">
             <option value="">-- Pilih Tahun Ajaran --</option>
             @foreach($tahunAjaranList as $ta)
                 <option 
@@ -16,11 +16,11 @@
                     {{ $ta->tahun_ajaran }}
                 </option>
             @endforeach
-        </select>
+        </select> --}}
     </div>
 
     {{-- Script langsung ditaruh di sini --}}
-    <script>
+    {{-- <script>
         function changeTahunAjaran(select) {
             let selected = select.value;
             if (selected) {
@@ -30,7 +30,7 @@
                 window.location.href = finalUrl;
             }
         }
-    </script>
+    </script> --}}
 
 <div class="row">
     <div class="col-md-12">
@@ -53,15 +53,14 @@
                         </thead>
                         <tbody class="table-border-bottom-0">
                             
+                        @foreach($rows as $i => $row)
                             <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">Tabel 8.a | IPK Lulusan</td>
-                                <td class="text-center">1</td>
-                                <td class="text-wrap">
-                                    Kurang
-                                </td>
+                                <td class="text-center">{{ $i + 1 }}</td>
+                                <td class="text-wrap">{{ $row['label'] }}</td>
+                                <td class="text-center">{{ $row['count'] }}</td>
+                                <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
                             </tr>
-
+                        @endforeach
                             
                             {{-- Tambahkan data dinamis di sini --}}
                         </tbody>
