@@ -39,7 +39,7 @@ use App\Http\Controllers\Api\KualitasPembelajaran\KurikulumPembelajaranControlle
 use App\Http\Controllers\Api\PenelitianDtps\PenelitianMahasiswaController;
 use App\Http\Controllers\Api\PenelitianDtps\RujukanTesisController;
 use App\Http\Controllers\Api\Petugas\ListDosenController;
-use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
+use App\Http\Controllers\Api\RekapData\RekapUtamaController;
 
 
 
