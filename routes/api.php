@@ -27,12 +27,21 @@ use App\Http\Controllers\Api\KinerjaLulusan\PrestasiMahasiswa\AkademikController
 use App\Http\Controllers\Api\KinerjaLulusan\PrestasiMahasiswa\NonAkademikController;
 use App\Http\Controllers\Api\KinerjaLulusan\IpkLulusanController;
 use App\Http\Controllers\Api\KinerjaLulusan\MasaStudiLulusanController;
+use App\Http\Controllers\Api\KinerjaLulusan\PkmDtpsApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\ProdukTeradopsiApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\PublikasiIlmiahApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\RekognisiDosenApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\PenelitianDtpsApiController;
+use App\Http\Controllers\Api\KinerjaLulusan\SitasiKaryaApiController;
 use App\Http\Controllers\Api\KualitasPembelajaran\IntegrasiPenelitianController;
 use App\Http\Controllers\Api\KualitasPembelajaran\KepuasanMahasiswaController;
 use App\Http\Controllers\Api\KualitasPembelajaran\KurikulumPembelajaranController;
 use App\Http\Controllers\Api\PenelitianDtps\PenelitianMahasiswaController;
 use App\Http\Controllers\Api\PenelitianDtps\RujukanTesisController;
 use App\Http\Controllers\Api\Petugas\ListDosenController;
+use App\Http\Controllers\Api\RekapData\RekapUtamaController;
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -54,12 +63,12 @@ Route::middleware('auth:sanctum')->apiResource('/luaran-bukuchapter', BukuChapte
 Route::middleware('auth:sanctum')->apiResource('/luaran-hkihakcipta', HkiHakciptaApiController::class);
 Route::middleware('auth:sanctum')->apiResource('/luaran-hkipaten', HkiPatenApiController::class);
 Route::middleware('auth:sanctum')->apiResource('/luaran-teknologikarya', TeknologiKaryaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-penelitian', BukuChapterApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-pkmdtps', HkiHakciptaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-produk', HkiPatenApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-publikasi', TeknologiKaryaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-rekognisi', TeknologiKaryaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-sitasi', TeknologiKaryaApiController::class);
+Route::middleware('auth:sanctum')->apiResource('/kinerja-penelitian', PenelitianDtpsApiController::class);
+Route::middleware('auth:sanctum')->apiResource('/kinerja-pkmdtps', PkmDtpsApiController::class);
+Route::middleware('auth:sanctum')->apiResource('/kinerja-produk', ProdukTeradopsiApiController::class);
+Route::middleware('auth:sanctum')->apiResource('/kinerja-publikasi', PublikasiIlmiahApiController::class);
+Route::middleware('auth:sanctum')->apiResource('/kinerja-rekognisi', RekognisiDosenApiController::class);
+Route::middleware('auth:sanctum')->apiResource('/kinerja-sitasi', SitasiKaryaApiController::class);
 Route::middleware('auth:sanctum')->apiResource('/kepuasan-pengguna', KepuasanPenggunaController::class);
 Route::middleware('auth:sanctum')->apiResource('/kesesuaian-kerja', KesesuaianKerjaController::class);
 Route::middleware('auth:sanctum')->apiResource('/tempat-kerja', TempatKerjaController::class);
@@ -74,3 +83,8 @@ Route::middleware('auth:sanctum')->apiResource('/kurikulum-pembelajaran', Kuriku
 Route::middleware('auth:sanctum')->apiResource('/penelitian-mahasiswa', PenelitianMahasiswaController::class);
 Route::middleware('auth:sanctum')->apiResource('/rujukan-tesis', RujukanTesisController::class);
 Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenController::class);
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/rekap', [RekapUtamaController::class, 'index']);
+});

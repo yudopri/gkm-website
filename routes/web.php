@@ -55,14 +55,58 @@ use App\Http\Controllers\Api\DataDosen\EwmpDosenApiController;
 use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
 use App\Http\Controllers\Api\DataMahasiswa\MahasiswaAsingApiController;
 use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
+use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
 
-
-
+use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPendidikan2Controller;
+use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPenelitian2Controller;
+use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPengabdian2Controller;
+use App\Http\Controllers\Admin\RekapData\SeleksiMahasiswa2Controller;
+use App\Http\Controllers\Admin\RekapData\MahasiswaAsing2Controller;
+use App\Http\Controllers\Admin\RekapData\DosenTetap2Controller;
+use App\Http\Controllers\Admin\RekapData\DosenPembimbingTugasAkhir2Controller;
+use App\Http\Controllers\Admin\RekapData\EwmpDosenTetap2Controller;
+use App\Http\Controllers\Admin\RekapData\DosenTidakTetap2Controller;
+use App\Http\Controllers\Admin\RekapData\DosenIndustri2Controller;
+use App\Http\Controllers\Admin\RekapData\PengakuanDosen2Controller;
+use App\Http\Controllers\Admin\RekapData\PenelitianDtps2Controller;
+use App\Http\Controllers\Admin\RekapData\PkMDtps2Controller;
+use App\Http\Controllers\Admin\RekapData\PagelaranIlmiahDtps2Controller;
+use App\Http\Controllers\Admin\RekapData\KaryaIlmiahDtpsDisitasi2Controller;
+use App\Http\Controllers\Admin\RekapData\ProdukDtps2Controller;
+use App\Http\Controllers\Admin\RekapData\HkiPaten2Controller;
+use App\Http\Controllers\Admin\RekapData\HkiHakCipta2Controller;
+use App\Http\Controllers\Admin\RekapData\TeknologiTepatGuna2Controller;
+use App\Http\Controllers\Admin\RekapData\BukuIsbn2Controller;
+use App\Http\Controllers\Admin\RekapData\Kurikulum2Controller;
+use App\Http\Controllers\Admin\RekapData\IntegrasiPembelajaran2Controller;
+use App\Http\Controllers\Admin\RekapData\KepuasanMahasiswa2Controller;
+use App\Http\Controllers\Admin\RekapData\PenelitianDtpsMahasiswa2Controller;
+use App\Http\Controllers\Admin\RekapData\TemaTesis2Controller;
+use App\Http\Controllers\Admin\RekapData\PkMMahasiswa2Controller;
+use App\Http\Controllers\Admin\RekapData\IpkLulusan2Controller;
+use App\Http\Controllers\Admin\RekapData\PrestasiAkademik2Controller;
+use App\Http\Controllers\Admin\RekapData\PrestasiNonAkademik2Controller;
+use App\Http\Controllers\Admin\RekapData\MasaStudi2Controller;
+use App\Http\Controllers\Admin\RekapData\WaktuTunggu2Controller;
+use App\Http\Controllers\Admin\RekapData\KesesuaianBidangKerja2Controller;
+use App\Http\Controllers\Admin\RekapData\TempatKerja2Controller;
+use App\Http\Controllers\Admin\RekapData\KepuasanPengguna2Controller;
+use App\Http\Controllers\Admin\RekapData\PagelaranMahasiswa2Controller;
+use App\Http\Controllers\Admin\RekapData\KaryaIlmiahMahasiswa2Controller;
+use App\Http\Controllers\Admin\RekapData\ProdukMahasiswa2Controller;
+use App\Http\Controllers\Admin\RekapData\HkiMahasiswaPaten2Controller;
+use App\Http\Controllers\Admin\RekapData\HkiMahasiswaHakCipta2Controller;
+use App\Http\Controllers\Admin\RekapData\TtgMahasiswa2Controller;
+use App\Http\Controllers\Admin\RekapData\BukuIsbnMahasiswa2Controller;
 
 
 Route::get('/', function () {
     return view('pages.front.index');
 });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9584a8eab891ee0f064c46262e2bd90acb99fc1d
 Route::get('/informasi', function () {
     return view('pages.front.informasi');
 });
@@ -489,6 +533,39 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::delete('/buku-chapter/{bookId}', [BukuChapterMahasiswaController::class, 'destroy'])->name('buku-chapter.destroy');
         });
     });
+
+
+
+    
+
+
+    Route::prefix('rekap-data')->name('rekap-data.')->group(function () {
+        Route::get('/kerjasama-tridharma-pendidikan/{tahun_ajaran}/{dosen_id}', [KerjasamaTridharmaPendidikan2Controller::class, 'index'])->name('kerjasama-tridharma');
+        Route::get('/seleksi-mahasiswa/{tahun_ajaran}/{dosen_id}', [SeleksiMahasiswa2Controller::class, 'index'])->name('seleksi-mahasiswa');
+        Route::get('/dosen-tetap/{tahun_ajaran}/{dosen_id}', [DosenTetap2Controller::class, 'index'])->name('dosen-tetap');
+        Route::get('/penelitian-dtps/{tahun_ajaran}/{dosen_id}', [PenelitianDtps2Controller::class, 'index'])->name('penelitian-dtps');
+        Route::get('/pkm-dtps/{tahun_ajaran}/{dosen_id}', [PkMDtps2Controller::class, 'index'])->name('pkm-dtps');
+        Route::get('/pagelaran-ilmiah-dtps/{tahun_ajaran}/{dosen_id}', [PagelaranIlmiahDtps2Controller::class, 'index'])->name('pagelaran-ilmiah-dtps');
+        Route::get('/hki-paten/{tahun_ajaran}/{dosen_id}', [HkiPaten2Controller::class, 'index'])->name('hki.paten');
+        Route::get('/kurikulum/{tahun_ajaran}/{dosen_id}', [Kurikulum2Controller::class, 'index'])->name('kurikulum');
+        Route::get('/integrasi-pembelajaran/{tahun_ajaran}/{dosen_id}', [IntegrasiPembelajaran2Controller::class, 'index'])->name('integrasi-pembelajaran');
+        Route::get('/ipk-lulusan/{tahun_ajaran}/{dosen_id}', [IpkLulusan2Controller::class, 'index'])->name('ipk-lulusan');
+        Route::get('/prestasi-akademik/{tahun_ajaran}/{dosen_id}', [PrestasiAkademik2Controller::class, 'index'])->name('prestasi-akademik');
+        Route::get('/masa-studi/{tahun_ajaran}/{dosen_id}', [MasaStudi2Controller::class, 'index'])->name('masa-studi');
+        Route::get('/waktu-tunggu/{tahun_ajaran}/{dosen_id}', [WaktuTunggu2Controller::class, 'index'])->name('waktu-tunggu');
+        Route::get('/pagelaran-mahasiswa/{tahun_ajaran}/{dosen_id}', [PagelaranMahasiswa2Controller::class, 'index'])->name('pagelaran-mahasiswa');
+        
+    });
+    
+
+
 });
 
+// Route::get('/admin/rekap-data-utama', [RekapUtamaController::class, 'index']);
+
+
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// Route::get('/admin/rekap-data/kerjasama-tridharma-pendidikan/{tahun_ajaran}', [KerjasamaTridharmaPendidikanController::class, 'index']);
+
