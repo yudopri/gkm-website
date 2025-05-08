@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\Jurusan;
 use App\Models\Jabatan;
+use App\Models\ProgramStudi;
 use App\Models\JabatanFungsional;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -42,6 +43,7 @@ public function edit($id)
         $jurusanList = Jurusan::all();
         $jabatanList = Jabatan::all();
         $jabatanFungsionalList = JabatanFungsional::all();
+        $programStudiList = ProgramStudi::all();
 
         // Jika data tidak ditemukan, redirect kembali dengan pesan error
         if (!$profile) {
@@ -52,6 +54,7 @@ public function edit($id)
             'profile' => $profile,
             'jurusanList' => $jurusanList,
             'jabatanList' => $jabatanList,
+            'programStudiList' => $programStudiList,
             'id' => $id,
             'jabatanFungsionalList' => $jabatanFungsionalList,
         ]);
@@ -70,6 +73,7 @@ public function update(Request $request, $id)
         'nama' => 'required|string|max:255',
         'nip' => 'required|string|max:50',
         'nidn' => 'required|string|max:50',
+        'handphone' => 'required|string|max:50',
         'jabatan_fungsional' => 'required|string|max:255',
         'jabatan_id' => 'required|exists:jabatan,id',
         'program_studi_id' => 'required|exists:program_studi,id',
@@ -112,9 +116,22 @@ public function update(Request $request, $id)
     $roles = [];
 
     switch ($validated['jabatan_fungsional']) {
+        case 'Guru Besar':
+            $roles = ['dosen'];
+            break;
         case 'Lektor Kepala':
             $roles = ['dosen'];
             break;
+            case 'Lektor':
+                $roles = ['dosen'];
+                break;
+        
+            case 'Asisten Ahli':
+                $roles = ['dosen'];
+                break;
+            case 'Tenaga Pengajar':
+                $roles = ['dosen'];
+                break;
         case 'Ketua Prodi D4':
             $roles = ['dosen', 'D4'];
             break;
@@ -130,6 +147,13 @@ public function update(Request $request, $id)
         case 'Teknisi Lab':
             $roles = ['teknisi'];
             break;
+        case 'Admin GKM':
+                $roles = ['admin'];
+                break;
+
+        case 'Petugas GKM':
+                    $roles = ['petugas'];
+                    break;
 
         default:
             $roles = ['staff'];

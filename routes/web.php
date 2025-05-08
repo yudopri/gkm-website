@@ -43,7 +43,7 @@ use App\Http\Controllers\Admin\LuaranMahasiswa\SitasiKaryaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\TeknologiKaryaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\BukuChapterMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiPatenMahasiswaController;
-use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiHakciptaMahasiswaController;
+use App\Http\Controllers\Admin\LuaranMahasiswa\LuaranLain\HkiHakCiptaMahasiswaController;
 use App\Http\Controllers\Admin\LuaranMahasiswa\ProdukJasaMahasiswaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -63,7 +63,9 @@ use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
 Route::get('/', function () {
     return view('pages.front.index');
 });
-
+Route::get('/informasi', function () {
+    return view('pages.front.informasi');
+});
 Auth::routes();
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
@@ -161,7 +163,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     });
 
     // ROLE DOSEN, STAFF, D3, D4, S2
-    Route::middleware('role:dosen|staff|D3|D4|S2')->prefix('dosen')->name('dosen.')->group(function () {
+    Route::middleware('role:dosen|staff|teknisi|D3|D4|S2')->prefix('dosen')->name('dosen.')->group(function () {
         Route::get('/tahun-ajaran-semester', [TahunAjaranController::class, 'index'])->name('tahun-ajaran.index');
 
         Route::prefix('kerjasama-tridharma/{tahunAjaran}')->name('kt.')->group(function () {

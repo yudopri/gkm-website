@@ -78,10 +78,10 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="{{ route('admin.data-dosen.ewmp-dosen.edit', $ewmp->id) }}">
+                                                        <a class="dropdown-item" href="{{ route('admin.dosen.dd.ewmp-dosen.edit', ['tahunAjaran' => $tahun_ajaran, 'ewmpDosenId' => $ewmp->id]) }}">
                                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                                         </a>
-                                                        <a class="dropdown-item" href="{{ route('admin.data-dosen.ewmp-dosen.destroy', $ewmp->id) }}"
+                                                        <a class="dropdown-item" href="{{ route('admin.dosen.dd.ewmp-dosen.destroy', ['tahunAjaran' => $tahun_ajaran, 'ewmpDosenId' => $ewmp->id]) }}"
                                                             data-confirm-delete="true">
                                                             <i class="bx bx-trash me-1"></i>
                                                             Delete
