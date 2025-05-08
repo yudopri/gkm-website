@@ -103,10 +103,6 @@ use App\Http\Controllers\Admin\RekapData\BukuIsbnMahasiswa2Controller;
 Route::get('/', function () {
     return view('pages.front.index');
 });
-<<<<<<< HEAD
-=======
-
->>>>>>> 9584a8eab891ee0f064c46262e2bd90acb99fc1d
 Route::get('/informasi', function () {
     return view('pages.front.informasi');
 });
@@ -536,7 +532,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 
 
-    
+
 
 
     Route::prefix('rekap-data')->name('rekap-data.')->group(function () {
@@ -554,9 +550,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/masa-studi/{tahun_ajaran}/{dosen_id}', [MasaStudi2Controller::class, 'index'])->name('masa-studi');
         Route::get('/waktu-tunggu/{tahun_ajaran}/{dosen_id}', [WaktuTunggu2Controller::class, 'index'])->name('waktu-tunggu');
         Route::get('/pagelaran-mahasiswa/{tahun_ajaran}/{dosen_id}', [PagelaranMahasiswa2Controller::class, 'index'])->name('pagelaran-mahasiswa');
-        
+
     });
-    
+
 
 
 });

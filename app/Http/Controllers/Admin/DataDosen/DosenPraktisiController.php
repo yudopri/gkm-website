@@ -155,11 +155,7 @@ class DosenPraktisiController extends Controller
             $validated = $request->all();
 
             $dosenPraktisi = DosenIndustriPraktisi::findOrFail($id);
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> 9584a8eab891ee0f064c46262e2bd90acb99fc1d
             $validated['tahun_ajaran_id'] = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail()->id;
             $update = $dosenPraktisi->update($validated);
             if ($update) {

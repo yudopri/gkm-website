@@ -125,11 +125,7 @@ public function update(Request $request, $id)
             case 'Lektor':
                 $roles = ['dosen'];
                 break;
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 9584a8eab891ee0f064c46262e2bd90acb99fc1d
             case 'Asisten Ahli':
                 $roles = ['dosen'];
                 break;

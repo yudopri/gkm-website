@@ -36,10 +36,6 @@ class ListDosenController extends Controller
         return back()->withErrors($e->getMessage());
     }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 9584a8eab891ee0f064c46262e2bd90acb99fc1d
 
     public function exportPdf(string $dosenId)
     {
