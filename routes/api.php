@@ -88,3 +88,4 @@ Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenControlle
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/rekap', [RekapUtamaController::class, 'index']);
 });
+
