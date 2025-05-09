@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\RekapData\RekapUtamaController;
 use App\Http\Controllers\Api\AuthControllerApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,12 @@ use App\Http\Controllers\Api\DataDosen\EwmpDosenApiController;
 use App\Http\Controllers\Api\DataDosen\PembimbingTaApiController;
 use App\Http\Controllers\Api\DataMahasiswa\MahasiswaAsingApiController;
 use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
+use App\Http\Controllers\Api\KinerjaDosen\PenelitianDtpsApiController;
+use App\Http\Controllers\Api\KinerjaDosen\PkmDtpsApiController;
+use App\Http\Controllers\Api\KinerjaDosen\ProdukTeradopsiApiController;
+use App\Http\Controllers\Api\KinerjaDosen\PublikasiIlmiahApiController;
+use App\Http\Controllers\Api\KinerjaDosen\RekognisiDosenApiController;
+use App\Http\Controllers\Api\KinerjaDosen\SitasiKaryaApiController;
 use App\Http\Controllers\Api\KinerjaLulusan\EvaluasiLulusan\KepuasanPenggunaController;
 use App\Http\Controllers\Api\KinerjaLulusan\EvaluasiLulusan\KesesuaianKerjaController;
 use App\Http\Controllers\Api\KinerjaLulusan\EvaluasiLulusan\TempatKerjaController;
@@ -27,19 +34,12 @@ use App\Http\Controllers\Api\KinerjaLulusan\PrestasiMahasiswa\AkademikController
 use App\Http\Controllers\Api\KinerjaLulusan\PrestasiMahasiswa\NonAkademikController;
 use App\Http\Controllers\Api\KinerjaLulusan\IpkLulusanController;
 use App\Http\Controllers\Api\KinerjaLulusan\MasaStudiLulusanController;
-use App\Http\Controllers\Api\KinerjaLulusan\PkmDtpsApiController;
-use App\Http\Controllers\Api\KinerjaLulusan\ProdukTeradopsiApiController;
-use App\Http\Controllers\Api\KinerjaLulusan\PublikasiIlmiahApiController;
-use App\Http\Controllers\Api\KinerjaLulusan\RekognisiDosenApiController;
-use App\Http\Controllers\Api\KinerjaLulusan\PenelitianDtpsApiController;
-use App\Http\Controllers\Api\KinerjaLulusan\SitasiKaryaApiController;
 use App\Http\Controllers\Api\KualitasPembelajaran\IntegrasiPenelitianController;
 use App\Http\Controllers\Api\KualitasPembelajaran\KepuasanMahasiswaController;
 use App\Http\Controllers\Api\KualitasPembelajaran\KurikulumPembelajaranController;
 use App\Http\Controllers\Api\PenelitianDtps\PenelitianMahasiswaController;
 use App\Http\Controllers\Api\PenelitianDtps\RujukanTesisController;
 use App\Http\Controllers\Api\Petugas\ListDosenController;
-use App\Http\Controllers\Api\RekapData\RekapUtamaController;
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\RekapData;
+namespace App\Http\Controllers\Api\RekapData;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
