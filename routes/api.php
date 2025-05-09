@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
+use App\Http\Controllers\Api\RekapData\RekapUtamaController;
 use App\Http\Controllers\Api\AuthControllerApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -88,3 +88,4 @@ Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenControlle
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/rekap', [RekapUtamaController::class, 'index']);
 });
+
