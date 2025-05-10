@@ -558,7 +558,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 });
 
-// Route::get('/admin/rekap-data-utama', [RekapUtamaController::class, 'index']);
+Route::get('/admin/rekap-data-utama', [RekapUtamaController::class, 'index']);
 
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
