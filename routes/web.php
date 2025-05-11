@@ -55,7 +55,8 @@ use App\Http\Controllers\Api\DataDosen\EwmpDosenApiController;
 use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
 use App\Http\Controllers\Api\DataMahasiswa\MahasiswaAsingApiController;
 use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
-use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
+// use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
+// use App\Http\Controllers\Api\RekapData\RekapUtamaController;
 
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPendidikan2Controller;
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPenelitian2Controller;
@@ -558,7 +559,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 });
 
-Route::get('/admin/rekap-data-utama', [RekapUtamaController::class, 'index']);
+// Route::get('/rekap', [RekapUtamaController::class, 'index']);
 
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
