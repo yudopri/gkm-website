@@ -35,7 +35,8 @@ class SitasiKaryaApiController extends Controller
         return [
             'user_id' => 'required|exists:users,id',
             'nama_dosen' => 'required|string',
-            'judul_sitasi' => 'required|string',
+            'judul_artikel' => 'required|string|max:255',
+            'jumlah_sitasi' => 'required|string',
             'tahun' => 'required|string|max:4',
         ];
     }
@@ -50,7 +51,8 @@ class SitasiKaryaApiController extends Controller
         return [
             'user_id' => 'sometimes|required|exists:users,id',
             'nama_dosen' => 'sometimes|required|string',
-            'judul_sitasi' => 'sometimes|required|string',
+            'judul_artikel' => 'required|string|max:255',
+            'jumlah_sitasi' => 'required|string',
             'tahun' => 'sometimes|required|string|max:4',
         ];
     }
