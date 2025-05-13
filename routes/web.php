@@ -645,7 +645,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 });
 
-// Route::get('/rekap', [RekapUtamaController::class, 'index']);
+Route::get('/rekap', [RekapUtamaController::class, 'index']);
 
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

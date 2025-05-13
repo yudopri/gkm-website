@@ -47,12 +47,12 @@ class IntegrasiPembelajaran2Controller extends Controller
         ];
     
         $integrasiKeyAliases = [
-            'rekognisi_dosen' => 'Pengakuan/Rekognisi Dosen',
-            'penellitian_dpts' => 'Penelitian DPTS',
-            'pkm _dpts' => 'PKM DPTS',
-            'dtps_penelitian_mahasiswa' => 'Pagelaran/Pameran/Presentasi/Publikasi Ilmiah DTPS',
-            'sitasi_karya_dosen' => 'Karya Ilmiah Yang di SItasi',
-            'produk_teradopsi_dosen'  => 'Produk/Jasa DTPS yang Diadopsi oleh Industri/Masyarakat',
+            'rekognisi_dosen' => 'Tabel 3.b.1) Pengakuan/Rekognisi Dosen',
+            'penellitian_dpts' => 'Tabel 3.b.2) Penelitian DTPS',
+            'pkm _dpts' => 'Tabel 3.b.3) PkM DTPS',
+            'dtps_penelitian_mahasiswa' => 'Tabel 3.b.4) Pagelaran/Pameran/Presentasi/Publikasi Ilmiah DTPS',
+            'sitasi_karya_dosen' => 'Tabel 3.b.5) Karya Ilmiah DTPS yang Disitasi',
+            'produk_teradopsi_dosen'  => 'Tabel 3.b.6) Produk/Jasa DTPS yang Diadopsi oleh Industri/Masyarakat',
         ];
     
         // Gunakan array_map untuk memproses data
