@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\RekapData;
+namespace App\Http\Controllers\Api\RekapData;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -71,64 +71,64 @@ class RekapUtamaController extends Controller
 
         // Daftar model dan threshold minimal
         $models = [
-            'buku_chapter_dosen'             => BukuChapterDosen::class,
-            'buku_chapter_mahasiswa'         => BukuChapterMahasiswa::class,
-            'dosen_industri_praktisi'        => DosenIndustriPraktisi::class,
-            'dosen_pembimbing_ta'            => DosenPembimbingTA::class,
-            'dosen_tetap_pt'                 => DosenTetapPT::class,
-            'dosen_tidak_tetap'              => DosenTidakTetap::class,
-            'dtps_penelitian_mahasiswa'      => DtpsPenelitianMahasiswa::class,
-            'dtps_rujukan_tesis'             => DtpsRujukanTesis::class,
-            'eval_kepuasan_pengguna'         => EvalKepuasanPengguna::class,
-            'eval_kesesuaian_kerja'          => EvalKesesuaianKerja::class,
-            'eval_tempat_kerja'              => EvalTempatKerja::class,
-            'eval_waktu_tunggu'              => EvalWaktuTunggu::class,
-            'ewmp_dosen'                     => EwmpDosen::class,
-            'hki_hakcipta_dosen'             => HkiHakciptaDosen::class,
-            'hki_hakcipta_mahasiswa'         => HkiHakCiptaMahasiswa::class,
-            'hki_paten_dosen'                => HkiPatenDosen::class,
-            'hki_paten_mahasiswa'            => HkiPatenMahasiswa::class,
-            'integrasi_penelitian'           => IntegrasiPenelitian::class,
-            'ipk_lulusan'                    => IpkLulusan::class,
-            'kepuasan_mahasiswa'             => KepuasanMahasiswa::class,
-            'kerjasama_tridharma_pendidikan' => KerjasamaTridharmaPendidikan::class,
-            'kerjasama_tridharma_penelitian' => KerjasamaTridharmaPenelitian::class,
-            'kerjasama_tridharma_pengmas'    => KerjasamaTridharmaPengmas::class,
-            'kurikulum_pembelajaran'         => KurikulumPembelajaran::class,
-            'mahasiswa_asing'                => MahasiswaAsing::class,
-            'masa_studi_lulusan'             => MasaStudiLulusan::class,
-            'penelitian_dtps'                => PenelitianDtps::class,
-            'pkm_dtps'                       => PkmDtps::class,
-            'pkm_dtps_mahasiswa'             => PkmDtpsMahasiswa::class,
-            'prestasi_akademik_mhs'          => PrestasiAkademikMhs::class,
-            'prestasi_nonakademik_mhs'       => PrestasiNonakademikMhs::class,
-            'produk_jasa_mahasiswa'          => ProdukJasaMahasiswa::class,
-            'produk_teradopsi_dosen'         => ProdukTeradopsiDosen::class,
-            'publikasi_ilmiah_dosen'        => PublikasiIlmiahDosen::class,
-            'publikasi_mahasiswa'            => PublikasiMahasiswa::class,
-            'rekognisi_dosen'                => RekognisiDosen::class,
-            'seleksi_mahasiswa_baru'         => SeleksiMahasiswaBaru::class,
-            'sitasi_karya_dosen'             => SitasiKaryaDosen::class,
-            'sitasi_karya_mahasiswa'         => SitasiKaryaMahasiswa::class,
-            'teknologi_karya_dosen'          => TeknologiKaryaDosen::class,
-            'teknologi_karya_mahasiswa'      => TeknologiKaryaMahasiswa::class,
+            'Tabel 1.1 Kerjasama Tridharma - Pendidikan' => KerjasamaTridharmaPendidikan::class,
+            'Tabel 1.2 Kerjasama Tridharma - Penelitian' => KerjasamaTridharmaPenelitian::class,
+            'Tabel 1.3 Kerjasama Tridharma - Pengabdian kepada Masyarakat'    => KerjasamaTridharmaPengmas::class,
+            'Tabel 2.a Seleksi Mahasiswa'         => SeleksiMahasiswaBaru::class,
+            'Tabel 2.b Mahasiswa Asing		'                => MahasiswaAsing::class,
+            'Tabel 3.a.1) Dosen Tetap Perguruan Tinggi'                 => DosenTetapPT::class,
+            'Tabel 3.a.2) Dosen Pembimbing Utama Tugas Akhir'            => DosenPembimbingTA::class,
+            'Tabel 3.a.3) Ekuivalen Waktu Mengajar Penuh (EWMP) Dosen Tetap Perguruan Tinggi'                     => EwmpDosen::class,
+            'Tabel 3.a.4) Dosen Tidak Tetap'              => DosenTidakTetap::class,
+            'Tabel 3.a.5) Dosen Industri/Praktisi'        => DosenIndustriPraktisi::class,
+            'Tabel 3.b.1) Pengakuan/Rekognisi Dosen'                => RekognisiDosen::class,
+            'Tabel 3.b.2) Penelitian DTPS'                => PenelitianDtps::class,
+            'Tabel 3.b.3) PkM DTPS'                       => PkmDtps::class,
+            'Tabel 3.b.4) Pagelaran/Pameran/Presentasi/Publikasi Ilmiah DTPS'        => PublikasiIlmiahDosen::class,
+            'Tabel 3.b.5) Karya Ilmiah DTPS yang Disitasi'             => SitasiKaryaDosen::class,
+            'Tabel 3.b.6) Produk/Jasa DTPS yang Diadopsi oleh Industri/Masyarakat'         => ProdukTeradopsiDosen::class,
+            'Tabel 3.b.7) Luaran Penelitian/PkM Lainnya - HKI (Paten, Paten Sederhana)'                => HkiPatenDosen::class,
+            'Tabel 3.b.8) Luaran Penelitian/PkM Lainnya - HKI (Hak Cipta, Desain Produk Industri, dll.)'             => HkiHakciptaDosen::class,
+            'Tabel 3.b.9) Luaran Penelitian/PkM Lainnya - Teknologi Tepat Guna, Produk, Karya Seni, Rekayasa Sosial'          => TeknologiKaryaDosen::class,
+            'Tabel 3.b.10) Luaran Penelitian/PkM Lainnya - Buku ber-ISBN, Book Chapter'             => BukuChapterDosen::class,
+            'Tabel 5.a Kurikulum, Capaian Pembelajaran, dan Rencana Pembelajaran'         => KurikulumPembelajaran::class,
+            'Tabel 5.b Integrasi Kegiatan Penelitian/PkM dalam Pembelajaran'           => IntegrasiPenelitian::class,
+            'Tabel 5.c Kepuasan Mahasiswa'             => KepuasanMahasiswa::class,
+            'Tabel 6.a Penelitian DTPS yang Melibatkan Mahasiswa'      => DtpsPenelitianMahasiswa::class,
+            'Tabel 6.b Penelitian DTPS yang Menjadi Rujukan Tema Tesis/Disertasi'             => DtpsRujukanTesis::class,
+            'Tabel 7 PkM DTPS yang Melibatkan Mahasiswa'             => PkmDtpsMahasiswa::class,
+            'Tabel 8.a IPK Lulusan'                    => IpkLulusan::class,
+            'Tabel 8.b.1) Prestasi Akademik Mahasiswa'          => PrestasiAkademikMhs::class,
+            'Tabel 8.b.2) Prestasi Non-akademik Mahasiswa'       => PrestasiNonakademikMhs::class,
+            'Tabel 8.c Masa Studi Lulusan'             => MasaStudiLulusan::class,
+            'Tabel 8.d.1) Waktu Tunggu Lulusan'              => EvalWaktuTunggu::class,
+            'Tabel 8.d.2) Kesesuaian Bidang Kerja Lulusan'          => EvalKesesuaianKerja::class,
+            'Tabel 8.e.1) Tempat Kerja Lulusan'              => EvalTempatKerja::class,
+            'Tabel 8.e.2) Kepuasan Pengguna Lulusan'         => EvalKepuasanPengguna::class,
+            'Tabel 8.f.1) Pagelaran/Pameran/Presentasi/Publikasi Ilmiah Mahasiswa'            => PublikasiMahasiswa::class,
+            'Tabel 8.f.2) Karya Ilmiah Mahasiswa yang Disitasi'         => SitasiKaryaMahasiswa::class,
+            'Tabel 8.f.3) Produk/Jasa Mahasiswa yang Diadopsi oleh Industri/Masyarakat'          => ProdukJasaMahasiswa::class,
+            'Tabel 8.f.4) Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Paten, Paten Sederhana)'            => HkiPatenMahasiswa::class,
+            'Tabel 8.f.5) Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Hak Cipta, Desain Produk Industri, dll.)'         => HkiHakCiptaMahasiswa::class,
+            'Tabel 8.f.6) Luaran Penelitian yang Dihasilkan Mahasiswa - Teknologi Tepat Guna, Produk, Karya Seni, Rekayasa Sosial'      => TeknologiKaryaMahasiswa::class,
+            'Tabel 8.f.7) Luaran Penelitian yang Dihasilkan Mahasiswa - Buku ber-ISBN, Book Chapter'         => BukuChapterMahasiswa::class,
             'user_profile'                   => UserProfile::class,
         ];
 
         $minThresholds = [
-            'buku_chapter_dosen'             => 1,
-            'buku_chapter_mahasiswa'         => 1,
-            'dosen_industri_praktisi'        => 1,
-            'dosen_pembimbing_ta'            => 1,
-            'dosen_tetap_pt'                 => 1,
-            'kerjasama_tridharma_pendidikan' => 1,
-            'kerjasama_tridharma_penelitian' => 1,
-            'kerjasama_tridharma_pengamas'    => 1,
-            'seleksi_mahasiswa_baru' => 90,
-            'mahasiswa_asing' => 1,
-            'ewmp_dosen' => 12,
-            'dosen_industri_praktisi' => 1,
-            'rekognisi_dosen' => 1,
+            'Tabel 3.b.10) Luaran Penelitian/PkM Lainnya - Buku ber-ISBN, Book Chapter'             => 1,
+            'Tabel 8.f.7) Luaran Penelitian yang Dihasilkan Mahasiswa - Buku ber-ISBN, Book Chapter'         => 1,
+            'Tabel 3.a.5) Dosen Industri/Praktisi'        => 1,
+            'Tabel 3.a.2) Dosen Pembimbing Utama Tugas Akhir'            => 1,
+            'Tabel 3.a.1) Dosen Tetap Perguruan Tinggi'                 => 1,
+            'Tabel 1.1 Kerjasama Tridharma - Pendidikan' => 1,
+            'Tabel 1.2 Kerjasama Tridharma - Penelitian' => 1,
+            'Tabel 1.3 Kerjasama Tridharma - Pengabdian kepada Masyarakat'    => 1,
+            'Tabel 2.a Seleksi Mahasiswa' => 90,
+            'Tabel 2.b Mahasiswa Asing' => 1,
+            'Tabel 3.a.3) Ekuivalen Waktu Mengajar Penuh (EWMP) Dosen Tetap Perguruan Tinggi' => 12,
+            'Tabel 3.a.5) Dosen Industri/Praktisi' => 1,
+            'Tabel 3.b.1) Pengakuan/Rekognisi Dosen' => 1,
         ];
 
         $data = [];
@@ -142,14 +142,14 @@ class RekapUtamaController extends Controller
         }
 
         // Tambahan rasio dan keterangan khusus
-        $dosenTetap = $data['dosen_tetap_pt']['count'] ?? 0;
-        $tidakTetap = $data['dosen_tidak_tetap']['count'] ?? 0;
+        $dosenTetap = $data['Tabel 3.a.1) Dosen Tetap Perguruan Tinggi']['count'] ?? 0;
+        $tidakTetap = $data['Tabel 3.a.4) Dosen Tidak Tetap']['count'] ?? 0;
         if ($dosenTetap > 0) {
             // Rasio
             $data['dosen_tetap_pt_ratio'] = $this->ratio($dosenTetap, SeleksiMahasiswaBaru::sum('mhs_aktif_reguler'));
             // Cek 30%
             if (($tidakTetap / $dosenTetap) > 0.3) {
-                $data['dosen_tidak_tetap']['keterangan'] =
+                $data['Tabel 3.a.4) Dosen Tidak Tetap']['keterangan'] =
                     'jumlah tidak tetap melebihi persentase';
             }
         }

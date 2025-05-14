@@ -51,7 +51,7 @@ class IpkLulusan2Controller extends Controller
         // Gunakan array_map untuk memproses data
         $rows = array_map(function ($key) use ($rekapArray, $IPKKeyAliases) {
             return [
-                'label'     => $integrasiKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
+                'label'     => $IPKKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
                 'count'     => $rekapArray[$key]['count'] ?? 0,
                 'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
             ];

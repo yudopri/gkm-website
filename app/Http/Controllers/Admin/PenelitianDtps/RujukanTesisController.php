@@ -174,20 +174,20 @@ class RujukanTesisController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $tahunAjaran,string $id)
-    {
-        try {
-            $penelitian = DtpsRujukanTesis::findOrFail($id);
-            $delete = $dosenPraktisi->delete();
+    // public function destroy(string $tahunAjaran,string $id)
+    // {
+    //     try {
+    //         $penelitian = DtpsRujukanTesis::findOrFail($id);
+    //        $delete = $dosenPraktisi->delete();
 
-            if ($delete) {
-                return redirect()->route('admin.penelitian-dtps.rujukan-tesis.index', $tahunAjaran)
-                    ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
-            }
+    //         if ($delete) {
+    //             return redirect()->route('admin.penelitian-dtps.rujukan-tesis.index', $tahunAjaran)
+    //                 ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
+    //         }
 
-            throw new \Exception('Data dosen praktisi gagal dihapus');
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
-    }
+    //         throw new \Exception('Data dosen praktisi gagal dihapus');
+    //     } catch (\Exception $e) {
+    //         return back()->withErrors($e->getMessage());
+    //     }
+    // }
 }

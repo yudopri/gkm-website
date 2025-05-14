@@ -46,11 +46,11 @@ public function index($tahun_ajaran, int $dosenId)
     ];
 
     $dosenKeyAliases = [
-        'dosen_tetap_pt' => 'Dosen Tetap Perguruan Tinggi',
-        'dosen_pembimbing_ta' => 'Dosen Pembimbing Tugas Akhir',
-        'ewmp_dosen' => 'EWMP Dosen',
-        'dosen_tidak_tetap' => 'Dosen Tidak Tetap',
-        'dosen_industri_praktisi' => 'Dosen Industri/Praktisi'
+        'dosen_tetap_pt' => 'Tabel 3.a.1) Dosen Tetap Perguruan Tinggi',
+        'dosen_pembimbing_ta' => 'Tabel 3.a.2) Dosen Pembimbing Utama Tugas Akhir',
+        'ewmp_dosen' => 'Tabel 3.a.3) Ekuivalen Waktu Mengajar Penuh (EWMP) Dosen Tetap Perguruan Tinggi',
+        'dosen_tidak_tetap' => 'Tabel 3.a.4) Dosen Tidak Tetap',
+        'dosen_industri_praktisi' => 'Tabel 3.a.5) Dosen Industri/Praktisi'
     ];
 
     // Gunakan array_map untuk memproses data
