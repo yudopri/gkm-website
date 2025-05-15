@@ -44,7 +44,7 @@
                                         <td> {{ $produk->nama_mahasiswa}} </td>
                                         <td> {{ $produk->nama_produk}} </td>
                                         <td> {{ $produk->deskripsi_produk}} </td>
-                                        <td> {{ $produk->bukti}}</td>
+                                        <td> <a href="{{ $produk->bukti }}" target="_blank">Bukti</a></td>
                                         <td> {{ $produk->tahun}}</td>
 
                                         <!-- Aksi -->
