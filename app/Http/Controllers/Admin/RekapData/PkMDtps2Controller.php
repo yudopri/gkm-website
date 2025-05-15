@@ -52,7 +52,7 @@ class PkMDtps2Controller extends Controller
         // Gunakan array_map untuk memproses data
         $rows = array_map(function ($key) use ($rekapArray, $PKMDTPSKeyAliases) {
             return [
-                'label'     => $penelitianKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
+                'label'     => $PKMDTPSKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
                 'count'     => $rekapArray[$key]['count'] ?? 0,
                 'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
             ];

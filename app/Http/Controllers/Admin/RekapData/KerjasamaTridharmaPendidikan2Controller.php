@@ -44,9 +44,9 @@ class KerjasamaTridharmaPendidikan2Controller extends Controller
         ];
     
         $tridharmaKeyAliases = [
-            'kerjasama_tridharma_pendidikan' => 'kerjasama tridharma pendidikan',
-            'kerjasama_tridharma_penelitian' => 'kerjasama tridharma penelitian',
-            'kerjasama_tridharma_pengmas' => 'kerjasama tridharma pengabdian',
+            'kerjasama_tridharma_pendidikan' => 'Tabel 1.1 Kerjasama Tridharma - Pendidikan',
+            'kerjasama_tridharma_penelitian' => 'Tabel 1.2 Kerjasama Tridharma - Penelitian',
+            'kerjasama_tridharma_pengmas' => 'Tabel 1.3 Kerjasama Tridharma - Pengabdian kepada Masyarakat',
             
         ];
     

@@ -36,18 +36,29 @@ class SeleksiMahasiswa2Controller extends Controller
     $rekapArray = (new RekapUtamaController)->getRekap($dosenId);
 
     // 4. Filter hanya key tridharma
-    $seleksimhsKeys = [
-        'seleksi_mahasiswa_baru',
-        'mahasiswa_asing',
-        
-    ];
-    $rows = collect($seleksimhsKeys)->map(function ($key) use ($rekapArray) {
-        return [
-            'label'     => ucwords(str_replace('_', ' ', $key)),
-            'count'     => $rekapArray[$key]['count'] ?? 0,
-            'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
+    $mhsKeys = [
+            'seleksi_mahasiswa_baru',
+            'mahasiswa_asing',
+            
+            
+              
         ];
-    })->toArray();
+    
+        $mhsKeysAliases = [
+            'seleksi_mahasiswa_baru' => 'Tabel 2.a Seleksi Mahasiswa',
+            'mahasiswa_asing' => 'Tabel 2.b Mahasiswa Asing',
+            
+              
+        ];
+    
+        // Gunakan array_map untuk memproses data
+        $rows = array_map(function ($key) use ($rekapArray, $mhsKeysAliases) {
+            return [
+                'label'     => $mhsKeysAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
+                'count'     => $rekapArray[$key]['count'] ?? 0,
+                'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
+            ];
+        }, $mhsKeys);
 
     // 5. Pass ke view
     return view('pages.admin.rekap-data.mahasiswa.index', [

@@ -134,7 +134,7 @@ class RekapUtamaController extends Controller
         $data = [];
         foreach ($models as $key => $modelClass) {
             $count = $modelClass::where('user_id', $userId)->count();
-            $min   = $minThresholds[$key] ?? 0;
+            $min   = $minThresholds[$key] ?? 1;
             $status = $count >= $min
                         ? 'memenuhi'
                         : ($count === 0 ? 'belum diisi' : 'kurang');
