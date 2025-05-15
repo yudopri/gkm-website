@@ -115,44 +115,13 @@ public function update(Request $request, $id)
 
     $roles = [];
 
-    switch ($validated['jabatan_fungsional']) {
-        case 'Guru Besar':
-            $roles = ['dosen'];
-            break;
-        case 'Lektor Kepala':
-            $roles = ['dosen'];
-            break;
-            case 'Lektor':
-                $roles = ['dosen'];
-                break;
+    switch ($validated['jabatan_id']) {
 
-            case 'Asisten Ahli':
-                $roles = ['dosen'];
-                break;
-            case 'Tenaga Pengajar':
-                $roles = ['dosen'];
-                break;
-        case 'Ketua Prodi D4':
-            $roles = ['dosen', 'D4'];
-            break;
-        case 'Ketua Prodi D3':
-            $roles = ['dosen', 'D3'];
-            break;
-        case 'Mahasiswa S2':
-            $roles = ['D4', 'S2'];
-            break;
-        case 'Staff TU':
-            $roles = ['staff'];
-            break;
-        case 'Teknisi Lab':
-            $roles = ['teknisi'];
-            break;
-        case 'Admin GKM':
-                $roles = ['admin'];
-                break;
-
-        case 'Petugas GKM':
-                    $roles = ['petugas'];
+        case '1':
+                    $roles = ['dosen'];
+                    break;
+        case '2':
+                    $roles = ['admin'];
                     break;
 
         default:
