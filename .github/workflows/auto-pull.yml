@@ -1,0 +1,22 @@
+name: Automatically Pull Changes
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  pull-via-ssh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cross-the-world/ssh-pipeline@master
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          user: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          connect_timeout: 10s
+          script: |
+            cd domains/gkm-polije.com/public_html/
+            git pull origin main
+            git log -3 --pretty=format:'%h %s'
