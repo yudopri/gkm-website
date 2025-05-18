@@ -18,8 +18,8 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 class ListDosenController extends Controller
 {
     public function index()
-{
-    try {
+    {
+        try {
         $userProdiId = auth()->user()->profile->program_studi_id;
 
         $listDosen = User::with('profile')
@@ -29,13 +29,13 @@ class ListDosenController extends Controller
             })
             ->get();
 
-        return view('pages.admin.petugas.list-dosen.index', [
-            'list_dosen' => $listDosen,
-        ]);
-    } catch (\Exception $e) {
-        return back()->withErrors($e->getMessage());
+            return view('pages.admin.petugas.list-dosen.index', [
+                'list_dosen' => $listDosen,
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
     }
-}
 
     public function exportPdf(string $dosenId)
     {
