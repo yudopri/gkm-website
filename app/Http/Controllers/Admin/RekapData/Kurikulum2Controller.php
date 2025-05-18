@@ -22,16 +22,24 @@ class Kurikulum2Controller extends Controller
     public function index($tahun_ajaran, int $dosenId)
     {
         // 1. Daftar tahun ajaran untuk dropdown
-        $tahunAjaranList = TahunAjaranSemester::all()->map(function ($item) {
-            $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
-            return $item;
-        });
+        $tahunAjaranList = TahunAjaranSemester::orderBy('id', 'desc')->get();
     
         // 2. Validasi dosen_id
         $user = User::find($dosenId);
         if (! $user) {
             abort(404, 'Dosen tidak ditemukan');
         }
+        // 3. Ambil objek tahun ajaran berdasarkan slug
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahun_ajaran)->first();
+        if (! $tahunAjaranObj) {
+            abort(404, 'Tahun ajaran tidak ditemukan.');
+        }
+
+        // 4. Inject ke dalam request untuk digunakan oleh RekapUtamaController
+        request()->merge([
+            'tahun'    => $tahunAjaranObj->tahun_ajaran,
+            'semester' => $tahunAjaranObj->semester,
+        ]);
     
         // 3. Ambil data rekap seluruh metrik
         $rekapArray = (new RekapUtamaController)->getRekap($dosenId);
@@ -62,8 +70,9 @@ class Kurikulum2Controller extends Controller
     
         // 5. Pass ke view
         return view('pages.admin.rekap-data.kurikulum-capaian-pembelajaran-rencana-pembelajaran.index', [
-            'tahun_ajaran'    => $tahun_ajaran,
+          'tahun_ajaran'    => $tahun_ajaran,
             'tahunAjaranList' => $tahunAjaranList,
+            'dosenId'         => $dosenId,
             'dosen'           => $user,
             'rows'            => $rows,
         ]);
