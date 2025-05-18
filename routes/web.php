@@ -145,7 +145,6 @@ use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikBCMhsController;
 Route::get('/', function () {
     return view('pages.front.index');
 });
-
 Route::get('/informasi', function () {
     return view('pages.front.informasi');
 });
@@ -620,7 +619,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 
 
-    
+
 
 
     Route::prefix('rekap-data')->name('rekap-data.')->group(function () {
@@ -638,9 +637,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/masa-studi/{tahun_ajaran}/{dosen_id}', [MasaStudi2Controller::class, 'index'])->name('masa-studi');
         Route::get('/waktu-tunggu/{tahun_ajaran}/{dosen_id}', [WaktuTunggu2Controller::class, 'index'])->name('waktu-tunggu');
         Route::get('/pagelaran-mahasiswa/{tahun_ajaran}/{dosen_id}', [PagelaranMahasiswa2Controller::class, 'index'])->name('pagelaran-mahasiswa');
-        
+
     });
-    
+
 
 
 });

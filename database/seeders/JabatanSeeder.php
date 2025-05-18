@@ -13,15 +13,7 @@ class JabatanSeeder extends Seeder
      */
     public function run(): void
     {
-        Jabatan::create(['nama' => 'Super Admin']);
-        Jabatan::create(['nama' => 'Petugas GKM']);
-
-        Jabatan::create(['nama' => 'Ketua Jurusan']);
-        Jabatan::create(['nama' => 'Sekretaris Jurusan']);
-        Jabatan::create(['nama' => 'Koordinator Program Studi']);
-        Jabatan::create(['nama' => 'Kepala Laboratorium']);
-        Jabatan::create(['nama' => 'Teknisi Laboratorium']);
-        Jabatan::create(['nama' => 'Staff Administrasi']);
-        Jabatan::create(['nama' => 'Staff Pengajar']);
+        Jabatan::create(['nama' => 'Dosen']);
+        Jabatan::create(['nama' => 'GKM Prodi']);
     }
 }
