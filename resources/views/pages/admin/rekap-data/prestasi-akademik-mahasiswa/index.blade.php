@@ -7,30 +7,35 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold mb-0">Rekap Data Dosen</h4>
 
-        {{-- <select class="form-select" onchange="changeTahunAjaran(this)">
+        {{-- Dropdown Tahun Ajaran pakai slug --}}
+        <select class="form-select" id="tahunAjaranSelect" onchange="changeTahunAjaran(this)">
             <option value="">-- Pilih Tahun Ajaran --</option>
             @foreach($tahunAjaranList as $ta)
                 <option 
-                    value="{{ str_replace('/', '-', $ta->tahun_ajaran) }}" 
-                    {{ str_replace('/', '-', $tahun_ajaran) == str_replace('/', '-', $ta->tahun_ajaran) ? 'selected' : '' }}>
-                    {{ $ta->tahun_ajaran }}
+                    value="{{ $ta->slug }}"
+                    {{ $tahun_ajaran == $ta->slug ? 'selected' : '' }}>
+                    {{ $ta->tahun_ajaran }} ({{ ucfirst($ta->semester) }})
                 </option>
             @endforeach
-        </select> --}}
+        </select>
     </div>
 
-    {{-- Script langsung ditaruh di sini --}}
-    {{-- <script>
+    {{-- Script URL Redirect --}}
+    <script>
         function changeTahunAjaran(select) {
-            let selected = select.value;
-            if (selected) {
-                const route = "{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '__REPLACE__']) }}";
-                const finalUrl = route.replace('__REPLACE__', selected);  // Sudah pakai format yang bersih
-                console.log("Final URL:", finalUrl);
+            let selectedSlug = select.value;
+            let dosenId = "{{ $dosenId ?? '0' }}"; // pastikan variabel ini tersedia dari controller
+
+            if (selectedSlug && dosenId) {
+                const routeTemplate = "{{ route('admin.rekap-data.prestasi-akademik', ['tahun_ajaran' => '__SLUG__', 'dosen_id' => '__DOSEN__']) }}";
+                const finalUrl = routeTemplate
+                    .replace('__SLUG__', encodeURIComponent(selectedSlug))
+                    .replace('__DOSEN__', encodeURIComponent(dosenId));
+
                 window.location.href = finalUrl;
             }
         }
-    </script> --}}
+    </script>
 
 <div class="row">
     <div class="col-md-12">
