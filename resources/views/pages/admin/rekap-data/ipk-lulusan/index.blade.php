@@ -52,20 +52,22 @@
                                 <th>No</th>
                                 <th>Komponen</th>
                                 <th>Total</th>
+                                <th>Minimum</th>
                                 <th>Keterangan</th>
                                 
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                             
-                        @foreach($rows as $i => $row)
-                            <tr>
-                                <td class="text-center">{{ $i + 1 }}</td>
-                                <td class="text-wrap">{{ $row['label'] }}</td>
-                                <td class="text-center">{{ $row['count'] }}</td>
-                                <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
-                            </tr>
-                        @endforeach
+                         @foreach($rows as $i => $row)
+                                    <tr>
+                                        <td class="text-center">{{ $i + 1 }}</td>
+                                        <td class="text-wrap">{{ $row['label'] }}</td>
+                                        <td class="text-center">{{ $row['count'] }}</td>
+                                        <td class="text-center">{{ $row['min'] }}</td>
+                                        <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
+                                    </tr>
+                                @endforeach
                             
                             {{-- Tambahkan data dinamis di sini --}}
                         </tbody>

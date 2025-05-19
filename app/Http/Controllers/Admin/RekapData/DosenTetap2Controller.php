@@ -66,6 +66,7 @@ public function index($tahun_ajaran, int $dosenId)
         return [
             'label'     => $dosenKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
             'count'     => $rekapArray[$key]['count'] ?? 0,
+            'min'       => $rekapArray[$key]['min'] ?? '-', 
             'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
         ];
     }, $dosenKeys);
@@ -75,6 +76,7 @@ public function index($tahun_ajaran, int $dosenId)
     $rows[] = [
         'label'     => 'Rasio Dosen Tetap : Mahasiswa Aktif',
         'count'     => $rasioDosenTetap,
+       'min'       => '-', 
         'keterangan'=> 'Rasio dosen tetap terhadap mahasiswa aktif reguler',
     ];
 
@@ -87,6 +89,7 @@ public function index($tahun_ajaran, int $dosenId)
     $rows[] = [
         'label'     => 'Persentase Dosen Tidak Tetap',
         'count'     => round($persentaseTidakTetap, 2) . '%',
+        'min'       => '-', 
         'keterangan'=> $persentaseTidakTetap > 30
             ? 'Jumlah dosen tidak tetap melebihi 30%'
             : 'Jumlah dosen tidak tetap sesuai',

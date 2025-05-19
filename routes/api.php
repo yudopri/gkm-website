@@ -40,6 +40,7 @@ use App\Http\Controllers\Api\KualitasPembelajaran\KurikulumPembelajaranControlle
 use App\Http\Controllers\Api\PenelitianDtps\PenelitianMahasiswaController;
 use App\Http\Controllers\Api\PenelitianDtps\RujukanTesisController;
 use App\Http\Controllers\Api\Petugas\ListDosenController;
+use App\Http\Controllers\Api\importexcel\ImportExcelController;
 
 
 
@@ -87,5 +88,6 @@ Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenControlle
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/rekap', [RekapUtamaController::class, 'index']);
+    Route::get('/import-excel', [ImportExcelController::class, 'importExcel']);
 });
 

@@ -61,6 +61,7 @@ class PkMDtps2Controller extends Controller
             return [
                 'label'     => $PKMDTPSKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
                 'count'     => $rekapArray[$key]['count'] ?? 0,
+                 'min'       => $rekapArray[$key]['min'] ?? '-', 
                 'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
             ];
         }, $PKMDTPSKeys);
