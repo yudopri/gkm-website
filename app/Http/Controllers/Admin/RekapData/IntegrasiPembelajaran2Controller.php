@@ -67,6 +67,7 @@ class IntegrasiPembelajaran2Controller extends Controller
             return [
                 'label'     => $integrasiKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
                 'count'     => $rekapArray[$key]['count'] ?? 0,
+                 'min'       => $rekapArray[$key]['min'] ?? '-', 
                 'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
             ];
         }, $integrasiKeys);

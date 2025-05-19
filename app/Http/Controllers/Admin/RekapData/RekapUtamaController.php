@@ -115,7 +115,7 @@ class RekapUtamaController extends Controller
             'dosen_tetap_pt'                 => 1,
             'kerjasama_tridharma_pendidikan' => 1,
             'kerjasama_tridharma_penelitian' => 1,
-            'kerjasama_tridharma_pengamas'   => 1,
+            'kerjasama_tridharma_pengmas'   => 1,
             'seleksi_mahasiswa_baru'         => 90,
             'mahasiswa_asing'                => 1,
             'ewmp_dosen'                     => 12,

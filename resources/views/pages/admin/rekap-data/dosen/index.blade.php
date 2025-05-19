@@ -52,6 +52,7 @@
                                 <th>No</th>
                                 <th>Komponen</th>
                                 <th>Total</th>
+                                <th>Minimum</th>
                                 <th>Keterangan</th>
                                 
                             </tr>
@@ -63,6 +64,7 @@
                                         <td class="text-center">{{ $i + 1 }}</td>
                                         <td class="text-wrap">{{ $row['label'] }}</td>
                                         <td class="text-center">{{ $row['count'] }}</td>
+                                        <td class="text-center">{{ $row['min'] }}</td>
                                         <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
                                     </tr>
                                 @endforeach

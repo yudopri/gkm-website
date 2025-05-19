@@ -63,6 +63,7 @@ class SeleksiMahasiswa2Controller extends Controller
             return [
                 'label'     => $mhsKeysAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
                 'count'     => $rekapArray[$key]['count'] ?? 0,
+                 'min'       => $rekapArray[$key]['min'] ?? '-', 
                 'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
             ];
         }, $mhsKeys);
