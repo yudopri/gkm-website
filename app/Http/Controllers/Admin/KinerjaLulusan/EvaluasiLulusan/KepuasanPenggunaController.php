@@ -19,9 +19,38 @@ class KepuasanPenggunaController extends Controller
     {
         try {
             $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaran)->firstOrFail();
-        $tahunAjaranId = $tahunAjaranObj->id;
-        $tahun = $tahunAjaranObj->tahun_ajaran;
-            $kepuasanPengguna = EvalKepuasanPengguna::with('user')->where('tahun', $tahun)->get();
+$tahunAjaranId = $tahunAjaranObj->id;
+$tahun = $tahunAjaranObj->tahun_ajaran;
+
+$kepuasanPengguna = EvalKepuasanPengguna::with('user')
+    ->where('tahun', $tahun)
+    ->get()
+    ->groupBy('tahun') // Group berdasarkan tahun
+    ->map(function ($group) {
+        return [
+            'tahun' => $group->first()->tahun,
+            'jumlah_lulusan' => $group->sum('jumlah_lulusan'),
+            'jumlah_responden' => $group->sum('jumlah_responden'),
+            'ids' => $group->pluck('id'), // Jika perlu ID untuk aksi edit/delete
+        ];
+    })->values(); // Optional: reset keys
+    
+    $detailkepuasanPengguna = EvalKepuasanPengguna::with('user')
+    ->where('tahun', $tahun)
+    ->get()
+    ->groupBy('jenis_kemampuan')
+    ->map(function ($items) {
+        return [
+            'jenis_kemampuan' => $items->first()->jenis_kemampuan,
+            'tingkat_kepuasan_sangat_baik' => $items->sum('tingkat_kepuasan_sangat_baik'),
+            'tingkat_kepuasan_baik' => $items->sum('tingkat_kepuasan_baik'),
+            'tingkat_kepuasan_cukup' => $items->sum('tingkat_kepuasan_cukup'),
+            'tingkat_kepuasan_kurang' => $items->sum('tingkat_kepuasan_kurang'),
+            'rencana_tindakan' => $items->first()->rencana_tindakan,
+            'id' => $items->first()->id,
+        ];
+    })->values(); // untuk me-reset key agar bisa di-loop di blade
+
 
             $title = 'Hapus Data!';
             $text = "Apakah kamu yakin ingin menghapus?";
@@ -29,6 +58,7 @@ class KepuasanPenggunaController extends Controller
 
             return view('pages.admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.index', [
                 'kepuasan_pengguna' => $kepuasanPengguna,
+                'detail_kepuasan_pengguna' => $detailkepuasanPengguna,
                 'tahun_ajaran' => $tahunAjaran,
             ]);
         } catch (\Exception $e) {

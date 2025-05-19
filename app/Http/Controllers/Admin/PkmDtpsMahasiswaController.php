@@ -176,7 +176,7 @@ class PkmDtpsMahasiswaController extends Controller
     {
         try {
             $penelitian = PkmDtpsMahasiswa::findOrFail($id);
-            $delete = $dosenPraktisi->delete();
+            $delete = $penelitian->delete();
 
             if ($delete) {
                 return redirect()->route('admin.dtps-mahasiswa.pkm-dtps-mahasiswa.index', $tahunAjaran)
