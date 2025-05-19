@@ -189,7 +189,7 @@ class PublikasiMahasiswaController extends Controller
     {
         try {
             $publikasi = PublikasiMahasiswa::findOrFail($id);
-            $delete = $dosenPraktisi->delete();
+            $delete = $publikasi->delete();
 
             if ($delete) {
                 return redirect()->route('admin.kinerja-dosen.publikasi.index', $tahunAjaran)
