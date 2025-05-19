@@ -63,7 +63,7 @@
     <!-- Jabatan Fungsional -->
     <div>
         <label for="jabatan_fungsional" class="block mb-1 font-semibold text-xs">Jabatan Fungsional</label>
-        <select id="jabatan_fungsional" name="jabatan_fungsional" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium" required>
+        <select id="jabatan_fungsional" name="jabatan_fungsional" class="w-full rounded-md px-3 py-2 text-[#0F5B4F] font-medium">
             <option value="">Pilih Jabatan Fungsional</option>
             @foreach($jabatanFungsionalList as $jabatanFungsi)
                 <option value="{{ $jabatanFungsi->nama }}" {{ $profile->jabatan_fungsional == $jabatanFungsi->nama ? 'selected' : '' }}>{{ $jabatanFungsi->nama }}</option>

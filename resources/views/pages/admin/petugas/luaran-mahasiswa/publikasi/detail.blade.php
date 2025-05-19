@@ -38,8 +38,7 @@
                                 <tfoot class="table-border-bottom-0">
                                     <tr>
                                         <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
-                                        <th class="text-center">{{ $data_dosen->publikasi_mahasiswa->count('judul_artikel')}}</th>
-                                        <th class="rounded-end-bottom">Aksi</th>
+                                        <th class="text-center">{{ $totals }}</th>
                                     </tr>
                                 </tfoot>
                             </table>

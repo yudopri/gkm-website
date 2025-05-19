@@ -13,6 +13,8 @@ use App\Models\SeleksiMahasiswaBaru;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use App\Models\PublikasiIlmiahDosen;
+use App\Models\PublikasiMahasiswa;
 
 
 class ListDosenController extends Controller
@@ -112,8 +114,25 @@ class ListDosenController extends Controller
                 SUM(maba_transfer) as total_maba_transfer,
                 SUM(COALESCE(mhs_aktif_reguler, 0) + COALESCE(mhs_aktif_transfer, 0)) as total_mhs_aktif
             ')->first();
+            $totalpublik = PublikasiIlmiahDosen::whereNull('deleted_at')
+    ->get()
+    ->sum(function ($item) {
+        $raw = trim($item->judul_artikel);
+        $sanitized = str_replace(',', '.', $raw);
+        $sanitized = preg_replace('/[^0-9.]/', '', $sanitized);
+        return is_numeric($sanitized) ? (float) $sanitized : 0;
+    });
+    $totalpublikmaha = PublikasiMahasiswa::whereNull('deleted_at')
+    ->get()
+    ->sum(function ($item) {
+        $raw = trim($item->judul_artikel);
+        $sanitized = str_replace(',', '.', $raw);
+        $sanitized = preg_replace('/[^0-9.]/', '', $sanitized);
+        return is_numeric($sanitized) ? (float) $sanitized : 0;
+    });
 
-            $pdf = Pdf::loadView('pages.admin.petugas.list-dosen.print', compact('data', 'total'))->setPaper('legal', 'landscape');
+
+            $pdf = Pdf::loadView('pages.admin.petugas.list-dosen.print', compact('data', 'total','totalpublik','totalpublikmaha'))->setPaper('legal', 'landscape');
 
             $filename = 'laporan-gkm-' . Str::slug($data->name) . '-' . time()  . '.pdf';
 
