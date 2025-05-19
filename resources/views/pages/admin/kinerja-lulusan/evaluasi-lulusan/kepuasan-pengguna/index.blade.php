@@ -164,10 +164,10 @@
                                         <tr>
                                             <th class="rounded-start-bottom"> </th>
                                             <th class="text-center">Jumlah</th>
-                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_sangat_baik')}}</th>
-                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_baik')}} </th>
-                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_cukup')}} </th>
-                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_kurang')}} </th>
+                                            <th class="text-center">{{$detail_kepuasan_pengguna->sum('tingkat_kepuasan_sangat_baik')}}</th>
+                                            <th class="text-center">{{$detail_kepuasan_pengguna->sum('tingkat_kepuasan_baik')}} </th>
+                                            <th class="text-center">{{$detail_kepuasan_pengguna->sum('tingkat_kepuasan_cukup')}} </th>
+                                            <th class="text-center">{{$detail_kepuasan_pengguna->sum('tingkat_kepuasan_kurang')}} </th>
                                             <th class="text-center"></th>
                                             <th class="rounded-end-bottom">Aksi</th>
                                         </tr>
