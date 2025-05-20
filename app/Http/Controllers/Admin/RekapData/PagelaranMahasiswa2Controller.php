@@ -56,7 +56,7 @@ class PagelaranMahasiswa2Controller extends Controller
         ];
     
         $luaranMHSKeyAliases = [
-            'publikasi_mahasiswa' => 'Tabel 8.f.1| Pagelaran/Pameran/Presentasi/Publikasi Ilmiah Mahasiswa	',
+        'publikasi_mahasiswa' => 'Tabel 8.f.1| Pagelaran/Pameran/Presentasi/Publikasi Ilmiah Mahasiswa	',
         'sitasi_karya_mahasiswa' => 'Tabel 8.f.2| Karya Ilmiah Mahasiswa yang Disitasi	',
         'produk_jasa_mahasiswa' => 'Tabel 8.f.3| Produk/Jasa Mahasiswa yang Diadopsi oleh Industri/Masyarakat',
         'hki_paten_mahasiswa'=>'Tabel 8.f.4| Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Paten, Paten Sederhana)	',
