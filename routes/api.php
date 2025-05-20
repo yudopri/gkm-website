@@ -88,6 +88,6 @@ Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenControlle
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/rekap', [RekapUtamaController::class, 'index']);
-    Route::get('/import-excel', [ImportExcelController::class, 'importExcel']);
+    Route::post('/import-excel', [ImportExcelController::class, 'importExcel']);
 });
 
