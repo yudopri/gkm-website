@@ -139,7 +139,15 @@ use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikHkiMhsPatenControlle
 use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikHkiMhsCiptaController;
 use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikTKMhsController;
 use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikBCMhsController;
-
+use App\Http\Controllers\Admin\Grafik\KerjasamaTridharma\GabunganKerjasamaController;
+use App\Http\Controllers\Admin\Grafik\DataDosen\GabunganDosenController;
+use App\Http\Controllers\Admin\Grafik\DataMahasiswa\GabunganMahasiswaController;
+use App\Http\Controllers\Admin\Grafik\KinerjaDosen\GabunganKinerjaController;
+use App\Http\Controllers\Admin\Grafik\KualitasPembelajaran\GabunganKualitasController;
+use App\Http\Controllers\Admin\Grafik\PenelitianDTPS\GabunganPenelitianController;
+use App\Http\Controllers\Admin\Grafik\PkmDtpsMhs\GabunganPkmMhsController;
+use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GabunganLulusanController;
+use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GabunganLuaranController;
 
 Route::get('/', function () {
     return view('pages.front.index');
@@ -208,7 +216,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/luaran-karya-mahasiswa/grafik/hki_cipta', [GrafikHkiMhsCiptaController::class, 'index'])->name('grafik.luaran-karya-mahasiswa.hki_cipta.index');
         Route::get('/luaran-karya-mahasiswa/grafik/teknologi_karya', [GrafikTKMhsController::class, 'index'])->name('grafik.luaran-karya-mahasiswa.teknologi_karya.index');
         Route::get('/luaran-karya-mahasiswa/grafik/buku_chapter_mahasiswa', [GrafikBCMhsController::class, 'index'])->name('grafik.luaran-karya-mahasiswa.buku_chapter_mahasiswa.index');
-
+        Route::get('/kerjasama-tridharma/grafik/gabungan', [GabunganKerjasamaController::class, 'index'])->name('grafik.kerjasama-tridharma.gabungan.index');
+        Route::get('/data-dosen/grafik/gabungan', [GabunganDosenController::class, 'index'])->name('grafik.data-dosen.gabungan.index');
+        Route::get('/data-mahasiswa/grafik/gabungan', [GabunganMahasiswaController::class, 'index'])->name('grafik.data-mahasiswa.gabungan.index');
+        Route::get('/kinerja-dosen/grafik/gabungan', [GabunganKinerjaController::class, 'index'])->name('grafik.kinerja-dosen.gabungan.index');
+        Route::get('/kualitas-pembelajaran/grafik/gabungan', [GabunganKualitasController::class, 'index'])->name('grafik.kualitas-pembelajaran.gabungan.index');
+        Route::get('/penelitian-dtps/grafik/gabungan', [GabunganPenelitianController::class, 'index'])->name('grafik.penelitian-dtps.gabungan.index');
+        Route::get('/pkm-dtps-mhs/grafik/gabungan', [GabunganPkmMhsController::class, 'index'])->name('grafik.pkm-dtps-mhs.gabungan.index');
+        Route::get('/kinerja-lulusan/grafik/gabungan', [GabunganLulusanController::class, 'index'])->name('grafik.kinerja-lulusan.gabungan.index');
+        Route::get('/luaran-karya-mahasiswa/grafik/gabungan', [GabunganLuaranController::class, 'index'])->name('grafik.luaran-karya-mahasiswa.gabungan.index');
 
 
 
