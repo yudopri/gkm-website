@@ -128,7 +128,9 @@ class PkmDtpsController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'pkm_dtps')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'pkm_dtps' => function ($query) {
+        $query->whereNotNull('tahun');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kinerja-dosen.pkm-dtps.detail', [
                 'data_dosen' => $dosen,
