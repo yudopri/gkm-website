@@ -98,7 +98,9 @@ class SitasiKaryaController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'sitasi_karya_dosen')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'sitasi_karya_dosen'=> function ($query) {
+        $query->whereNotNull('tahun');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kinerja-dosen.sitasi-karya.detail', [
                 'data_dosen' => $dosen,

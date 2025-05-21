@@ -98,7 +98,9 @@ class HkiHakciptaController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'hki_cipta_dosen')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'hki_cipta_dosen'=> function ($query) {
+        $query->whereNotNull('tahun');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kinerja-dosen.luaran-lain.hki-hakcipta.detail', [
                 'data_dosen' => $dosen,

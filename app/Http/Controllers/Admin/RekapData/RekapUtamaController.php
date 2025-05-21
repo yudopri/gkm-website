@@ -58,10 +58,11 @@ class RekapUtamaController extends Controller
 {
     public function getRekap(int $userId): array
     {
-        if (!User::find($userId)) {
+        // Pastikan user ada
+        if (! User::find($userId)) {
             return [];
         }
-
+        // Daftar model dan threshold minimal
         $models = [
             'buku_chapter_dosen'             => BukuChapterDosen::class,
             'buku_chapter_mahasiswa'         => BukuChapterMahasiswa::class,
