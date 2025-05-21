@@ -35,7 +35,17 @@
                     </a>
                 </li>
             <li class="menu-item {{ request()->routeIs('admin.petugas.list-dosen.*') ? 'active open' : '' }}">
-           <a href="javascript:void(0);" class="menu-link menu-toggle">
+           
+           <li class="menu-item {{ request()->routeIs('admin.rekap-keseluruhan') || request()->routeIs('admin.rekap-keseluruhan.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.rekap-keseluruhan', ['tahun_ajaran' => '2024-2025-genap']) }}" class="menu-link">
+                    <div data-i18n="List Dosen">Rekap Keseluruhan Dosen</div>
+                    </a>
+                </li>
+            <li class="menu-item {{ request()->routeIs('admin.petugas.list-dosen.*') ? 'active open' : '' }}">
+
+                
+           
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <div data-i18n="List Dosen">Grafik</div>
                     </a>
     <ul class="menu-sub">

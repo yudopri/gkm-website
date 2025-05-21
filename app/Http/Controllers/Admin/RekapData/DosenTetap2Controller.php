@@ -22,16 +22,24 @@ class DosenTetap2Controller extends Controller
 public function index($tahun_ajaran, int $dosenId)
 {
     // 1. Daftar tahun ajaran untuk dropdown
-    $tahunAjaranList = TahunAjaranSemester::all()->map(function ($item) {
-        $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
-        return $item;
-    });
+   $tahunAjaranList = TahunAjaranSemester::orderBy('id', 'desc')->get();
 
     // 2. Validasi dosen_id
     $user = User::find($dosenId);
     if (! $user) {
         abort(404, 'Dosen tidak ditemukan');
     }
+
+    $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahun_ajaran)->first();
+        if (! $tahunAjaranObj) {
+            abort(404, 'Tahun ajaran tidak ditemukan.');
+        }
+
+        // 4. Inject ke dalam request untuk digunakan oleh RekapUtamaController
+        request()->merge([
+            'tahun'    => $tahunAjaranObj->tahun_ajaran,
+            'semester' => $tahunAjaranObj->semester,
+        ]);
 
     // 3. Ambil data rekap seluruh metrik
     $rekapArray = (new RekapUtamaController)->getRekap($dosenId);
@@ -46,11 +54,11 @@ public function index($tahun_ajaran, int $dosenId)
     ];
 
     $dosenKeyAliases = [
-        'dosen_tetap_pt' => 'Dosen Tetap Perguruan Tinggi',
-        'dosen_pembimbing_ta' => 'Dosen Pembimbing Tugas Akhir',
-        'ewmp_dosen' => 'EWMP Dosen',
-        'dosen_tidak_tetap' => 'Dosen Tidak Tetap',
-        'dosen_industri_praktisi' => 'Dosen Industri/Praktisi'
+        'dosen_tetap_pt' => 'Tabel 3.a.1) Dosen Tetap Perguruan Tinggi',
+        'dosen_pembimbing_ta' => 'Tabel 3.a.2) Dosen Pembimbing Utama Tugas Akhir',
+        'ewmp_dosen' => 'Tabel 3.a.3) Ekuivalen Waktu Mengajar Penuh (EWMP) Dosen Tetap Perguruan Tinggi',
+        'dosen_tidak_tetap' => 'Tabel 3.a.4) Dosen Tidak Tetap',
+        'dosen_industri_praktisi' => 'Tabel 3.a.5) Dosen Industri/Praktisi'
     ];
 
     // Gunakan array_map untuk memproses data
@@ -58,6 +66,7 @@ public function index($tahun_ajaran, int $dosenId)
         return [
             'label'     => $dosenKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
             'count'     => $rekapArray[$key]['count'] ?? 0,
+            'min'       => $rekapArray[$key]['min'] ?? '-', 
             'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
         ];
     }, $dosenKeys);
@@ -67,6 +76,7 @@ public function index($tahun_ajaran, int $dosenId)
     $rows[] = [
         'label'     => 'Rasio Dosen Tetap : Mahasiswa Aktif',
         'count'     => $rasioDosenTetap,
+       'min'       => '-', 
         'keterangan'=> 'Rasio dosen tetap terhadap mahasiswa aktif reguler',
     ];
 
@@ -79,6 +89,7 @@ public function index($tahun_ajaran, int $dosenId)
     $rows[] = [
         'label'     => 'Persentase Dosen Tidak Tetap',
         'count'     => round($persentaseTidakTetap, 2) . '%',
+        'min'       => '-', 
         'keterangan'=> $persentaseTidakTetap > 30
             ? 'Jumlah dosen tidak tetap melebihi 30%'
             : 'Jumlah dosen tidak tetap sesuai',
@@ -86,10 +97,11 @@ public function index($tahun_ajaran, int $dosenId)
 
     // 5. Pass ke view
     return view('pages.admin.rekap-data.dosen.index', [
-        'tahun_ajaran'    => $tahun_ajaran,
-        'tahunAjaranList' => $tahunAjaranList,
-        'dosen'           => $user,
-        'rows'            => $rows,
+            'tahun_ajaran'    => $tahun_ajaran,
+            'tahunAjaranList' => $tahunAjaranList,
+            'dosenId'         => $dosenId,
+            'dosen'           => $user,
+            'rows'            => $rows,
     ]);
 }
 

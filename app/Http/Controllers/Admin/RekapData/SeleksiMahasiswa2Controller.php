@@ -21,40 +21,60 @@ class SeleksiMahasiswa2Controller extends Controller
     public function index($tahun_ajaran, int $dosenId)
 {
     // 1. Daftar tahun ajaran untuk dropdown
-    $tahunAjaranList = TahunAjaranSemester::all()->map(function ($item) {
-        $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
-        return $item;
-    });
+   $tahunAjaranList = TahunAjaranSemester::orderBy('id', 'desc')->get();
 
     // 2. Validasi dosen_id
     $user = User::find($dosenId);
     if (! $user) {
         abort(404, 'Dosen tidak ditemukan');
     }
+// 3. Ambil objek tahun ajaran berdasarkan slug
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahun_ajaran)->first();
+        if (! $tahunAjaranObj) {
+            abort(404, 'Tahun ajaran tidak ditemukan.');
+        }
 
+        // 4. Inject ke dalam request untuk digunakan oleh RekapUtamaController
+        request()->merge([
+            'tahun'    => $tahunAjaranObj->tahun_ajaran,
+            'semester' => $tahunAjaranObj->semester,
+        ]);
     // 3. Ambil data rekap seluruh metrik
     $rekapArray = (new RekapUtamaController)->getRekap($dosenId);
 
     // 4. Filter hanya key tridharma
-    $seleksimhsKeys = [
-        'seleksi_mahasiswa_baru',
-        'mahasiswa_asing',
-        
-    ];
-    $rows = collect($seleksimhsKeys)->map(function ($key) use ($rekapArray) {
-        return [
-            'label'     => ucwords(str_replace('_', ' ', $key)),
-            'count'     => $rekapArray[$key]['count'] ?? 0,
-            'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
+    $mhsKeys = [
+            'seleksi_mahasiswa_baru',
+            'mahasiswa_asing',
+            
+            
+              
         ];
-    })->toArray();
+    
+        $mhsKeysAliases = [
+            'seleksi_mahasiswa_baru' => 'Tabel 2.a Seleksi Mahasiswa',
+            'mahasiswa_asing' => 'Tabel 2.b Mahasiswa Asing',
+            
+              
+        ];
+    
+        // Gunakan array_map untuk memproses data
+        $rows = array_map(function ($key) use ($rekapArray, $mhsKeysAliases) {
+            return [
+                'label'     => $mhsKeysAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
+                'count'     => $rekapArray[$key]['count'] ?? 0,
+                 'min'       => $rekapArray[$key]['min'] ?? '-', 
+                'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
+            ];
+        }, $mhsKeys);
 
     // 5. Pass ke view
     return view('pages.admin.rekap-data.mahasiswa.index', [
-        'tahun_ajaran'    => $tahun_ajaran,
-        'tahunAjaranList' => $tahunAjaranList,
-        'dosen'           => $user,
-        'rows'            => $rows,
+       'tahun_ajaran'    => $tahun_ajaran,
+            'tahunAjaranList' => $tahunAjaranList,
+            'dosenId'         => $dosenId,
+            'dosen'           => $user,
+            'rows'            => $rows,
     ]);
 }
 

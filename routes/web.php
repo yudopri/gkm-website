@@ -56,6 +56,8 @@ use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
 use App\Http\Controllers\Api\DataMahasiswa\MahasiswaAsingApiController;
 use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
 use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
+// use App\Http\Controllers\Api\RekapData\RekapUtamaController;
+use App\Http\Controllers\Admin\RekapData\RekapKeseluruhan;
 
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPendidikan2Controller;
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPenelitian2Controller;
@@ -152,7 +154,6 @@ use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GabunganLuaranController;
 Route::get('/', function () {
     return view('pages.front.index');
 });
-
 Route::get('/informasi', function () {
     return view('pages.front.informasi');
 });
@@ -635,7 +636,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 
 
-    
+
 
 
     Route::prefix('rekap-data')->name('rekap-data.')->group(function () {
@@ -653,14 +654,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/masa-studi/{tahun_ajaran}/{dosen_id}', [MasaStudi2Controller::class, 'index'])->name('masa-studi');
         Route::get('/waktu-tunggu/{tahun_ajaran}/{dosen_id}', [WaktuTunggu2Controller::class, 'index'])->name('waktu-tunggu');
         Route::get('/pagelaran-mahasiswa/{tahun_ajaran}/{dosen_id}', [PagelaranMahasiswa2Controller::class, 'index'])->name('pagelaran-mahasiswa');
-        
+
     });
-    
 
 
+Route::get('/rekap-keseluruhan/{tahun_ajaran}', [RekapKeseluruhan::class, 'index'])->name('rekap-keseluruhan');
 });
 
-// Route::get('/admin/rekap-data-utama', [RekapUtamaController::class, 'index']);
+Route::get('/rekap', [RekapUtamaController::class, 'index']);
 
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

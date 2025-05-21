@@ -52,21 +52,16 @@ use App\Models\TeknologiKaryaDosen;
 use App\Models\TeknologiKaryaMahasiswa;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Models\TahunAjaranSemester;
 
 class RekapUtamaController extends Controller
 {
-    /**
-     * Mengembalikan array rekap data:
-     * key => [count, min, status, (optional) keterangan]
-     *
-     * @param int $userId
-     * @return array<string, array>
-     */
-public function getRekap(?int $userId = null, ?string $tahunAjaran = null): array
-{
-    if ($userId !== null && ! User::find($userId)) {
-        return [];
-    }
+    public function getRekap(int $userId): array
+    {
+        // Pastikan user ada
+        if (! User::find($userId)) {
+            return [];
+        }
         // Daftar model dan threshold minimal
         $models = [
             'buku_chapter_dosen'             => BukuChapterDosen::class,
@@ -102,7 +97,7 @@ public function getRekap(?int $userId = null, ?string $tahunAjaran = null): arra
             'prestasi_nonakademik_mhs'       => PrestasiNonakademikMhs::class,
             'produk_jasa_mahasiswa'          => ProdukJasaMahasiswa::class,
             'produk_teradopsi_dosen'         => ProdukTeradopsiDosen::class,
-            'publikasi_ilmiah_dosen'        => PublikasiIlmiahDosen::class,
+            'publikasi_ilmiah_dosen'         => PublikasiIlmiahDosen::class,
             'publikasi_mahasiswa'            => PublikasiMahasiswa::class,
             'rekognisi_dosen'                => RekognisiDosen::class,
             'seleksi_mahasiswa_baru'         => SeleksiMahasiswaBaru::class,
@@ -110,7 +105,7 @@ public function getRekap(?int $userId = null, ?string $tahunAjaran = null): arra
             'sitasi_karya_mahasiswa'         => SitasiKaryaMahasiswa::class,
             'teknologi_karya_dosen'          => TeknologiKaryaDosen::class,
             'teknologi_karya_mahasiswa'      => TeknologiKaryaMahasiswa::class,
-            'user_profile'                   => UserProfile::class,
+            
         ];
 
         $minThresholds = [
@@ -121,48 +116,49 @@ public function getRekap(?int $userId = null, ?string $tahunAjaran = null): arra
             'dosen_tetap_pt'                 => 1,
             'kerjasama_tridharma_pendidikan' => 1,
             'kerjasama_tridharma_penelitian' => 1,
-            'kerjasama_tridharma_pengamas'    => 1,
-            'seleksi_mahasiswa_baru' => 90,
-            'mahasiswa_asing' => 1,
-            'ewmp_dosen' => 12,
-            'dosen_industri_praktisi' => 1,
-            'rekognisi_dosen' => 1,
+            'kerjasama_tridharma_pengmas'   => 1,
+            'seleksi_mahasiswa_baru'         => 90,
+            'mahasiswa_asing'                => 1,
+            'ewmp_dosen'                     => 12,
+            'rekognisi_dosen'                => 1,
         ];
 
+        $tahun = request()->input('tahun');
         $data = [];
+
         foreach ($models as $key => $modelClass) {
-            $count = $modelClass::where('user_id', $userId)->count();
-            $min   = $minThresholds[$key] ?? 0;
+            $query = $modelClass::where('user_id', $userId);
+            $query = $this->selectTahun($query, $tahun, $key);
+
+            $count = $query->count();
+            $min   = $minThresholds[$key] ?? 1;
             $status = $count >= $min
-                        ? 'memenuhi'
-                        : ($count === 0 ? 'belum diisi' : 'kurang');
+                ? 'memenuhi'
+                : ($count === 0 ? 'belum diisi' : 'kurang');
             $data[$key] = ['count' => $count, 'min' => $min, 'status' => $status];
         }
 
-        // Tambahan rasio dan keterangan khusus
         $dosenTetap = $data['dosen_tetap_pt']['count'] ?? 0;
         $tidakTetap = $data['dosen_tidak_tetap']['count'] ?? 0;
         if ($dosenTetap > 0) {
-            // Rasio
             $data['dosen_tetap_pt_ratio'] = $this->ratio($dosenTetap, SeleksiMahasiswaBaru::sum('mhs_aktif_reguler'));
-            // Cek 30%
             if (($tidakTetap / $dosenTetap) > 0.3) {
-                $data['dosen_tidak_tetap']['keterangan'] =
-                    'jumlah tidak tetap melebihi persentase';
+                $data['dosen_tidak_tetap']['keterangan'] = 'jumlah tidak tetap melebihi persentase';
             }
         }
 
         return $data;
     }
 
-    /**
-     * API endpoint untuk rekap data
-     */
     public function index(Request $request)
     {
-        $request->validate(['user_id' => 'required|exists:users,id']);
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'tahun'   => 'nullable|string',
+        ]);
+
         $userId = $request->input('user_id');
-        $rekap  = $this->getRekap($userId);
+        $rekap = $this->getRekap($userId);
 
         return response()->json([
             'status'  => 'success',
@@ -171,23 +167,60 @@ public function getRekap(?int $userId = null, ?string $tahunAjaran = null): arra
         ]);
     }
 
-    /**
-     * Hitung GCD untuk rasio
-     */
     private function gcd(int $a, int $b): int
     {
         return $b === 0 ? $a : $this->gcd($b, $a % $b);
     }
 
-    /**
-     * Buat string rasio a:b
-     */
     private function ratio(int $a, int $b): string
     {
-        if ($b === 0) {
-            return 'n/a';
-        }
+        if ($b === 0) return 'n/a';
         $g = $this->gcd($a, $b);
         return ($a / $g) . ':' . ($b / $g);
     }
+
+    private function selectTahun($query, $tahunInput, string $modelKey)
+{
+    if (!$tahunInput) return $query;
+
+    $tahunInput = trim((string) $tahunInput);
+    $semester = request()->input('semester'); // ambil semester dari URL juga
+
+    $usesTahunAjaranId = [
+        'dosen_industri_praktisi',
+        'dosen_pembimbing_ta',
+        'dosen_tetap_pt',
+        'dosen_tidak_tetap',
+        'ewmp_dosen',
+        'kerjasama_tridharma_pendidikan',
+        'kerjasama_tridharma_penelitian',
+        'kerjasama_tridharma_pengmas',
+        'mahasiswa_asing',
+        'seleksi_mahasiswa_baru',
+    ];
+
+    $customTahunColumns = [
+        'penelitian_dtps' => 'tahun_penelitian',
+        // tambahkan model lain di sini jika perlu
+    ];
+
+    if (in_array($modelKey, $usesTahunAjaranId)) {
+        if (!$semester) {
+            // Default ke "ganjil" jika tidak dikirim
+            $semester = 'ganjil';
+        }
+
+        $ta = TahunAjaranSemester::where('tahun_ajaran', $tahunInput)
+            ->where('semester', $semester)
+            ->first();
+
+        return $ta
+            ? $query->where('tahun_ajaran_id', $ta->id)
+            : $query->whereRaw('0 = 1');
+    }
+
+    $column = $customTahunColumns[$modelKey] ?? 'tahun';
+    return $query->where($column, $tahunInput);
+}
+
 }

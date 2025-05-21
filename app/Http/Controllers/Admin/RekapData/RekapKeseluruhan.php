@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\RekapData;
+namespace App\Http\Controllers\Admin\RekapData;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
-use App\Models\User;
 
-// Import semua model untuk rekap
 use App\Models\BukuChapterDosen;
 use App\Models\BukuChapterMahasiswa;
 use App\Models\DosenIndustriPraktisi;
@@ -51,12 +49,47 @@ use App\Models\TeknologiKaryaDosen;
 use App\Models\TeknologiKaryaMahasiswa;
 use App\Models\UserProfile;
 
-class RekapUtamaController extends Controller
+class RekapKeseluruhan extends Controller
 {
-    public function getRekap(int $userId): array
+    public function index(Request $request)
     {
-        if (!User::find($userId)) return [];
+        // Ambil list tahun ajaran untuk dropdown
+        $tahunAjaranList = TahunAjaranSemester::select('tahun_ajaran', 'semester', 'slug')
+            ->orderByDesc('tahun_ajaran')
+            ->orderByDesc('semester')
+            ->get();
 
+        // Ambil slug dari query string (?tahun_ajaran=)
+        $slug = $request->input('tahun_ajaran');
+
+        // Cari objek tahun ajaran berdasarkan slug, jika tidak ada pilih terbaru
+        if ($slug) {
+            $tahunAjaranObj = TahunAjaranSemester::where('slug', $slug)->first();
+            if (!$tahunAjaranObj) {
+                abort(404, 'Tahun ajaran tidak ditemukan.');
+            }
+        } else {
+            $tahunAjaranObj = TahunAjaranSemester::orderByDesc('tahun_ajaran')->orderByDesc('semester')->first();
+        }
+
+        $tahun_ajaran = $tahunAjaranObj ? $tahunAjaranObj->tahun_ajaran : null;
+        $semester     = $tahunAjaranObj ? $tahunAjaranObj->semester : null;
+        $selected_slug = $tahunAjaranObj ? $tahunAjaranObj->slug : null;
+
+        // Kirim tahun_ajaran dan semester ke getRekap
+        $rows = $this->getRekap($tahun_ajaran, $semester);
+
+        return view('pages.admin.rekap-data.rekap-keseluruhan.index', [
+            'tahun_ajaran'    => $tahun_ajaran,
+            'semester'        => $semester,
+            'tahunAjaranList' => $tahunAjaranList,
+            'rows'            => $rows,
+            'selected_slug'   => $selected_slug,
+        ]);
+    }
+
+    public function getRekap($tahun = null, $semester = null): array
+    {
         $models = [
             'Tabel 1.1 Kerjasama Tridharma - Pendidikan' => KerjasamaTridharmaPendidikan::class,
             'Tabel 1.2 Kerjasama Tridharma - Penelitian' => KerjasamaTridharmaPenelitian::class,
@@ -99,7 +132,6 @@ class RekapUtamaController extends Controller
             'Tabel 8.f.5) HKI Mahasiswa - Hak Cipta' => HkiHakCiptaMahasiswa::class,
             'Tabel 8.f.6) Teknologi Mahasiswa' => TeknologiKaryaMahasiswa::class,
             'Tabel 8.f.7) Buku Mahasiswa' => BukuChapterMahasiswa::class,
-            'user_profile' => UserProfile::class,
         ];
 
         $minThresholds = [
@@ -115,54 +147,9 @@ class RekapUtamaController extends Controller
             'Tabel 3.b.1) Pengakuan/Rekognisi Dosen' => 1,
         ];
 
-        $tahun = request()->input('tahun');
-        $semester = request()->input('semester');
-        $data = [];
-
-        foreach ($models as $key => $modelClass) {
-            $query = $modelClass::where('user_id', $userId);
-            $query = $this->selectTahun($query, $tahun, $semester, $key);
-
-            $count = $query->count();
-            $min = $minThresholds[$key] ?? 1;
-            $status = $count >= $min ? 'memenuhi' : ($count === 0 ? 'belum diisi' : 'kurang');
-            $data[$key] = ['count' => $count, 'min' => $min, 'status' => $status];
-        }
-
-        // Rasio & peringatan khusus
-        $dosenTetap = $data['Tabel 3.a.1) Dosen Tetap Perguruan Tinggi']['count'] ?? 0;
-        $tidakTetap = $data['Tabel 3.a.4) Dosen Tidak Tetap']['count'] ?? 0;
-        if ($dosenTetap > 0) {
-            $data['dosen_tetap_pt_ratio'] = $this->ratio($dosenTetap, SeleksiMahasiswaBaru::sum('mhs_aktif_reguler'));
-            if (($tidakTetap / $dosenTetap) > 0.3) {
-                $data['Tabel 3.a.4) Dosen Tidak Tetap']['keterangan'] = 'jumlah tidak tetap melebihi persentase';
-            }
-        }
-
-        return $data;
-    }
-
-    public function index(Request $request)
-    {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'tahun' => 'nullable|string',
-            'semester' => 'nullable|string',
-        ]);
-
-        $userId = $request->input('user_id');
-        $rekap = $this->getRekap($userId);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Rekap data',
-            'data' => $rekap,
-        ]);
-    }
-
-    private function selectTahun($query, $tahunInput, $semesterInput, string $modelKey)
-    {
-        if (!$tahunInput) return $query;
+        $customTahunColumns = [
+            PenelitianDtps::class => 'tahun_penelitian',
+        ];
 
         $usesTahunAjaranId = [
             DosenIndustriPraktisi::class,
@@ -177,21 +164,79 @@ class RekapUtamaController extends Controller
             SeleksiMahasiswaBaru::class,
         ];
 
-        $customTahunColumns = [
-            PenelitianDtps::class => 'tahun_penelitian',
-        ];
+        $data = [];
+        $dosenTetap = null;
+        $tidakTetap = null;
 
-        if (in_array($modelKey, $usesTahunAjaranId)) {
+        foreach ($models as $label => $modelClass) {
+            $query = $modelClass::query();
+            $query = $this->selectTahun($query, $tahun, $semester, $modelClass, $usesTahunAjaranId, $customTahunColumns);
+
+            $count = $query->count();
+            $min = $minThresholds[$label] ?? 1;
+            $status = $count >= $min ? 'memenuhi' : ($count === 0 ? 'belum diisi' : 'kurang');
+            $keterangan = $status;
+
+            if ($label === 'Tabel 3.a.1) Dosen Tetap Perguruan Tinggi') {
+                $dosenTetap = $count;
+            }
+            if ($label === 'Tabel 3.a.4) Dosen Tidak Tetap') {
+                $tidakTetap = $count;
+            }
+
+            $data[] = [
+                'label'      => $label,
+                'count'      => $count,
+                'min'        => $min,
+                'status'     => $status,
+                'keterangan' => $keterangan,
+                'tipe'       => 'utama',
+            ];
+        }
+
+        // Tambah baris khusus rasio jika perlu
+        if ($dosenTetap > 0) {
+            $rasio = $this->ratio($dosenTetap, SeleksiMahasiswaBaru::sum('mhs_aktif_reguler'));
+            $data[] = [
+                'label'      => 'Rasio Dosen Tetap PT : Mahasiswa Aktif Reguler',
+                'count'      => $rasio,
+                'min'        => '-',
+                'status'     => '-',
+                'keterangan' => '-',
+                'tipe'       => 'rasio',
+            ];
+
+            if ($tidakTetap !== null && ($tidakTetap / $dosenTetap) > 0.3) {
+                foreach ($data as &$row) {
+                    if ($row['label'] === 'Tabel 3.a.4) Dosen Tidak Tetap') {
+                        $row['keterangan'] = 'jumlah tidak tetap melebihi persentase';
+                    }
+                }
+                unset($row);
+            }
+        }
+
+        return $data;
+    }
+
+    private function selectTahun($query, $tahunInput, $semesterInput, $modelClass, $usesTahunAjaranId, $customTahunColumns)
+    {
+        if (!$tahunInput) return $query;
+
+        if (in_array($modelClass, $usesTahunAjaranId)) {
             $semester = $semesterInput ?: 'ganjil';
             $ta = TahunAjaranSemester::where('tahun_ajaran', $tahunInput)
-                ->where('semester', $semester)
+                ->whereRaw('LOWER(semester) = ?', [strtolower($semester)])
                 ->first();
 
             return $ta ? $query->where('tahun_ajaran_id', $ta->id) : $query->whereRaw('0 = 1');
         }
 
-        $column = $customTahunColumns[$modelKey] ?? 'tahun';
-        return $query->where($column, $tahunInput);
+        $column = $customTahunColumns[$modelClass] ?? null;
+        if ($column) {
+            return $query->where($column, $tahunInput);
+        }
+        return $query;
     }
 
     private function gcd(int $a, int $b): int

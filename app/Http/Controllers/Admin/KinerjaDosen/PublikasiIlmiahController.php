@@ -27,9 +27,17 @@ class PublikasiIlmiahController extends Controller
         $publikasi = PublikasiIlmiahDosen::with('user')->where('tahun', $tahun)->get();
         // Get the totals grouped by 'jenis_artikel' for the given year and user
         $total = PublikasiIlmiahDosen::where('user_id', $userId)
-    ->whereNull('deleted_at')
     ->where('tahun', $tahun)
-    ->count();
+    ->whereNull('deleted_at')
+    ->get()
+    ->sum(function ($item) {
+        $raw = trim($item->judul_artikel);
+        $sanitized = str_replace(',', '.', $raw);
+        $sanitized = preg_replace('/[^0-9.]/', '', $sanitized);
+        return is_numeric($sanitized) ? (float) $sanitized : 0;
+    });
+
+
 
 
 
@@ -109,19 +117,37 @@ class PublikasiIlmiahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        try {
-            $dosen = User::with('profile', 'publikasi_ilmiah')->whereId($id)->firstOrFail();
+   public function show(string $id)
+{
+    try {
+        $dosen = User::with('profile', 'publikasi_ilmiah')->findOrFail($id);
 
-            return view('pages.admin.petugas.kinerja-dosen.publikasi-ilmiah.detail', [
-                'data_dosen' => $dosen,
-                'dosenId' => $dosen->id,
-            ]);
-        } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage());
-        }
+        $total = $dosen->publikasi_ilmiah
+            ->filter(function ($item) {
+                return is_null($item->deleted_at);
+            })
+            ->sum(function ($item) {
+                $raw = trim($item->judul_artikel);
+
+                // Ganti koma jadi titik jika ada, dan buang karakter selain angka dan titik
+                $sanitized = str_replace(',', '.', $raw);
+                $sanitized = preg_replace('/[^0-9.]/', '', $sanitized);
+
+                return is_numeric($sanitized) ? (float) $sanitized : 0;
+            });
+
+        return view('pages.admin.petugas.kinerja-dosen.publikasi-ilmiah.detail', [
+            'data_dosen' => $dosen,
+            'totals'     => $total,
+            'dosenId'    => $dosen->id,
+        ]);
+    } catch (\Exception $e) {
+        return back()->withErrors($e->getMessage());
     }
+}
+
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -189,7 +215,7 @@ class PublikasiIlmiahController extends Controller
     {
         try {
             $publikasi = PublikasiIlmiahDosen::findOrFail($id);
-            $delete = $dosenPraktisi->delete();
+            $delete = $publikasi->delete();
 
             if ($delete) {
                 return redirect()->route('admin.kinerja-dosen.publikasi-ilmiah.index', $tahunAjaran)

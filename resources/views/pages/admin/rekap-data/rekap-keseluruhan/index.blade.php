@@ -1,4 +1,4 @@
-@extends('layouts.rekap')
+@extends('layouts.dashboard')
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -13,35 +13,30 @@
             @foreach($tahunAjaranList as $ta)
                 <option 
                     value="{{ $ta->slug }}"
-                    {{ $tahun_ajaran == $ta->slug ? 'selected' : '' }}>
+                    {{ $selected_slug == $ta->slug ? 'selected' : '' }}>
                     {{ $ta->tahun_ajaran }} ({{ ucfirst($ta->semester) }})
                 </option>
             @endforeach
         </select>
-    </div>
+            </div>
 
     {{-- Script URL Redirect --}}
     <script>
         function changeTahunAjaran(select) {
-            let selectedSlug = select.value;
-            let dosenId = "{{ $dosenId ?? '0' }}"; // pastikan variabel ini tersedia dari controller
-
-            if (selectedSlug && dosenId) {
-                const routeTemplate = "{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '__SLUG__', 'dosen_id' => '__DOSEN__']) }}";
-                const finalUrl = routeTemplate
-                    .replace('__SLUG__', encodeURIComponent(selectedSlug))
-                    .replace('__DOSEN__', encodeURIComponent(dosenId));
-
-                window.location.href = finalUrl;
+            var selectedSlug = select.value;
+            if (selectedSlug) {
+                window.location.href = "{{ url()->current() }}?tahun_ajaran=" + encodeURIComponent(selectedSlug);
             }
         }
     </script>
+
+    {{-- Tampilkan pesan jika tidak ada data --}}
 
 
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="card-header">TABEL 1 | Kerjasama Tridharma</h5>
+                <h5 class="card-header">Rekap keseluruhan data Dosen</h5>
                 <hr class="my-0" />
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -51,19 +46,27 @@
                                     <th>No</th>
                                     <th>Komponen</th>
                                     <th>Total</th>
-                                    <th>Minimum</th>
-                                    <th>Keterangan</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                 @foreach($rows as $i => $row)
+                                 @foreach($rows as $row)
+                                    @if($row['tipe'] === 'utama')
                                     <tr>
-                                        <td class="text-center">{{ $i + 1 }}</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td class="text-wrap">{{ $row['label'] }}</td>
                                         <td class="text-center">{{ $row['count'] }}</td>
-                                        <td class="text-center">{{ $row['min'] }}</td>
-                                        <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
+                                    
                                     </tr>
+                                    @endif
+                                @endforeach
+                                {{-- Tampilkan rasio di luar tabel utama jika mau --}}
+                                @foreach($rows as $row) 
+                                    @if($row['tipe'] === 'rasio')
+                                        <tr>
+                                            <td colspan="5" class="fw-bold bg-light">{{ $row['label'] }}: {{ $row['count'] }}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
 
                             </tbody>
