@@ -36,22 +36,27 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+    table-layout: fixed;
             page-break-inside: auto;
         }
-        thead {
-            display: table-header-group;
-        }
-        tfoot {
-            display: table-footer-group;
-        }
+thead {
+    display: table-header-group;
+}
+tfoot {
+    display: table-footer-group;
+}
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+
         th, td {
-            border: 1px solid #000;
-            padding: 5px;
-            text-align: left;
-            vertical-align: top;
-            font-size: 12px;
-            page-break-inside: avoid;
-        }
+    word-break: break-word;
+    white-space: normal;
+    font-size: 10px; /* kecilkan ukuran */
+    padding: 4px;
+    border: 1px solid #000;
+}
         th {
             background-color: #f2f2f2;
             font-weight: bold;
@@ -694,7 +699,7 @@ $sumberDana = [
                     <th rowspan="2">Tahun <br>(YYYY)</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
             @foreach ($data->publikasi_ilmiah as $publik)
 <tr>
 <td class="text-center">{{ $loop->iteration }}</td>
@@ -724,7 +729,7 @@ $sumberDana = [
                     <th>Jumlah Sitasi</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->sitasi_karya_dosen as $sitasi)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
@@ -748,7 +753,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">z
+            <tbody>z
                 <tr>
                     <td class="text-center fw-bold">I</td>
                     <td class="text-wrap fw-bold" colspan="4">
@@ -778,7 +783,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">II</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -810,7 +815,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">III</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -840,7 +845,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">IV</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -875,7 +880,7 @@ $sumberDana = [
                     <th>Maks</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->ipk_lulusan as $ipk)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -909,7 +914,7 @@ $sumberDana = [
                     <th>akhir TS</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->masa_studi_lulusan as $data)
                 <tr>
                     <td class="text-center">{{ $data->masa_studi }}</td>
@@ -943,7 +948,7 @@ $sumberDana = [
                     <th>Internasional</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->prestasi_akademik as $akademik)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -981,7 +986,7 @@ $sumberDana = [
                     <th>Internasional</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->prestasi_nonakademik as $nonakademik)
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
@@ -1013,7 +1018,7 @@ $sumberDana = [
                     <th>Jumlah Tanggapan <br>Kepuasan Pengguna <br>yang Terlacak</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->eval_kepuasan_pengguna as $pengguna)
                     <tr>
                         <td class="text-center">{{ $pengguna->tahun }}</td>
@@ -1051,7 +1056,7 @@ $sumberDana = [
                     <th>Tinggi</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->eval_kesesuaian_kerja as $data)
                 @php
                     $persentase = $data->jumlah_lulusan_terlacak > 0
@@ -1125,7 +1130,7 @@ $sumberDana = [
                     <th>Multinasional/ <br>Internasional</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->eval_tempat_kerja as $data)
                 <tr>
                     <td class="text-center">{{$data->tahun}}</td>
@@ -1168,7 +1173,7 @@ $sumberDana = [
                     <th>WT > 6 bulan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->eval_waktu_tunggu as $data)
                 <tr>
                     <td class="text-center">{{ $data->masa_studi }}</td>
@@ -1208,7 +1213,7 @@ $sumberDana = [
                     <th>Tahun <br>(YYYY)</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->integrasi_penelitian as $penelitian)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1240,7 +1245,7 @@ $sumberDana = [
                     <th>Kurang</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->kepuasan_mahasiswa as $kepuasan)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1293,7 +1298,7 @@ $sumberDana = [
                     <th>Keteram- <br>pilan <br>Khusus</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->kurikulum_pembelajaran as $kurikulum)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1329,7 +1334,7 @@ $sumberDana = [
                     <th>Judul Kegiatan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->penelitian_mahasiswa as $penelitian)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1355,7 +1360,7 @@ $sumberDana = [
                     <th>Judul <br>Tesis/Disertasi</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->rujukan_tesis_mahasiswa as $rujukan)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1380,7 +1385,7 @@ $sumberDana = [
                     <th>Judul Kegiatan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->pkm_dtps_mahasiswa as $pkm)
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
@@ -1407,7 +1412,7 @@ $sumberDana = [
                     <th>Tahun <br>(YYYY)</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
             @foreach ($data->produk_jasa_mahasiswa as $index => $produk)
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
@@ -1434,7 +1439,7 @@ $sumberDana = [
                     <th rowspan="2">Tahun <br>(YYYY)</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
             @foreach ($data->publikasi_mahasiswa as $publik)
 <tr>
 <td class="text-center">{{ $loop->iteration }}</td>
@@ -1464,7 +1469,7 @@ $sumberDana = [
                     <th>Jumlah Sitasi</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->sitasi_karya_mahasiswa as $sitasi)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
@@ -1488,7 +1493,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">z
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">I</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -1518,7 +1523,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">II</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -1527,8 +1532,8 @@ $sumberDana = [
                         Sirkuit Terpadu, e) dll.)
                     </td>
                 </tr>
-                <tr>
                     @foreach ($data->hki_cipta_mahasiswa as $hkicipta)
+                <tr>
                         <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
                         <td class="text-wrap">{{ $hkicipta->luaran_penelitian }}</td>
                         <td class="text-center">{{ $hkicipta->tahun }}</td>
@@ -1550,7 +1555,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">III</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -1580,7 +1585,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">IV</td>
                     <td class="text-wrap fw-bold" colspan="3">

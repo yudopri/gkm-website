@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\KinerjaDosen\LuaranLain\HkiHakciptaApiController;
 use App\Http\Controllers\Api\KinerjaDosen\LuaranLain\HkiPatenApiController;
 use App\Http\Controllers\Api\KinerjaDosen\LuaranLain\TeknologiKaryaApiController;
 use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\Api\PkmDtpsMahasiswaController;
 use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
 use App\Http\Controllers\Api\DataDosen\DosenPraktisiApiController;
 use App\Http\Controllers\Api\DataDosen\DosenTetapApiController;
@@ -90,6 +91,7 @@ Route::middleware('auth:sanctum')->apiResource('/kepuasan-mahasiswa', KepuasanMa
 Route::middleware('auth:sanctum')->apiResource('/kurikulum-pembelajaran', KurikulumPembelajaranController::class);
 Route::middleware('auth:sanctum')->apiResource('/penelitian-mahasiswa', PenelitianMahasiswaController::class);
 Route::middleware('auth:sanctum')->apiResource('/rujukan-tesis', RujukanTesisController::class);
+Route::middleware('auth:sanctum')->apiResource('/pkm-mahasiswa', PkmDtpsMahasiswaController::class);
 Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenController::class);
 Route::middleware('auth:sanctum')->apiResource('/luaran-bukuchapter-mahasiswa', BukuChapterMahasiswaController::class);
 Route::middleware('auth:sanctum')->apiResource('/luaran-hkihakcipta-mahasiswa', HkiHakCiptaMahasiswaController::class);
