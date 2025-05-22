@@ -101,7 +101,9 @@ class DosenPraktisiController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_praktisi')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'dosen_praktisi'=> function ($query) {
+        $query->whereNotNull('tahun_ajaran_id');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.data-dosen.dosen-praktisi.detail-dosen-praktisi', [
                 'data_dosen' => $dosen,

@@ -22,17 +22,24 @@ class PagelaranMahasiswa2Controller extends Controller
     public function index($tahun_ajaran, int $dosenId)
     {
         // 1. Daftar tahun ajaran untuk dropdown
-        $tahunAjaranList = TahunAjaranSemester::all()->map(function ($item) {
-            $item->tahun_ajaran = str_replace('&', '-', $item->tahun_ajaran);
-            return $item;
-        });
+       $tahunAjaranList = TahunAjaranSemester::orderBy('id', 'desc')->get();
     
         // 2. Validasi dosen_id
         $user = User::find($dosenId);
         if (! $user) {
             abort(404, 'Dosen tidak ditemukan');
         }
-    
+    // 3. Ambil objek tahun ajaran berdasarkan slug
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahun_ajaran)->first();
+        if (! $tahunAjaranObj) {
+            abort(404, 'Tahun ajaran tidak ditemukan.');
+        }
+
+        // 4. Inject ke dalam request untuk digunakan oleh RekapUtamaController
+        request()->merge([
+            'tahun'    => $tahunAjaranObj->tahun_ajaran,
+            'semester' => $tahunAjaranObj->semester,
+        ]);
         // 3. Ambil data rekap seluruh metrik
         $rekapArray = (new RekapUtamaController)->getRekap($dosenId);
     
@@ -49,7 +56,7 @@ class PagelaranMahasiswa2Controller extends Controller
         ];
     
         $luaranMHSKeyAliases = [
-            'publikasi_mahasiswa' => 'Tabel 8.f.1| Pagelaran/Pameran/Presentasi/Publikasi Ilmiah Mahasiswa	',
+        'publikasi_mahasiswa' => 'Tabel 8.f.1| Pagelaran/Pameran/Presentasi/Publikasi Ilmiah Mahasiswa	',
         'sitasi_karya_mahasiswa' => 'Tabel 8.f.2| Karya Ilmiah Mahasiswa yang Disitasi	',
         'produk_jasa_mahasiswa' => 'Tabel 8.f.3| Produk/Jasa Mahasiswa yang Diadopsi oleh Industri/Masyarakat',
         'hki_paten_mahasiswa'=>'Tabel 8.f.4| Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Paten, Paten Sederhana)	',
@@ -64,6 +71,7 @@ class PagelaranMahasiswa2Controller extends Controller
             return [
                 'label'     => $luaranMHSKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
                 'count'     => $rekapArray[$key]['count'] ?? 0,
+                 'min'       => $rekapArray[$key]['min'] ?? '-', 
                 'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
             ];
         }, $luaranMHSKeys);
@@ -72,6 +80,7 @@ class PagelaranMahasiswa2Controller extends Controller
         return view('pages.admin.rekap-data.pagelaran-pameran-presentasi-publikasi-ilmiah-mahasiswa.index', [
             'tahun_ajaran'    => $tahun_ajaran,
             'tahunAjaranList' => $tahunAjaranList,
+            'dosenId'         => $dosenId,
             'dosen'           => $user,
             'rows'            => $rows,
         ]);

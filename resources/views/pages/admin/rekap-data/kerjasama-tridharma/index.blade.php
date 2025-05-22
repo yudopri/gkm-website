@@ -6,8 +6,37 @@
     {{-- Header dan Dropdown Tahun Ajaran --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold mb-0">Rekap Data Dosen</h4>
-        {{-- Dropdown TA bisa ditambahkan kembali jika perlu --}}
+
+        {{-- Dropdown Tahun Ajaran pakai slug --}}
+        <select class="form-select" id="tahunAjaranSelect" onchange="changeTahunAjaran(this)">
+            <option value="">-- Pilih Tahun Ajaran --</option>
+            @foreach($tahunAjaranList as $ta)
+                <option 
+                    value="{{ $ta->slug }}"
+                    {{ $tahun_ajaran == $ta->slug ? 'selected' : '' }}>
+                    {{ $ta->tahun_ajaran }} ({{ ucfirst($ta->semester) }})
+                </option>
+            @endforeach
+        </select>
     </div>
+
+    {{-- Script URL Redirect --}}
+    <script>
+        function changeTahunAjaran(select) {
+            let selectedSlug = select.value;
+            let dosenId = "{{ $dosenId ?? '0' }}"; // pastikan variabel ini tersedia dari controller
+
+            if (selectedSlug && dosenId) {
+                const routeTemplate = "{{ route('admin.rekap-data.kerjasama-tridharma', ['tahun_ajaran' => '__SLUG__', 'dosen_id' => '__DOSEN__']) }}";
+                const finalUrl = routeTemplate
+                    .replace('__SLUG__', encodeURIComponent(selectedSlug))
+                    .replace('__DOSEN__', encodeURIComponent(dosenId));
+
+                window.location.href = finalUrl;
+            }
+        }
+    </script>
+
 
     <div class="row">
         <div class="col-md-12">
@@ -22,15 +51,17 @@
                                     <th>No</th>
                                     <th>Komponen</th>
                                     <th>Total</th>
+                                    <th>Minimum</th>
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                @foreach($rows as $i => $row)
+                                 @foreach($rows as $i => $row)
                                     <tr>
                                         <td class="text-center">{{ $i + 1 }}</td>
                                         <td class="text-wrap">{{ $row['label'] }}</td>
                                         <td class="text-center">{{ $row['count'] }}</td>
+                                        <td class="text-center">{{ $row['min'] }}</td>
                                         <td class="text-wrap">{{ ucfirst($row['keterangan']) }}</td>
                                     </tr>
                                 @endforeach

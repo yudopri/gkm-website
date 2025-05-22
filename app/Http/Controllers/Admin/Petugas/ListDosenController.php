@@ -13,6 +13,11 @@ use App\Models\SeleksiMahasiswaBaru;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use App\Models\PublikasiIlmiahDosen;
+use App\Models\PublikasiMahasiswa;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use Illuminate\Support\Facades\Log;
+use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 
 
 class ListDosenController extends Controller
@@ -112,8 +117,25 @@ class ListDosenController extends Controller
                 SUM(maba_transfer) as total_maba_transfer,
                 SUM(COALESCE(mhs_aktif_reguler, 0) + COALESCE(mhs_aktif_transfer, 0)) as total_mhs_aktif
             ')->first();
+            $totalpublik = PublikasiIlmiahDosen::whereNull('deleted_at')
+    ->get()
+    ->sum(function ($item) {
+        $raw = trim($item->judul_artikel);
+        $sanitized = str_replace(',', '.', $raw);
+        $sanitized = preg_replace('/[^0-9.]/', '', $sanitized);
+        return is_numeric($sanitized) ? (float) $sanitized : 0;
+    });
+    $totalpublikmaha = PublikasiMahasiswa::whereNull('deleted_at')
+    ->get()
+    ->sum(function ($item) {
+        $raw = trim($item->judul_artikel);
+        $sanitized = str_replace(',', '.', $raw);
+        $sanitized = preg_replace('/[^0-9.]/', '', $sanitized);
+        return is_numeric($sanitized) ? (float) $sanitized : 0;
+    });
 
-            $pdf = Pdf::loadView('pages.admin.petugas.list-dosen.print', compact('data', 'total'))->setPaper('legal', 'landscape');
+
+            $pdf = Pdf::loadView('pages.admin.petugas.list-dosen.print', compact('data', 'total','totalpublik','totalpublikmaha'))->setPaper('legal', 'landscape');
 
             $filename = 'laporan-gkm-' . Str::slug($data->name) . '-' . time()  . '.pdf';
 
@@ -2024,98 +2046,148 @@ public function importExcel(Request $request)
     $request->validate([
         'file' => 'required|mimes:xlsx,csv',
     ]);
+ $namaDosen = $request->input('nama_dosen');
 
-    $filePath = $request->file('file')->store('temp');
-    $fullPath = Storage::path($filePath);
-    $spreadsheet = IOFactory::load($fullPath);
-    \App\Models\KerjasamaTridharmaPendidikan::truncate();
-    \App\Models\KerjasamaTridharmaPenelitian::truncate();
-    \App\Models\KerjasamaTridharmaPengmas::truncate();
-    \App\Models\SeleksiMahasiswaBaru::truncate();
-    \App\Models\MahasiswaAsing::truncate();
-    \App\Models\DosenTetapPT::truncate();
-    \App\Models\DosenTidakTetap::truncate();
-    \App\Models\DosenPembimbingTA::truncate();
-    \App\Models\EwmpDosen::truncate();
-    \App\Models\DosenIndustriPraktisi::truncate();
-    \App\Models\RekognisiDosen::truncate();
-    \App\Models\PenelitianDtps::truncate();
-    \App\Models\PkmDtps::truncate();
-    \App\Models\ProdukTeradopsiDosen::truncate();
-    \App\Models\PublikasiIlmiahDosen::truncate();
-    \App\Models\SitasiKaryaDosen::truncate();
-    \App\Models\HkiPatenDosen::truncate();
-    \App\Models\HkiHakciptaDosen::truncate();
-    \App\Models\TeknologiKaryaDosen::truncate();
-    \App\Models\BukuChapterDosen::truncate();
-    \App\Models\IpkLulusan::truncate();
-    \App\Models\MasaStudiLulusan::truncate();
-    \App\Models\PrestasiAkademik::truncate();
-    \App\Models\PrestasiNonakademik::truncate();
-    \App\Models\EvalKepuasanPengguna::truncate();
-    \App\Models\EvalKesesuaianKerja::truncate();
-    \App\Models\EvalTempatKerja::truncate();
-    \App\Models\EvalWaktuTunggu::truncate();
-    \App\Models\IntegrasiPenelitian::truncate();
-    \App\Models\KepuasanMahasiswa::truncate();
-    \App\Models\KurikulumPembelajaran::truncate();
-    \App\Models\DtpsPenelitianMahasiswa::truncate();
-    \App\Models\DtpsRujukanTesis::truncate();
-    \App\Models\PkmDtpsMahasiswa::truncate();
-    \App\Models\ProdukJasaMahasiswa::truncate();
-    \App\Models\PublikasiMahasiswa::truncate();
-    \App\Models\ProdukJasaMahasiswa::truncate();
-    \App\Models\SitasiKaryaMahasiswa::truncate();
-    \App\Models\HkiPatenMahasiswa::truncate();
-    \App\Models\HkiHakCiptaMahasiswa::truncate();
-    \App\Models\TeknologiKaryaMahasiswa::truncate();
-    \App\Models\BukuChapterMahasiswa::truncate();
-    $userId = auth()->id();
+$user = \App\Models\User::whereHas('profile', function($query) use ($namaDosen) {
+    $query->where('nama', $namaDosen);
+})->first();
 
+if (!$user) {
+    return back()->withErrors(['error' => "User dengan nama dosen '$namaDosen' tidak ditemukan."]);
+}
+
+$userId = $user->id;
+
+   
+     \App\Models\KerjasamaTridharmaPendidikan::where('user_id', $userId)->delete();
+    \App\Models\KerjasamaTridharmaPenelitian::where('user_id', $userId)->delete();
+    \App\Models\KerjasamaTridharmaPengmas::where('user_id', $userId)->delete();
+    \App\Models\SeleksiMahasiswaBaru::where('user_id', $userId)->delete();
+    \App\Models\MahasiswaAsing::where('user_id', $userId)->delete();
+    \App\Models\DosenTetapPT::where('user_id', $userId)->delete();
+    \App\Models\DosenTidakTetap::where('user_id', $userId)->delete();
+    \App\Models\DosenPembimbingTA::where('user_id', $userId)->delete();
+    \App\Models\EwmpDosen::where('user_id', $userId)->delete();
+    \App\Models\DosenIndustriPraktisi::where('user_id', $userId)->delete();
+    \App\Models\RekognisiDosen::where('user_id', $userId)->delete();
+    \App\Models\PenelitianDtps::where('user_id', $userId)->delete();
+    \App\Models\PkmDtps::where('user_id', $userId)->delete();
+    \App\Models\ProdukTeradopsiDosen::where('user_id', $userId)->delete();
+    \App\Models\PublikasiIlmiahDosen::where('user_id', $userId)->delete();
+    \App\Models\SitasiKaryaDosen::where('user_id', $userId)->delete();
+    \App\Models\HkiPatenDosen::where('user_id', $userId)->delete();
+    \App\Models\HkiHakciptaDosen::where('user_id', $userId)->delete();
+    \App\Models\TeknologiKaryaDosen::where('user_id', $userId)->delete();
+    \App\Models\BukuChapterDosen::where('user_id', $userId)->delete();
+    \App\Models\IpkLulusan::where('user_id', $userId)->delete();
+    \App\Models\MasaStudiLulusan::where('user_id', $userId)->delete();
+    \App\Models\PrestasiAkademikMhs::where('user_id', $userId)->delete();
+    \App\Models\PrestasiNonakademikMhs::where('user_id', $userId)->delete();
+    \App\Models\EvalKepuasanPengguna::where('user_id', $userId)->delete();
+    \App\Models\EvalKesesuaianKerja::where('user_id', $userId)->delete();
+    \App\Models\EvalTempatKerja::where('user_id', $userId)->delete();
+    \App\Models\EvalWaktuTunggu::where('user_id', $userId)->delete();
+    \App\Models\IntegrasiPenelitian::where('user_id', $userId)->delete();
+    \App\Models\KepuasanMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\KurikulumPembelajaran::where('user_id', $userId)->delete();
+    \App\Models\DtpsPenelitianMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\DtpsRujukanTesis::where('user_id', $userId)->delete();
+    \App\Models\PkmDtpsMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\ProdukJasaMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\PublikasiMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\ProdukJasaMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\SitasiKaryaMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\HkiPatenMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\HkiHakCiptaMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\TeknologiKaryaMahasiswa::where('user_id', $userId)->delete();
+    \App\Models\BukuChapterMahasiswa::where('user_id', $userId)->delete();
+    
+  $filePath = $request->file('file')->store('temp');
+$fullPath = Storage::path($filePath);
+$spreadsheet = IOFactory::load($fullPath);
     foreach ($spreadsheet->getSheetNames() as $sheetIndex => $sheetName) {
         $sheet = $spreadsheet->getSheet($sheetIndex);
-        $rows = $sheet->toArray();
+       // Ambil seluruh data dari sheet
+$data = $sheet->toArray(null, true, true, true);
 
-        if (empty($rows)) continue;
+if (empty($data)) continue; // Lewati sheet kosong
 
-        // Gabung header dari beberapa baris pertama
-        $headerRows = [
-            $rows[0] ?? [],
-            $rows[1] ?? [],
-            $rows[2] ?? [],
-        ];
+$startIndex = null;
+$maxHeaderColumns = 0;
 
-        $combinedHeaders = [];
-        foreach ($headerRows[0] as $index => $header) {
-            $fullHeaderParts = [];
-            foreach ($headerRows as $row) {
-                if (!empty($row[$index])) {
-                    $fullHeaderParts[] = trim($row[$index]);
-                }
+foreach ($data as $index => $row) {
+    // Ambil kolom tidak kosong
+    $nonEmptyKeys = array_keys(array_filter($row, fn($val) => trim((string) $val) !== ''));
+
+    // Hitung kolom teks
+    $textColumnCount = 0;
+    foreach ($nonEmptyKeys as $key) {
+        if (!is_numeric($row[$key])) {
+            $textColumnCount++;
+        }
+    }
+
+    if ($textColumnCount > 0) {
+        // Ambil nilai kolom yang tidak kosong
+        $headerCandidate = array_values(array_filter($row, fn($val) => trim((string) $val) !== ''));
+        
+        // Pastikan semua kolom bukan angka
+        $allText = true;
+        foreach ($headerCandidate as $val) {
+            if (is_numeric($val)) {
+                $allText = false;
+                break;
             }
-            $combinedHeaders[$index] = implode(' - ', $fullHeaderParts);
         }
 
-        // Proses data mulai dari baris ke-3
-        foreach ($rows as $index => $row) {
-            if ($index < 3) continue; // Lewati baris 1-3 (header)
+        // Validasi: minimal 2 kolom teks dan jumlah kolomnya lebih dari sebelumnya (opsional)
+        if ($allText && count($headerCandidate) > $maxHeaderColumns && count($headerCandidate) >= 2) {
+            $startIndex = $index;
+            $maxHeaderColumns = count($headerCandidate); // update supaya ambil baris header "terlengkap"
+        }
+    }
+}
 
-            if (empty(array_filter($row))) continue; // Skip baris kosong
 
-            $rowData = array_combine($combinedHeaders, $row);
 
-            if (!$rowData) continue; // Skip jika kombinasi gagal
 
-            switch ($sheetName) {
+if (is_null($startIndex)) continue; // tidak ada header valid
+
+// Ambil header (key = nama kolom), trim semua kolom
+$headers = array_map('trim', $data[$startIndex]);
+
+// Ambil baris setelah header
+$dataRows = array_slice($data, $startIndex);
+
+// Loop setiap baris data
+foreach ($dataRows as $rowIndex => $row) {
+    // Trim semua nilai
+    $trimmedRow = array_map('trim', $row);
+
+    // Pastikan jumlah kolom sesuai header
+    $rowCount = count($trimmedRow);
+    $headerCount = count($headers);
+
+    if ($rowCount < $headerCount) {
+        $trimmedRow = array_pad($trimmedRow, $headerCount, null);
+    } elseif ($rowCount > $headerCount) {
+        $trimmedRow = array_slice($trimmedRow, 0, $headerCount);
+    }
+
+    $rowData = array_combine($headers, $trimmedRow);
+
+    // Lewati baris kosong
+    if (collect($rowData)->filter(fn($val) => trim((string) $val) !== '')->isEmpty()) continue;
+
+
+        try {
+            switch (trim($sheetName)) {
                 case 'Kerjasama Pendidikan':
                     $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
 
-                    \App\Models\KerjasamaTridharmaPendidikan::updateOrCreate(
+                    \App\Models\KerjasamaTridharmaPendidikan::create(
                         [
-                            'user_id' => $userId,
                             'judul_kegiatan' => $rowData['Judul Kerjasama'] ?? '-',
-                        ],
-                        [
                             'lembaga_mitra' => $rowData['Lembaga Mitra'] ?? '-',
                             'tahun_ajaran_id' => $tahunAjaranId,
                             'tingkat' => $rowData['Tingkat'] ?? '-',
@@ -2131,12 +2203,9 @@ public function importExcel(Request $request)
                 case 'Kerjasama Penelitian':
                     $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
 
-                    \App\Models\KerjasamaTridharmaPenelitian::updateOrCreate(
+                    \App\Models\KerjasamaTridharmaPenelitian::create(
                         [
-                            'user_id' => $userId,
                             'judul_kegiatan' => $rowData['Judul Kerjasama'] ?? '-',
-                        ],
-                        [
                             'lembaga_mitra' => $rowData['Lembaga Mitra'] ?? '-',
                             'tahun_ajaran_id' => $tahunAjaranId,
                             'tingkat' => $rowData['Tingkat'] ?? '-',
@@ -2152,12 +2221,9 @@ public function importExcel(Request $request)
                 case 'Kerjasama Pengabdian Masyarakat':
                     $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
 
-                    \App\Models\KerjasamaTridharmaPengmas::updateOrCreate(
+                    \App\Models\KerjasamaTridharmaPengmas::create(
                         [
-                            'user_id' => $userId,
                             'judul_kegiatan' => $rowData['Judul Kerjasama'] ?? '-',
-                        ],
-                        [
                             'lembaga_mitra' => $rowData['Lembaga Mitra'] ?? '-',
                             'tahun_ajaran_id' => $tahunAjaranId,
                             'tingkat' => $rowData['Tingkat'] ?? '-',
@@ -2173,37 +2239,31 @@ public function importExcel(Request $request)
                 case 'Seleksi Mahasiswa Baru':
                     $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
 
-                    \App\Models\SeleksiMahasiswaBaru::updateOrCreate(
-                        [
-                            'user_id' => $userId,
+                    \App\Models\SeleksiMahasiswaBaru::create(
+                       [
+            'tahun_akademik' => $rowData['Tahun Akademik'] ?? '-',
+            'daya_tampung' => ($rowData['Daya Tampung'] ?? '-') === '-' ? 0 : (int) $rowData['Daya Tampung'],
+            'pendaftar' => ($rowData['Jumlah Calon Mahasiswa - Pendaftar'] ?? '-') === '-' ? 0 : (int) $rowData['Jumlah Calon Mahasiswa - Pendaftar'],
+            'lulus_seleksi' => ($rowData['Jumlah Calon Mahasiswa - Lulus Seleksi'] ?? '-') === '-' ? 0 : (int) $rowData['Jumlah Calon Mahasiswa - Lulus Seleksi'],
+            'maba_reguler' => ($rowData['Jumlah Mahasiswa Baru - Reguler'] ?? '-') === '-' ? 0 : (int) $rowData['Jumlah Mahasiswa Baru - Reguler'],
+            'maba_transfer' => ($rowData['Jumlah Mahasiswa Baru - Trfansfer'] ?? '-') === '-' ? 0 : (int) $rowData['Jumlah Mahasiswa Baru - Trfansfer'],
+            'mhs_aktif_reguler' => ($rowData['Jumlah Mahasiswa Aktif - Reguler'] ?? '-') === '-' ? 0 : (int) $rowData['Jumlah Mahasiswa Aktif - Reguler'],
+            'mhs_aktif_transfer' => ($rowData['Jumlah Mahasiswa Aktif - Trfansfer'] ?? '-') === '-' ? 0 : (int) $rowData['Jumlah Mahasiswa Aktif - Trfansfer'],
+            'user_id' => $userId,
                             'tahun_ajaran_id' => $tahunAjaranId,
-                        ],
-                        [
-                            'tahun_akademik' => $rowData['Tahun Akademik'] ?? '-',
-                            'daya_tampung' => $rowData['Daya Tampung'] ?? '-',
-                            'pendaftar' => $rowData['Jumlah Calon Mahasiswa - Pendaftar'] ?? '-',
-                            'lulus_seleksi' => $rowData['Jumlah Calon Mahasiswa - Lulus Seleksi'] ?? '-',
-                            'maba_reguler' => $rowData['Jumlah Mahasiswa Baru - Reguler'] ?? '-',
-                            'maba_transfer' => $rowData['Jumlah Mahasiswa Baru - Trfansfer'] ?? '-',
-                            'mhs_aktif_reguler' => $rowData['Jumlah Mahasiswa Aktif - Reguler'] ?? '-',
-                            'mhs_aktif_transfer' => $rowData['Jumlah Mahasiswa Aktif - Trfansfer'] ?? '-',
-                            'user_id' => $userId,
-                        ]
+        ]
                     );
                     break;
 
                 case 'Mahasiswa Asing':
                     $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
 
-                    \App\Models\MahasiswaAsing::updateOrCreate(
-                        [
-                            'user_id' => $userId,
-                        ],
+                    \App\Models\MahasiswaAsing::create(
                         [
                             'tahun_akademik' => $rowData['Tahun Akademik'] ?? '-',
-                            'mhs_aktif' => $rowData['Jumlah Mahasiswa Aktif'] ?? '-',
-                            'mhs_asing_fulltime' => $rowData['Jumlah Mahasiswa Asing Penuh Waktu'] ?? '-',
-                            'mhs_asing_parttime' => $rowData['Jumlah Mahasiswa Asing Paruh Waktu'] ?? '-',
+                            'mhs_aktif' => $rowData['Jumlah Mahasiswa Aktif'] ?? '0',
+                            'mhs_asing_fulltime' => $rowData['Jumlah Mahasiswa Asing Penuh Waktu'] ?? '0',
+                            'mhs_asing_parttime' => $rowData['Jumlah Mahasiswa Asing Paruh Waktu'] ?? '0',
                             'tahun_ajaran_id' => $tahunAjaranId,
                             'user_id' => $userId,
                         ]
@@ -2214,10 +2274,7 @@ public function importExcel(Request $request)
                         $kesesuaianKompetensi = !empty(trim($rowData['Kesesuaian dengan Kompetensi Inti PS'] ?? '')) ? 1 : 0;;
 $kesesuaianKeahlian = !empty(trim($rowData['Kesesuaian Bidang Keahlian dengan Mata Kuliah yang Diampu'] ?? '')) ? 1 : 0;;
 
-                        \App\Models\DosenTetapPT::updateOrCreate(
-                            [
-                                'user_id' => $userId,
-                            ],
+                        \App\Models\DosenTetapPT::create(
                             [
                                 'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
                                 'nidn_nidk' => $rowData['NIDN/NIDK'] ?? '-',
@@ -2238,16 +2295,18 @@ $kesesuaianKeahlian = !empty(trim($rowData['Kesesuaian Bidang Keahlian dengan Ma
                         break;
                         case 'Dosen Tidak Tetap':
                             $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
-                            if($rowData['Kesesuaian dengan Kompetensi Inti PS'] == '✓'){
-                                $kesesuaianKompetensi = 1;
-                            }
-                            if($rowData['Kesesuaian Bidang Keahlian dengan Mata Kuliah yang Diampu'] == '✓'){
-                                $kesesuaianKeahlian = 1;
-                            }
-                            \App\Models\DosenTidakTetap::updateOrCreate(
-                                [
-                                    'user_id' => $userId,
-                                ],
+                            $kesesuaianKompetensi = 0;
+$kesesuaianKeahlian = 0;
+
+if (($rowData['Kesesuaian dengan Kompetensi Inti PS'] ?? '') === '✓') {
+    $kesesuaianKompetensi = 1;
+}
+
+if (($rowData['Kesesuaian Bidang Keahlian dengan Mata Kuliah yang Diampu'] ?? '') === '✓') {
+    $kesesuaianKeahlian = 1;
+}
+
+                            \App\Models\DosenTidakTetap::create(
                                 [
                                     'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
                                     'nidn_nidk' => $rowData['NIDN/NIDK'] ?? '-',
@@ -2268,39 +2327,51 @@ $kesesuaianKeahlian = !empty(trim($rowData['Kesesuaian Bidang Keahlian dengan Ma
                             case 'Dosen Pembimbing TA':
                                 $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
 
-                                \App\Models\DosenPembimbingTA::updateOrCreate(
-                                    [
-                                        'user_id' => $userId,
-                                    ],
+                                \App\Models\DosenPembimbingTA::create(
                                     [
                                         'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
                                         'mhs_bimbingan_ps' => $rowData['Jumlah Mahasiswa yang Dibimbing - Pada PS'] ?? '-',
                                         'mhs_bimbingan_ps_lain' => $rowData['Jumlah Mahasiswa yang Dibimbing - Pada PS Lain'] ?? '-',
                                         'tahun_ajaran_id' => $tahunAjaranId,
                                         'user_id' => $userId,
+                                        'tahun_ajaran_id' => $tahunAjaranId,
                                     ]
                                 );
                                 break;
                                 case 'Dosen EWMP Dosen':
                                     $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
-                                    if($rowData['DTPS'] == '✓'){
-                                        $isDtps = 1;
-                                    }
-                                    \App\Models\EwmpDosen::updateOrCreate(
-                                        [
-                                            'user_id' => $userId,
-                                        ],
+                                    $lsDtps = 0;
+if (isset($rowData['DTPS']) && $rowData['DTPS'] === '✓') {
+    $isDtps = 1;
+} else {
+    $isDtps = 0;
+}
+
+                                    \App\Models\EwmpDosen::create(
                                         [
                                             'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
-                                            'is_dtps' => $isDtps ?? '-',
-                                            'ps_diakreditasi' => $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS yang Diakreditasi'] ?? '-',
-                                            'ps_lain_dalam_pt' => $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS Lain di dalam PT'] ?? '-',
-                                            'ps_lain_luar_pt' => $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS Lain di luar PT'] ?? '-',
-                                            'ps_diakreditasi' => $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Penelitian'] ?? '-',
-                                            'penelitian' => $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - PkM'] ?? '-',
-                                            'pkm' => $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Tugas Tambahan dan/atau Penunjang'] ?? '-',
-                                            'tugas_tambahan' => $rowData['Jumlah (sks)'] ?? '-',
-                                            'avg_per_semester' => $rowData['Rata-rata per Semester (sks)'] ?? '-',
+    'is_dtps' => $isDtps ?? '0',
+    'ps_diakreditasi' => is_numeric($rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS yang Diakreditasi'] ?? null)
+        ? $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS yang Diakreditasi']
+        : 0,
+    'ps_lain_dalam_pt' => is_numeric($rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS Lain di dalam PT'] ?? null)
+        ? $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS Lain di dalam PT']
+        : 0,
+    'ps_lain_luar_pt' => is_numeric($rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS Lain di luar PT'] ?? null)
+        ? $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Pendidikan: Pembelajaran dan Pembimbingan - PS Lain di luar PT']
+        : 0,
+    'penelitian' => is_numeric($rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Penelitian'] ?? null)
+        ? $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Penelitian']
+        : 0,
+    'pkm' => is_numeric($rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - PkM'] ?? null)
+        ? $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - PkM']
+        : 0,
+    'tugas_tambahan' => is_numeric($rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Tugas Tambahan dan/atau Penunjang'] ?? null)
+        ? $rowData['Ekuivalen Waktu Mengajar Penuh (EWMP) pada saat TS dalam satuan kredit semester (sks) - Tugas Tambahan dan/atau Penunjang']
+        : 0,
+    'avg_per_semester' => is_numeric($rowData['Rata-rata per Semester (sks)'] ?? null)
+        ? $rowData['Rata-rata per Semester (sks)']
+        : 0,
                                             'tahun_ajaran_id' => $tahunAjaranId,
                                             'user_id' => $userId,
                                         ]
@@ -2309,10 +2380,7 @@ $kesesuaianKeahlian = !empty(trim($rowData['Kesesuaian Bidang Keahlian dengan Ma
                                 case 'Dosen Industri Praktisi':
                                     $tahunAjaranId = optional(\App\Models\TahunAjaranSemester::where('tahun_ajaran', $rowData['Tahun Ajaran'] ?? '-')->first())->id;
 
-                                    \App\Models\DosenIndustriPraktisi::updateOrCreate(
-                                        [
-                                            'user_id' => $userId,
-                                        ],
+                                    \App\Models\DosenIndustriPraktisi::create(
                                         [
                                             'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
                                             'nidk' => $rowData['NIDK'] ?? '-',
@@ -2337,19 +2405,16 @@ if ($value && filter_var($value, FILTER_VALIDATE_URL)) {
     $bukti_pendukung = '-';
     $nama_rekognisi = $value;
 }
-if($rowData['Tingkat - Wilayah'] == '✓'){
+if (($rowData['Tingkat - Wilayah'] ?? null) === '✓') {
     $tingkat = 'lokal';
-}
-if($rowData['Tingkat - Nasional'] == '✓'){
+} elseif (($rowData['Tingkat - Nasional'] ?? null) === '✓') {
     $tingkat = 'nasional';
-}
-if($rowData['Tingkat - Internasional'] == '✓'){
+} elseif (($rowData['Tingkat - Internasional'] ?? null) === '✓') {
     $tingkat = 'internasional';
+} else {
+    $tingkat = '-';
 }
-                                        \App\Models\RekognisiDosen::updateOrCreate(
-                                            [
-                                                'user_id' => $userId,
-                                            ],
+                                  \App\Models\RekognisiDosen::create(
                                             [
                                                 'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
                                                 'bidang_keahlian' => $rowData['Bidang Keahlian'] ?? '-',
@@ -2357,7 +2422,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                 'nama_rekognisi' => $nama_rekognisi,
                                                 'tingkat' => $tingkat ?? '-',
                                                 'tahun' => $rowData['Tahun'] ?? '-',
-                                                                                                'user_id' => $userId,
+                                                'user_id' => $userId,
                                             ]
                                         );
                                         break;
@@ -2369,16 +2434,16 @@ if($rowData['Tingkat - Internasional'] == '✓'){
 
                                             'Lembaga Luar Negeri' => 'internasional',
                                             ];
-                                            \App\Models\PenelitianDtps::updateOrCreate(
+                                            $sumberPembiayaan = $rowData['Sumber Pembiayaan'] ?? null;
+$sumber_dana = $sumberDana[$sumberPembiayaan] ?? '-';
+
+                                            \App\Models\PenelitianDtps::create(
                                                 [
-                                                    'user_id' => $userId,
-                                                ],
-                                                [
-                                                    'sumber_dana' => $sumberDana[$rowData['Sumber Pembiayaan']] ?? '-',
-                                                    'jumlah_judul' => $rowData['Jumlah Judul Penelitian'] ?? '-',
-                                                    'tahun_penelitian' => $rowData['Tahun Penelitian'] ?? '-',
-                                                    'user_id' => $userId,
-                                                ]
+        'sumber_dana' => $sumber_dana,
+        'jumlah_judul' => $rowData['Jumlah Judul Penelitian'] ?? '0',
+        'tahun_penelitian' => $rowData['Tahun Penelitian'] ?? '-',
+        'user_id' => $userId,
+    ]
                                             );
                                             break;
                                             case 'PKM Dtps':
@@ -2389,23 +2454,19 @@ if($rowData['Tingkat - Internasional'] == '✓'){
 
                                                 'Lembaga Luar Negeri' => 'internasional',
                                                 ];
-                                                \App\Models\PkmDtps::updateOrCreate(
+                                                $sumberPembiayaan = $rowData['Sumber Pembiayaan'] ?? null;
+$sumber_dana = $sumberDana[$sumberPembiayaan] ?? '-';
+                                                \App\Models\PkmDtps::create(
                                                     [
-                                                        'user_id' => $userId,
-                                                    ],
-                                                    [
-                                                        'sumber_dana' => $sumberDana[$rowData['Sumber Pembiayaan']] ?? '-',
-                                                        'jumlah_judul' => $rowData['Jumlah Judul Penelitian'] ?? '-',
+                                                        'sumber_dana' => $sumber_dana,
+                                                        'jumlah_judul' => $rowData['Jumlah Judul Penelitian'] ?? '0',
                                                         'tahun' => $rowData['Tahun'] ?? '-',
                                                                                                 'user_id' => $userId,
                                                     ]
                                                 );
                                                 break;
                                                 case 'Produk Teradopsi Dosen':
-                                                    \App\Models\ProdukTeradopsiDosen::updateOrCreate(
-                                                        [
-                                                            'user_id' => $userId,
-                                                        ],
+                                                    \App\Models\ProdukTeradopsiDosen::create(
                                                         [
                                                             'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
                                                             'nama_produk' => $rowData['Nama Produk/Jasa'] ?? '-',
@@ -2417,10 +2478,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                     );
                                                     break;
                                                 case 'Publikasi Ilmiah Dosen':
-                                                        \App\Models\PublikasiIlmiahDosen::updateOrCreate(
-                                                            [
-                                                                'user_id' => $userId,
-                                                            ],
+                                                        \App\Models\PublikasiIlmiahDosen::create(
                                                             [
                                                                 'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
                                                                 'judul_artikel' => $rowData['Judul Artikel'] ?? '-',
@@ -2431,24 +2489,18 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                         );
                                                         break;
                                                         case 'Sitasi Karya Dosen':
-                                                            \App\Models\SitasiKaryaDosen::updateOrCreate(
-                                                                [
-                                                                    'user_id' => $userId,
-                                                                ],
+                                                            \App\Models\SitasiKaryaDosen::create(
                                                                 [
                                                                     'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
                                                                     'judul_artikel' => $rowData['Judul Artikel'] ?? '-',
-                                                                    'jumlah_sitasi' => $rowData['Jumlah Sitasi'] ?? '-',
+                                                                    'jumlah_sitasi' => $rowData['Jumlah Sitasi'] ?? '0',
                                                                     'tahun' => $rowData['Tahun'] ?? '-',
                                                                                                 'user_id' => $userId,
                                                                 ]
                                                             );
                                                             break;
                                                             case 'HKI Paten Dosen':
-                                                                \App\Models\HkiPatenDosen::updateOrCreate(
-                                                                    [
-                                                                        'user_id' => $userId,
-                                                                    ],
+                                                                \App\Models\HkiPatenDosen::create(
                                                                     [
                                                                         'luaran_penelitian' => $rowData['Luaran Penelitian - HKI: a) Paten, b) Paten Sederhana'] ?? '-',
                                                                         'keterangan' => $rowData['Keterangan'] ?? '-',
@@ -2458,10 +2510,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                 );
                                                                 break;
                                                                 case 'HKI HakCipta Dosen':
-                                                                    \App\Models\HkiHakciptaDosen::updateOrCreate(
-                                                                        [
-                                                                            'user_id' => $userId,
-                                                                        ],
+                                                                    \App\Models\HkiHakciptaDosen::create(
                                                                         [
                                                                             'luaran_penelitian' => $rowData['Luaran Penelitian - HKI: a) Hak Cipta, b) Desain Produk Industri, c) Perlindungan Varietas Tanaman (Sertifikat Perlindungan'] ?? '-',
                                                                             'keterangan' => $rowData['Keterangan'] ?? '-',
@@ -2471,10 +2520,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                     );
                                                                     break;
                                                                     case 'Teknologi Karya Dosen':
-                                                                        \App\Models\TeknologiKaryaDosen::updateOrCreate(
-                                                                            [
-                                                                                'user_id' => $userId,
-                                                                            ],
+                                                                        \App\Models\TeknologiKaryaDosen::create(
                                                                             [
                                                                                 'luaran_penelitian' => $rowData['Luaran Penelitian - Teknologi Tepat Guna, Produk (Produk Terstandarisasi, Produk Tersertifikasi), Karya Seni, Rekayasa Sosial'] ?? '-',
                                                                                 'keterangan' => $rowData['Keterangan'] ?? '-',
@@ -2484,10 +2530,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                         );
                                                                         break;
                                                                         case 'Buku Chapter Dosen':
-                                                                            \App\Models\BukuChapterDosen::updateOrCreate(
-                                                                                [
-                                                                                    'user_id' => $userId,
-                                                                                ],
+                                                                            \App\Models\BukuChapterDosen::create(
                                                                                 [
                                                                                     'luaran_penelitian' => $rowData['Luaran Penelitian - Buku ber-ISBN, Book Chapter'] ?? '-',
                                                                                     'keterangan' => $rowData['Keterangan'] ?? '-',
@@ -2497,59 +2540,52 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                             );
                                                                             break;
                                                                         case 'IPK Lulusan':
-                                                                            \App\Models\IpkLulusan::updateOrCreate(
+                                                                            \App\Models\IpkLulusan::create(
                                                                                 [
-                                                                                    'user_id' => $userId,
-                                                                                ],
-                                                                                [
-                                                                                    'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '-',
-                                                                                    'ipk_minimal' => $rowData['Indeks Prestasi Kumulatif - Min'] ?? '-',
-                                                                                    'ipk_maksimal' => $rowData['Indeks Prestasi Kumulatif - Rata-rata'] ?? '-',
-                                                                                    'ipk_rata_rata' => $rowData['Indeks Prestasi Kumulatif - Max'] ?? '-',
+                                                                                    'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '0',
+                                                                                    'ipk_minimal' => $rowData['Indeks Prestasi Kumulatif - Min'] ?? '0',
+                                                                                    'ipk_maksimal' => $rowData['Indeks Prestasi Kumulatif - Rata-rata'] ?? '0',
+                                                                                    'ipk_rata_rata' => $rowData['Indeks Prestasi Kumulatif - Max'] ?? '0',
                                                                                     'tahun' => $rowData['Tahun Ajaran'] ?? '-',
                                                                                     'user_id' => $userId,
                                                                                 ]
                                                                             );
                                                                             break;
                                                                         case 'Masa Studi Lulusan':
-                                                                            \App\Models\MasaStudiLulusan::updateOrCreate(
-                                                                                [
-                                                                                    'user_id' => $userId,
-                                                                                ],
+                                                                            \App\Models\MasaStudiLulusan::create(
                                                                                 [
                                                                                     'masa_studi' => $rowData['Masa Studi'] ?? '-',
-                                                                                    'jumlah_mhs_diterima' => $rowData['Jumlah Mahasiswa Diterima'] ?? '-',
-                                                                                    'jumlah_mhs_lulus_akhir_ts' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS'] ?? '-',
-                                                                                    'jumlah_mhs_lulus_akhir_ts_1' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-1'] ?? '-',
-                                                                                    'jumlah_mhs_lulus_akhir_ts_2' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-2'] ?? '-',
-                                                                                    'jumlah_mhs_lulus_akhir_ts_3' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-3'] ?? '-',
-                                                                                    'jumlah_mhs_lulus_akhir_ts_4' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-4'] ?? '-',
+                                                                                    'jumlah_mhs_diterima' => $rowData['Jumlah Mahasiswa Diterima'] ?? '0',
+                                                                                    'jumlah_mhs_lulus_akhir_ts' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS'] ?? '0',
+                                                                                    'jumlah_mhs_lulus_akhir_ts_1' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-1'] ?? '0',
+                                                                                    'jumlah_mhs_lulus_akhir_ts_2' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-2'] ?? '0',
+                                                                                    'jumlah_mhs_lulus_akhir_ts_3' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-3'] ?? '0',
+                                                                                    'jumlah_mhs_lulus_akhir_ts_4' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-4'] ?? '0',
                                                                                     'jumlah_mhs_lulus_akhir_ts_5' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-5'] ?? '-',
-                                                                                    'jumlah_mhs_lulus_akhir_ts_6' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-6'] ?? '-',
-                                                                                    'jumlah_lulusan' => $rowData['Jumlah Lulusan s.d Akhir TS'] ?? '-',
-                                                                                    'mean_masa_studi' => $rowData['Rata-rata Masa Studi'] ?? '-',
+                                                                                    'jumlah_mhs_lulus_akhir_ts_6' => $rowData['Jumlah Mahasiswa yang Lulus Pada Akhir TS - Akhir TS-6'] ?? '0',
+                                                                                    'jumlah_lulusan' => $rowData['Jumlah Lulusan s.d Akhir TS'] ?? '0',
+                                                                                    'mean_masa_studi' => $rowData['Rata-rata Masa Studi'] ?? '0',
                                                                                     'tahun' => $rowData['Tahun Masuk'] ?? '-',
                                                                                             'user_id' => $userId,
                                                                                 ]
                                                                             );
                                                                             break;
                                                                         case 'Prestasi Akademik':
-                                                                            $lokal=!empty(trim($rowData['Tingkat - Lokal/Wilayah'] ?? '')) ? 1 : 0;
-                                                                                $nasional=!empty(trim($rowData['Tingkat - Nasional'] ?? '')) ? 1 : 0;
-                                                                                $internasional=!empty(trim($rowData['Tingkat - Internasional'] ?? '')) ? 1 : 0;
-                                                                                if($lokal == 1){
-                                                                                    $tingkat = 'lokal';
-                                                                                }else if($nasional==1){
-                                                                                    $tingkat = 'nasional';
-                                                                                }else if($internasional == 1){
-                                                                                    $tingkat = 'internasional';
-                                                                                }else{
-                                                                                    $tingkat = '';
-                                                                                }
-                                                                            \App\Models\PrestasiAkademik::updateOrCreate(
-                                                                                [
-                                                                                    'user_id' => $userId,
-                                                                                ],
+                                                                            $lokal = ($rowData['Tingkat - Lokal/Wilayah'] ?? '') === '✓' ? 1 : 0;
+$nasional = ($rowData['Tingkat - Nasional'] ?? '') === '✓' ? 1 : 0;
+$internasional = ($rowData['Tingkat - Internasional'] ?? '') === '✓' ? 1 : 0;
+
+if ($lokal === 1) {
+    $tingkat = 'lokal';
+} elseif ($nasional === 1) {
+    $tingkat = 'nasional';
+} elseif ($internasional === 1) {
+    $tingkat = 'internasional';
+} else {
+    $tingkat = '';
+}
+
+                                                                            \App\Models\PrestasiAkademikMhs::create(
                                                                                 [
                                                                                     'nama_kegiatan' => $rowData['Nama Kegiatan'] ?? '-',
                                                                                     'prestasi' => $rowData['Prestasi yang Dicapai'] ?? '-',
@@ -2560,22 +2596,21 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                             );
                                                                             break;
                                                                             case 'Prestasi Non Akademik':
-                                                                                $lokal=!empty(trim($rowData['Tingkat - Lokal/Wilayah'] ?? '')) ? 1 : 0;
-                                                                                $nasional=!empty(trim($rowData['Tingkat - Nasional'] ?? '')) ? 1 : 0;
-                                                                                $internasional=!empty(trim($rowData['Tingkat - Internasional'] ?? '')) ? 1 : 0;
-                                                                                if($lokal == 1){
-                                                                                    $tingkat = 'lokal';
-                                                                                }else if($nasional==1){
-                                                                                    $tingkat = 'nasional';
-                                                                                }else if($internasional == 1){
-                                                                                    $tingkat = 'internasional';
-                                                                                }else{
-                                                                                    $tingkat = '';
-                                                                                }
-                                                                                \App\Models\PrestasiNonakademik::updateOrCreate(
-                                                                                    [
-                                                                                        'user_id' => $userId,
-                                                                                    ],
+                                                                                $lokal = ($rowData['Tingkat - Lokal/Wilayah'] ?? '') === '✓' ? 1 : 0;
+$nasional = ($rowData['Tingkat - Nasional'] ?? '') === '✓' ? 1 : 0;
+$internasional = ($rowData['Tingkat - Internasional'] ?? '') === '✓' ? 1 : 0;
+
+if ($lokal === 1) {
+    $tingkat = 'lokal';
+} elseif ($nasional === 1) {
+    $tingkat = 'nasional';
+} elseif ($internasional === 1) {
+    $tingkat = 'internasional';
+} else {
+    $tingkat = '';
+}
+
+                                                                                \App\Models\PrestasiNonakademikMhs::create(
                                                                                     [
                                                                                         'nama_kegiatan' => $rowData['Nama Kegiatan'] ?? '-',
                                                                                         'prestasi' => $rowData['Prestasi yang Dicapai'] ?? '-',
@@ -2586,77 +2621,62 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                 );
                                                                                 break;
                                                                                 case 'Evaluasi Kepuasan Pengguna':
-                                                                                    \App\Models\EvalKepuasanPengguna::updateOrCreate(
-                                                                                        [
-                                                                                            'user_id' => $userId,
-                                                                                        ],
+                                                                                    \App\Models\EvalKepuasanPengguna::create(
                                                                                         [
                                                                                             'jenis_kemampuan' => $rowData['Jenis Kemampuan'] ?? '-',
-                                                                                            'tingkat_kepuasan_sangat_baik' => $rowData['Tingkat Kepuasan Pengguna (%) - Sangat Baik'] ?? '-',
-                                                                                            'tingkat_kepuasan_baik' => $rowData['Tingkat Kepuasan Pengguna (%) - Baik'] ?? '-',
-                                                                                            'tingkat_kepuasan_cukup' => $rowData['Tingkat Kepuasan Pengguna (%) - Cukup'] ?? '-',
-                                                                                            'tingkat_kepuasan_kurang' => $rowData['Tingkat Kepuasan Pengguna (%) - Kurang'] ?? '-',
-                                                                                            'rencana_tindakan' => $rowData['Rencana Tindak Lanjut Oleh UPPS/PS'] ?? '-',
-                                                                                            'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '-',
-                                                                                            'jumlah_responden' => $rowData['Jumlah Tanggapan Kepuasan Pengguna yang Terlacak'] ?? '-',
+                                                                                            'tingkat_kepuasan_sangat_baik' => $rowData['Tingkat Kepuasan Pengguna (%) - Sangat Baik'] ?? '0',
+                                                                                            'tingkat_kepuasan_baik' => $rowData['Tingkat Kepuasan Pengguna (%) - Baik'] ?? '0',
+                                                                                            'tingkat_kepuasan_cukup' => $rowData['Tingkat Kepuasan Pengguna (%) - Cukup'] ?? '0',
+                                                                                            'tingkat_kepuasan_kurang' => $rowData['Tingkat Kepuasan Pengguna (%) - Kurang'] ?? '0',
+                                                                                            'rencana_tindakan' => $rowData['Rencana Tindak Lanjut Oleh UPPS/PS'] ?? '0',
+                                                                                            'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '0',
+                                                                                            'jumlah_responden' => $rowData['Jumlah Tanggapan Kepuasan Pengguna yang Terlacak'] ?? '0',
                                                                                             'tahun' => $rowData['Tahun Lulus'] ?? '-',
                                                                                             'user_id' => $userId,
                                                                                         ]
                                                                                     );
                                                                                     break;
                                                                                 case 'Evaluasi Kesesuaian Kerja':
-                                                                                    \App\Models\EvalKesesuaianKerja::updateOrCreate(
+                                                                                    \App\Models\EvalKesesuaianKerja::create(
                                                                                         [
-                                                                                            'user_id' => $userId,
-                                                                                        ],
-                                                                                        [
-                                                                                            'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '-',
-                                                                                            'jumlah_lulusan_terlacak' => $rowData['Jumlah Lulusan yang Terlacak'] ?? '-',
-                                                                                            'jumlah_lulusan_bekerja' => $rowData['Jumlah Lulusan yang Terlacak dengan Tingkat Kesesuaian Bidang Kerja'] ?? '-',
+                                                                                            'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '0',
+                                                                                            'jumlah_lulusan_terlacak' => $rowData['Jumlah Lulusan yang Terlacak'] ?? '0',
+                                                                                            'jumlah_lulusan_bekerja' => $rowData['Jumlah Lulusan yang Terlacak dengan Tingkat Kesesuaian Bidang Kerja'] ?? '0',
                                                                                             'tahun' => $rowData['Tahun Lulus'] ?? '-',
                                                                                             'user_id' => $userId,
                                                                                         ]
                                                                                     );
                                                                                     break;
                                                                                 case 'Evaluasi Tempat Kerja':
-                                                                                    \App\Models\EvalTempatKerja::updateOrCreate(
+                                                                                    \App\Models\EvalTempatKerja::create(
                                                                                         [
-                                                                                            'user_id' => $userId,
-                                                                                        ],
-                                                                                        [
-                                                                                            'jumlah_lulusan_terlacak' => $rowData['Jumlah Lulusan yang Terlacak'] ?? '-',
-                                                                                            'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '-',
-                                                                                            'jumlah_lulusan_bekerja_lokal' => $rowData['Jumlah Lulusan yang Terlacak dengan Tingkat/Ukuran Tempat Kerja/Berwirausaha - Lokal/ Wilayah/ Berwirausaha tidak Berbadan Hukum'] ?? '-',
-                                                                                            'jumlah_lulusan_bekerja_nasional' => $rowData['Jumlah Lulusan yang Terlacak dengan Tingkat/Ukuran Tempat Kerja/Berwirausaha - Nasional/ Berwirausaha berbadan Hukum'] ?? '-',
-                                                                                            'jumlah_lulusan_bekerja_internasional' => $rowData['Jumlah Lulusan yang Terlacak dengan Tingkat/Ukuran Tempat Kerja/Berwirausaha - Multinasional/ Internasional'] ?? '-',
+                                                                                            'jumlah_lulusan_terlacak' => $rowData['Jumlah Lulusan yang Terlacak'] ?? '0',
+                                                                                            'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '0',
+                                                                                            'jumlah_lulusan_bekerja_lokal' => $rowData['Jumlah Lulusan yang Terlacak dengan Tingkat/Ukuran Tempat Kerja/Berwirausaha - Lokal/ Wilayah/ Berwirausaha tidak Berbadan Hukum'] ?? '0',
+                                                                                            'jumlah_lulusan_bekerja_nasional' => $rowData['Jumlah Lulusan yang Terlacak dengan Tingkat/Ukuran Tempat Kerja/Berwirausaha - Nasional/ Berwirausaha berbadan Hukum'] ?? '0',
+                                                                                            'jumlah_lulusan_bekerja_internasional' => $rowData['Jumlah Lulusan yang Terlacak dengan Tingkat/Ukuran Tempat Kerja/Berwirausaha - Multinasional/ Internasional'] ?? '0',
                                                                                             'tahun' => $rowData['Tahun Lulus'] ?? '-',
                                                                                             'user_id' => $userId,
                                                                                         ]
                                                                                     );
                                                                                     break;
                                                                                 case 'Evaluasi Waktu Tunggu':
-                                                                                    \App\Models\EvalWaktuTunggu::updateOrCreate(
-                                                                                        [
-                                                                                            'user_id' => $userId,
-                                                                                        ],
+                                                                                    \App\Models\EvalWaktuTunggu::create(
                                                                                         [
                                                                                             'masa_studi' => $rowData['Masa Studi'] ?? '-',
-                                                                                            'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '-',
-                                                                                            'jumlah_lulusan_terlacak' => $rowData['Jumlah Lulusan yang Terlacak'] ?? '-',
-                                                                                            'jumlah_lulusan_terlacak_dipesan' => $rowData['Jumlah Lulusan yang Terlacak Dipesan'] ?? '-',
-                                                                                            'jumlah_lulusan_waktu_tiga_bulan' => $rowData['Jumlah Lulusan yang Terlacak dengan Waktu Tunggu - WT < 3 Bulan'] ?? '-',
-                                                                                            'jumlah_lulusan_waktu_enam_bulan' => $rowData['Jumlah Lulusan yang Terlacak dengan Waktu Tunggu - 3 Bulan < WT < 6 Bulan'] ?? '-',
-                                                                                            'jumlah_lulusan_waktu_sembilan_bulan' => $rowData['Jumlah Lulusan yang Terlacak dengan Waktu Tunggu - WT > 6 Bulan'] ?? '-',
+                                                                                            'jumlah_lulusan' => $rowData['Jumlah Lulusan'] ?? '0',
+                                                                                            'jumlah_lulusan_terlacak' => $rowData['Jumlah Lulusan yang Terlacak'] ?? '0',
+                                                                                            'jumlah_lulusan_terlacak_dipesan' => $rowData['Jumlah Lulusan yang Terlacak Dipesan'] ?? '0',
+                                                                                            'jumlah_lulusan_waktu_tiga_bulan' => $rowData['Jumlah Lulusan yang Terlacak dengan Waktu Tunggu - WT < 3 Bulan'] ?? '0',
+                                                                                            'jumlah_lulusan_waktu_enam_bulan' => $rowData['Jumlah Lulusan yang Terlacak dengan Waktu Tunggu - 3 Bulan < WT < 6 Bulan'] ?? '0',
+                                                                                            'jumlah_lulusan_waktu_sembilan_bulan' => $rowData['Jumlah Lulusan yang Terlacak dengan Waktu Tunggu - WT > 6 Bulan'] ?? '0',
                                                                                             'tahun' => $rowData['Tahun Lulus'] ?? '-',
                                                                                             'user_id' => $userId,
                                                                                         ]
                                                                                     );
                                                                                     break;
                                                                                 case 'Integrasi Penelitian':
-                                                                                    \App\Models\IntegrasiPenelitian::updateOrCreate(
-                                                                                        [
-                                                                                            'user_id' => $userId,
-                                                                                        ],
+                                                                                    \App\Models\IntegrasiPenelitian::create(
                                                                                         [
                                                                                             'judul_penelitian' => $rowData['Judul Penelitian'] ?? '-',
                                                                                             'nama_dosen' => $rowData['Nama Dosen'] ?? '-',
@@ -2668,16 +2688,13 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                     );
                                                                                     break;
                                                                                 case 'Kepuasan Mahasiswa':
-                                                                                    \App\Models\KepuasanMahasiswa::updateOrCreate(
-                                                                                        [
-                                                                                            'user_id' => $userId,
-                                                                                        ],
+                                                                                    \App\Models\KepuasanMahasiswa::create(
                                                                                         [
                                                                                             'aspek_penilaian' => $rowData['Aspek yang Diukur'] ?? '-',
-                                                                                            'tingkat_kepuasan_sangat_baik' => $rowData['Tingkat Kepuasan Mahasiswa (%) - Sangat Baik'] ?? '-',
-                                                                                            'tingkat_kepuasan_baik' => $rowData['Tingkat Kepuasan Mahasiswa (%) - Baik'] ?? '-',
-                                                                                            'tingkat_kepuasan_cukup' => $rowData['Tingkat Kepuasan Mahasiswa (%) - Cukup'] ?? '-',
-                                                                                            'tingkat_kepuasan_kurang' => $rowData['Tingkat Kepuasan Mahasiswa (%) - Kurang'] ?? '-',
+                                                                                            'tingkat_kepuasan_sangat_baik' => $rowData['Tingkat Kepuasan Mahasiswa (%) - Sangat Baik'] ?? '0',
+                                                                                            'tingkat_kepuasan_baik' => $rowData['Tingkat Kepuasan Mahasiswa (%) - Baik'] ?? '0',
+                                                                                            'tingkat_kepuasan_cukup' => $rowData['Tingkat Kepuasan Mahasiswa (%) - Cukup'] ?? '0',
+                                                                                            'tingkat_kepuasan_kurang' => $rowData['Tingkat Kepuasan Mahasiswa (%) - Kurang'] ?? '0',
                                                                                             'rencana_tindakan' => $rowData['Rencana Tindak Lanjut oleh UPPS/PS'] ?? '-',
                                                                                             'tahun' => $rowData['Tahun'] ?? '-',
                                                                                                 'user_id' => $userId,
@@ -2685,26 +2702,24 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                     );
                                                                                     break;
                                                                                     case 'Kurikulum Pembelajaran':
-                                                                                        $kompetensi = !empty(trim($rowData['Mata Kuliah Kompetensi'] ?? '')) ? 1 : 0;
-                                                                                        $sikap = !empty(trim($rowData['Capaian Pembelajaran - Sikap'] ?? '')) ? 1 : 0;
-                                                                                        $pengetahuan = !empty(trim($rowData['Capaian Pembelajaran - Pengetahuan'] ?? '')) ? 1 : 0;
-                                                                                        $keterampilanumum = !empty(trim($rowData['Capaian Pembelajaran - Keterampilan Umum'] ?? '')) ? 1 : 0;
-                                                                                        $keterampilankhusus = !empty(trim($rowData['Capaian Pembelajaran - Keterampilan Khusus'] ?? '')) ? 1 : 0;
+                                                                                        $kompetensi = ($rowData['Mata Kuliah Kompetensi'] ?? '') === '✓' ? 1 : 0;
+$sikap = ($rowData['Capaian Pembelajaran - Sikap'] ?? '') === '✓' ? 1 : 0;
+$pengetahuan = ($rowData['Capaian Pembelajaran - Pengetahuan'] ?? '') === '✓' ? 1 : 0;
+$keterampilanumum = ($rowData['Capaian Pembelajaran - Keterampilan Umum'] ?? '') === '✓' ? 1 : 0;
+$keterampilankhusus = ($rowData['Capaian Pembelajaran - Keterampilan Khusus'] ?? '') === '✓' ? 1 : 0;
 
 
-                                                                                        \App\Models\KurikulumPembelajaran::updateOrCreate(
-                                                                                            [
-                                                                                                'user_id' => $userId,
-                                                                                            ],
+
+                                                                                        \App\Models\KurikulumPembelajaran::create(
                                                                                             [
                                                                                                 'nama_mata_kuliah' => $rowData['Mata Kuliah'] ?? '-',
                                                                                                 'kode_mata_kuliah' => $rowData['Kode Mata Kuliah'] ?? '-',
                                                                                                 'mata_kuliah_kompetensi' => $kompetensi ?? '-',
-                                                                                                'sks_kuliah' => $rowData['Bobot Kredit (SKS) - Kuliah/ Responsi/ Tutorial'] ?? '-',
-                                                                                                'sks_seminar' => $rowData['Bobot Kredit (SKS) - Seminar'] ?? '-',
-                                                                                                'sks_praktikum' => $rowData['Bobot Kredit (SKS) - Praktikum Praktik/ Praktik Lapangan'] ?? '-',
-                                                                                                'konversi_sks' => $rowData['Konversi Kredit ke Jam'] ?? '-',
-                                                                                                'semester' => $rowData['Semester'] ?? '-',
+                                                                                                'sks_kuliah' => $rowData['Bobot Kredit (SKS) - Kuliah/ Responsi/ Tutorial'] ?? '0',
+                                                                                                'sks_seminar' => $rowData['Bobot Kredit (SKS) - Seminar'] ?? '0',
+                                                                                                'sks_praktikum' => $rowData['Bobot Kredit (SKS) - Praktikum Praktik/ Praktik Lapangan'] ?? '0',
+                                                                                                'konversi_sks' => $rowData['Konversi Kredit ke Jam'] ?? '0',
+                                                                                                'semester' => $rowData['Semester'] ?? '0',
                                                                                                 'metode_pembelajaran' => $rowData['Metode Pembelajaran'] ?? '-',
                                                                                                 'dokumen' => $rowData['Dokumen Rencana Pembelajaran'] ?? '-',
                                                                                                 'unit_penyelenggara' => $rowData['Unit Penyelenggara'] ?? '-',
@@ -2718,10 +2733,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                         );
                                                                                         break;
                                                                                         case 'Penelitian Mahasiswa':
-                                                                                            \App\Models\DtpsPenelitianMahasiswa::updateOrCreate(
-                                                                                                [
-                                                                                                    'user_id' => $userId,
-                                                                                                ],
+                                                                                            \App\Models\DtpsPenelitianMahasiswa::create(
                                                                                                 [
                                                                                                     'nama_dosen' => $rowData['Nama Dosen Pembimbing'] ?? '-',
                                                                                                     'tema_penelitian' => $rowData['Tema Penelitian Sesuai Roadmap'] ?? '-',
@@ -2733,10 +2745,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                             );
                                                                                             break;
                                                                                             case 'Rujukan Tesis Mahasiswa':
-                                                                                                \App\Models\DtpsRujukanTesis::updateOrCreate(
-                                                                                                    [
-                                                                                                        'user_id' => $userId,
-                                                                                                    ],
+                                                                                                \App\Models\DtpsRujukanTesis::create(
                                                                                                     [
                                                                                                         'nama_dosen' => $rowData['Nama Dosen Pembimbing'] ?? '-',
                                                                                                         'tema_penelitian' => $rowData['Tema Penelitian Sesuai Roadmap'] ?? '-',
@@ -2748,10 +2757,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                                 );
                                                                                                 break;
                                                                                                 case 'PKM Dtps Mahasiswa':
-                                                                                                    \App\Models\PkmDtpsMahasiswa::updateOrCreate(
-                                                                                                        [
-                                                                                                            'user_id' => $userId,
-                                                                                                        ],
+                                                                                                    \App\Models\PkmDtpsMahasiswa::create(
                                                                                                         [
                                                                                                             'tema' => $rowData['Tema Penelitian Sesuai Roadmap'] ?? '-',
                                                                                                             'nama_mhs' => $rowData['Nama Mahasiswa'] ?? '-',
@@ -2762,10 +2768,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                                     );
                                                                                                     break;
                                                                                                     case 'Produk Jasa Mahasiswa':
-                                                                                                        \App\Models\ProdukJasaMahasiswa::updateOrCreate(
-                                                                                                            [
-                                                                                                                'user_id' => $userId,
-                                                                                                            ],
+                                                                                                        \App\Models\ProdukJasaMahasiswa::create(
                                                                                                             [
                                                                                                                 'nama_produk' => $rowData['Nama Produk/Jasa'] ?? '-',
                                                                                                                 'nama_mahasiswa' => $rowData['Nama Mahasiswa'] ?? '-',
@@ -2777,10 +2780,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                                         );
                                                                                                         break;
                                                                                                         case 'Publikasi Mahasiswa':
-                                                                                                            \App\Models\PublikasiMahasiswa::updateOrCreate(
-                                                                                                                [
-                                                                                                                    'user_id' => $userId,
-                                                                                                                ],
+                                                                                                            \App\Models\PublikasiMahasiswa::create(
                                                                                                                 [
                                                                                                                     'judul_artikel' => $rowData['Judul Artikel'] ?? '-',
                                                                                                                     'nama_mahasiswa' => $rowData['Nama Mahasiswa'] ?? '-',
@@ -2791,24 +2791,18 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                                             );
                                                                                                             break;
                                                                                                             case 'Sitasi Karya Mahasiswa':
-                                                                                                                \App\Models\SitasiKaryaMahasiswa::updateOrCreate(
-                                                                                                                    [
-                                                                                                                        'user_id' => $userId,
-                                                                                                                    ],
+                                                                                                                \App\Models\SitasiKaryaMahasiswa::create(
                                                                                                                     [
                                                                                                                         'judul_artikel' => $rowData['Judul Artikel'] ?? '-',
                                                                                                                         'nama_mahasiswa' => $rowData['Nama Mahasiswa'] ?? '-',
-                                                                                                                        'jumlah_sitasi' => $rowData['Jumlah Sitasi'] ?? '-',
+                                                                                                                        'jumlah_sitasi' => $rowData['Jumlah Sitasi'] ?? '0',
                                                                                                                         'tahun' => $rowData['Tahun'] ?? '-',
                                                                                                                             'user_id' => $userId,
                                                                                                                     ]
                                                                                                                 );
                                                                                                                 break;
                                                                                                                 case 'HKI Paten Mahasiswa':
-                                                                                                                    \App\Models\HkiPatenMahasiswa::updateOrCreate(
-                                                                                                                        [
-                                                                                                                            'user_id' => $userId,
-                                                                                                                        ],
+                                                                                                                    \App\Models\HkiPatenMahasiswa::create(
                                                                                                                         [
                                                                                                                             'luaran_penelitian' => $rowData['Luaran Penelitian - HKI: a) Paten, b) Paten Sederhana'] ?? '-',
                                                                                                                             'keterangan' => $rowData['Keterangan'] ?? '-',
@@ -2818,10 +2812,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                                                     );
                                                                                                                     break;
                                                                                                                     case 'HKI HakCipta Mahasiswa':
-                                                                                                                        \App\Models\HkiHakCiptaMahasiswa::updateOrCreate(
-                                                                                                                            [
-                                                                                                                                'user_id' => $userId,
-                                                                                                                            ],
+                                                                                                                        \App\Models\HkiHakCiptaMahasiswa::create(
                                                                                                                             [
                                                                                                                                 'luaran_penelitian' => $rowData['Luaran Penelitian - HKI: a) Hak Cipta, b) Desain Produk Industri, c) Perlindungan Varietas Tanaman (Sertifikat Perlindungan'] ?? '-',
                                                                                                                                 'keterangan' => $rowData['Keterangan'] ?? '-',
@@ -2831,10 +2822,7 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                                                         );
                                                                                                                         break;
                                                                                                                         case 'Teknologi Karya Mahasiswa':
-                                                                                                                            \App\Models\TeknologiKaryaMahasiswa::updateOrCreate(
-                                                                                                                                [
-                                                                                                                                    'user_id' => $userId,
-                                                                                                                                ],
+                                                                                                                            \App\Models\TeknologiKaryaMahasiswa::create(
                                                                                                                                 [
                                                                                                                                     'luaran_penelitian' => $rowData['Luaran Penelitian - Teknologi Tepat Guna, Produk (Produk Terstandarisasi, Produk Tersertifikasi), Karya Seni, Rekayasa Sosial'] ?? '-',
                                                                                                                                     'keterangan' => $rowData['Keterangan'] ?? '-',
@@ -2844,19 +2832,20 @@ if($rowData['Tingkat - Internasional'] == '✓'){
                                                                                                                             );
                                                                                                                             break;
                                                                                                                             case 'Buku Chapter Mahasiswa':
-                                                                                                                                \App\Models\BukuChapterMahasiswa::updateOrCreate(
-                                                                                                                                    [
-                                                                                                                                        'user_id' => $userId,
-                                                                                                                                    ],
+                                                                                                                                \App\Models\BukuChapterMahasiswa::create(
                                                                                                                                     [
                                                                                                                                         'luaran_penelitian' => $rowData['Luaran Penelitian - Buku ber-ISBN, Book Chapter'] ?? '-',
                                                                                                                                         'keterangan' => $rowData['Keterangan'] ?? '-',
                                                                                                                                         'tahun' => $rowData['Tahun'] ?? '-',
                                                                                                                                                     'user_id' => $userId,
                                                                                                                                     ]
-                                                                                                                                );
-                                                                                                                                break;
+                                                                                                                                );                                                                                                                     break;
             }
+} catch (\Exception $e) {
+        Log::error("Gagal simpan data di Sheet '{$sheetName}', Baris Excel " . ($rowIndex + 1) . ": " . $e->getMessage());
+    }
+        
+            
         }
     }
 

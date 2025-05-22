@@ -174,20 +174,20 @@ class PenelitianMahasiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(string $tahunAjaran,string $id)
-    // {
-    //     try {
-    //         $penelitian = DtpsPenelitianMahasiswa::findOrFail($id);
-    //         $delete = $dosenPraktisi->delete();
+     public function destroy(string $tahunAjaran,string $id)
+    {
+        try {
+            $penelitian = DtpsPenelitianMahasiswa::findOrFail($id);
+            $delete = $penelitian->delete();
 
-    //         if ($delete) {
-    //             return redirect()->route('admin.penelitian-dtps.penelitian-mahasiswa.index', $tahunAjaran)
-    //                 ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
-    //         }
+            if ($delete) {
+                return redirect()->route('admin.penelitian-dtps.penelitian-mahasiswa.index', $tahunAjaran)
+                    ->with('toast_success', 'Data dosen praktisi berhasil dihapus');
+            }
 
-    //         throw new \Exception('Data dosen praktisi gagal dihapus');
-    //     } catch (\Exception $e) {
-    //         return back()->withErrors($e->getMessage());
-    //     }
-    // }
+            throw new \Exception('Data dosen praktisi gagal dihapus');
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
+    }
 }

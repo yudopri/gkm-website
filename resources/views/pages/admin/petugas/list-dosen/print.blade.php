@@ -5,90 +5,68 @@
     <meta charset="UTF-8">
     <title>Data Laporan</title>
     <style>
+        @page {
+            margin: 20mm;
+        }
         body {
             font-family: Arial, sans-serif;
             color: #333;
             margin: 0;
+            padding: 0;
+        }
+        .content {
             padding: 20px;
         }
-
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
-
         .header h1 {
             font-size: 24px;
             margin: 0;
         }
-
-        .header p {
-            font-size: 14px;
-            margin: 5px 0;
-            color: #555;
-        }
-
-        .section-heading {
-            font-size: 18px;
-            font-weight: bold;
-            color: #4CAF50;
+        h2.section-title {
+            font-size: 20px;
             margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
         }
-
-        .table-container {
-            width: 100%;
-            margin: 10px 0;
-            overflow-x: auto;
-            /* Tambahan untuk mencegah overflow */
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-bottom: 20px;
+            page-break-inside: auto;
         }
-
-        th,
-        td {
-            padding: 8px;
-            /* Mengurangi padding untuk menghemat ruang */
-            border: 1px solid #ccc;
+        thead {
+            display: table-header-group;
+        }
+        tfoot {
+            display: table-footer-group;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 5px;
             text-align: left;
+            vertical-align: top;
             font-size: 12px;
-            word-wrap: break-word;
-            /* Membungkus teks yang panjang */
+            page-break-inside: avoid;
         }
-
         th {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 13px;
-            white-space: nowrap;
-            /* Menghindari tumpukan teks pada header */
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
         .text-center {
             text-align: center;
         }
-
         .text-wrap {
             word-break: break-word;
         }
-
         a {
             color: #4CAF50;
             text-decoration: none;
             font-size: 11px;
         }
-
         a:hover {
             text-decoration: underline;
         }
@@ -96,6 +74,7 @@
 </head>
 
 <body>
+    <div class="content">
 
     <div class="header">
         <h1>Data Laporan GKM</h1>
@@ -105,7 +84,7 @@
     <!-- Tabel Pertama -->
     <div class="table-container">
         <div class="section-heading">Laporan Kerjasama Pendidikan</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2" class="text-center">No.</th>
@@ -147,7 +126,7 @@
     <!-- Tabel Kedua -->
     <div class="table-container">
         <div class="section-heading">Laporan Kerjasama Penelitian</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2" class="text-center">No.</th>
@@ -189,7 +168,7 @@
     <!-- Tabel Ketiga -->
     <div class="table-container">
         <div class="section-heading">Laporan Kerjasama Pengabdian Masyarakat</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2" class="text-center">No.</th>
@@ -231,7 +210,7 @@
     <!-- Tabel Keempat -->
     <div class="table-container">
         <div class="section-heading">Laporan Seleksi Mahasiswa Baru</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Tahun Akademik</th>
@@ -283,7 +262,7 @@
     <!-- Tabel Kelima -->
     <div class="table-container">
         <div class="section-heading">Laporan Mahasiswa Asing</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>Jumlah Mahasiswa Aktif</th>
@@ -314,7 +293,7 @@
     <!-- Tabel Keenam -->
      <div class="table-container">
         <div class="section-heading">Laporan Dosen Tetap</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -377,7 +356,7 @@
     <!-- Tabel Ketujuh -->
     <div class="table-container">
         <div class="section-heading">Laporan Dosen Tidak Tetap</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -419,7 +398,7 @@
     <!-- Tabel Kedelapan -->
     <div class="table-container">
         <div class="section-heading">Laporan Dosen Pembimbing TA</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="3">No.</th>
@@ -456,7 +435,7 @@
     <!-- Tabel Kesembilan -->
     <div class="table-container">
         <div class="section-heading">Laporan EWMP Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead >
                 <tr>
                     <th rowspan="3">No.</th>
@@ -509,7 +488,7 @@
     <!-- Tabel Kesepuluh -->
     <div class="table-container">
         <div class="section-heading">Laporan Dosen Praktisi</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead >
                 <tr>
                     <th>No.</th>
@@ -547,7 +526,7 @@
     <!-- Tabel Kesebelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Rekognisi Dtps Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -588,7 +567,7 @@
     <!-- Tabel Keduabelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Penelitian Dtps Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -631,7 +610,7 @@ $sumberDana = [
     <!-- Tabel Ketigabelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Pkm Dtps Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                         <th>No.</th>
@@ -676,7 +655,7 @@ $sumberDana = [
     <!-- Tabel Keempatbelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Produk Teradopsi Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
 
                 <tr>
@@ -706,7 +685,7 @@ $sumberDana = [
     <!-- Tabel Kelimabelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Publikasi Ilmiah Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -728,7 +707,7 @@ $sumberDana = [
             <tfoot class="table-border-bottom-0">
                 <tr>
                     <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
-                    <th class="text-center">{{ $data->publikasi_ilmiah->count('judul_artikel')}}</th>
+                    <th class="text-center">{{ $totalpublik }}</th>
                 </tr>
             </tfoot>
         </table>
@@ -736,7 +715,7 @@ $sumberDana = [
     <!-- Tabel Keenambelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Sitasi Karya Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -760,7 +739,7 @@ $sumberDana = [
     <!-- Tabel Ketujuhbelas -->
     <div class="table-container">
         <div class="section-heading">Laporan HKI (Paten) Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -790,7 +769,7 @@ $sumberDana = [
     <!-- Tabel Kedelapanbelas -->
     <div class="table-container">
         <div class="section-heading">Laporan HKI (Hak Cipta) Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -822,7 +801,7 @@ $sumberDana = [
     <!-- Tabel Kesembilanbelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Teknologi Karya Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -852,7 +831,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluh -->
     <div class="table-container">
         <div class="section-heading">Laporan Buku Chapter Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -882,7 +861,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhSatu -->
     <div class="table-container">
         <div class="section-heading">Laporan IPK Lulusan</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -913,7 +892,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhDua -->
     <div class="table-container">
         <div class="section-heading">Laporan Masa Studi Lulusan</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Masa Studi</th>
@@ -950,7 +929,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhTiga -->
     <div class="table-container">
         <div class="section-heading">Laporan Prestasi Akademik</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -988,7 +967,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhEmpat -->
     <div class="table-container">
         <div class="section-heading">Laporan Prestasi Nonakademik</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -1026,7 +1005,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhLima -->
     <div class="table-container">
         <div class="section-heading">Laporan Evaluasi Kepuasan Pengguna</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>Tahun Lulus</th>
@@ -1058,7 +1037,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhEnam -->
     <div class="table-container">
         <div class="section-heading">Laporan Evaluasi Kesesuaian Kerja</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Tahun <br>Lulus</th>
@@ -1129,7 +1108,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhTujuh -->
     <div class="table-container">
         <div class="section-heading">Laporan Evaluasi Tempat Kerja</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Tahun <br>Lulus</th>
@@ -1174,7 +1153,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhDelapan -->
     <div class="table-container">
         <div class="section-heading">Laporan Evaluasi Waktu Tunggu</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Masa Studi</th>
@@ -1218,7 +1197,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhSembilan -->
     <div class="table-container">
         <div class="section-heading">Laporan Integrasi Penelitian</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1246,7 +1225,7 @@ $sumberDana = [
     <!-- Tabel TigaPuluh -->
     <div class="table-container">
         <div class="section-heading">Laporan Kepuasan Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -1290,7 +1269,7 @@ $sumberDana = [
     <!-- Tabel TigaPuluhSatu -->
     <div class="table-container">
         <div class="section-heading">Laporan Kurikulum Pembelajaran</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -1340,7 +1319,7 @@ $sumberDana = [
     <!-- TigaPuluhDua -->
     <div class="table-container">
         <div class="section-heading">Laporan Penelitian Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1366,7 +1345,7 @@ $sumberDana = [
     <!-- TigaPuluhTiga -->
     <div class="table-container">
         <div class="section-heading">Laporan Rujukan Tesis Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1392,7 +1371,7 @@ $sumberDana = [
     <!-- TigaPuluhEmpat -->
     <div class="table-container">
         <div class="section-heading">Laporan PKM Dtps Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1416,7 +1395,7 @@ $sumberDana = [
     <!-- TigaPuluhLima -->
     <div class="table-container">
         <div class="section-heading">Laporan Produk Jasa Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
 
                 <tr>
@@ -1446,7 +1425,7 @@ $sumberDana = [
     <!-- TigaPuluhEnam -->
     <div class="table-container">
         <div class="section-heading">Laporan Publikasi Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -1468,8 +1447,7 @@ $sumberDana = [
             <tfoot class="table-border-bottom-0">
                 <tr>
                     <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
-                    <th class="text-center">{{ $data->publikasi_mahasiswa->count('judul_artikel')}}</th>
-                    <th class="rounded-end-bottom">Aksi</th>
+                    <th class="text-center">{{ $totalpublikmaha }}</th>
                 </tr>
             </tfoot>
         </table>
@@ -1477,7 +1455,7 @@ $sumberDana = [
     <!-- TigaPuluhTujuh -->
     <div class="table-container">
         <div class="section-heading">Laporan Sitasi Karya Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1501,7 +1479,7 @@ $sumberDana = [
     <!-- TigaPuluhDelapan -->
     <div class="table-container">
         <div class="section-heading">Laporan HKI (Paten) Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1531,7 +1509,7 @@ $sumberDana = [
     <!-- TigaPuluhSembilan -->
     <div class="table-container">
         <div class="section-heading">Laporan HKI (Hak Cipta) Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1563,7 +1541,7 @@ $sumberDana = [
     <!-- EmpatPuluh -->
     <div class="table-container">
         <div class="section-heading">Laporan Teknologi Karya Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1593,7 +1571,7 @@ $sumberDana = [
     <!-- EmpatPuluhSatu -->
     <div class="table-container">
         <div class="section-heading">Laporan Buku Chapter Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1619,6 +1597,7 @@ $sumberDana = [
                 @endforeach
             </tbody>
         </table>
+    </div>
     </div>
 </body>
 

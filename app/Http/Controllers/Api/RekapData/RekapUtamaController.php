@@ -49,14 +49,47 @@ use App\Models\SitasiKaryaDosen;
 use App\Models\SitasiKaryaMahasiswa;
 use App\Models\TeknologiKaryaDosen;
 use App\Models\TeknologiKaryaMahasiswa;
-use App\Models\UserProfile;
+
 
 class RekapUtamaController extends Controller
 {
-    public function getRekap(int $userId): array
+    /**
+     * Endpoint utama untuk rekap data via route param
+     */
+    public function index(Request $request, $user_id, $tahun_ajaran)
     {
-        if (!User::find($userId)) return [];
+        $semester = $request->query('semester'); // optional via query ?semester=genap
 
+        $rekap = $this->getRekap($user_id, $tahun_ajaran, $semester);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Rekap data',
+            'data'    => $rekap,
+        ]);
+    }
+
+    /**
+     * Fungsi utama rekap, menerima user_id, tahun ajaran (slug), dan semester (opsional)
+     */
+    public function getRekap(int $userId, string $tahunAjaranSlug, ?string $semester = null): array
+    {
+        // Validasi user
+        $user = User::find($userId);
+        if (! $user) {
+            abort(404, 'User tidak ditemukan.');
+        }
+
+        // Ambil data tahun ajaran
+        $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahunAjaranSlug)->first();
+        if (! $tahunAjaranObj) {
+            abort(404, 'Tahun ajaran tidak ditemukan.');
+        }
+
+        $tahun = $tahunAjaranObj->tahun_ajaran;
+        $semester = $semester ?: $tahunAjaranObj->semester;
+
+        // Daftar model untuk rekap
         $models = [
             'Tabel 1.1 Kerjasama Tridharma - Pendidikan' => KerjasamaTridharmaPendidikan::class,
             'Tabel 1.2 Kerjasama Tridharma - Penelitian' => KerjasamaTridharmaPenelitian::class,
@@ -99,9 +132,10 @@ class RekapUtamaController extends Controller
             'Tabel 8.f.5) HKI Mahasiswa - Hak Cipta' => HkiHakCiptaMahasiswa::class,
             'Tabel 8.f.6) Teknologi Mahasiswa' => TeknologiKaryaMahasiswa::class,
             'Tabel 8.f.7) Buku Mahasiswa' => BukuChapterMahasiswa::class,
-            'user_profile' => UserProfile::class,
+            
         ];
 
+        // Threshold minimum untuk status "memenuhi"
         $minThresholds = [
             'Tabel 3.a.5) Dosen Industri/Praktisi' => 1,
             'Tabel 3.a.2) Dosen Pembimbing Utama Tugas Akhir' => 1,
@@ -115,15 +149,12 @@ class RekapUtamaController extends Controller
             'Tabel 3.b.1) Pengakuan/Rekognisi Dosen' => 1,
         ];
 
-        $tahun = request()->input('tahun');
-        $semester = request()->input('semester');
         $data = [];
-
         foreach ($models as $key => $modelClass) {
             $query = $modelClass::where('user_id', $userId);
-            $query = $this->selectTahun($query, $tahun, $semester, $key);
-
+            $query = $this->selectTahun($query, $tahun, $semester, $modelClass);
             $count = $query->count();
+
             $min = $minThresholds[$key] ?? 1;
             $status = $count >= $min ? 'memenuhi' : ($count === 0 ? 'belum diisi' : 'kurang');
             $data[$key] = ['count' => $count, 'min' => $min, 'status' => $status];
@@ -133,8 +164,9 @@ class RekapUtamaController extends Controller
         $dosenTetap = $data['Tabel 3.a.1) Dosen Tetap Perguruan Tinggi']['count'] ?? 0;
         $tidakTetap = $data['Tabel 3.a.4) Dosen Tidak Tetap']['count'] ?? 0;
         if ($dosenTetap > 0) {
-            $data['dosen_tetap_pt_ratio'] = $this->ratio($dosenTetap, SeleksiMahasiswaBaru::sum('mhs_aktif_reguler'));
-            if (($tidakTetap / $dosenTetap) > 0.3) {
+            $mahasiswaAktif = SeleksiMahasiswaBaru::sum('mhs_aktif_reguler');
+            $data['dosen_tetap_pt_ratio'] = $this->ratio($dosenTetap, $mahasiswaAktif);
+            if ($tidakTetap / $dosenTetap > 0.3) {
                 $data['Tabel 3.a.4) Dosen Tidak Tetap']['keterangan'] = 'jumlah tidak tetap melebihi persentase';
             }
         }
@@ -142,27 +174,12 @@ class RekapUtamaController extends Controller
         return $data;
     }
 
-    public function index(Request $request)
+    /**
+     * Filter query berdasarkan tahun dan semester sesuai model
+     */
+    private function selectTahun($query, $tahunInput, $semesterInput, string $modelClass)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'tahun' => 'nullable|string',
-            'semester' => 'nullable|string',
-        ]);
-
-        $userId = $request->input('user_id');
-        $rekap = $this->getRekap($userId);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Rekap data',
-            'data' => $rekap,
-        ]);
-    }
-
-    private function selectTahun($query, $tahunInput, $semesterInput, string $modelKey)
-    {
-        if (!$tahunInput) return $query;
+        if (! $tahunInput) return $query;
 
         $usesTahunAjaranId = [
             DosenIndustriPraktisi::class,
@@ -181,7 +198,7 @@ class RekapUtamaController extends Controller
             PenelitianDtps::class => 'tahun_penelitian',
         ];
 
-        if (in_array($modelKey, $usesTahunAjaranId)) {
+        if (in_array($modelClass, $usesTahunAjaranId)) {
             $semester = $semesterInput ?: 'ganjil';
             $ta = TahunAjaranSemester::where('tahun_ajaran', $tahunInput)
                 ->where('semester', $semester)
@@ -190,15 +207,21 @@ class RekapUtamaController extends Controller
             return $ta ? $query->where('tahun_ajaran_id', $ta->id) : $query->whereRaw('0 = 1');
         }
 
-        $column = $customTahunColumns[$modelKey] ?? 'tahun';
+        $column = $customTahunColumns[$modelClass] ?? 'tahun';
         return $query->where($column, $tahunInput);
     }
 
+    /**
+     * Greatest Common Divisor
+     */
     private function gcd(int $a, int $b): int
     {
         return $b === 0 ? $a : $this->gcd($b, $a % $b);
     }
 
+    /**
+     * Rasio a:b yang disederhanakan
+     */
     private function ratio(int $a, int $b): string
     {
         if ($b === 0) return 'n/a';
