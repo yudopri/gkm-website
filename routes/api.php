@@ -40,7 +40,7 @@ use App\Http\Controllers\Api\KualitasPembelajaran\KepuasanMahasiswaController;
 use App\Http\Controllers\Api\KualitasPembelajaran\KurikulumPembelajaranController;
 use App\Http\Controllers\Api\PenelitianDtps\PenelitianMahasiswaController;
 use App\Http\Controllers\Api\PenelitianDtps\RujukanTesisController;
-use App\Http\Controllers\Api\Petugas\ListDosenController;;
+use App\Http\Controllers\Api\Petugas\ListDosenController;
 use App\Http\Controllers\Api\importexcel\ImportExcelController;
 use App\Http\Controllers\Api\LuaranMahasiswa\ProdukJasaMahasiswaController;
 use App\Http\Controllers\Api\LuaranMahasiswa\PublikasiMahasiswaController;
