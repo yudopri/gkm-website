@@ -11,7 +11,7 @@ class GrafikKepuasanMahasiswaController extends Controller
     public function index()
     {
 // Mengambil data yang sudah digroup dan dihitung total kerjasama berdasarkan tahun dan semester
-$data = KepuasanMahasiswa::join('tahun_ajaran_semester', 'kepuasan_mahasiswa', '=', 'tahun_ajaran_semester.tahun_ajaran')
+$data = KepuasanMahasiswa::join('tahun_ajaran_semester', 'kepuasan_mahasiswa.tahun', '=', 'tahun_ajaran_semester.tahun_ajaran')
 ->select(
     DB::raw("CONCAT(tahun_ajaran_semester.tahun_ajaran, ' - ', tahun_ajaran_semester.semester) AS tahun_ajaran"),
     DB::raw("COUNT(kepuasan_mahasiswa.id) AS total_kerjasama")
