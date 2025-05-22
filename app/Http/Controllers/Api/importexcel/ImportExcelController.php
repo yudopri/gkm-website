@@ -13,23 +13,23 @@ use App\Models\SeleksiMahasiswaBaru;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-
+use Illuminate\Support\Facades\Log;
 class ImportExcelController extends Controller
 {
     public function importExcel(Request $request)
 {
     $request->validate([
         'file' => 'required|mimes:xlsx,csv',
+        'user_id' => 'required|integer|exists:users,id', // tambahkan validasi user_id
     ]);
- $namaDosen = $request->input('nama_dosen');
 
-$user = \App\Models\User::whereHas('profile', function($query) use ($namaDosen) {
-    $query->where('nama', $namaDosen);
-})->first();
+    $userId = $request->input('user_id');
 
-if (!$user) {
-    return back()->withErrors(['error' => "User dengan nama dosen '$namaDosen' tidak ditemukan."]);
-}
+    $user = \App\Models\User::find($userId);
+
+    if (!$user) {
+        return back()->withErrors(['error' => "User dengan ID '$userId' tidak ditemukan."]);
+    }
 
 $userId = $user->id;
 
