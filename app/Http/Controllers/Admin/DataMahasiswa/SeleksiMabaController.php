@@ -110,7 +110,13 @@ class SeleksiMabaController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'seleksi_maba')->whereId($id)->firstOrFail();
+           $dosen = User::with([
+    'profile',
+    'seleksi_maba' => function ($query) {
+        $query->whereNotNull('tahun_ajaran_id');
+    }
+])->whereId($id)->firstOrFail();
+
 
             $totals = SeleksiMahasiswaBaru::selectRaw('
                 SUM(pendaftar) as total_pendaftar,

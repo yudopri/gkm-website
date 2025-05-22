@@ -98,7 +98,9 @@ class BukuChapterController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'buku_chapter_dosen')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'buku_chapter_dosen'=> function ($query) {
+        $query->whereNotNull('tahun');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kinerja-dosen.luaran-lain.buku-chapter.detail', [
                 'data_dosen' => $dosen,

@@ -127,7 +127,9 @@ class PenelitianDtpsController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'penelitian_dtps')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'penelitian_dtps' => function ($query) {
+        $query->whereNotNull('tahun_penelitian');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kinerja-dosen.penelitian-dtps.detail', [
                 'data_dosen' => $dosen,

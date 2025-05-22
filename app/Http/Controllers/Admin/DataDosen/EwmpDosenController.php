@@ -104,7 +104,9 @@ class EwmpDosenController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'ewmp_dosen')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'ewmp_dosen'=> function ($query) {
+        $query->whereNotNull('tahun_ajaran_id');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.data-dosen.ewmp-dosen.detail-ewmp-dosen', [
                 'data_dosen' => $dosen,

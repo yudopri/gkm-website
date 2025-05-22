@@ -120,7 +120,9 @@ class PublikasiIlmiahController extends Controller
    public function show(string $id)
 {
     try {
-        $dosen = User::with('profile', 'publikasi_ilmiah')->findOrFail($id);
+        $dosen = User::with(['profile', 'publikasi_ilmiah'=> function ($query) {
+        $query->whereNotNull('tahun');
+    }])->findOrFail($id);
 
         $total = $dosen->publikasi_ilmiah
             ->filter(function ($item) {
