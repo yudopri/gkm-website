@@ -39,8 +39,15 @@ use App\Http\Controllers\Api\KualitasPembelajaran\KepuasanMahasiswaController;
 use App\Http\Controllers\Api\KualitasPembelajaran\KurikulumPembelajaranController;
 use App\Http\Controllers\Api\PenelitianDtps\PenelitianMahasiswaController;
 use App\Http\Controllers\Api\PenelitianDtps\RujukanTesisController;
-use App\Http\Controllers\Api\Petugas\ListDosenController;
+use App\Http\Controllers\Api\Petugas\ListDosenController;;
 use App\Http\Controllers\Api\importexcel\ImportExcelController;
+use App\Http\Controllers\Api\LuaranMahasiswa\ProdukJasaMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\PublikasiMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\SitasiKaryaMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\BukuChapterMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\HkiHakCiptaMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\HkiPatenMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\TeknologiKaryaMahasiswaController;
 
 
 
@@ -84,6 +91,14 @@ Route::middleware('auth:sanctum')->apiResource('/kurikulum-pembelajaran', Kuriku
 Route::middleware('auth:sanctum')->apiResource('/penelitian-mahasiswa', PenelitianMahasiswaController::class);
 Route::middleware('auth:sanctum')->apiResource('/rujukan-tesis', RujukanTesisController::class);
 Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenController::class);
+Route::middleware('auth:sanctum')->apiResource('/luaran-bukuchapter-mahasiswa', BukuChapterMahasiswaController::class);
+Route::middleware('auth:sanctum')->apiResource('/luaran-hkihakcipta-mahasiswa', HkiHakCiptaMahasiswaController::class);
+Route::middleware('auth:sanctum')->apiResource('/luaran-hkipaten-mahasiswa', HkiPatenMahasiswaController::class);
+Route::middleware('auth:sanctum')->apiResource('/luaran-teknologikarya-mahasiswa', TeknologiKaryaMahasiswaController::class);
+Route::middleware('auth:sanctum')->apiResource('/luaran-produk-mahasiswa', ProdukJasaMahasiswaController::class);
+Route::middleware('auth:sanctum')->apiResource('/luaran-publikasi-mahasiswa', PublikasiMahasiswaController::class);
+Route::middleware('auth:sanctum')->apiResource('/luaran-sitasi-mahasiswa', SitasiKaryaMahasiswaController::class);
+
 
 
 Route::middleware('auth:sanctum')->group(function () {
