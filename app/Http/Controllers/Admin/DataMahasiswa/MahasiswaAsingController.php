@@ -111,7 +111,9 @@ class MahasiswaAsingController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'mahasiswa_asing')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'mahasiswa_asing' => function ($query) {
+        $query->whereNotNull('tahun_ajaran_id');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.data-mahasiswa.detail-mhs-asing', [
                 'data_dosen' => $dosen,

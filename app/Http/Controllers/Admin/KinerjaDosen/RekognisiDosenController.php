@@ -107,7 +107,9 @@ class RekognisiDosenController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'rekognisi_dtps')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'rekognisi_dtps'=> function ($query) {
+        $query->whereNotNull('tahun');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kinerja-dosen.rekognisi-dosen.detail', [
                 'data_dosen' => $dosen,

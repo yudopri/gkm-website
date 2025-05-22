@@ -40,37 +40,34 @@
                                     </thead>
                                     <tbody class="table-border-bottom-0">
                                         @foreach ($kepuasan_pengguna as $pengguna)
-                                            <tr>
-                                                <td class="text-center">{{ $pengguna->tahun }}</td>
-                                                <td class="text-center">{{ $pengguna->jumlah_lulusan }}</td>
-                                                <td class="text-center">{{ $pengguna->jumlah_responden }}</td>
+    <tr>
+        <td class="text-center">{{ $pengguna['tahun'] }}</td>
+        <td class="text-center">{{ $pengguna['jumlah_lulusan'] }}</td>
+        <td class="text-center">{{ $pengguna['jumlah_responden'] }}</td>
+        <td class="text-center">
+            <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <!-- Contoh: ambil ID pertama dari group untuk aksi -->
+                    <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.edit', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId' => $pengguna['ids']->first()]) }}">
+                        <i class="bx bx-edit-alt me-1"></i> Edit
+                    </a>
 
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <!-- Edit -->
-                                                            <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.edit', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId'=>$pengguna->id]) }}">
-                                                                <i class="bx bx-edit-alt me-1"></i> Edit
-                                                            </a>
+                    <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.destroy', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId' => $pengguna['ids']->first()]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="dropdown-item text-danger">
+                            <i class="bx bx-trash me-1"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+@endforeach
 
-                                                            <!-- Delete -->
-                                                            <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.destroy', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId'=>$pengguna->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item text-danger">
-                                                                    <i class="bx bx-trash me-1"></i> Delete
-                                                                </button>
-                                                            </form>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
                                     </tbody>
                                     <tfoot class="table-border-bottom-0 table-secondary">
                                         <tr>
@@ -123,42 +120,43 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        @foreach ($kepuasan_pengguna as $pengguna)
-                                        <tr>
-                                            <td class="text-center">{{$loop->iteration}}</td>
-                                            <td class="text-wrap">{{ $pengguna->jenis_kemampuan}}</td>
-                                            <td class="text-center"> {{ $pengguna->tingkat_kepuasan_sangat_baik}}</td>
-                                            <td class="text-center"> {{ $pengguna->tingkat_kepuasan_baik}}</td>
-                                            <td class="text-center"> {{ $pengguna->tingkat_kepuasan_cukup}}</td>
-                                            <td class="text-center"> {{ $pengguna->tingkat_kepuasan_kurang}}</td>
-                                            <td class="text-center"> {{ $pengguna->rencana_tindakan}}</td>
+                                        @foreach ($detail_kepuasan_pengguna as $pengguna)
+                                           <tr>
+        <td class="text-center">{{ $loop->iteration }}</td>
+        <td class="text-wrap">{{ $pengguna['jenis_kemampuan'] }}</td>
+        <td class="text-center">{{ $pengguna['tingkat_kepuasan_sangat_baik'] }}</td>
+        <td class="text-center">{{ $pengguna['tingkat_kepuasan_baik'] }}</td>
+        <td class="text-center">{{ $pengguna['tingkat_kepuasan_cukup'] }}</td>
+        <td class="text-center">{{ $pengguna['tingkat_kepuasan_kurang'] }}</td>
+        <td class="text-center">{{ $pengguna['rencana_tindakan'] }}</td>
 
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                         <!-- Edit -->
-                                                         <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.edit', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId'=>$pengguna->id]) }}">
-                                                            <i class="bx bx-edit-alt me-1"></i> Edit
-                                                        </a>
+        <!-- Aksi -->
+        <td class="text-center">
+            <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <!-- Edit -->
+                    <a class="dropdown-item" href="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.edit', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId' => $pengguna['id']]) }}">
+                        <i class="bx bx-edit-alt me-1"></i> Edit
+                    </a>
 
-                                                        <!-- Delete -->
-                                                        <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.destroy', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId'=>$pengguna->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="dropdown-item text-danger">
-                                                                <i class="bx bx-trash me-1"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                    <!-- Delete -->
+                    <form action="{{ route('admin.kinerja-lulusan.evaluasi-lulusan.kepuasan-pengguna.destroy', ['tahunAjaran' => $tahun_ajaran, 'kepuasanId' => $pengguna['id']]) }}"
+                        method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="dropdown-item text-danger">
+                            <i class="bx bx-trash me-1"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+@endforeach
 
                                     </tbody>
 
@@ -166,10 +164,10 @@
                                         <tr>
                                             <th class="rounded-start-bottom"> </th>
                                             <th class="text-center">Jumlah</th>
-                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_sangat_baik')}}</th>
-                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_baik')}} </th>
-                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_cukup')}} </th>
-                                            <th class="text-center">{{$kepuasan_pengguna->sum('tingkat_kepuasan_kurang')}} </th>
+                                            <th class="text-center">{{$detail_kepuasan_pengguna->sum('tingkat_kepuasan_sangat_baik')}}</th>
+                                            <th class="text-center">{{$detail_kepuasan_pengguna->sum('tingkat_kepuasan_baik')}} </th>
+                                            <th class="text-center">{{$detail_kepuasan_pengguna->sum('tingkat_kepuasan_cukup')}} </th>
+                                            <th class="text-center">{{$detail_kepuasan_pengguna->sum('tingkat_kepuasan_kurang')}} </th>
                                             <th class="text-center"></th>
                                             <th class="rounded-end-bottom">Aksi</th>
                                         </tr>

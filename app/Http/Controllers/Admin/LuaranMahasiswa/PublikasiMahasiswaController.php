@@ -27,9 +27,16 @@ class PublikasiMahasiswaController extends Controller
         $publikasi = PublikasiMahasiswa::with('user')->where('tahun', $tahun)->get();
         // Get the totals grouped by 'jenis_artikel' for the given year and user
         $total = PublikasiMahasiswa::where('user_id', $userId)
-    ->whereNull('deleted_at')
     ->where('tahun', $tahun)
-    ->count();
+    ->whereNull('deleted_at')
+    ->get()
+    ->sum(function ($item) {
+        $raw = trim($item->judul_artikel);
+        $sanitized = str_replace(',', '.', $raw);
+        $sanitized = preg_replace('/[^0-9.]/', '', $sanitized);
+        return is_numeric($sanitized) ? (float) $sanitized : 0;
+    });
+
 
 
 
@@ -113,9 +120,23 @@ class PublikasiMahasiswaController extends Controller
     {
         try {
             $dosen = User::with('profile', 'publikasi_mahasiswa')->whereId($id)->firstOrFail();
+$total = $dosen->publikasi_mahasiswa
+            ->filter(function ($item) {
+                return is_null($item->deleted_at);
+            })
+            ->sum(function ($item) {
+                $raw = trim($item->judul_artikel);
+
+                // Ganti koma jadi titik jika ada, dan buang karakter selain angka dan titik
+                $sanitized = str_replace(',', '.', $raw);
+                $sanitized = preg_replace('/[^0-9.]/', '', $sanitized);
+
+                return is_numeric($sanitized) ? (float) $sanitized : 0;
+            });
 
             return view('pages.admin.petugas.luaran-mahasiswa.publikasi.detail', [
                 'data_dosen' => $dosen,
+                'totals' => $total,
                 'dosenId' => $dosen->id,
             ]);
         } catch (\Exception $e) {
@@ -189,7 +210,7 @@ class PublikasiMahasiswaController extends Controller
     {
         try {
             $publikasi = PublikasiMahasiswa::findOrFail($id);
-            $delete = $dosenPraktisi->delete();
+            $delete = $publikasi->delete();
 
             if ($delete) {
                 return redirect()->route('admin.kinerja-dosen.publikasi.index', $tahunAjaran)

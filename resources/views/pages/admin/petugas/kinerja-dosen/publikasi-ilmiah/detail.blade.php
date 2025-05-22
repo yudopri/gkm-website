@@ -22,9 +22,6 @@
                                         <th rowspan="2">Judul Artikel</th>
                                         <th rowspan="2">Jenis Publikasi</th>
                                         <th rowspan="2">Tahun <br>(YYYY)</th>
-
-                                        <!-- Aksi -->
-                                        <th rowspan="2">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
@@ -40,8 +37,7 @@
                                 <tfoot class="table-border-bottom-0">
                                     <tr>
                                         <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
-                                        <th class="text-center">{{ $data_dosen->publikasi_ilmiah->count('judul_artikel')}}</th>
-                                        <th class="rounded-end-bottom">Aksi</th>
+                                        <th class="text-center">{{ $totals }}</th>
                                     </tr>
                                 </tfoot>
                             </table>

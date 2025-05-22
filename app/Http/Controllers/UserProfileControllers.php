@@ -74,7 +74,7 @@ public function update(Request $request, $id)
         'nip' => 'required|string|max:50',
         'nidn' => 'required|string|max:50',
         'handphone' => 'required|string|max:50',
-        'jabatan_fungsional' => 'required|string|max:255',
+        'jabatan_fungsional' => 'nullable|string|max:255',
         'jabatan_id' => 'required|exists:jabatan,id',
         'program_studi_id' => 'required|exists:program_studi,id',
         'avatar' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',

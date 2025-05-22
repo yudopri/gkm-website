@@ -98,7 +98,9 @@ class HkiPatenController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'hki_paten_dosen')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'hki_paten_dosen'=> function ($query) {
+        $query->whereNotNull('tahun');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kinerja-dosen.luaran-lain.hki-paten.detail', [
                 'data_dosen' => $dosen,

@@ -96,7 +96,9 @@ class PembimbingTaController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_pembimbing_ta')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'dosen_pembimbing_ta'=> function ($query) {
+        $query->whereNotNull('tahun_ajaran_id');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.data-dosen.dospem-ta.detail-dospem-ta', [
                 'data_dosen' => $dosen,

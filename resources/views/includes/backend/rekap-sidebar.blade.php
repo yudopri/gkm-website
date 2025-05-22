@@ -32,49 +32,49 @@
         
                 <!-- #s 9. rekap data -->
                 <li class="menu-item">
-                <a href="{{route('admin.rekap-data.kerjasama-tridharma',['tahun_ajaran' => '2024-2025','dosen_id' => $dosen->id])}}" class="menu-link">
+                <a href="{{route('admin.rekap-data.kerjasama-tridharma',['tahun_ajaran' => '2024-2025-genap','dosen_id' => $dosen->id])}}" class="menu-link">
                     <div data-i18n="Rekap Data">Kerjasama Tridharma</div>
                 </a>
-                <a href="{{ route('admin.rekap-data.seleksi-mahasiswa', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id])}}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.seleksi-mahasiswa', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id])}}" class="menu-link">
                     <div data-i18n="Rekap Data">Mahasiswa</div>
                 </a>
-                <a href="{{ route('admin.rekap-data.dosen-tetap', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.dosen-tetap', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Dosen</div>
                 </a>
-                <a href="{{ route('admin.rekap-data.integrasi-pembelajaran', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.integrasi-pembelajaran', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Kinerja Dosen</div>
                 </a>
-                <a href="{{ route('admin.rekap-data.hki.paten', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.hki.paten', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Luaran Lainnya</div>
                 </a>
-                <a href="{{ route('admin.rekap-data.kurikulum', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.kurikulum', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Kualitas Pembelajaran</div>
                 </a>
-                <a href="{{ route('admin.rekap-data.penelitian-dtps', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}"class="menu-link">
+                <a href="{{ route('admin.rekap-data.penelitian-dtps', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}"class="menu-link">
                     <div data-i18n="Rekap Data">Penelitian DTPS</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.pkm-dtps', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.pkm-dtps', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">PKM DTPS</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.ipk-lulusan', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.ipk-lulusan', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">IPK Lulusan</div>
                 </a>
                 
-                <a href="{{ route('admin.rekap-data.prestasi-akademik', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.prestasi-akademik', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Prestasi Mahasiswa</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.masa-studi', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.masa-studi', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Masa studi Lulusan</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.waktu-tunggu', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.waktu-tunggu', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Evaluasi Lulusan</div>
                 </a>
 
-                <a href="{{ route('admin.rekap-data.pagelaran-mahasiswa', ['tahun_ajaran' => '2024-2025','dosen_id'=> $dosen->id]) }}" class="menu-link">
+                <a href="{{ route('admin.rekap-data.pagelaran-mahasiswa', ['tahun_ajaran' => '2024-2025-genap','dosen_id'=> $dosen->id]) }}" class="menu-link">
                     <div data-i18n="Rekap Data">Luaran Karya Mahasiswa</div>
                 </a>
 

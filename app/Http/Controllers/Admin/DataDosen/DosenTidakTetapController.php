@@ -106,7 +106,9 @@ class DosenTidakTetapController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tidak_tetap')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'dosen_tidak_tetap'=> function ($query) {
+        $query->whereNotNull('tahun_ajaran_id');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.data-dosen.dosen-tidak-tetap.detail-dosen-tidak-tetap', [
                 'data_dosen' => $dosen,

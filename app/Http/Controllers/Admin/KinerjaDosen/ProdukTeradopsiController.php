@@ -100,7 +100,9 @@ class ProdukTeradopsiController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'produk_teradopsi')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'produk_teradopsi'=> function ($query) {
+        $query->whereNotNull('tahun');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.kinerja-dosen.produk-teradopsi.detail', [
                 'data_dosen' => $dosen,

@@ -69,7 +69,7 @@
                                 <tfoot class="table-border-bottom-0">
                                     <tr>
                                         <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
-                                        <th class="text-center">{{ $totals}}</th>
+                                        <th class="text-center">{{ $totals }}</th>
                                         <th class="rounded-end-bottom">Aksi</th>
                                     </tr>
                                 </tfoot>

@@ -111,7 +111,9 @@ class DosenTetapController extends Controller
     public function show(string $id)
     {
         try {
-            $dosen = User::with('profile', 'dosen_tetap')->whereId($id)->firstOrFail();
+            $dosen = User::with(['profile', 'dosen_tetap'=> function ($query) {
+        $query->whereNotNull('tahun_ajaran_id');
+    }])->whereId($id)->firstOrFail();
 
             return view('pages.admin.petugas.data-dosen.dosen-tetap-pt.detail-dosen-tetap', [
                 'data_dosen' => $dosen,

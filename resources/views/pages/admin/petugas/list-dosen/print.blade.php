@@ -5,90 +5,73 @@
     <meta charset="UTF-8">
     <title>Data Laporan</title>
     <style>
+        @page {
+            margin: 20mm;
+        }
         body {
             font-family: Arial, sans-serif;
             color: #333;
             margin: 0;
+            padding: 0;
+        }
+        .content {
             padding: 20px;
         }
-
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
-
         .header h1 {
             font-size: 24px;
             margin: 0;
         }
-
-        .header p {
-            font-size: 14px;
-            margin: 5px 0;
-            color: #555;
-        }
-
-        .section-heading {
-            font-size: 18px;
-            font-weight: bold;
-            color: #4CAF50;
+        h2.section-title {
+            font-size: 20px;
             margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
         }
-
-        .table-container {
-            width: 100%;
-            margin: 10px 0;
-            overflow-x: auto;
-            /* Tambahan untuk mencegah overflow */
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-bottom: 20px;
+    table-layout: fixed;
+            page-break-inside: auto;
         }
+thead {
+    display: table-header-group;
+}
+tfoot {
+    display: table-footer-group;
+}
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
 
-        th,
-        td {
-            padding: 8px;
-            /* Mengurangi padding untuk menghemat ruang */
-            border: 1px solid #ccc;
-            text-align: left;
-            font-size: 12px;
-            word-wrap: break-word;
-            /* Membungkus teks yang panjang */
-        }
-
+        th, td {
+    word-break: break-word;
+    white-space: normal;
+    font-size: 10px; /* kecilkan ukuran */
+    padding: 4px;
+    border: 1px solid #000;
+}
         th {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 13px;
-            white-space: nowrap;
-            /* Menghindari tumpukan teks pada header */
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
         .text-center {
             text-align: center;
         }
-
         .text-wrap {
             word-break: break-word;
         }
-
         a {
             color: #4CAF50;
             text-decoration: none;
             font-size: 11px;
         }
-
         a:hover {
             text-decoration: underline;
         }
@@ -96,6 +79,7 @@
 </head>
 
 <body>
+    <div class="content">
 
     <div class="header">
         <h1>Data Laporan GKM</h1>
@@ -105,7 +89,7 @@
     <!-- Tabel Pertama -->
     <div class="table-container">
         <div class="section-heading">Laporan Kerjasama Pendidikan</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2" class="text-center">No.</th>
@@ -147,7 +131,7 @@
     <!-- Tabel Kedua -->
     <div class="table-container">
         <div class="section-heading">Laporan Kerjasama Penelitian</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2" class="text-center">No.</th>
@@ -189,7 +173,7 @@
     <!-- Tabel Ketiga -->
     <div class="table-container">
         <div class="section-heading">Laporan Kerjasama Pengabdian Masyarakat</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2" class="text-center">No.</th>
@@ -231,7 +215,7 @@
     <!-- Tabel Keempat -->
     <div class="table-container">
         <div class="section-heading">Laporan Seleksi Mahasiswa Baru</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Tahun Akademik</th>
@@ -283,7 +267,7 @@
     <!-- Tabel Kelima -->
     <div class="table-container">
         <div class="section-heading">Laporan Mahasiswa Asing</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>Jumlah Mahasiswa Aktif</th>
@@ -314,7 +298,7 @@
     <!-- Tabel Keenam -->
      <div class="table-container">
         <div class="section-heading">Laporan Dosen Tetap</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -377,7 +361,7 @@
     <!-- Tabel Ketujuh -->
     <div class="table-container">
         <div class="section-heading">Laporan Dosen Tidak Tetap</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -419,7 +403,7 @@
     <!-- Tabel Kedelapan -->
     <div class="table-container">
         <div class="section-heading">Laporan Dosen Pembimbing TA</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="3">No.</th>
@@ -456,7 +440,7 @@
     <!-- Tabel Kesembilan -->
     <div class="table-container">
         <div class="section-heading">Laporan EWMP Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead >
                 <tr>
                     <th rowspan="3">No.</th>
@@ -509,7 +493,7 @@
     <!-- Tabel Kesepuluh -->
     <div class="table-container">
         <div class="section-heading">Laporan Dosen Praktisi</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead >
                 <tr>
                     <th>No.</th>
@@ -547,7 +531,7 @@
     <!-- Tabel Kesebelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Rekognisi Dtps Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -588,7 +572,7 @@
     <!-- Tabel Keduabelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Penelitian Dtps Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -631,7 +615,7 @@ $sumberDana = [
     <!-- Tabel Ketigabelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Pkm Dtps Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                         <th>No.</th>
@@ -676,7 +660,7 @@ $sumberDana = [
     <!-- Tabel Keempatbelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Produk Teradopsi Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
 
                 <tr>
@@ -706,7 +690,7 @@ $sumberDana = [
     <!-- Tabel Kelimabelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Publikasi Ilmiah Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -715,7 +699,7 @@ $sumberDana = [
                     <th rowspan="2">Tahun <br>(YYYY)</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
             @foreach ($data->publikasi_ilmiah as $publik)
 <tr>
 <td class="text-center">{{ $loop->iteration }}</td>
@@ -728,7 +712,7 @@ $sumberDana = [
             <tfoot class="table-border-bottom-0">
                 <tr>
                     <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
-                    <th class="text-center">{{ $data->publikasi_ilmiah->count('judul_artikel')}}</th>
+                    <th class="text-center">{{ $totalpublik }}</th>
                 </tr>
             </tfoot>
         </table>
@@ -736,7 +720,7 @@ $sumberDana = [
     <!-- Tabel Keenambelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Sitasi Karya Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -745,7 +729,7 @@ $sumberDana = [
                     <th>Jumlah Sitasi</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->sitasi_karya_dosen as $sitasi)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
@@ -760,7 +744,7 @@ $sumberDana = [
     <!-- Tabel Ketujuhbelas -->
     <div class="table-container">
         <div class="section-heading">Laporan HKI (Paten) Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -769,7 +753,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">z
+            <tbody>z
                 <tr>
                     <td class="text-center fw-bold">I</td>
                     <td class="text-wrap fw-bold" colspan="4">
@@ -790,7 +774,7 @@ $sumberDana = [
     <!-- Tabel Kedelapanbelas -->
     <div class="table-container">
         <div class="section-heading">Laporan HKI (Hak Cipta) Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -799,7 +783,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">II</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -822,7 +806,7 @@ $sumberDana = [
     <!-- Tabel Kesembilanbelas -->
     <div class="table-container">
         <div class="section-heading">Laporan Teknologi Karya Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -831,7 +815,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">III</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -852,7 +836,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluh -->
     <div class="table-container">
         <div class="section-heading">Laporan Buku Chapter Dosen</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -861,7 +845,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">IV</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -882,7 +866,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhSatu -->
     <div class="table-container">
         <div class="section-heading">Laporan IPK Lulusan</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -896,7 +880,7 @@ $sumberDana = [
                     <th>Maks</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->ipk_lulusan as $ipk)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -913,7 +897,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhDua -->
     <div class="table-container">
         <div class="section-heading">Laporan Masa Studi Lulusan</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Masa Studi</th>
@@ -930,7 +914,7 @@ $sumberDana = [
                     <th>akhir TS</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->masa_studi_lulusan as $data)
                 <tr>
                     <td class="text-center">{{ $data->masa_studi }}</td>
@@ -950,7 +934,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhTiga -->
     <div class="table-container">
         <div class="section-heading">Laporan Prestasi Akademik</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -964,7 +948,7 @@ $sumberDana = [
                     <th>Internasional</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->prestasi_akademik as $akademik)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -988,7 +972,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhEmpat -->
     <div class="table-container">
         <div class="section-heading">Laporan Prestasi Nonakademik</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -1002,7 +986,7 @@ $sumberDana = [
                     <th>Internasional</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->prestasi_nonakademik as $nonakademik)
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
@@ -1026,7 +1010,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhLima -->
     <div class="table-container">
         <div class="section-heading">Laporan Evaluasi Kepuasan Pengguna</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>Tahun Lulus</th>
@@ -1034,7 +1018,7 @@ $sumberDana = [
                     <th>Jumlah Tanggapan <br>Kepuasan Pengguna <br>yang Terlacak</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->eval_kepuasan_pengguna as $pengguna)
                     <tr>
                         <td class="text-center">{{ $pengguna->tahun }}</td>
@@ -1058,7 +1042,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhEnam -->
     <div class="table-container">
         <div class="section-heading">Laporan Evaluasi Kesesuaian Kerja</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Tahun <br>Lulus</th>
@@ -1072,7 +1056,7 @@ $sumberDana = [
                     <th>Tinggi</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->eval_kesesuaian_kerja as $data)
                 @php
                     $persentase = $data->jumlah_lulusan_terlacak > 0
@@ -1129,7 +1113,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhTujuh -->
     <div class="table-container">
         <div class="section-heading">Laporan Evaluasi Tempat Kerja</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Tahun <br>Lulus</th>
@@ -1146,7 +1130,7 @@ $sumberDana = [
                     <th>Multinasional/ <br>Internasional</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->eval_tempat_kerja as $data)
                 <tr>
                     <td class="text-center">{{$data->tahun}}</td>
@@ -1174,7 +1158,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhDelapan -->
     <div class="table-container">
         <div class="section-heading">Laporan Evaluasi Waktu Tunggu</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">Masa Studi</th>
@@ -1189,7 +1173,7 @@ $sumberDana = [
                     <th>WT > 6 bulan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->eval_waktu_tunggu as $data)
                 <tr>
                     <td class="text-center">{{ $data->masa_studi }}</td>
@@ -1218,7 +1202,7 @@ $sumberDana = [
     <!-- Tabel KeduaPuluhSembilan -->
     <div class="table-container">
         <div class="section-heading">Laporan Integrasi Penelitian</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1229,7 +1213,7 @@ $sumberDana = [
                     <th>Tahun <br>(YYYY)</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->integrasi_penelitian as $penelitian)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1246,7 +1230,7 @@ $sumberDana = [
     <!-- Tabel TigaPuluh -->
     <div class="table-container">
         <div class="section-heading">Laporan Kepuasan Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -1261,7 +1245,7 @@ $sumberDana = [
                     <th>Kurang</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->kepuasan_mahasiswa as $kepuasan)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1290,7 +1274,7 @@ $sumberDana = [
     <!-- Tabel TigaPuluhSatu -->
     <div class="table-container">
         <div class="section-heading">Laporan Kurikulum Pembelajaran</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -1314,7 +1298,7 @@ $sumberDana = [
                     <th>Keteram- <br>pilan <br>Khusus</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->kurikulum_pembelajaran as $kurikulum)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1340,7 +1324,7 @@ $sumberDana = [
     <!-- TigaPuluhDua -->
     <div class="table-container">
         <div class="section-heading">Laporan Penelitian Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1350,7 +1334,7 @@ $sumberDana = [
                     <th>Judul Kegiatan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->penelitian_mahasiswa as $penelitian)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1366,7 +1350,7 @@ $sumberDana = [
     <!-- TigaPuluhTiga -->
     <div class="table-container">
         <div class="section-heading">Laporan Rujukan Tesis Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1376,7 +1360,7 @@ $sumberDana = [
                     <th>Judul <br>Tesis/Disertasi</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->rujukan_tesis_mahasiswa as $rujukan)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
@@ -1392,7 +1376,7 @@ $sumberDana = [
     <!-- TigaPuluhEmpat -->
     <div class="table-container">
         <div class="section-heading">Laporan PKM Dtps Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1401,7 +1385,7 @@ $sumberDana = [
                     <th>Judul Kegiatan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->pkm_dtps_mahasiswa as $pkm)
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
@@ -1416,7 +1400,7 @@ $sumberDana = [
     <!-- TigaPuluhLima -->
     <div class="table-container">
         <div class="section-heading">Laporan Produk Jasa Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
 
                 <tr>
@@ -1428,7 +1412,7 @@ $sumberDana = [
                     <th>Tahun <br>(YYYY)</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
             @foreach ($data->produk_jasa_mahasiswa as $index => $produk)
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
@@ -1446,7 +1430,7 @@ $sumberDana = [
     <!-- TigaPuluhEnam -->
     <div class="table-container">
         <div class="section-heading">Laporan Publikasi Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th rowspan="2">No.</th>
@@ -1455,7 +1439,7 @@ $sumberDana = [
                     <th rowspan="2">Tahun <br>(YYYY)</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
             @foreach ($data->publikasi_mahasiswa as $publik)
 <tr>
 <td class="text-center">{{ $loop->iteration }}</td>
@@ -1468,8 +1452,7 @@ $sumberDana = [
             <tfoot class="table-border-bottom-0">
                 <tr>
                     <th colspan="3" class="rounded-start-bottom">Jumlah Judul</th>
-                    <th class="text-center">{{ $data->publikasi_mahasiswa->count('judul_artikel')}}</th>
-                    <th class="rounded-end-bottom">Aksi</th>
+                    <th class="text-center">{{ $totalpublikmaha }}</th>
                 </tr>
             </tfoot>
         </table>
@@ -1477,7 +1460,7 @@ $sumberDana = [
     <!-- TigaPuluhTujuh -->
     <div class="table-container">
         <div class="section-heading">Laporan Sitasi Karya Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1486,7 +1469,7 @@ $sumberDana = [
                     <th>Jumlah Sitasi</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 @foreach ($data->sitasi_karya_mahasiswa as $sitasi)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
@@ -1501,7 +1484,7 @@ $sumberDana = [
     <!-- TigaPuluhDelapan -->
     <div class="table-container">
         <div class="section-heading">Laporan HKI (Paten) Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1510,7 +1493,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">z
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">I</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -1531,7 +1514,7 @@ $sumberDana = [
     <!-- TigaPuluhSembilan -->
     <div class="table-container">
         <div class="section-heading">Laporan HKI (Hak Cipta) Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1540,7 +1523,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">II</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -1549,8 +1532,8 @@ $sumberDana = [
                         Sirkuit Terpadu, e) dll.)
                     </td>
                 </tr>
-                <tr>
                     @foreach ($data->hki_cipta_mahasiswa as $hkicipta)
+                <tr>
                         <td class="text-center">{{ $loop->iteration }}</td> <!-- Iteration counter -->
                         <td class="text-wrap">{{ $hkicipta->luaran_penelitian }}</td>
                         <td class="text-center">{{ $hkicipta->tahun }}</td>
@@ -1563,7 +1546,7 @@ $sumberDana = [
     <!-- EmpatPuluh -->
     <div class="table-container">
         <div class="section-heading">Laporan Teknologi Karya Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1572,7 +1555,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">III</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -1593,7 +1576,7 @@ $sumberDana = [
     <!-- EmpatPuluhSatu -->
     <div class="table-container">
         <div class="section-heading">Laporan Buku Chapter Mahasiswa</div>
-        <table>
+        <table class="table-bordered table-bordered">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -1602,7 +1585,7 @@ $sumberDana = [
                     <th>Keterangan</th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0">
+            <tbody>
                 <tr>
                     <td class="text-center fw-bold">IV</td>
                     <td class="text-wrap fw-bold" colspan="3">
@@ -1619,6 +1602,7 @@ $sumberDana = [
                 @endforeach
             </tbody>
         </table>
+    </div>
     </div>
 </body>
 

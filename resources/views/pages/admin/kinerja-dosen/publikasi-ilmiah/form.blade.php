@@ -35,19 +35,31 @@
             autofocus required />
     </div>
 </div>
-                            @php
-                                $options = ['Jurnal penelitian tidak terakreditasi'=>'Jurnal penelitian tidak terakreditasi', '	Jurnal penelitian nasional terakreditasi' , 'Jurnal penelitian internasional','	Jurnal penelitian internasional bereputasi','Seminar wilayah/lokal/perguruan tinggi','Seminar nasional','Seminar internasional','Pagelaran/pameran/presentasi dalam forum di tingkat wilayah','	Pagelaran/pameran/presentasi dalam forum di tingkat nasional','Pagelaran/pameran/presentasi dalam forum di tingkat internasional'];
-                            @endphp
+                           @php
+    $options = [
+        'Jurnal penelitian tidak terakreditasi' => 'Jurnal penelitian tidak terakreditasi',
+        'Jurnal penelitian nasional terakreditasi' => 'Jurnal penelitian nasional terakreditasi',
+        'Jurnal penelitian internasional' => 'Jurnal penelitian internasional',
+        'Jurnal penelitian internasional bereputasi' => 'Jurnal penelitian internasional bereputasi',
+        'Seminar wilayah/lokal/perguruan tinggi' => 'Seminar wilayah/lokal/perguruan tinggi',
+        'Seminar nasional' => 'Seminar nasional',
+        'Seminar internasional' => 'Seminar internasional',
+        'Pagelaran/pameran/presentasi dalam forum di tingkat wilayah' => 'Pagelaran/pameran/presentasi dalam forum di tingkat wilayah',
+        'Pagelaran/pameran/presentasi dalam forum di tingkat nasional' => 'Pagelaran/pameran/presentasi dalam forum di tingkat nasional',
+        'Pagelaran/pameran/presentasi dalam forum di tingkat internasional' => 'Pagelaran/pameran/presentasi dalam forum di tingkat internasional',
+    ];
+@endphp
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="jenis_artikel">Jenis Artikel</label>
                                 <div class="col-sm-10">
                                     <select class="form-select" id="jenis_artikel" name="jenis_artikel" required>
-                                        @foreach ($options as $value => $label)
-                                            <option value="{{ $value }}" {{ old('jenis_artikel', $publikasi_ilmiah->jenis_artikel) === $value ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
+                                        @foreach ($options as $label)
+    <option value="{{ $label }}" {{ old('jenis_artikel', $publikasi_ilmiah->jenis_artikel) === $label ? 'selected' : '' }}>
+        {{ $label }}
+    </option>
+@endforeach
+
                                     </select>
                                 </div>
                             </div>
