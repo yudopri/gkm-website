@@ -16,16 +16,14 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Illuminate\Support\Facades\Log;
 class ImportExcelController extends Controller
 {
-    public function importExcel(Request $request)
+    public function importExcel(Request $request, String $id)
 {
     $request->validate([
         'file' => 'required|mimes:xlsx,csv',
-        'user_id' => 'required|integer|exists:users,id', // tambahkan validasi user_id
     ]);
 
-    $userId = $request->input('user_id');
 
-    $user = \App\Models\User::find($userId);
+    $user = \App\Models\User::find($id);
 
     if (!$user) {
         return back()->withErrors(['error' => "User dengan ID '$userId' tidak ditemukan."]);
