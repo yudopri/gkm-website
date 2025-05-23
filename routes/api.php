@@ -105,6 +105,6 @@ Route::middleware('auth:sanctum')->apiResource('/luaran-sitasi-mahasiswa', Sitas
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/rekap/{user_id}/{tahun}', [RekapUtamaController::class, 'index']);
-    Route::post('/import-excel/{user_id}', [ImportExcelController::class, 'importExcel']);
+    Route::post('/import-excel/{id}', [ImportExcelController::class, 'importExcel']);
 });
 
