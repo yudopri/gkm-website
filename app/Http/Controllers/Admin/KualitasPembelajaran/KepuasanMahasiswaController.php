@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\KualitasPembelajaran;
 
 use App\Http\Controllers\Controller;
 use App\Models\KepuasanMahasiswa;
+use App\Models\PenelitianDtps;
 use Illuminate\Http\Request;
 use App\Models\TahunAjaranSemester;
 use App\Models\User;
