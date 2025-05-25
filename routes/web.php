@@ -132,7 +132,7 @@ use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikWaktuTungguController
 use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikKesesuaianKerjaController;
 use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikTempatKerjaController;
 use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikKepuasanPenggunaController;
-use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikMasastudiController;
+use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikMasaStudiController;
 use App\Http\Controllers\Admin\Grafik\PkmDtpsMhs\GrafikPkmDtpsMhsController;
 use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikPublikasiMahasiswaController;
 use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikSitasiMahasiswaController;
