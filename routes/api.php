@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ExportExcel\ExportExcelApiController;
 use App\Http\Controllers\Api\RekapData\RekapUtamaController;
 use App\Http\Controllers\Api\AuthControllerApi;
 use Illuminate\Http\Request;
@@ -45,66 +46,63 @@ use App\Http\Controllers\Api\importexcel\ImportExcelController;
 use App\Http\Controllers\Api\LuaranMahasiswa\ProdukJasaMahasiswaController;
 use App\Http\Controllers\Api\LuaranMahasiswa\PublikasiMahasiswaController;
 use App\Http\Controllers\Api\LuaranMahasiswa\SitasiKaryaMahasiswaController;
-use App\Http\Controllers\Api\LuaranMahasiswa\BukuChapterMahasiswaController;
-use App\Http\Controllers\Api\LuaranMahasiswa\HkiHakCiptaMahasiswaController;
-use App\Http\Controllers\Api\LuaranMahasiswa\HkiPatenMahasiswaController;
-use App\Http\Controllers\Api\LuaranMahasiswa\TeknologiKaryaMahasiswaController;
-
-
+use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\BukuChapterMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\HkiHakCiptaMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\HkiPatenMahasiswaController;
+use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\TeknologiKaryaMahasiswaController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
 Route::post('/token', [AuthControllerApi::class, 'requestToken']);
-Route::middleware('auth:sanctum')->apiResource('/user-profiles', UserProfileController::class);
-Route::middleware('auth:sanctum')->apiResource('/dosen-praktisi', DosenPraktisiApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/dosen-tetap', DosenTetapApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/dosen-tidak-tetap', DosenTidakTetapApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/dosen-pembimbing-ta', PembimbingTaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/ewmp-dosen', EwmpDosenApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/tahun-ajaran', TahunAjaranApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/mahasiswa-asing', MahasiswaAsingApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/seleksi-maba', SeleksiMabaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kstd-pendidikan', PendidikanApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kstd-penelitian', PenelitianApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kstd-pengmas', PengmasApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-bukuchapter', BukuChapterApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-hkihakcipta', HkiHakciptaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-hkipaten', HkiPatenApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-teknologikarya', TeknologiKaryaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-penelitian', PenelitianDtpsApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-pkmdtps', PkmDtpsApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-produk', ProdukTeradopsiApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-publikasi', PublikasiIlmiahApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-rekognisi', RekognisiDosenApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kinerja-sitasi', SitasiKaryaApiController::class);
-Route::middleware('auth:sanctum')->apiResource('/kepuasan-pengguna', KepuasanPenggunaController::class);
-Route::middleware('auth:sanctum')->apiResource('/kesesuaian-kerja', KesesuaianKerjaController::class);
-Route::middleware('auth:sanctum')->apiResource('/tempat-kerja', TempatKerjaController::class);
-Route::middleware('auth:sanctum')->apiResource('/waktu-tunggu', WaktuTungguController::class);
-Route::middleware('auth:sanctum')->apiResource('/prestasi-akademik', AkademikController::class);
-Route::middleware('auth:sanctum')->apiResource('/prestasi-non-akademik', NonAkademikController::class);
-Route::middleware('auth:sanctum')->apiResource('/ipk-lulusan', IpkLulusanController::class);
-Route::middleware('auth:sanctum')->apiResource('/masa-studi-lulusan', MasaStudiLulusanController::class);
-Route::middleware('auth:sanctum')->apiResource('/integrasi-penelitian', IntegrasiPenelitianController::class);
-Route::middleware('auth:sanctum')->apiResource('/kepuasan-mahasiswa', KepuasanMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/kurikulum-pembelajaran', KurikulumPembelajaranController::class);
-Route::middleware('auth:sanctum')->apiResource('/penelitian-mahasiswa', PenelitianMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/rujukan-tesis', RujukanTesisController::class);
-Route::middleware('auth:sanctum')->apiResource('/pkm-mahasiswa', PkmDtpsMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/list-dosen', ListDosenController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-bukuchapter-mahasiswa', BukuChapterMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-hkihakcipta-mahasiswa', HkiHakCiptaMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-hkipaten-mahasiswa', HkiPatenMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-teknologikarya-mahasiswa', TeknologiKaryaMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-produk-mahasiswa', ProdukJasaMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-publikasi-mahasiswa', PublikasiMahasiswaController::class);
-Route::middleware('auth:sanctum')->apiResource('/luaran-sitasi-mahasiswa', SitasiKaryaMahasiswaController::class);
-
-
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/import-excel/{id}', [ImportExcelController::class, 'importExcel']);
+    Route::get('/export-excel/{id}', [ExportExcelApiController::class, 'exportExcel']);
     Route::get('/rekap/{user_id}/{tahun}', [RekapUtamaController::class, 'index']);
-    Route::post('/import-excel/{user_id}', [ImportExcelController::class, 'importExcel']);
+    Route::apiResource('/user-profiles', UserProfileController::class);
+    Route::apiResource('/dosen-praktisi', DosenPraktisiApiController::class);
+    Route::apiResource('/dosen-tetap', DosenTetapApiController::class);
+    Route::apiResource('/dosen-tidak-tetap', DosenTidakTetapApiController::class);
+    Route::apiResource('/dosen-pembimbing-ta', PembimbingTaApiController::class);
+    Route::apiResource('/ewmp-dosen', EwmpDosenApiController::class);
+    Route::apiResource('/tahun-ajaran', TahunAjaranApiController::class);
+    Route::apiResource('/mahasiswa-asing', MahasiswaAsingApiController::class);
+    Route::apiResource('/seleksi-maba', SeleksiMabaApiController::class);
+    Route::apiResource('/kstd-pendidikan', PendidikanApiController::class);
+    Route::apiResource('/kstd-penelitian', PenelitianApiController::class);
+    Route::apiResource('/kstd-pengmas', PengmasApiController::class);
+    Route::apiResource('/luaran-bukuchapter', BukuChapterApiController::class);
+    Route::apiResource('/luaran-hkihakcipta', HkiHakciptaApiController::class);
+    Route::apiResource('/luaran-hkipaten', HkiPatenApiController::class);
+    Route::apiResource('/luaran-teknologikarya', TeknologiKaryaApiController::class);
+    Route::apiResource('/kinerja-penelitian', PenelitianDtpsApiController::class);
+    Route::apiResource('/kinerja-pkmdtps', PkmDtpsApiController::class);
+    Route::apiResource('/kinerja-produk', ProdukTeradopsiApiController::class);
+    Route::apiResource('/kinerja-publikasi', PublikasiIlmiahApiController::class);
+    Route::apiResource('/kinerja-rekognisi', RekognisiDosenApiController::class);
+    Route::apiResource('/kinerja-sitasi', SitasiKaryaApiController::class);
+    Route::apiResource('/kepuasan-pengguna', KepuasanPenggunaController::class);
+    Route::apiResource('/kesesuaian-kerja', KesesuaianKerjaController::class);
+    Route::apiResource('/tempat-kerja', TempatKerjaController::class);
+    Route::apiResource('/waktu-tunggu', WaktuTungguController::class);
+    Route::apiResource('/prestasi-akademik', AkademikController::class);
+    Route::apiResource('/prestasi-non-akademik', NonAkademikController::class);
+    Route::apiResource('/ipk-lulusan', IpkLulusanController::class);
+    Route::apiResource('/masa-studi-lulusan', MasaStudiLulusanController::class);
+    Route::apiResource('/integrasi-penelitian', IntegrasiPenelitianController::class);
+    Route::apiResource('/kepuasan-mahasiswa', KepuasanMahasiswaController::class);
+    Route::apiResource('/kurikulum-pembelajaran', KurikulumPembelajaranController::class);
+    Route::apiResource('/penelitian-mahasiswa', PenelitianMahasiswaController::class);
+    Route::apiResource('/rujukan-tesis', RujukanTesisController::class);
+    Route::apiResource('/pkm-mahasiswa', PkmDtpsMahasiswaController::class);
+    Route::apiResource('/list-dosen', ListDosenController::class);
+    Route::apiResource('/luaran-bukuchapter-mahasiswa', BukuChapterMahasiswaController::class);
+    Route::apiResource('/luaran-hkihakcipta-mahasiswa', HkiHakCiptaMahasiswaController::class);
+    Route::apiResource('/luaran-hkipaten-mahasiswa', HkiPatenMahasiswaController::class);
+    Route::apiResource('/luaran-teknologikarya-mahasiswa', TeknologiKaryaMahasiswaController::class);
+    Route::apiResource('/luaran-produk-mahasiswa', ProdukJasaMahasiswaController::class);
+    Route::apiResource('/luaran-publikasi-mahasiswa', PublikasiMahasiswaController::class);
+    Route::apiResource('/luaran-sitasi-mahasiswa', SitasiKaryaMahasiswaController::class);
 });
-
