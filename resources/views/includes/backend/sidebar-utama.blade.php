@@ -56,7 +56,7 @@
          <ul class="menu-sub">
               <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.kerjasama-tridharma.*') ? 'active' : '' }}">
             <a href="{{ route('admin.petugas.grafik.kerjasama-tridharma.gabungan.index') }}" class="menu-link">
-                <div data-i18n="List Dosen">Gabungan</div>
+                <div data-i18n="List Dosen">Grafik Rekap</div>
             </a>
             </li>
             <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.kerjasama-tridharma.*') ? 'active' : '' }}">
@@ -83,7 +83,7 @@
         <ul class="menu-sub">
                         <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.data-mahasiswa.*') ? 'active' : '' }}">
             <a href="{{ route('admin.petugas.grafik.data-mahasiswa.gabungan.index') }}" class="menu-link">
-                <div data-i18n="List Dosen">Gabungan</div>
+                <div data-i18n="List Dosen">Grafik Rekap</div>
             </a>
             </li>
             <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.data-mahasiswa.*') ? 'active' : '' }}">
@@ -104,7 +104,7 @@
         <ul class="menu-sub">
             <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.data-dosen.*') ? 'active' : '' }}">
             <a href="{{ route('admin.petugas.grafik.data-dosen.gabungan.index') }}" class="menu-link">
-                <div data-i18n="List Dosen">Gabungan</div>
+                <div data-i18n="List Dosen">Grafik Rekap</div>
             </a>
             </li>
 
@@ -141,7 +141,7 @@
         <ul class="menu-sub">
             <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.kinerja-dosen.*') ? 'active' : '' }}">
             <a href="{{ route('admin.petugas.grafik.kinerja-dosen.gabungan.index') }}" class="menu-link">
-                <div data-i18n="List Dosen">Gabungan</div>
+                <div data-i18n="List Dosen">Grafik Rekap</div>
             </a>
             </li>
 
@@ -211,7 +211,7 @@
         <ul class="menu-sub">
                         <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.kualitas-pembelajaran.*') ? 'active' : '' }}">
             <a href="{{ route('admin.petugas.grafik.kualitas-pembelajaran.gabungan.index') }}" class="menu-link">
-                <div data-i18n="List Dosen">Gabungan</div>
+                <div data-i18n="List Dosen">Grafik Rekap</div>
             </a>
             </li>
 
@@ -261,7 +261,7 @@
             <ul class="menu-sub">
             <li class="menu-item {{ request()->routeIs('admin.petugas.kerjasama-tridharma.*') ? 'active' : '' }}">
             <a href="{{ route('admin.petugas.grafik.pkm-dtps-mhs.gabungan.index') }}" class="menu-link"> 
-                <div data-i18n="List Dosen">Gabungan</div>
+                <div data-i18n="List Dosen">Grafik Rekap</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('admin.petugas.kerjasama-tridharma.*') ? 'active' : '' }}">
@@ -279,7 +279,7 @@
         <ul class="menu-sub">
          <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.kinerja-lulusan.*') ? 'active' : '' }}">
             <a href="{{ route('admin.petugas.grafik.kinerja-lulusan.gabungan.index') }}" class="menu-link">
-                <div data-i18n="List Dosen">Gabungan</div>
+                <div data-i18n="List Dosen">Grafik Rekap</div>
             </a>
             </li>
 
@@ -346,7 +346,7 @@
         <ul class="menu-sub">
             <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.luaran-karya-mahasiswa.*') ? 'active' : '' }}">
             <a href="{{ route('admin.petugas.grafik.luaran-karya-mahasiswa.gabungan.index') }}" class="menu-link">
-                <div data-i18n="List Dosen">Gabungan</div>
+                <div data-i18n="List Dosen">Grafik Rekap</div>
             </a>
             </li>
             <li class="menu-item {{ request()->routeIs('admin.petugas.grafik.luaran-karya-mahasiswa.*') ? 'active' : '' }}">
