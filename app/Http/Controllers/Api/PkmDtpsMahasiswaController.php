@@ -16,7 +16,7 @@ class PkmDtpsMahasiswaController extends Controller
 
     protected function getModelClass()
     {
-        return DtpsPenelitianMahasiswa::class;
+        return PkmDtpsMahasiswa::class;
     }
 
     protected function getStoreValidationRules()
