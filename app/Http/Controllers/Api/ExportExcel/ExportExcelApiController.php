@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Api\ExportExcel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\User;
 use Illuminate\Support\Facades\Response;
-use Str;
 
 class ExportExcelApiController extends Controller
 {
-    public function exportExcel(string $dosenId)
+    public function exportExcel(string $id)
     {
         try {
             $data = User::with([
@@ -68,7 +68,7 @@ class ExportExcelApiController extends Controller
                 'hki_cipta_mahasiswa',
                 'teknologi_karya_mahasiswa',
                 'buku_chapter_mahasiswa',
-            ])->whereId($dosenId)->firstOrFail();
+            ])->whereId($id)->firstOrFail();
 
             // Membuat Spreadsheet baru
             $spreadsheet = new Spreadsheet();

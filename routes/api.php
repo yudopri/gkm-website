@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\KinerjaDosen\LuaranLain\HkiHakciptaApiController;
 use App\Http\Controllers\Api\KinerjaDosen\LuaranLain\HkiPatenApiController;
 use App\Http\Controllers\Api\KinerjaDosen\LuaranLain\TeknologiKaryaApiController;
 use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\Api\PkmDtpsMahasiswaController;
 use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
 use App\Http\Controllers\Api\DataDosen\DosenPraktisiApiController;
 use App\Http\Controllers\Api\DataDosen\DosenTetapApiController;
@@ -57,9 +58,9 @@ Route::get('/user', function (Request $request) {
 Route::post('/token', [AuthControllerApi::class, 'requestToken']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/import-excel/{id}', [ImportExcelController::class, 'importExcel']);
+    Route::get('/export-excel/{id}', [ExportExcelApiController::class, 'exportExcel']);
     Route::get('/rekap/{user_id}/{tahun}', [RekapUtamaController::class, 'index']);
-    Route::get('/export-excel/{dosenId}', [ExportExcelApiController::class, 'exportExcel']);
-    Route::post('/import-excel', [ImportExcelController::class, 'importExcel']);
     Route::apiResource('/user-profiles', UserProfileController::class);
     Route::apiResource('/dosen-praktisi', DosenPraktisiApiController::class);
     Route::apiResource('/dosen-tetap', DosenTetapApiController::class);
@@ -95,6 +96,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/kurikulum-pembelajaran', KurikulumPembelajaranController::class);
     Route::apiResource('/penelitian-mahasiswa', PenelitianMahasiswaController::class);
     Route::apiResource('/rujukan-tesis', RujukanTesisController::class);
+    Route::apiResource('/pkm-mahasiswa', PkmDtpsMahasiswaController::class);
     Route::apiResource('/list-dosen', ListDosenController::class);
     Route::apiResource('/luaran-bukuchapter-mahasiswa', BukuChapterMahasiswaController::class);
     Route::apiResource('/luaran-hkihakcipta-mahasiswa', HkiHakCiptaMahasiswaController::class);
@@ -104,4 +106,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/luaran-publikasi-mahasiswa', PublikasiMahasiswaController::class);
     Route::apiResource('/luaran-sitasi-mahasiswa', SitasiKaryaMahasiswaController::class);
 });
-
