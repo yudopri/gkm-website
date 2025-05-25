@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ExportExcel\ExportExcelApiController;
-use App\Http\Controllers\Api\RekapData\RekapUtamaController;
+use App\Http\Controllers\Api\RekapData\RedirectController;
 use App\Http\Controllers\Api\AuthControllerApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -60,7 +60,7 @@ Route::post('/token', [AuthControllerApi::class, 'requestToken']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/import-excel/{id}', [ImportExcelController::class, 'importExcel']);
     Route::get('/export-excel/{id}', [ExportExcelApiController::class, 'exportExcel']);
-    Route::get('/rekap/{user_id}/{tahun}', [RekapUtamaController::class, 'index']);
+    Route::get('/rekap/{user_id}/{tahun}', [RedirectController::class, 'getJson']);
     Route::apiResource('/user-profiles', UserProfileController::class);
     Route::apiResource('/dosen-praktisi', DosenPraktisiApiController::class);
     Route::apiResource('/dosen-tetap', DosenTetapApiController::class);

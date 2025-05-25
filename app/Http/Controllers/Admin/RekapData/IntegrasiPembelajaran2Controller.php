@@ -48,16 +48,17 @@ class IntegrasiPembelajaran2Controller extends Controller
             'rekognisi_dosen',
             'penellitian_dpts',
             'pkm _dpts',
-            'dtps_penelitian_mahasiswa',
+            'publikasi_ilmiah_dosen',
             'sitasi_karya_dosen',
-            'produk_teradopsi_dosen'   
+            'produk_teradopsi_dosen' 
+            
         ];
     
         $integrasiKeyAliases = [
             'rekognisi_dosen' => 'Tabel 3.b.1) Pengakuan/Rekognisi Dosen',
             'penellitian_dpts' => 'Tabel 3.b.2) Penelitian DTPS',
             'pkm _dpts' => 'Tabel 3.b.3) PkM DTPS',
-            'dtps_penelitian_mahasiswa' => 'Tabel 3.b.4) Pagelaran/Pameran/Presentasi/Publikasi Ilmiah DTPS',
+            'publikasi_ilmiah_dosen' => 'Tabel 3.b.4) Pagelaran/Pameran/Presentasi/Publikasi Ilmiah DTPS',
             'sitasi_karya_dosen' => 'Tabel 3.b.5) Karya Ilmiah DTPS yang Disitasi',
             'produk_teradopsi_dosen'  => 'Tabel 3.b.6) Produk/Jasa DTPS yang Diadopsi oleh Industri/Masyarakat',
         ];
