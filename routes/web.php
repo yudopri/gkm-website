@@ -157,9 +157,10 @@ Route::get('/', function () {
 Route::get('/informasi', function () {
     return view('pages.front.informasi');
 });
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Untuk menampilkan profile
     Route::get('profile/{id}', [UserProfileControllers::class, 'show'])->name('profile.show');
