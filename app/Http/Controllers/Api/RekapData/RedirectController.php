@@ -103,7 +103,7 @@ class RedirectController extends Controller
             'publikasi_ilmiah_dosen'=>'Tabel 3.b.4) Pagelaran/Pameran/Publikasi Ilmiah DTPS',
             'sitasi_karya_dosen' =>'Tabel 3.b.5) Karya Ilmiah DTPS yang Disitasi',
             'produk_teradopsi_dosen'  => 'Tabel 3.b.6) Produk/Jasa DTPS yang Diadopsi',
-             'hki_hakcipta_dosen' => 'Tabel 3.b.7) Luaran HKI - Paten, ',
+             'hki_hakcipta_dosen' => 'Tabel 3.b.7) Luaran HKI - Paten',
             'hki_paten_dosen' => 'Tabel 3.b.8) Luaran HKI - Hak Cipta',
             'teknologi_karya_dosen' => 'Tabel 3.b.9) Teknologi Tepat Guna DTPS',
             'buku_chapter_dosen' => 'Tabel 3.b.10) Buku/Book Chapter DTPS',
