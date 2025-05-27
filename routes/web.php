@@ -56,7 +56,7 @@ use App\Http\Controllers\Api\Dosen\TahunAjaranApiController;
 use App\Http\Controllers\Api\DataMahasiswa\MahasiswaAsingApiController;
 use App\Http\Controllers\Api\DataMahasiswa\SeleksiMabaApiController;
 // use App\Http\Controllers\Admin\RekapData\RekapUtamaController;
-use App\Http\Controllers\Api\RekapData\RekapUtamaController;
+// use App\Http\Controllers\Api\RekapData\RedirectController;
 use App\Http\Controllers\Admin\RekapData\RekapKeseluruhan;
 
 use App\Http\Controllers\Admin\RekapData\KerjasamaTridharmaPendidikan2Controller;
@@ -132,7 +132,7 @@ use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikWaktuTungguController
 use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikKesesuaianKerjaController;
 use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikTempatKerjaController;
 use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikKepuasanPenggunaController;
-use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikMasastudiController;
+use App\Http\Controllers\Admin\Grafik\KinerjaLulusan\GrafikMasaStudiController;
 use App\Http\Controllers\Admin\Grafik\PkmDtpsMhs\GrafikPkmDtpsMhsController;
 use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikPublikasiMahasiswaController;
 use App\Http\Controllers\Admin\Grafik\LuaranMahasiswa\GrafikSitasiMahasiswaController;
@@ -157,9 +157,10 @@ Route::get('/', function () {
 Route::get('/informasi', function () {
     return view('pages.front.informasi');
 });
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Untuk menampilkan profile
     Route::get('profile/{id}', [UserProfileControllers::class, 'show'])->name('profile.show');
@@ -661,8 +662,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 Route::get('/rekap-keseluruhan/{tahun_ajaran}', [RekapKeseluruhan::class, 'index'])->name('rekap-keseluruhan');
 });
 
-// Route::get('/rekap/{user_id}/{tahun}', [RekapUtamaController::class, 'index']);
-
+// Route::get('/rekap/{user_id}/{tahun}', [RedirectController::class, 'getJson']);
+// Route::get('/rekap', [RekapUtamaController::class, 'index']);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
