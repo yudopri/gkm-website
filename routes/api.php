@@ -50,6 +50,9 @@ use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\BukuChapterMahasiswaCont
 use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\HkiHakCiptaMahasiswaController;
 use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\HkiPatenMahasiswaController;
 use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\TeknologiKaryaMahasiswaController;
+use Illuminate\Support\Facades\URL;
+use App\Models\User;
+use Illuminate\Auth\Events\Verified;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -57,6 +60,25 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/token', [AuthControllerApi::class, 'requestToken']);
 Route::post('/register', [AuthControllerApi::class, 'apiregister']);
+Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
+    $user = User::findOrFail($id);
+
+    // Cek apakah URL valid (signed URL)
+    if (! URL::hasValidSignature($request)) {
+        return response()->json(['message' => 'Invalid or expired verification link.'], 403);
+    }
+
+    // Cek apakah email sudah diverifikasi
+    if ($user->hasVerifiedEmail()) {
+        return response()->json(['message' => 'Email already verified.'], 200);
+    }
+
+    // Verifikasi email
+    $user->markEmailAsVerified();
+    event(new Verified($user));
+
+    return response()->json(['message' => 'Email successfully verified.'], 200);
+})->name('api.verification.verify');
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/import-excel/{id}', [ImportExcelController::class, 'importExcel']);
     Route::get('/export-excel/{id}', [ExportExcelApiController::class, 'exportExcel']);

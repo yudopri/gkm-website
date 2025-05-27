@@ -66,6 +66,10 @@ class User extends Authenticatable
         $name = urlencode($this->name);
         return "https://ui-avatars.com/api/?name={$name}&background=random";
     }
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\VerifyEmailApi($this));
+    }
 
     public function profile()
     {
