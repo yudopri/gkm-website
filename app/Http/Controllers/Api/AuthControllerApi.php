@@ -36,9 +36,9 @@ class AuthControllerApi extends Controller
     // Cari user
     $user = User::where('email', $request->email)->first();
 
-    if (!$user || !Hash::check($request->password, $user->password)) {
+    if (!Auth::attempt($credentials)) {
         return response()->json([
-            'message' => 'Email atau password salah'
+            'message' => 'User tidak ditemukan atau password salah'
         ], 401);
     }
 
