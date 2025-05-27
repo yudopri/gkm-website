@@ -19,17 +19,17 @@ class PagelaranMahasiswa2Controller extends Controller
      * @param string $tahun_ajaran
      * @param int    $dosenId
      */
-    public function index($tahun_ajaran, int $dosenId)
+    public function index($tahun_ajaran, int $dosenId, Request $request)
     {
         // 1. Daftar tahun ajaran untuk dropdown
-       $tahunAjaranList = TahunAjaranSemester::orderBy('id', 'desc')->get();
-    
+        $tahunAjaranList = TahunAjaranSemester::orderBy('id', 'desc')->get();
+
         // 2. Validasi dosen_id
         $user = User::find($dosenId);
         if (! $user) {
             abort(404, 'Dosen tidak ditemukan');
         }
-    // 3. Ambil objek tahun ajaran berdasarkan slug
+        // 3. Ambil objek tahun ajaran berdasarkan slug
         $tahunAjaranObj = TahunAjaranSemester::where('slug', $tahun_ajaran)->first();
         if (! $tahunAjaranObj) {
             abort(404, 'Tahun ajaran tidak ditemukan.');
@@ -42,40 +42,62 @@ class PagelaranMahasiswa2Controller extends Controller
         ]);
         // 3. Ambil data rekap seluruh metrik
         $rekapArray = (new RekapUtamaController)->getRekap($dosenId);
-    
+
         // 4. Filter hanya key tridharma
         $luaranMHSKeys = [
-        'publikasi_mahasiswa',
-        'sitasi_karya_mahasiswa',
-        'produk_jasa_mahasiswa',
-        'hki_paten_mahasiswa',
-        'hki_hakcipta_mahasiswa',
-        'teknologi_karya_mahasiswa',
-        'buku_chapter_mahasiswa'
-              
+            'publikasi_mahasiswa',
+            'sitasi_karya_mahasiswa',
+            'produk_jasa_mahasiswa',
+            'hki_paten_mahasiswa',
+            'hki_hakcipta_mahasiswa',
+            'teknologi_karya_mahasiswa',
+            'buku_chapter_mahasiswa'
         ];
-    
+
         $luaranMHSKeyAliases = [
-        'publikasi_mahasiswa' => 'Tabel 8.f.1| Pagelaran/Pameran/Presentasi/Publikasi Ilmiah Mahasiswa	',
-        'sitasi_karya_mahasiswa' => 'Tabel 8.f.2| Karya Ilmiah Mahasiswa yang Disitasi	',
-        'produk_jasa_mahasiswa' => 'Tabel 8.f.3| Produk/Jasa Mahasiswa yang Diadopsi oleh Industri/Masyarakat',
-        'hki_paten_mahasiswa'=>'Tabel 8.f.4| Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Paten, Paten Sederhana)	',
-        'hki_hakcipta_mahasiswa'=>'Tabel 8.f.5| Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Hak Cipta, Desain Produk Industri, dll.)	',
-        'teknologi_karya_mahasiswa'=>'Tabel 8.f.6| Luaran Penelitian yang Dihasilkan Mahasiswa - Teknologi Tepat Guna, Produk, Karya Seni, Rekayasa Sosial	',
-        'buku_chapter_mahasiswa' =>'Tabel 8.f.7| Luaran Penelitian yang Dihasilkan Mahasiswa - Buku ber-ISBN, Book Chapter	'
-              
+            'publikasi_mahasiswa' => 'Tabel 8.f.1| Pagelaran/Pameran/Presentasi/Publikasi Ilmiah Mahasiswa',
+            'sitasi_karya_mahasiswa' => 'Tabel 8.f.2| Karya Ilmiah Mahasiswa yang Disitasi',
+            'produk_jasa_mahasiswa' => 'Tabel 8.f.3| Produk/Jasa Mahasiswa yang Diadopsi oleh Industri/Masyarakat',
+            'hki_paten_mahasiswa'=>'Tabel 8.f.4| Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Paten, Paten Sederhana)',
+            'hki_hakcipta_mahasiswa'=>'Tabel 8.f.5| Luaran Penelitian yang Dihasilkan Mahasiswa - HKI (Hak Cipta, Desain Produk Industri, dll.)',
+            'teknologi_karya_mahasiswa'=>'Tabel 8.f.6| Luaran Penelitian yang Dihasilkan Mahasiswa - Teknologi Tepat Guna, Produk, Karya Seni, Rekayasa Sosial',
+            'buku_chapter_mahasiswa' =>'Tabel 8.f.7| Luaran Penelitian yang Dihasilkan Mahasiswa - Buku ber-ISBN, Book Chapter'
         ];
-    
+
         // Gunakan array_map untuk memproses data
         $rows = array_map(function ($key) use ($rekapArray, $luaranMHSKeyAliases) {
             return [
                 'label'     => $luaranMHSKeyAliases[$key] ?? ucwords(str_replace('_', ' ', $key)),
                 'count'     => $rekapArray[$key]['count'] ?? 0,
-                 'min'       => $rekapArray[$key]['min'] ?? '-', 
+                'min'       => $rekapArray[$key]['min'] ?? '-', 
                 'keterangan'=> $rekapArray[$key]['status'] ?? 'belum diisi',
             ];
         }, $luaranMHSKeys);
+
+        // 8. Search filter
+        $search = request()->get('search');
+
+        $rows = collect($rows)->filter(function ($item) use ($search) {
+            if (!$search) return true;
+            return str_contains(strtolower($item['keterangan']), strtolower($search));
+        })->values()->toArray();
+
+
+
+        // Sorting
+        $sort = $request->query('sort', 'label');
+        $direction = $request->query('direction', 'asc');
+
+        usort($rows, function ($a, $b) use ($sort, $direction) {
+            if ($direction === 'asc') {
+                return $a[$sort] <=> $b[$sort];
+            } else {
+                return $b[$sort] <=> $a[$sort];
+            }
+        });
+
     
+
         // 5. Pass ke view
         return view('pages.admin.rekap-data.pagelaran-pameran-presentasi-publikasi-ilmiah-mahasiswa.index', [
             'tahun_ajaran'    => $tahun_ajaran,
@@ -83,8 +105,10 @@ class PagelaranMahasiswa2Controller extends Controller
             'dosenId'         => $dosenId,
             'dosen'           => $user,
             'rows'            => $rows,
+            'sort'            => $sort,
+            'direction'       => $direction,
         ]);
-    }     
+    }
 
     /**
      * Show the form for creating a new resource.

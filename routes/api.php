@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ExportExcel\ExportExcelApiController;
 use App\Http\Controllers\Api\RekapData\RedirectController;
 use App\Http\Controllers\Api\AuthControllerApi;
+use App\Http\Controllers\Api\test\test2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\KerjasamaTridharma\PendidikanApiController;
@@ -105,4 +106,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/luaran-produk-mahasiswa', ProdukJasaMahasiswaController::class);
     Route::apiResource('/luaran-publikasi-mahasiswa', PublikasiMahasiswaController::class);
     Route::apiResource('/luaran-sitasi-mahasiswa', SitasiKaryaMahasiswaController::class);
+    Route::apiResource('/test', test2::class);
 });
