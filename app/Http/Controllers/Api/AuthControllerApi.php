@@ -36,17 +36,16 @@ class AuthControllerApi extends Controller
     // Cari user
     $user = User::where('email', $request->email)->first();
 
-    if (!Auth::attempt($credentials)) {
+    if (!$user || !Hash::check($request->password, $user->password)) {
         return response()->json([
-            'message' => 'User tidak ditemukan atau password salah'
+            'message' => 'Email atau password salah'
         ], 401);
     }
 
     // Cek verifikasi email
     if (!$user->hasVerifiedEmail()) {
         // Kirim ulang email verifikasi secara manual
-        Notification::route('mail', $user->email)
-            ->notify(new VerifyEmail);
+        $user->sendEmailVerificationNotification();
 
         return response()->json([
             'message' => 'Email belum diverifikasi. Tautan verifikasi telah dikirim ulang.'
