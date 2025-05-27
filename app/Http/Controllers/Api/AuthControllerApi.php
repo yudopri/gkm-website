@@ -16,31 +16,44 @@ use Illuminate\Support\Facades\Hash;
 class AuthControllerApi extends Controller
 {
     public function requestToken(Request $request): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|max:255',
-            'password' => 'required|string'
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|string|email|max:255',
+        'password' => 'required|string'
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
-        $credentials = $request->only('email', 'password');
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
 
-        if (!Auth::attempt($credentials)) {
-            return response()->json([
-                'message' => 'User not found'
-            ], 401);
-        }
+    $credentials = $request->only('email', 'password');
 
-        $user = User::where('email', $request->email)->firstOrFail();
-        $token = $user->createToken('auth_token')->plainTextToken;
+    if (!Auth::attempt($credentials)) {
+        return response()->json([
+            'message' => 'User tidak ditemukan atau password salah'
+        ], 401);
+    }
+
+    $user = User::where('email', $request->email)->firstOrFail();
+
+    // ✅ Cek jika email belum diverifikasi
+    if (!$user->hasVerifiedEmail()) {
+        // Kirim ulang email verifikasi
+        $user->sendEmailVerificationNotification();
 
         return response()->json([
-            'id' => $user->id,
-            'token' => $token,
-        ], Response::HTTP_OK);
+            'message' => 'Email belum diverifikasi. Tautan verifikasi telah dikirim ulang.'
+        ], 403);
     }
+
+    // ✅ Email sudah diverifikasi → buat token
+    $token = $user->createToken('auth_token')->plainTextToken;
+
+    return response()->json([
+        'id' => $user->id,
+        'token' => $token,
+    ], Response::HTTP_OK);
+}
     public function apiregister(Request $request)
     {
         // Validasi
