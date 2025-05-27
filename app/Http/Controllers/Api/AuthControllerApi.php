@@ -12,41 +12,48 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Auth\Notifications\VerifyEmail;
+
 
 class AuthControllerApi extends Controller
 {
     public function requestToken(Request $request): JsonResponse
 {
+    // Validasi input
     $validator = Validator::make($request->all(), [
         'email' => 'required|string|email|max:255',
         'password' => 'required|string'
     ]);
 
     if ($validator->fails()) {
-        return response()->json($validator->errors(), 422);
+        return response()->json([
+            'message' => 'Validasi gagal',
+            'errors' => $validator->errors()
+        ], 422);
     }
 
-    $credentials = $request->only('email', 'password');
+    // Cari user
+    $user = User::where('email', $request->email)->first();
 
-    if (!Auth::attempt($credentials)) {
+    if (!$user || !Hash::check($request->password, $user->password)) {
         return response()->json([
-            'message' => 'User tidak ditemukan atau password salah'
+            'message' => 'Email atau password salah'
         ], 401);
     }
 
-    $user = User::where('email', $request->email)->firstOrFail();
-
-    // ✅ Cek jika email belum diverifikasi
+    // Cek verifikasi email
     if (!$user->hasVerifiedEmail()) {
-        // Kirim ulang email verifikasi
-        $user->sendEmailVerificationNotification();
+        // Kirim ulang email verifikasi secara manual
+        Notification::route('mail', $user->email)
+            ->notify(new VerifyEmail);
 
         return response()->json([
             'message' => 'Email belum diverifikasi. Tautan verifikasi telah dikirim ulang.'
         ], 403);
     }
 
-    // ✅ Email sudah diverifikasi → buat token
+    // Login dan buat token
     $token = $user->createToken('auth_token')->plainTextToken;
 
     return response()->json([
