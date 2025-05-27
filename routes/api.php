@@ -53,11 +53,11 @@ use App\Http\Controllers\Api\LuaranMahasiswa\LuaranLain\TeknologiKaryaMahasiswaC
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware(['auth:sanctum', 'verified']);
 
 Route::post('/token', [AuthControllerApi::class, 'requestToken']);
-
-Route::middleware('auth:sanctum')->group(function () {
+Route::post('/register', [AuthControllerApi::class, 'apiregister']);
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/import-excel/{id}', [ImportExcelController::class, 'importExcel']);
     Route::get('/export-excel/{id}', [ExportExcelApiController::class, 'exportExcel']);
     Route::get('/rekap/{user_id}/{tahun}', [RedirectController::class, 'getJson']);
