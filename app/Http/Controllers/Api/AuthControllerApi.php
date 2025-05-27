@@ -45,8 +45,7 @@ class AuthControllerApi extends Controller
     // Cek verifikasi email
     if (!$user->hasVerifiedEmail()) {
         // Kirim ulang email verifikasi secara manual
-        Notification::route('mail', $user->email)
-            ->notify(new VerifyEmail);
+        $user->sendEmailVerificationNotification();
 
         return response()->json([
             'message' => 'Email belum diverifikasi. Tautan verifikasi telah dikirim ulang.'
