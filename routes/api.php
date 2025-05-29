@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ExportExcel\ExportExcelApiController;
+use App\Http\Controllers\Api\ExportPdf\ExportPdfController;
 use App\Http\Controllers\Api\RekapData\RedirectController;
 use App\Http\Controllers\Api\AuthControllerApi;
 use Illuminate\Http\Request;
@@ -80,6 +81,7 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) 
     return response()->json(['message' => 'Email successfully verified.'], 200);
 })->name('api.verification.verify');
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/export-pdf/{id}', [ExportPdfController::class, 'exportPdf']);
     Route::post('/import-excel/{id}', [ImportExcelController::class, 'importExcel']);
     Route::get('/export-excel/{id}', [ExportExcelApiController::class, 'exportExcel']);
     Route::get('/rekap/{user_id}/{tahun}', [RedirectController::class, 'getJson']);
